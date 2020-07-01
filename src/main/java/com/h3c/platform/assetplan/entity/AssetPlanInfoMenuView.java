@@ -1,0 +1,236 @@
+package com.h3c.platform.assetplan.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class AssetPlanInfoMenuView {
+    private Integer assetplanid;
+
+    private String plancode;
+
+    private String assetname;
+
+    private String assetmanufacturer;
+
+    private String assetmodel;
+
+    private String assetcategory;
+
+    private BigDecimal pprice;
+
+    private Date planmonth;
+
+    private String requireduser;
+
+    private String applyuser;
+
+    private Date applytime;
+
+    private String reviewer;
+
+    private Integer reviewresult;
+
+    private String dept3manager;
+
+    private String dept2manager;
+
+    private String planner;
+
+    private String oqdeptreviewer;
+
+    private String dept1reviewer;
+
+    private String apstatus;
+
+    private String apstage;
+
+    private String apstatusdetail;
+
+    private String applymonth;
+
+    private String deleteflag;
+
+    public Integer getAssetplanid() {
+        return assetplanid;
+    }
+
+    public void setAssetplanid(Integer assetplanid) {
+        this.assetplanid = assetplanid;
+    }
+
+    public String getPlancode() {
+        return plancode;
+    }
+
+    public void setPlancode(String plancode) {
+        this.plancode = plancode == null ? null : plancode.trim();
+    }
+
+    public String getAssetname() {
+        return assetname;
+    }
+
+    public void setAssetname(String assetname) {
+        this.assetname = assetname == null ? null : assetname.trim();
+    }
+
+    public String getAssetmanufacturer() {
+        return assetmanufacturer;
+    }
+
+    public void setAssetmanufacturer(String assetmanufacturer) {
+        this.assetmanufacturer = assetmanufacturer == null ? null : assetmanufacturer.trim();
+    }
+
+    public String getAssetmodel() {
+        return assetmodel;
+    }
+
+    public void setAssetmodel(String assetmodel) {
+        this.assetmodel = assetmodel == null ? null : assetmodel.trim();
+    }
+
+    public String getAssetcategory() {
+        return assetcategory;
+    }
+
+    public void setAssetcategory(String assetcategory) {
+        this.assetcategory = assetcategory == null ? null : assetcategory.trim();
+    }
+
+    public BigDecimal getPprice() {
+        return pprice;
+    }
+
+    public void setPprice(BigDecimal pprice) {
+        this.pprice = pprice;
+    }
+
+    public Date getPlanmonth() {
+        return planmonth;
+    }
+
+    public void setPlanmonth(Date planmonth) {
+        this.planmonth = planmonth;
+    }
+
+    public String getRequireduser() {
+        return requireduser;
+    }
+
+    public void setRequireduser(String requireduser) {
+        this.requireduser = requireduser == null ? null : requireduser.trim();
+    }
+
+    public String getApplyuser() {
+        return applyuser;
+    }
+
+    public void setApplyuser(String applyuser) {
+        this.applyuser = applyuser == null ? null : applyuser.trim();
+    }
+
+    public Date getApplytime() {
+        return applytime;
+    }
+
+    public void setApplytime(Date applytime) {
+        this.applytime = applytime;
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer == null ? null : reviewer.trim();
+    }
+
+    public Integer getReviewresult() {
+        return reviewresult;
+    }
+
+    public void setReviewresult(Integer reviewresult) {
+        this.reviewresult = reviewresult;
+    }
+
+    public String getDept3manager() {
+        return dept3manager;
+    }
+
+    public void setDept3manager(String dept3manager) {
+        this.dept3manager = dept3manager == null ? null : dept3manager.trim();
+    }
+
+    public String getDept2manager() {
+        return dept2manager;
+    }
+
+    public void setDept2manager(String dept2manager) {
+        this.dept2manager = dept2manager == null ? null : dept2manager.trim();
+    }
+
+    public String getPlanner() {
+        return planner;
+    }
+
+    public void setPlanner(String planner) {
+        this.planner = planner == null ? null : planner.trim();
+    }
+
+    public String getOqdeptreviewer() {
+        return oqdeptreviewer;
+    }
+
+    public void setOqdeptreviewer(String oqdeptreviewer) {
+        this.oqdeptreviewer = oqdeptreviewer == null ? null : oqdeptreviewer.trim();
+    }
+
+    public String getDept1reviewer() {
+        return dept1reviewer;
+    }
+
+    public void setDept1reviewer(String dept1reviewer) {
+        this.dept1reviewer = dept1reviewer == null ? null : dept1reviewer.trim();
+    }
+
+    public String getApstatus() {
+        return apstatus;
+    }
+
+    public void setApstatus(String apstatus) {
+        this.apstatus = apstatus == null ? null : apstatus.trim();
+    }
+
+    public String getApstage() {
+        return apstage;
+    }
+
+    public void setApstage(String apstage) {
+        this.apstage = apstage == null ? null : apstage.trim();
+    }
+
+    public String getApstatusdetail() {
+        return apstatusdetail;
+    }
+
+    public void setApstatusdetail(String apstatusdetail) {
+        this.apstatusdetail = apstatusdetail == null ? null : apstatusdetail.trim();
+    }
+
+    public String getApplymonth() {
+        return applymonth;
+    }
+
+    public void setApplymonth(String applymonth) {
+        this.applymonth = applymonth == null ? null : applymonth.trim();
+    }
+
+    public String getDeleteflag() {
+        return deleteflag;
+    }
+
+    public void setDeleteflag(String deleteflag) {
+        this.deleteflag = deleteflag == null ? null : deleteflag.trim();
+    }
+}

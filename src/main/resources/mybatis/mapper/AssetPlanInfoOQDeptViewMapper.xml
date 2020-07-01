@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoOQDeptViewMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView">
+    <result column="OQDeptReviewer" jdbcType="VARCHAR" property="oqdeptreviewer" />
+    <result column="AssetPlanID" jdbcType="INTEGER" property="assetplanid" />
+    <result column="PlanCode" jdbcType="VARCHAR" property="plancode" />
+    <result column="AssetName" jdbcType="VARCHAR" property="assetname" />
+    <result column="ApplyMonth" jdbcType="VARCHAR" property="applymonth" />
+    <result column="AssetManufacturer" jdbcType="VARCHAR" property="assetmanufacturer" />
+    <result column="Requireds" jdbcType="INTEGER" property="requireds" />
+    <result column="RequiredsAudit" jdbcType="INTEGER" property="requiredsaudit" />
+    <result column="NoPassCount" jdbcType="BIGINT" property="nopasscount" />
+    <result column="PPrice" jdbcType="DECIMAL" property="pprice" />
+    <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
+    <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
+    <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
+    <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
+    <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
+    <result column="dept2Code" jdbcType="VARCHAR" property="dept2code" />
+    <result column="dept2Name" jdbcType="VARCHAR" property="dept2name" />
+    <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
+    <result column="CompleteSetCode" jdbcType="INTEGER" property="completesetcode" />
+    <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
+    <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
+    <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
+    <result column="OQDeptReviewNote" jdbcType="VARCHAR" property="oqdeptreviewnote" />
+    <result column="UsageRate" jdbcType="VARCHAR" property="usagerate" />
+    <result column="ManufacturerTypeEnum" jdbcType="VARCHAR" property="manufacturertypeenum" />
+    <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
+    <result column="GroupFlag" jdbcType="VARCHAR" property="groupflag" />
+    <result column="ReviewTime" jdbcType="TIMESTAMP" property="reviewtime" />
+    <result column="GroupflagDetail" jdbcType="VARCHAR" property="groupflagdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    OQDeptReviewer, AssetPlanID, PlanCode, AssetName, ApplyMonth, AssetManufacturer, 
+    Requireds, RequiredsAudit, NoPassCount, PPrice, TotalMoney, ActualMoney, RequiredUserName, 
+    RequiredUser, DeptCode, dept2Code, dept2Name, IsCompleteSet, CompleteSetCode, AssetModel, 
+    ItemCode, Purpose, OQDeptReviewNote, UsageRate, ManufacturerTypeEnum, AssetCategory, 
+    GroupFlag, ReviewTime, GroupflagDetail
+  </sql>
+  <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptViewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from AssetPlanInfoOQDeptView
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptViewExample">
+    delete from AssetPlanInfoOQDeptView
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView">
+    insert into AssetPlanInfoOQDeptView (OQDeptReviewer, AssetPlanID, PlanCode, 
+      AssetName, ApplyMonth, AssetManufacturer, 
+      Requireds, RequiredsAudit, NoPassCount, 
+      PPrice, TotalMoney, ActualMoney, 
+      RequiredUserName, RequiredUser, DeptCode, 
+      dept2Code, dept2Name, IsCompleteSet, 
+      CompleteSetCode, AssetModel, ItemCode, 
+      Purpose, OQDeptReviewNote, UsageRate, 
+      ManufacturerTypeEnum, AssetCategory, GroupFlag, 
+      ReviewTime, GroupflagDetail)
+    values (#{oqdeptreviewer,jdbcType=VARCHAR}, #{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, 
+      #{assetname,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, 
+      #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, #{nopasscount,jdbcType=BIGINT}, 
+      #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
+      #{requiredusername,jdbcType=VARCHAR}, #{requireduser,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
+      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{iscompleteset,jdbcType=VARCHAR}, 
+      #{completesetcode,jdbcType=INTEGER}, #{assetmodel,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
+      #{purpose,jdbcType=VARCHAR}, #{oqdeptreviewnote,jdbcType=VARCHAR}, #{usagerate,jdbcType=VARCHAR}, 
+      #{manufacturertypeenum,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{groupflag,jdbcType=VARCHAR}, 
+      #{reviewtime,jdbcType=TIMESTAMP}, #{groupflagdetail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView">
+    insert into AssetPlanInfoOQDeptView
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oqdeptreviewer != null">
+        OQDeptReviewer,
+      </if>
+      <if test="assetplanid != null">
+        AssetPlanID,
+      </if>
+      <if test="plancode != null">
+        PlanCode,
+      </if>
+      <if test="assetname != null">
+        AssetName,
+      </if>
+      <if test="applymonth != null">
+        ApplyMonth,
+      </if>
+      <if test="assetmanufacturer != null">
+        AssetManufacturer,
+      </if>
+      <if test="requireds != null">
+        Requireds,
+      </if>
+      <if test="requiredsaudit != null">
+        RequiredsAudit,
+      </if>
+      <if test="nopasscount != null">
+        NoPassCount,
+      </if>
+      <if test="pprice != null">
+        PPrice,
+      </if>
+      <if test="totalmoney != null">
+        TotalMoney,
+      </if>
+      <if test="actualmoney != null">
+        ActualMoney,
+      </if>
+      <if test="requiredusername != null">
+        RequiredUserName,
+      </if>
+      <if test="requireduser != null">
+        RequiredUser,
+      </if>
+      <if test="deptcode != null">
+        DeptCode,
+      </if>
+      <if test="dept2code != null">
+        dept2Code,
+      </if>
+      <if test="dept2name != null">
+        dept2Name,
+      </if>
+      <if test="iscompleteset != null">
+        IsCompleteSet,
+      </if>
+      <if test="completesetcode != null">
+        CompleteSetCode,
+      </if>
+      <if test="assetmodel != null">
+        AssetModel,
+      </if>
+      <if test="itemcode != null">
+        ItemCode,
+      </if>
+      <if test="purpose != null">
+        Purpose,
+      </if>
+      <if test="oqdeptreviewnote != null">
+        OQDeptReviewNote,
+      </if>
+      <if test="usagerate != null">
+        UsageRate,
+      </if>
+      <if test="manufacturertypeenum != null">
+        ManufacturerTypeEnum,
+      </if>
+      <if test="assetcategory != null">
+        AssetCategory,
+      </if>
+      <if test="groupflag != null">
+        GroupFlag,
+      </if>
+      <if test="reviewtime != null">
+        ReviewTime,
+      </if>
+      <if test="groupflagdetail != null">
+        GroupflagDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oqdeptreviewer != null">
+        #{oqdeptreviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="assetplanid != null">
+        #{assetplanid,jdbcType=INTEGER},
+      </if>
+      <if test="plancode != null">
+        #{plancode,jdbcType=VARCHAR},
+      </if>
+      <if test="assetname != null">
+        #{assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="applymonth != null">
+        #{applymonth,jdbcType=VARCHAR},
+      </if>
+      <if test="assetmanufacturer != null">
+        #{assetmanufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="requireds != null">
+        #{requireds,jdbcType=INTEGER},
+      </if>
+      <if test="requiredsaudit != null">
+        #{requiredsaudit,jdbcType=INTEGER},
+      </if>
+      <if test="nopasscount != null">
+        #{nopasscount,jdbcType=BIGINT},
+      </if>
+      <if test="pprice != null">
+        #{pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalmoney != null">
+        #{totalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="actualmoney != null">
+        #{actualmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="requiredusername != null">
+        #{requiredusername,jdbcType=VARCHAR},
+      </if>
+      <if test="requireduser != null">
+        #{requireduser,jdbcType=VARCHAR},
+      </if>
+      <if test="deptcode != null">
+        #{deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dept2code != null">
+        #{dept2code,jdbcType=VARCHAR},
+      </if>
+      <if test="dept2name != null">
+        #{dept2name,jdbcType=VARCHAR},
+      </if>
+      <if test="iscompleteset != null">
+        #{iscompleteset,jdbcType=VARCHAR},
+      </if>
+      <if test="completesetcode != null">
+        #{completesetcode,jdbcType=INTEGER},
+      </if>
+      <if test="assetmodel != null">
+        #{assetmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="itemcode != null">
+        #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null">
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="oqdeptreviewnote != null">
+        #{oqdeptreviewnote,jdbcType=VARCHAR},
+      </if>
+      <if test="usagerate != null">
+        #{usagerate,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturertypeenum != null">
+        #{manufacturertypeenum,jdbcType=VARCHAR},
+      </if>
+      <if test="assetcategory != null">
+        #{assetcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="groupflag != null">
+        #{groupflag,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewtime != null">
+        #{reviewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="groupflagdetail != null">
+        #{groupflagdetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptViewExample" resultType="java.lang.Long">
+    select count(*) from AssetPlanInfoOQDeptView
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update AssetPlanInfoOQDeptView
+    <set>
+      <if test="record.oqdeptreviewer != null">
+        OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetplanid != null">
+        AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
+      </if>
+      <if test="record.plancode != null">
+        PlanCode = #{record.plancode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetname != null">
+        AssetName = #{record.assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applymonth != null">
+        ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetmanufacturer != null">
+        AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requireds != null">
+        Requireds = #{record.requireds,jdbcType=INTEGER},
+      </if>
+      <if test="record.requiredsaudit != null">
+        RequiredsAudit = #{record.requiredsaudit,jdbcType=INTEGER},
+      </if>
+      <if test="record.nopasscount != null">
+        NoPassCount = #{record.nopasscount,jdbcType=BIGINT},
+      </if>
+      <if test="record.pprice != null">
+        PPrice = #{record.pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalmoney != null">
+        TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualmoney != null">
+        ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.requiredusername != null">
+        RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requireduser != null">
+        RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptcode != null">
+        DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept2code != null">
+        dept2Code = #{record.dept2code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept2name != null">
+        dept2Name = #{record.dept2name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iscompleteset != null">
+        IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completesetcode != null">
+        CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.assetmodel != null">
+        AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemcode != null">
+        ItemCode = #{record.itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purpose != null">
+        Purpose = #{record.purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oqdeptreviewnote != null">
+        OQDeptReviewNote = #{record.oqdeptreviewnote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usagerate != null">
+        UsageRate = #{record.usagerate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufacturertypeenum != null">
+        ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetcategory != null">
+        AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupflag != null">
+        GroupFlag = #{record.groupflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewtime != null">
+        ReviewTime = #{record.reviewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.groupflagdetail != null">
+        GroupflagDetail = #{record.groupflagdetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update AssetPlanInfoOQDeptView
+    set OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
+      AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
+      PlanCode = #{record.plancode,jdbcType=VARCHAR},
+      AssetName = #{record.assetname,jdbcType=VARCHAR},
+      ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
+      AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
+      Requireds = #{record.requireds,jdbcType=INTEGER},
+      RequiredsAudit = #{record.requiredsaudit,jdbcType=INTEGER},
+      NoPassCount = #{record.nopasscount,jdbcType=BIGINT},
+      PPrice = #{record.pprice,jdbcType=DECIMAL},
+      TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
+      ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
+      RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
+      RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
+      DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      dept2Code = #{record.dept2code,jdbcType=VARCHAR},
+      dept2Name = #{record.dept2name,jdbcType=VARCHAR},
+      IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
+      CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
+      AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
+      ItemCode = #{record.itemcode,jdbcType=VARCHAR},
+      Purpose = #{record.purpose,jdbcType=VARCHAR},
+      OQDeptReviewNote = #{record.oqdeptreviewnote,jdbcType=VARCHAR},
+      UsageRate = #{record.usagerate,jdbcType=VARCHAR},
+      ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=VARCHAR},
+      AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
+      GroupFlag = #{record.groupflag,jdbcType=VARCHAR},
+      ReviewTime = #{record.reviewtime,jdbcType=TIMESTAMP},
+      GroupflagDetail = #{record.groupflagdetail,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

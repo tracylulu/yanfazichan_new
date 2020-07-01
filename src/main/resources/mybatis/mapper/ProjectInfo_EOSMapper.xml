@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.sync.dao.ProjectInfo_EOSMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.sync.entity.ProjectInfo_EOS">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    <result column="project_no" jdbcType="VARCHAR" property="projectNo" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_code" jdbcType="VARCHAR" property="projectCode" />
+    <result column="release_no" jdbcType="VARCHAR" property="releaseNo" />
+    <result column="build_no" jdbcType="VARCHAR" property="buildNo" />
+    <result column="telecom_percent" jdbcType="VARCHAR" property="telecomPercent" />
+    <result column="non_telecom_percent" jdbcType="VARCHAR" property="nonTelecomPercent" />
+    <result column="effective_date" jdbcType="TIMESTAMP" property="effectiveDate" />
+    <result column="project_start_date" jdbcType="TIMESTAMP" property="projectStartDate" />
+    <result column="assign_point_desc" jdbcType="VARCHAR" property="assignPointDesc" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="mark" jdbcType="VARCHAR" property="mark" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="loaded_time" jdbcType="TIMESTAMP" property="loadedTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, type_id, type_name, project_no, project_name, project_code, release_no, build_no, 
+    telecom_percent, non_telecom_percent, effective_date, project_start_date, assign_point_desc, 
+    status, mark, create_date, loaded_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOSExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ProjectInfo_EOS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ProjectInfo_EOS
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ProjectInfo_EOS
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOSExample">
+    delete from ProjectInfo_EOS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOS">
+    insert into ProjectInfo_EOS (id, type_id, type_name, 
+      project_no, project_name, project_code, 
+      release_no, build_no, telecom_percent, 
+      non_telecom_percent, effective_date, project_start_date, 
+      assign_point_desc, status, mark, 
+      create_date, loaded_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{typeId,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{projectNo,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{projectCode,jdbcType=VARCHAR}, 
+      #{releaseNo,jdbcType=VARCHAR}, #{buildNo,jdbcType=VARCHAR}, #{telecomPercent,jdbcType=VARCHAR}, 
+      #{nonTelecomPercent,jdbcType=VARCHAR}, #{effectiveDate,jdbcType=TIMESTAMP}, #{projectStartDate,jdbcType=TIMESTAMP}, 
+      #{assignPointDesc,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{loadedTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOS">
+    insert into ProjectInfo_EOS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="typeName != null">
+        type_name,
+      </if>
+      <if test="projectNo != null">
+        project_no,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="projectCode != null">
+        project_code,
+      </if>
+      <if test="releaseNo != null">
+        release_no,
+      </if>
+      <if test="buildNo != null">
+        build_no,
+      </if>
+      <if test="telecomPercent != null">
+        telecom_percent,
+      </if>
+      <if test="nonTelecomPercent != null">
+        non_telecom_percent,
+      </if>
+      <if test="effectiveDate != null">
+        effective_date,
+      </if>
+      <if test="projectStartDate != null">
+        project_start_date,
+      </if>
+      <if test="assignPointDesc != null">
+        assign_point_desc,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="mark != null">
+        mark,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="loadedTime != null">
+        loaded_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectNo != null">
+        #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCode != null">
+        #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseNo != null">
+        #{releaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buildNo != null">
+        #{buildNo,jdbcType=VARCHAR},
+      </if>
+      <if test="telecomPercent != null">
+        #{telecomPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="nonTelecomPercent != null">
+        #{nonTelecomPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null">
+        #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStartDate != null">
+        #{projectStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assignPointDesc != null">
+        #{assignPointDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loadedTime != null">
+        #{loadedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOSExample" resultType="java.lang.Long">
+    select count(*) from ProjectInfo_EOS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ProjectInfo_EOS
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeName != null">
+        type_name = #{record.typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectNo != null">
+        project_no = #{record.projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCode != null">
+        project_code = #{record.projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.releaseNo != null">
+        release_no = #{record.releaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildNo != null">
+        build_no = #{record.buildNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telecomPercent != null">
+        telecom_percent = #{record.telecomPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nonTelecomPercent != null">
+        non_telecom_percent = #{record.nonTelecomPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effectiveDate != null">
+        effective_date = #{record.effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectStartDate != null">
+        project_start_date = #{record.projectStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.assignPointDesc != null">
+        assign_point_desc = #{record.assignPointDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mark != null">
+        mark = #{record.mark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loadedTime != null">
+        loaded_time = #{record.loadedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ProjectInfo_EOS
+    set id = #{record.id,jdbcType=INTEGER},
+      type_id = #{record.typeId,jdbcType=VARCHAR},
+      type_name = #{record.typeName,jdbcType=VARCHAR},
+      project_no = #{record.projectNo,jdbcType=VARCHAR},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_code = #{record.projectCode,jdbcType=VARCHAR},
+      release_no = #{record.releaseNo,jdbcType=VARCHAR},
+      build_no = #{record.buildNo,jdbcType=VARCHAR},
+      telecom_percent = #{record.telecomPercent,jdbcType=VARCHAR},
+      non_telecom_percent = #{record.nonTelecomPercent,jdbcType=VARCHAR},
+      effective_date = #{record.effectiveDate,jdbcType=TIMESTAMP},
+      project_start_date = #{record.projectStartDate,jdbcType=TIMESTAMP},
+      assign_point_desc = #{record.assignPointDesc,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      mark = #{record.mark,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      loaded_time = #{record.loadedTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOS">
+    update ProjectInfo_EOS
+    <set>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectNo != null">
+        project_no = #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCode != null">
+        project_code = #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseNo != null">
+        release_no = #{releaseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buildNo != null">
+        build_no = #{buildNo,jdbcType=VARCHAR},
+      </if>
+      <if test="telecomPercent != null">
+        telecom_percent = #{telecomPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="nonTelecomPercent != null">
+        non_telecom_percent = #{nonTelecomPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null">
+        effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStartDate != null">
+        project_start_date = #{projectStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assignPointDesc != null">
+        assign_point_desc = #{assignPointDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null">
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loadedTime != null">
+        loaded_time = #{loadedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.h3c.platform.sync.entity.ProjectInfo_EOS">
+    update ProjectInfo_EOS
+    set type_id = #{typeId,jdbcType=VARCHAR},
+      type_name = #{typeName,jdbcType=VARCHAR},
+      project_no = #{projectNo,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_code = #{projectCode,jdbcType=VARCHAR},
+      release_no = #{releaseNo,jdbcType=VARCHAR},
+      build_no = #{buildNo,jdbcType=VARCHAR},
+      telecom_percent = #{telecomPercent,jdbcType=VARCHAR},
+      non_telecom_percent = #{nonTelecomPercent,jdbcType=VARCHAR},
+      effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      project_start_date = #{projectStartDate,jdbcType=TIMESTAMP},
+      assign_point_desc = #{assignPointDesc,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      loaded_time = #{loadedTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteProjectInfoEos" >
+    delete from ProjectInfo_EOS
+  </delete>
+
+  <insert id="insertProjectInfoEos" parameterType="java.util.List">
+     insert into ProjectInfo_EOS ( type_id, type_name, 
+      project_no, project_name, project_code, 
+      release_no, build_no, telecom_percent, 
+      non_telecom_percent, effective_date, project_start_date, 
+      assign_point_desc, status, mark, 
+      create_date, loaded_time, update_time
+      )
+    values
+    <foreach collection="list" item="param" index="index"
+                 separator=",">
+    (
+    #{param.type_id}, 
+    #{param.type_name}, 
+    #{param.project_no},
+    #{param.project_name},
+    #{param.project_code},
+    #{param.release_no},
+    #{param.build_no},
+    #{param.telecom_percent},
+    #{param.non_telecom_percent},
+    #{param.effective_date},  
+    #{param.project_start_date},  
+    #{param.assign_point_desc},  
+    #{param.status},  
+    #{param.mark},  
+    #{param.create_date},  
+    #{param.loaded_time},  
+    GETDATE()
+    )
+    </foreach>
+  </insert>
+</mapper>

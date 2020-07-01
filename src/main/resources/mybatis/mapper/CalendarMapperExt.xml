@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.common.dao.CalendarMapper">
+ 
+  <select id="getStartDate" parameterType="Date" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"></include> from Calendar where the_date&lt;=#{startDate} and delete_flag=1 and fiscal_period='Y' order by the_date desc LIMIT 1
+  </select>
+   <select id="getEndDate" parameterType="map" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"></include> from Calendar where the_date&gt;=#{param.startDate} and delete_flag=1 and fiscal_period='Y' order by the_date  LIMIT ${param.limit}
+  </select>
+</mapper>

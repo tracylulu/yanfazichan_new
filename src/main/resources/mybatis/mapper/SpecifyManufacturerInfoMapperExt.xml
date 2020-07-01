@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.SpecifyManufacturerInfoMapper" >
+  <insert id="insertBackID" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo" useGeneratedKeys="true" keyProperty="specifymanufacturerid" keyColumn="specifymanufacturerid">
+    insert into SpecifyManufacturerInfo (Purpose, NecessityAnalysis, 
+      Creator, Createtime, Modifier, 
+      ModifiTime, DeleteFlag, AddtheContent
+      )
+    values (#{purpose,jdbcType=VARCHAR}, #{necessityanalysis,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{modifitime,jdbcType=TIMESTAMP}, #{deleteflag,jdbcType=VARCHAR}, #{addthecontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+</mapper>

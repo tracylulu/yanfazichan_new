@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.sysmgr.dao.UserInfoMapper">
+  <insert id="insertByEosData">
+ 	 INSERT INTO UserInfo (notes_ID,emp_code,domain_account,display_name,emp_name,coa_code,dept1_code,dept2_code,dept3_code,
+ 	 		dept4_code,dept_code,dept_name,email,update_time,delete_flag,creator,create_time,modifier,modifi_time)
+ 	 SELECT notes_ID,emp_code,domain_account,display_name,emp_name,coa_code,dept1_code,dept2_code,dept3_code,dept4_code,dept_code,
+ 	 	dept_name,email,SYSDATE(),1,'sys',SYSDATE()UserInfo_EOS,'sys',SYSDATE() 
+ 	 FROM UserInfo_EOS a WHERE NOT EXISTS (SELECT 1 FROM UserInfo b WHERE a.emp_code=b.emp_code)  
+  </insert>
+  
+  <update id="deleteInvalidData">
+  	UPDATE UserInfo SET delete_flag= 0 WHERE emp_code IN ( 
+ 		SELECT * FROM (SELECT emp_code AS code FROM UserInfo a WHERE NOT EXISTS (SELECT 1 FROM UserInfo_EOS b WHERE a.emp_code=b.emp_code))t1 )
+  </update>
+  
+  <update id="updateByEosData">
+  	UPDATE UserInfo a  LEFT JOIN UserInfo_EOS b ON a.emp_code=b.emp_code 
+	SET a.notes_ID=b.notes_ID,a.domain_account=b.domain_account,a.display_name=b.display_name,
+		a.emp_name=b.emp_name,a.coa_code=b.coa_code,a.dept1_code=b.dept1_code,a.dept2_code=b.dept2_code,
+		a.dept3_code=b.dept3_code,a.dept4_code=b.dept4_code,
+		a.dept_code=b.dept_code,a.dept_name=b.dept_name,a.email=b.email,a.update_time=SYSDATE(),a.modifi_time=SYSDATE() 
+  	WHERE b.emp_code IS NOT NULL  AND a.delete_flag=1
+  
+  </update>
+</mapper>

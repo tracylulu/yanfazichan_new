@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.common.dao.MailInfoMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.common.entity.MailInfo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SendTo" jdbcType="VARCHAR" property="sendto" />
+    <result column="CCTo" jdbcType="VARCHAR" property="ccto" />
+    <result column="Subject" jdbcType="VARCHAR" property="subject" />
+    <result column="Creator" jdbcType="VARCHAR" property="creator" />
+    <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.h3c.platform.common.entity.MailInfo">
+    <result column="Content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SendTo, CCTo, Subject, Creator, CreateTime
+  </sql>
+  <sql id="Blob_Column_List">
+    Content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.h3c.platform.common.entity.MailInfoExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from MailInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.h3c.platform.common.entity.MailInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from MailInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from MailInfo
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MailInfo
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.h3c.platform.common.entity.MailInfoExample">
+    delete from MailInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.h3c.platform.common.entity.MailInfo">
+    insert into MailInfo (ID, SendTo, CCTo, 
+      Subject, Creator, CreateTime, 
+      Content)
+    values (#{id,jdbcType=INTEGER}, #{sendto,jdbcType=VARCHAR}, #{ccto,jdbcType=VARCHAR}, 
+      #{subject,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.h3c.platform.common.entity.MailInfo">
+    insert into MailInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="sendto != null">
+        SendTo,
+      </if>
+      <if test="ccto != null">
+        CCTo,
+      </if>
+      <if test="subject != null">
+        Subject,
+      </if>
+      <if test="creator != null">
+        Creator,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sendto != null">
+        #{sendto,jdbcType=VARCHAR},
+      </if>
+      <if test="ccto != null">
+        #{ccto,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.h3c.platform.common.entity.MailInfoExample" resultType="java.lang.Long">
+    select count(*) from MailInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update MailInfo
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendto != null">
+        SendTo = #{record.sendto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ccto != null">
+        CCTo = #{record.ccto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subject != null">
+        Subject = #{record.subject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null">
+        Creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        Content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update MailInfo
+    set ID = #{record.id,jdbcType=INTEGER},
+      SendTo = #{record.sendto,jdbcType=VARCHAR},
+      CCTo = #{record.ccto,jdbcType=VARCHAR},
+      Subject = #{record.subject,jdbcType=VARCHAR},
+      Creator = #{record.creator,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      Content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update MailInfo
+    set ID = #{record.id,jdbcType=INTEGER},
+      SendTo = #{record.sendto,jdbcType=VARCHAR},
+      CCTo = #{record.ccto,jdbcType=VARCHAR},
+      Subject = #{record.subject,jdbcType=VARCHAR},
+      Creator = #{record.creator,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.h3c.platform.common.entity.MailInfo">
+    update MailInfo
+    <set>
+      <if test="sendto != null">
+        SendTo = #{sendto,jdbcType=VARCHAR},
+      </if>
+      <if test="ccto != null">
+        CCTo = #{ccto,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        Subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        Creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.h3c.platform.common.entity.MailInfo">
+    update MailInfo
+    set SendTo = #{sendto,jdbcType=VARCHAR},
+      CCTo = #{ccto,jdbcType=VARCHAR},
+      Subject = #{subject,jdbcType=VARCHAR},
+      Creator = #{creator,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      Content = #{content,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.h3c.platform.common.entity.MailInfo">
+    update MailInfo
+    set SendTo = #{sendto,jdbcType=VARCHAR},
+      CCTo = #{ccto,jdbcType=VARCHAR},
+      Subject = #{subject,jdbcType=VARCHAR},
+      Creator = #{creator,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>  
+</mapper>

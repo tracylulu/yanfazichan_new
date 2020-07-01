@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.DeptInfoMapper">
+  
+  
+  
+  <select id="getDeptInfoList" resultMap="BaseResultMap">
+		<!-- <if test="param.id!=null and param.id==0 ">			
+			SELECT * FROM DeptInfo 
+			where dept_code!='50040000' and dept_level=#{param.level}
+			order by dept_code		
+		</if>
+		<if test="param.id!=null and param.id!=0 ">
+			<if test="param.level==2">
+				SELECT * FROM DeptInfo 
+				WHERE sup_dept_code=#{param.id} and dept_level=#{param.level} 
+				order by dept_code	
+			</if>
+			<if test="param.level==3">
+				SELECT * FROM DeptInfo 
+				WHERE sup_dept_code=#{param.id} and dept_level=#{param.level} 
+				order by dept_code
+			</if>
+		
+		</if> -->
+		<!-- SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code  from DeptInfo t -->
+		SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code  from DeptInfo t 
+		
+		where t.dept_level !='4' and t.dept_level !='0'
+		order by t.dept_level
+	</select>
+  
+  <insert id="insertByEosData">
+ 	INSERT INTO DeptInfo(dept_code,dept_name,coa,dept_level,sup_dept_code,type_id,dept_type,dept_manager_code,
+			dept_planner_code,dept_code_chain,delete_flag,creator,create_time,modifier,modifi_time)
+	SELECT dept_code,dept_name,coa,dept_level,sup_dept_code,type_id,dept_type,dept_manager_code,
+		dept_planner_code,dept_code_chain,1,'sys',SYSDATE(),'sys',SYSDATE() 
+	FROM DeptInfo_EOS a WHERE NOT EXISTS (SELECT 1 FROM DeptInfo b WHERE a.dept_code=b.dept_code)
+ 
+  </insert>
+  
+  <update id="deleteInvalidData">
+  	UPDATE DeptInfo SET delete_flag= 0 WHERE dept_code IN ( 
+ 		SELECT * FROM (SELECT dept_code AS code FROM DeptInfo a WHERE NOT EXISTS (SELECT 1 FROM DeptInfo_EOS b WHERE a.dept_code=b.dept_code))t1 )
+  </update>
+  
+  <update id="updateByEosData">  	
+	UPDATE DeptInfo a LEFT JOIN DeptInfo_EOS b ON a.dept_code=b.dept_code
+	SET a.dept_name=b.dept_name,a.coa=b.coa,a.dept_level=b.dept_level,a.sup_dept_code=b.sup_dept_code,a.type_id=b.type_id,a.dept_type=b.dept_type,
+		 a.dept_manager_code=b.dept_manager_code,a.dept_planner_code=b.dept_planner_code,a.dept_code_chain=b.dept_code_chain,a.modifi_time=SYSDATE(),a.modifier='sys'
+ 	WHERE b.dept_code IS NOT NULL  AND a.delete_flag=1
+  
+  </update>
+  
+</mapper>

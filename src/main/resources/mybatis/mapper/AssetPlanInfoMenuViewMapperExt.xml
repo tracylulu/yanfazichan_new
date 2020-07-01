@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoMenuViewMapper">
+  
+  
+  <sql id="condition_sql">
+		<where>
+			DeleteFlag=1
+			<if test="param.ApplyUser !=null and param.ApplyUser !='' ">
+				and 
+				(ApplyUser = #{param.ApplyUser} 
+				or Reviewer = #{param.ApplyUser} 
+				or Dept3Manager = #{param.ApplyUser} 
+				or Dept2Manager = #{param.ApplyUser} 
+				or Planner = #{param.ApplyUser} 
+				or OQDeptReviewer = #{param.ApplyUser} 
+				or Dept1Reviewer = #{param.ApplyUser} 
+				)
+			</if>
+		</where>
+	</sql>
+
+   <select id="listofTodoInfoForRequiredUser" parameterType="map" resultMap="BaseResultMap">
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='1' AND APStatus='11' AND RequiredUser= #{param.RequiredUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+  </select>
+	
+  <select id="listofTodoInfo" parameterType="map" resultMap="BaseResultMap">
+  		
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='2' AND Reviewer= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+	UNION ALL 
+	 
+	<!-- SELECT APStatusDetail,ApplyMonth,APStage,APStatus FROM 
+	AssetPlanInfoMenuView WHERE APStage='2' AND APStatus='21' AND Reviewer= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage,APStatus
+	UNION ALL  -->
+	
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='3' AND APStatus='30' AND Dept3Manager= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+	
+	UNION ALL 
+	 
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='4' AND APStatus='40' AND Dept2Manager= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+  		
+  	UNION ALL 
+	 
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='5' AND APStatus='50' AND Planner= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+  		
+  	UNION ALL 
+	 
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='6' AND APStatus='60' AND OQDeptReviewer= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+	
+	UNION ALL 
+	 
+	SELECT APStatusDetail,ApplyMonth,APStage FROM 
+	AssetPlanInfoMenuView WHERE APStage='7' AND APStatus='70' AND Dept1Reviewer= #{param.ApplyUser}
+	group BY APStatusDetail,ApplyMonth,APStage
+		
+  </select>
+  
+  <select id="countTodoInfo" parameterType="map" resultType="int">
+  	select count(*) from AssetPlanInfoMenuView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+
+  
+</mapper>

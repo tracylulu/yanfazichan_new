@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.SpecifyManufacturerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    <id column="SpecifyManufacturerID" jdbcType="INTEGER" property="specifymanufacturerid" />
+    <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
+    <result column="NecessityAnalysis" jdbcType="VARCHAR" property="necessityanalysis" />
+    <result column="Creator" jdbcType="VARCHAR" property="creator" />
+    <result column="Createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="Modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="ModifiTime" jdbcType="TIMESTAMP" property="modifitime" />
+    <result column="DeleteFlag" jdbcType="VARCHAR" property="deleteflag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    <result column="AddtheContent" jdbcType="LONGVARCHAR" property="addthecontent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SpecifyManufacturerID, Purpose, NecessityAnalysis, Creator, Createtime, Modifier, 
+    ModifiTime, DeleteFlag
+  </sql>
+  <sql id="Blob_Column_List">
+    AddtheContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfoExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SpecifyManufacturerInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SpecifyManufacturerInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SpecifyManufacturerInfo
+    where SpecifyManufacturerID = #{specifymanufacturerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SpecifyManufacturerInfo
+    where SpecifyManufacturerID = #{specifymanufacturerid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfoExample">
+    delete from SpecifyManufacturerInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    insert into SpecifyManufacturerInfo (SpecifyManufacturerID, Purpose, NecessityAnalysis, 
+      Creator, Createtime, Modifier, 
+      ModifiTime, DeleteFlag, AddtheContent
+      )
+    values (#{specifymanufacturerid,jdbcType=INTEGER}, #{purpose,jdbcType=VARCHAR}, #{necessityanalysis,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{modifitime,jdbcType=TIMESTAMP}, #{deleteflag,jdbcType=VARCHAR}, #{addthecontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    insert into SpecifyManufacturerInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specifymanufacturerid != null">
+        SpecifyManufacturerID,
+      </if>
+      <if test="purpose != null">
+        Purpose,
+      </if>
+      <if test="necessityanalysis != null">
+        NecessityAnalysis,
+      </if>
+      <if test="creator != null">
+        Creator,
+      </if>
+      <if test="createtime != null">
+        Createtime,
+      </if>
+      <if test="modifier != null">
+        Modifier,
+      </if>
+      <if test="modifitime != null">
+        ModifiTime,
+      </if>
+      <if test="deleteflag != null">
+        DeleteFlag,
+      </if>
+      <if test="addthecontent != null">
+        AddtheContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specifymanufacturerid != null">
+        #{specifymanufacturerid,jdbcType=INTEGER},
+      </if>
+      <if test="purpose != null">
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="necessityanalysis != null">
+        #{necessityanalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifitime != null">
+        #{modifitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteflag != null">
+        #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="addthecontent != null">
+        #{addthecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfoExample" resultType="java.lang.Long">
+    select count(*) from SpecifyManufacturerInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SpecifyManufacturerInfo
+    <set>
+      <if test="record.specifymanufacturerid != null">
+        SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.purpose != null">
+        Purpose = #{record.purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.necessityanalysis != null">
+        NecessityAnalysis = #{record.necessityanalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null">
+        Creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        Createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null">
+        Modifier = #{record.modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifitime != null">
+        ModifiTime = #{record.modifitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleteflag != null">
+        DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addthecontent != null">
+        AddtheContent = #{record.addthecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update SpecifyManufacturerInfo
+    set SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=INTEGER},
+      Purpose = #{record.purpose,jdbcType=VARCHAR},
+      NecessityAnalysis = #{record.necessityanalysis,jdbcType=VARCHAR},
+      Creator = #{record.creator,jdbcType=VARCHAR},
+      Createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      Modifier = #{record.modifier,jdbcType=VARCHAR},
+      ModifiTime = #{record.modifitime,jdbcType=TIMESTAMP},
+      DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR},
+      AddtheContent = #{record.addthecontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SpecifyManufacturerInfo
+    set SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=INTEGER},
+      Purpose = #{record.purpose,jdbcType=VARCHAR},
+      NecessityAnalysis = #{record.necessityanalysis,jdbcType=VARCHAR},
+      Creator = #{record.creator,jdbcType=VARCHAR},
+      Createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      Modifier = #{record.modifier,jdbcType=VARCHAR},
+      ModifiTime = #{record.modifitime,jdbcType=TIMESTAMP},
+      DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    update SpecifyManufacturerInfo
+    <set>
+      <if test="purpose != null">
+        Purpose = #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="necessityanalysis != null">
+        NecessityAnalysis = #{necessityanalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        Creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        Createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        Modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifitime != null">
+        ModifiTime = #{modifitime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteflag != null">
+        DeleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      </if>
+      <if test="addthecontent != null">
+        AddtheContent = #{addthecontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where SpecifyManufacturerID = #{specifymanufacturerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    update SpecifyManufacturerInfo
+    set Purpose = #{purpose,jdbcType=VARCHAR},
+      NecessityAnalysis = #{necessityanalysis,jdbcType=VARCHAR},
+      Creator = #{creator,jdbcType=VARCHAR},
+      Createtime = #{createtime,jdbcType=TIMESTAMP},
+      Modifier = #{modifier,jdbcType=VARCHAR},
+      ModifiTime = #{modifitime,jdbcType=TIMESTAMP},
+      DeleteFlag = #{deleteflag,jdbcType=VARCHAR},
+      AddtheContent = #{addthecontent,jdbcType=LONGVARCHAR}
+    where SpecifyManufacturerID = #{specifymanufacturerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo">
+    update SpecifyManufacturerInfo
+    set Purpose = #{purpose,jdbcType=VARCHAR},
+      NecessityAnalysis = #{necessityanalysis,jdbcType=VARCHAR},
+      AddtheContent = #{addthecontent,jdbcType=LONGVARCHAR},
+      Creator = #{creator,jdbcType=VARCHAR},
+      Createtime = #{createtime,jdbcType=TIMESTAMP},
+      Modifier = #{modifier,jdbcType=VARCHAR},
+      ModifiTime = #{modifitime,jdbcType=TIMESTAMP},
+      DeleteFlag = #{deleteflag,jdbcType=VARCHAR}
+    where SpecifyManufacturerID = #{specifymanufacturerid,jdbcType=INTEGER}
+  </update>
+</mapper>

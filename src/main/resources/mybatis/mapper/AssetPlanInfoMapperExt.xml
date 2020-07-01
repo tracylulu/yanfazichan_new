@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoMapper">
+  <update id="deleteByID" parameterType="map">
+  	 update AssetPlanInfo set DeleteFlag=0,Modifier=#{param.Modifier},ModifiTime=SYSDATE() where AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  <update id="activateAssetPlanInfoByIds" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 Modifier=#{param.Modifier},
+  	 AbnormalPlanEnum=#{param.AbnormalPlanEnum},
+  	 OutTimePlanEnum=#{param.OutTimePlanEnum},
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  
+  <select id="getInfoListByReviewer" parameterType="map" resultMap="BaseResultMap">
+  	 select * from AssetPlanInfo 
+  	 where Reviewer=#{param.Reviewer} and
+  	 AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </select>
+  
+  
+  <update id="submitAssetPlanInfoByIds" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 ReviewResult=#{param.ReviewResult},
+  	<!--  Modifier=#{param.Modifier}, -->
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  <update id="submitInfoFromReviewToDept3" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 Modifier=#{param.Modifier},
+  	 Dept3Manager=#{param.Dept3Manager},
+  	 ReviewTime=#{param.ReviewTime},
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and ReviewResult=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  <update id="submitInfoFromDept3ToDept2" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 Modifier=#{param.Modifier},
+  	 Dept2Manager=#{param.Dept2Manager},
+  	 Dept3CheckTime=#{param.Dept3CheckTime},
+  	 ModifiTime=SYSDATE() 
+  	 where  DeleteFlag=1 and ReviewResult=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  <update id="submitInfoFromDept2ToPlanner" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 Modifier=#{param.Modifier},
+  	 Planner=#{param.Planner},
+  	 Dept2CheckTime=#{param.Dept2CheckTime},
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and ReviewResult=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  <update id="submitInfoFromPlannerToOQDept" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 Modifier=#{param.Modifier},
+  	 OQDeptReviewer=#{param.OQDeptReviewer},
+  	 PlannerTime=SYSDATE(),
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and ReviewResult=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  
+  <update id="submitInfoFromOQDeptToDept1" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 Modifier=#{param.Modifier},
+  	 Dept1Reviewer=#{param.Dept1Reviewer},
+  	 OQDeptReviewTime=#{param.OQDeptReviewTime},
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and ReviewResult=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  <update id="submitInfoFromDept1ToEnd" parameterType="map">
+  	 update AssetPlanInfo set 
+  	 APStatus=#{param.APStatus},
+  	 APStage=#{param.APStage},
+  	 Modifier=#{param.Modifier},
+  	 Dept1ReviewTime=#{param.Dept1ReviewTime},
+  	 ModifiTime=SYSDATE() 
+  	 where DeleteFlag=1 and ReviewResult=1 and AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+  </update>
+  
+  
+  <select id="getMaxCompleteSetCode" resultType="Integer" parameterType="string">
+  	SELECT MAX(CompleteSetCode) FROM AssetPlanInfo WHERE  PlanCode=#{partCode}
+  </select>
+  
+  
+    <sql id="condition_sql">
+		<where>
+			<if test="param.APStage !=null and param.APStage !='' ">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyUser !=null and param.ApplyUser !='' ">
+				and ApplyUser = #{param.ApplyUser} 
+				or Reviewer = #{param.ApplyUser} 
+				or Dept3Manager = #{param.ApplyUser} 
+				or Dept2Manager = #{param.ApplyUser} 
+				or Planner = #{param.ApplyUser} 
+				or OQDeptReviewer = #{param.ApplyUser} 
+				or Dept1Reviewer = #{param.ApplyUser} 
+			</if>
+		</where>
+	</sql>
+
+  <select id="countTodoInfoDetail" parameterType="map" resultType="int">
+  	select count(*) from AssetPlanInfo
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+	
+  <select id="listofTodoInfoDetail" parameterType="map" resultMap="BaseResultMap">
+  	select * from AssetPlanInfo
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+  <!-- 
+  <sql id="condition_sql">
+		<where>
+			DeleteFlag=1 and ReviewResult=1
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+		</where>
+	</sql> -->
+
+  
+  
+   <!-- <select id="getNotReviewListByApplyUser" parameterType="map" resultMap="BaseResultMap">
+  	select * from AssetPlanInfo
+  		<if test="_parameter != null">
+    		<include refid="condition_sql_2"></include>
+    	</if>
+    	
+  </select> -->
+  
+  
+<!--   <select id="getNotReviewList" parameterType="map" resultMap="BaseResultMap">
+  	select * from AssetPlanInfo
+  		<if test="_parameter != null">
+    		<include refid="condition_sql_1"></include>
+    	</if>
+  </select> -->
+ 
+ 	<!-- <sql id="condition_sql_1">
+		<where>
+			DeleteFlag=1
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			 不规范 
+			<if test="param.ReviewResult !=null">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+             and AssetPlanID in
+			<foreach collection="param.id" item="code" index="index"
+				open="(" close=")" separator=",">
+				#{code}
+			</foreach>
+		</where>
+	</sql> -->
+	
+	<select id="getAssetPlanEmailByMap" parameterType="map" resultMap="BaseResultMap">
+		<!-- select * from AssetPlanInfo   WHERE  deleteFlag=1 and OutTimePlanEnum=-1
+			AND APStatus=#{param.status} AND YEAR(PlanMonth)=${param.year} and  MONTH(PlanMonth)=${param.month} -->
+			SELECT * FROM AssetPlanInfo WHERE deleteFlag=1 and OutTimePlanEnum=-1  AND  APStatus!=0
+	</select>
+		
+	<update id="updateSubmitDept2Data" parameterType="map" >
+		update AssetPlanInfo  set APStatus='40',APStage='4' WHERE AbnormalPlanEnum=0 AND deleteFlag=1 
+			AND APStatus=41 AND YEAR(PlanMonth)=${param.year} and  MONTH(PlanMonth)=${param.month}
+	</update>
+	<update id="eidtAssetOutTimeStatus" parameterType="map" >
+		update AssetPlanInfo  set OutTimePlanEnum=#{param.outTimeStatus},ModifiTime=sysdate()  WHERE AbnormalPlanEnum=#{param.abnormalPlanEnum} AND deleteFlag=1 
+			AND APStatus=#{param.status} AND APStage=#{param.stage} AND YEAR(PlanMonth)=${param.year} and  MONTH(PlanMonth)=${param.month} and OutTimePlanEnum=-1
+	</update>
+	<update id="eidtMonthOutTimeStatus" parameterType="map" >
+		update AssetPlanInfo  set OutTimePlanEnum=0,ModifiTime=sysdate()  WHERE deleteFlag=1 
+			AND APStatus in('10','11','20','30','40') AND YEAR(PlanMonth)=${param.year} and  MONTH(PlanMonth)=${param.month}  and OutTimePlanEnum=-1
+	</update> 
+	<update id="updateReviewResult" parameterType="map">
+		update AssetPlanInfo  set 
+		ReviewResult=#{param.result},ReviewNote=#{param.reviewNote},APStatus=#{param.apstatus},
+		APStage=#{param.apstage},Modifier=#{param.modifier},ModifiTime= #{param.modifiTime} where AssetPlanID in
+		<foreach collection="param.id" item="code" index="index"
+			open="(" close=")" separator=",">
+			#{code}
+		</foreach>
+	</update>
+	
+</mapper>

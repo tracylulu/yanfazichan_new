@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoApplyViewMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView">
+    <result column="AssetPlanID" jdbcType="INTEGER" property="assetplanid" />
+    <result column="PlanCode" jdbcType="VARCHAR" property="plancode" />
+    <result column="AssetName" jdbcType="VARCHAR" property="assetname" />
+    <result column="AssetManufacturer" jdbcType="VARCHAR" property="assetmanufacturer" />
+    <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
+    <result column="Requireds" jdbcType="INTEGER" property="requireds" />
+    <result column="PPrice" jdbcType="DECIMAL" property="pprice" />
+    <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
+    <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
+    <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
+    <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
+    <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
+    <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
+    <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
+    <result column="OutTimePlanEnum" jdbcType="INTEGER" property="outtimeplanenum" />
+    <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
+    <result column="CompleteSetCode" jdbcType="INTEGER" property="completesetcode" />
+    <result column="AssetNote" jdbcType="VARCHAR" property="assetnote" />
+    <result column="APStatus" jdbcType="VARCHAR" property="apstatus" />
+    <result column="APStage" jdbcType="VARCHAR" property="apstage" />
+    <result column="ApplyUser" jdbcType="VARCHAR" property="applyuser" />
+    <result column="Reviewer" jdbcType="VARCHAR" property="reviewer" />
+    <result column="ApplyMonth" jdbcType="VARCHAR" property="applymonth" />
+    <result column="DeleteFlag" jdbcType="VARCHAR" property="deleteflag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, Requireds, PPrice, 
+    TotalMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, ItemCode, Purpose, 
+    OutTimePlanEnum, IsCompleteSet, CompleteSetCode, AssetNote, APStatus, APStage, ApplyUser, 
+    Reviewer, ApplyMonth, DeleteFlag
+  </sql>
+  <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyViewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from AssetPlanInfoApplyView
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyViewExample">
+    delete from AssetPlanInfoApplyView
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView">
+    insert into AssetPlanInfoApplyView (AssetPlanID, PlanCode, AssetName, 
+      AssetManufacturer, AssetModel, Requireds, 
+      PPrice, TotalMoney, RequiredUser, 
+      RequiredUserName, DeptCode, Dept3Name, 
+      ItemCode, Purpose, OutTimePlanEnum, 
+      IsCompleteSet, CompleteSetCode, AssetNote, 
+      APStatus, APStage, ApplyUser, 
+      Reviewer, ApplyMonth, DeleteFlag
+      )
+    values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
+      #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
+      #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, 
+      #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
+      #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, 
+      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
+      #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, 
+      #{reviewer,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView">
+    insert into AssetPlanInfoApplyView
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="assetplanid != null">
+        AssetPlanID,
+      </if>
+      <if test="plancode != null">
+        PlanCode,
+      </if>
+      <if test="assetname != null">
+        AssetName,
+      </if>
+      <if test="assetmanufacturer != null">
+        AssetManufacturer,
+      </if>
+      <if test="assetmodel != null">
+        AssetModel,
+      </if>
+      <if test="requireds != null">
+        Requireds,
+      </if>
+      <if test="pprice != null">
+        PPrice,
+      </if>
+      <if test="totalmoney != null">
+        TotalMoney,
+      </if>
+      <if test="requireduser != null">
+        RequiredUser,
+      </if>
+      <if test="requiredusername != null">
+        RequiredUserName,
+      </if>
+      <if test="deptcode != null">
+        DeptCode,
+      </if>
+      <if test="dept3name != null">
+        Dept3Name,
+      </if>
+      <if test="itemcode != null">
+        ItemCode,
+      </if>
+      <if test="purpose != null">
+        Purpose,
+      </if>
+      <if test="outtimeplanenum != null">
+        OutTimePlanEnum,
+      </if>
+      <if test="iscompleteset != null">
+        IsCompleteSet,
+      </if>
+      <if test="completesetcode != null">
+        CompleteSetCode,
+      </if>
+      <if test="assetnote != null">
+        AssetNote,
+      </if>
+      <if test="apstatus != null">
+        APStatus,
+      </if>
+      <if test="apstage != null">
+        APStage,
+      </if>
+      <if test="applyuser != null">
+        ApplyUser,
+      </if>
+      <if test="reviewer != null">
+        Reviewer,
+      </if>
+      <if test="applymonth != null">
+        ApplyMonth,
+      </if>
+      <if test="deleteflag != null">
+        DeleteFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="assetplanid != null">
+        #{assetplanid,jdbcType=INTEGER},
+      </if>
+      <if test="plancode != null">
+        #{plancode,jdbcType=VARCHAR},
+      </if>
+      <if test="assetname != null">
+        #{assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="assetmanufacturer != null">
+        #{assetmanufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="assetmodel != null">
+        #{assetmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="requireds != null">
+        #{requireds,jdbcType=INTEGER},
+      </if>
+      <if test="pprice != null">
+        #{pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalmoney != null">
+        #{totalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="requireduser != null">
+        #{requireduser,jdbcType=VARCHAR},
+      </if>
+      <if test="requiredusername != null">
+        #{requiredusername,jdbcType=VARCHAR},
+      </if>
+      <if test="deptcode != null">
+        #{deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dept3name != null">
+        #{dept3name,jdbcType=VARCHAR},
+      </if>
+      <if test="itemcode != null">
+        #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="purpose != null">
+        #{purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="outtimeplanenum != null">
+        #{outtimeplanenum,jdbcType=INTEGER},
+      </if>
+      <if test="iscompleteset != null">
+        #{iscompleteset,jdbcType=VARCHAR},
+      </if>
+      <if test="completesetcode != null">
+        #{completesetcode,jdbcType=INTEGER},
+      </if>
+      <if test="assetnote != null">
+        #{assetnote,jdbcType=VARCHAR},
+      </if>
+      <if test="apstatus != null">
+        #{apstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="apstage != null">
+        #{apstage,jdbcType=VARCHAR},
+      </if>
+      <if test="applyuser != null">
+        #{applyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewer != null">
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="applymonth != null">
+        #{applymonth,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null">
+        #{deleteflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyViewExample" resultType="java.lang.Long">
+    select count(*) from AssetPlanInfoApplyView
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update AssetPlanInfoApplyView
+    <set>
+      <if test="record.assetplanid != null">
+        AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
+      </if>
+      <if test="record.plancode != null">
+        PlanCode = #{record.plancode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetname != null">
+        AssetName = #{record.assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetmanufacturer != null">
+        AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetmodel != null">
+        AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requireds != null">
+        Requireds = #{record.requireds,jdbcType=INTEGER},
+      </if>
+      <if test="record.pprice != null">
+        PPrice = #{record.pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalmoney != null">
+        TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.requireduser != null">
+        RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requiredusername != null">
+        RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptcode != null">
+        DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept3name != null">
+        Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemcode != null">
+        ItemCode = #{record.itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purpose != null">
+        Purpose = #{record.purpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outtimeplanenum != null">
+        OutTimePlanEnum = #{record.outtimeplanenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.iscompleteset != null">
+        IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completesetcode != null">
+        CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.assetnote != null">
+        AssetNote = #{record.assetnote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apstatus != null">
+        APStatus = #{record.apstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apstage != null">
+        APStage = #{record.apstage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyuser != null">
+        ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewer != null">
+        Reviewer = #{record.reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applymonth != null">
+        ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteflag != null">
+        DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update AssetPlanInfoApplyView
+    set AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
+      PlanCode = #{record.plancode,jdbcType=VARCHAR},
+      AssetName = #{record.assetname,jdbcType=VARCHAR},
+      AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
+      AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
+      Requireds = #{record.requireds,jdbcType=INTEGER},
+      PPrice = #{record.pprice,jdbcType=DECIMAL},
+      TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
+      RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
+      RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
+      DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
+      ItemCode = #{record.itemcode,jdbcType=VARCHAR},
+      Purpose = #{record.purpose,jdbcType=VARCHAR},
+      OutTimePlanEnum = #{record.outtimeplanenum,jdbcType=INTEGER},
+      IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
+      CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
+      AssetNote = #{record.assetnote,jdbcType=VARCHAR},
+      APStatus = #{record.apstatus,jdbcType=VARCHAR},
+      APStage = #{record.apstage,jdbcType=VARCHAR},
+      ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
+      Reviewer = #{record.reviewer,jdbcType=VARCHAR},
+      ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
+      DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

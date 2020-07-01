@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoReviewViewMapper">
+ 
+	<sql id="condition_sql">
+		<where>
+			DeleteFlag=1 and OutTimePlanEnum !=0
+			<if test="param.Reviewer !=null">
+				and Reviewer = #{param.Reviewer}
+			</if>
+			
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+			<!--全选  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==0 ">
+             </if>
+             <!--规范  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==1 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+			 <!--不规范  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==2 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+              <!--未审核  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==3 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+              <!--再审核  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==4 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+		</where>
+	</sql>
+
+  <select id="getSumTotalMoneyForReview" parameterType="map" resultType="java.lang.String">
+  	select SUM(TotalMoney) as m from AssetPlanInfoReviewView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  </select>
+  
+  <select id="getReviewResult" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  	select  * from AssetPlanInfoReviewView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+    order by ReviewResult desc,CompleteSetCode asc,PPrice asc,DeptCode asc,ApplyUser asc
+  </select>
+  
+  
+  <select id="getNotReviewApplyUserList" parameterType="map" resultType="String">
+  	select RequiredUser from AssetPlanInfoReviewView where DeleteFlag=1
+			 <!--不规范  -->
+            	and ReviewResult = #{param.ReviewResult}
+			<if test="param.ReviewResult !=null">
+             </if>
+             <if test="param.ApplyMonth !=null">
+            	and ApplyMonth = #{param.ApplyMonth}
+             </if>
+             <if test="param.Reviewer !=null">
+            	and Reviewer = #{param.Reviewer}
+             </if>
+    	GROUP BY RequiredUser
+  </select>
+  
+  <select id="getNotReviewListByApplyUser" parameterType="map" resultMap="BaseResultMap">
+  	select * from AssetPlanInfoReviewView where DeleteFlag=1
+  		<if test="param.RequiredUser !=null">
+				and RequiredUser = #{param.RequiredUser}
+		</if>
+  		<!--不规范  -->
+		<if test="param.ReviewResult !=null">
+       		and ReviewResult = #{param.ReviewResult}
+        </if>
+        <if test="param.ApplyMonth !=null">
+       		and ApplyMonth = #{param.ApplyMonth}
+        </if>
+    	<if test="param.Reviewer !=null">
+            and Reviewer = #{param.Reviewer}
+        </if>
+  </select>
+  
+  <select id="getAllReviewList" parameterType="map" resultType="Integer">
+  	select AssetPlanID from AssetPlanInfoReviewView where DeleteFlag=1
+			 <!--规范  -->
+			<if test="param.ReviewResult !=null">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+             <if test="param.ApplyMonth !=null">
+            	and ApplyMonth = #{param.ApplyMonth}
+             </if>
+             <if test="param.Reviewer !=null">
+				and Reviewer = #{param.Reviewer}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+  </select>
+
+
+	<select id="listofReviewDetail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  	select * from AssetPlanInfoReviewView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+		order by ReviewResult desc,CompleteSetCode asc,PPrice asc,DeptCode asc,ApplyUser asc,AssetPlanID
+  </select>
+
+</mapper>

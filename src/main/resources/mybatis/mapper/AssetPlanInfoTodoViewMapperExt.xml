@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoTodoViewMapper">
+ 
+	<sql id="condition_sql">
+		<where>
+			DeleteFlag=1 and OutTimePlanEnum=-1
+			<if test="param.RequiredUser !=null">
+				and RequiredUser = #{param.RequiredUser}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+			
+		</where>
+	</sql>
+		
+  <select id="getSumTotalMoneyForTodo" parameterType="map" resultType="java.lang.String">
+  	select SUM(TotalMoney) as m from AssetPlanInfoTodoView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+
+  <select id="listofTodoDetail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  	select * from AssetPlanInfoTodoView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+	order by AssetPlanID desc		
+  
+  </select>
+
+  
+ 
+</mapper>

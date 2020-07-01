@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoDept1ViewMapper">
+  <sql id="condition_sql">
+		<where>
+			<if test="param.GroupFlag !=null">
+				and GroupFlag = #{param.GroupFlag}
+			</if>
+			<if test="param.Dept1Reviewer !=null">
+				and Dept1Reviewer = #{param.Dept1Reviewer}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+		</where>
+	</sql>
+  
+  <select id="listofDept1Detail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  	select * from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+    order by Dept2Code asc,DeptCode asc,RequiredUser asc
+  
+  </select>
+  
+  
+  <!-- <select id="getSumCountBeforeForDept1" parameterType="map" resultType="java.lang.String">
+  	select SUM(Requireds) as c from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select> -->
+  
+  <!-- <select id="getSumCountAfterForDept1" parameterType="map" resultType="java.lang.String">
+  	select SUM(RequiredsAudit) as c from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select> -->
+  
+  <!-- <select id="getSumMoneyBeforeForDept1" parameterType="map" resultType="java.lang.String">
+  	select SUM(TotalMoney) as m from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select> -->
+  
+  <!-- <select id="getSumMoneyAfterForDept1" parameterType="map" resultType="java.lang.String">
+  	select SUM(ActualMoney) as m from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select> -->
+  
+    
+      <select id="getListForFlag" parameterType="map" resultType="java.lang.Integer">
+  	select GroupFlag from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+    	group by GroupFlag
+  
+  </select>
+  
+  <select id="getGroupMess" parameterType="map" resultType="map">
+  	select SUM(Requireds) as Requireds ,SUM(RequiredsAudit) as RequiredsAudit,SUM(TotalMoney) as TotalmoneySum,SUM(ActualMoney) as ActualmoneySum from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+  <select id="getListSize" parameterType="map" resultType="java.lang.Integer">
+  	   select count(*) from AssetPlanInfoDept1View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  </select>
+ 
+ 
+</mapper>

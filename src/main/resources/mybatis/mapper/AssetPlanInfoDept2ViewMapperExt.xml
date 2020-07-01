@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoDept2ViewMapper">
+
+	<sql id="condition_sql">
+		<where>
+			DeleteFlag=1 and ReviewResult=1 and OutTimePlanEnum !=0
+			<if test="param.Dept2Manager !=null">
+				and Dept2Manager = #{param.Dept2Manager}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+			<if test="param.DeptCode !=null">
+				and DeptCode = #{param.DeptCode}
+			</if>
+		</where>
+	</sql>
+
+	<select id="getSumTotalMoneyForDept2" parameterType="map"
+		resultType="java.lang.String">
+		select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoDept2View
+		<if test="_parameter != null">
+			<include refid="condition_sql"></include>
+		</if>
+
+	</select>
+	<select id="getSumMoneyWithThirdDept" parameterType="map"
+		resultType="java.lang.String">
+		select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoDept2View
+
+		<if test="_parameter != null">
+			<include refid="condition_sql"></include>
+		</if>
+	</select>
+
+	<select id="getSumActualMoneySumForDept2" parameterType="map"
+		resultType="java.lang.String">
+		select ifnull(SUM(ActualMoney),0) as m from AssetPlanInfoDept2View
+		<if test="_parameter != null">
+			<include refid="condition_sql"></include>
+		</if>
+
+	</select>
+
+
+
+	<select id="listofDept2Detail" parameterType="map"
+		resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+		select * from AssetPlanInfoDept2View
+		<if test="_parameter != null">
+			<include refid="condition_sql"></include>
+		</if>
+		order by DeptCode asc,ApplyUser asc,CompleteSetCode asc,AssetPlanID
+
+	</select>
+
+
+</mapper>

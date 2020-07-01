@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.ProjectInfoMapper">
+  
+  
+  <sql id="condition_sql">
+		<where>
+			<if test="param.projectNo !=null and param.projectNo !='' ">
+				and project_no LIKE concat(#{param.projectNo},'%')
+			</if>
+            
+		</where>
+	</sql>
+
+  
+	
+  <select id="getItemCodeTop20" parameterType="map" resultMap="BaseResultMap">
+  	select * from ProjectInfo
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+    	order by project_no asc 
+		LIMIT  20
+  
+  </select>
+  
+   <select id="getItemNameByItemCode" parameterType="map" resultType="String">
+  	select project_name from ProjectInfo where project_no = #{param.projectNo}
+  
+  </select>
+  
+  <insert id="insertByEosData">
+ 	 INSERT INTO ProjectInfo (type_id,type_name,project_no,project_name,project_code,release_no,
+		build_no,telecom_percent,non_telecom_percent,effective_date ,project_start_date,assign_point_desc 
+		,status ,mark ,create_date ,loaded_time ,delete_flag ,creator ,	create_time ,	modifier ,	modifi_time )
+	  SELECT type_id,type_name,project_no,project_name,project_code,release_no,
+		build_no,telecom_percent,non_telecom_percent,effective_date ,project_start_date,assign_point_desc 
+		,status ,mark ,create_date ,loaded_time ,1 ,'sys' ,SYSDATE() ,	'sys' ,SYSDATE() 
+	  FROM ProjectInfo_EOS a WHERE NOT EXISTS (SELECT 1 FROM ProjectInfo b WHERE a.project_no=b.project_no)
+  </insert>
+  
+  <update id="deleteInvalidData">
+  	UPDATE ProjectInfo SET delete_flag= 0 WHERE project_no IN ( 
+ 		SELECT * FROM (SELECT project_no AS code FROM ProjectInfo a WHERE NOT EXISTS (SELECT 1 FROM ProjectInfo_EOS b WHERE a.project_no=b.project_no))t1 )
+  </update>
+  
+  <update id="updateByEosData">
+  	 UPDATE ProjectInfo a LEFT JOIN ProjectInfo_EOS b ON a.project_no=b.project_no
+ 		SET a.type_id=b.type_id,a.type_name=b.type_name,a.project_name=b.project_name,a.project_code=b.project_code,a.release_no=b.release_no,
+			a.build_no=b.build_no,a.telecom_percent=b.telecom_percent,a.non_telecom_percent=b.non_telecom_percent,a.effective_date =b.effective_date,
+			a.project_start_date=b.project_start_date,a.assign_point_desc=b.assign_point_desc,a.status =b.status,a.mark = b.mark,
+			a.loaded_time = b.loaded_time,a.	modifier ='sys',a.modifi_time=SYSDATE()
+	 WHERE b.project_no IS NOT NULL  AND a.delete_flag=1
+  
+  </update>
+</mapper>

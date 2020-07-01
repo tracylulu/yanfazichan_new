@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoDetailViewMapper">
+  
+  
+  
+  <select id="getByAssetID" parameterType="Integer" resultMap="BaseResultMap">
+			SELECT * FROM AssetPlanInfoDetailView 
+			where AssetPlanID=#{assetplanid}
+	</select>
+  
+  
+  
+</mapper>

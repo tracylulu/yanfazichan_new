@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.datasource.dao.DatasourceConfigMapper">
+
+
+
+	<resultMap id="BaseResultMap" type="com.h3c.platform.datasource.entity.DatasourceConfig">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		 <result column="host" jdbcType="VARCHAR" property="host" />
+		 
+		 <result column="port" jdbcType="VARCHAR" property="port" />
+		 <result column="username" jdbcType="VARCHAR" property="username" />
+		 <result column="password" jdbcType="VARCHAR" property="password" />
+		 <result column="database" jdbcType="VARCHAR" property="database" />
+		 <result column="cm_code" jdbcType="VARCHAR" property="cmCode" />
+	</resultMap>
+
+	<insert id="insertUseGeneratedKeys" parameterType="com.h3c.platform.datasource.entity.DatasourceConfig">
+		insert into 
+		datasource_config(id, host, port, username, password,database) 
+		values
+		(#{id}, #{host},#{port}, #{root}, #{Hello@123}, #{sign});
+	</insert>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select * from datasource_config
+	</select>
+	
+	<select id="getDatasourceConfigByCmCode" parameterType="map" resultMap="BaseResultMap">
+		select * from datasource_config
+		<where>
+			<if test="cmCode != null">
+				cm_code = #{cmCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getDatasourceConfigByActCmcode" parameterType="map" resultMap="BaseResultMap">
+		select * from datasource_config
+		<where>
+			<if test="cmCode != null">
+				cm_code in 
+				(
+				select code from Datasource_Config_Code config_code 
+				where  exists(select * from Sys_CMInfo cmInfo where config_code.cm_code = cmInfo.cm_code and cmInfo.is_disable = '0') and config_code.cm_code = #{cmCode}
+				)
+			</if>
+		</where>
+		order by cm_code asc;
+	</select>
+	<select id="listDatasourceConfig" resultMap="BaseResultMap">
+		select * from datasource_config config  where cm_code 
+
+		in(
+			select code from Datasource_Config_Code configCode 
+			where 
+			exists(select cm_code from Sys_CMInfo cminfo where cminfo.is_disable = '0' and cminfo.cm_code = configCode.cm_code)
+		)
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="long">
+		delete from datasource_config
+	</delete>
+</mapper>

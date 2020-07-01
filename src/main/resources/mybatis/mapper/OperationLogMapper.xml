@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.sysmgr.dao.OperationLogMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.sysmgr.entity.OperationLog">
+    <id column="LogID" jdbcType="BIGINT" property="logid" />
+    <result column="ModelCode" jdbcType="VARCHAR" property="modelcode" />
+    <result column="ModelName" jdbcType="VARCHAR" property="modelname" />
+    <result column="LogType" jdbcType="INTEGER" property="logtype" />
+    <result column="Summary" jdbcType="VARCHAR" property="summary" />
+    <result column="UserID" jdbcType="VARCHAR" property="userid" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="LogTime" jdbcType="TIMESTAMP" property="logtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.h3c.platform.sysmgr.entity.OperationLog">
+    <result column="Content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LogID, ModelCode, ModelName, LogType, Summary, UserID, IP, LogTime
+  </sql>
+  <sql id="Blob_Column_List">
+    Content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.h3c.platform.sysmgr.entity.OperationLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from OperationLog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.h3c.platform.sysmgr.entity.OperationLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from OperationLog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from OperationLog
+    where LogID = #{logid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from OperationLog
+    where LogID = #{logid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.h3c.platform.sysmgr.entity.OperationLogExample">
+    delete from OperationLog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
+    insert into OperationLog (LogID, ModelCode, ModelName, 
+      LogType, Summary, UserID, 
+      IP, LogTime, Content
+      )
+    values (#{logid,jdbcType=BIGINT}, #{modelcode,jdbcType=VARCHAR}, #{modelname,jdbcType=VARCHAR}, 
+      #{logtype,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{logtime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
+    insert into OperationLog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        LogID,
+      </if>
+      <if test="modelcode != null">
+        ModelCode,
+      </if>
+      <if test="modelname != null">
+        ModelName,
+      </if>
+      <if test="logtype != null">
+        LogType,
+      </if>
+      <if test="summary != null">
+        Summary,
+      </if>
+      <if test="userid != null">
+        UserID,
+      </if>
+      <if test="ip != null">
+        IP,
+      </if>
+      <if test="logtime != null">
+        LogTime,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        #{logid,jdbcType=BIGINT},
+      </if>
+      <if test="modelcode != null">
+        #{modelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelname != null">
+        #{modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="logtype != null">
+        #{logtype,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null">
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.h3c.platform.sysmgr.entity.OperationLogExample" resultType="java.lang.Long">
+    select count(*) from OperationLog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update OperationLog
+    <set>
+      <if test="record.logid != null">
+        LogID = #{record.logid,jdbcType=BIGINT},
+      </if>
+      <if test="record.modelcode != null">
+        ModelCode = #{record.modelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelname != null">
+        ModelName = #{record.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtype != null">
+        LogType = #{record.logtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.summary != null">
+        Summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        UserID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        IP = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null">
+        LogTime = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        Content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update OperationLog
+    set LogID = #{record.logid,jdbcType=BIGINT},
+      ModelCode = #{record.modelcode,jdbcType=VARCHAR},
+      ModelName = #{record.modelname,jdbcType=VARCHAR},
+      LogType = #{record.logtype,jdbcType=INTEGER},
+      Summary = #{record.summary,jdbcType=VARCHAR},
+      UserID = #{record.userid,jdbcType=VARCHAR},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      LogTime = #{record.logtime,jdbcType=TIMESTAMP},
+      Content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update OperationLog
+    set LogID = #{record.logid,jdbcType=BIGINT},
+      ModelCode = #{record.modelcode,jdbcType=VARCHAR},
+      ModelName = #{record.modelname,jdbcType=VARCHAR},
+      LogType = #{record.logtype,jdbcType=INTEGER},
+      Summary = #{record.summary,jdbcType=VARCHAR},
+      UserID = #{record.userid,jdbcType=VARCHAR},
+      IP = #{record.ip,jdbcType=VARCHAR},
+      LogTime = #{record.logtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
+    update OperationLog
+    <set>
+      <if test="modelcode != null">
+        ModelCode = #{modelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelname != null">
+        ModelName = #{modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="logtype != null">
+        LogType = #{logtype,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null">
+        Summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        UserID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null">
+        LogTime = #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LogID = #{logid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
+    update OperationLog
+    set ModelCode = #{modelcode,jdbcType=VARCHAR},
+      ModelName = #{modelname,jdbcType=VARCHAR},
+      LogType = #{logtype,jdbcType=INTEGER},
+      Summary = #{summary,jdbcType=VARCHAR},
+      UserID = #{userid,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      LogTime = #{logtime,jdbcType=TIMESTAMP},
+      Content = #{content,jdbcType=LONGVARCHAR}
+    where LogID = #{logid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
+    update OperationLog
+    set ModelCode = #{modelcode,jdbcType=VARCHAR},
+      ModelName = #{modelname,jdbcType=VARCHAR},
+      LogType = #{logtype,jdbcType=INTEGER},
+      Summary = #{summary,jdbcType=VARCHAR},
+      UserID = #{userid,jdbcType=VARCHAR},
+      IP = #{ip,jdbcType=VARCHAR},
+      LogTime = #{logtime,jdbcType=TIMESTAMP}
+    where LogID = #{logid,jdbcType=BIGINT}
+  </update>
+</mapper>

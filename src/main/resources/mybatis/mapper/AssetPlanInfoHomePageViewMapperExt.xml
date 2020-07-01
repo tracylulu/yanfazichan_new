@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoHomePageViewMapper">
+  
+  
+  <!-- <sql id="condition_sql">
+		<where>
+			DeleteFlag=1
+			
+			<if test="param.ApplyUser !=null and param.ApplyUser !='' ">
+				and 
+				(ApplyUser = #{param.ApplyUser} 
+				or Reviewer = #{param.ApplyUser} 
+				or Dept3Manager = #{param.ApplyUser} 
+				or Dept2Manager = #{param.ApplyUser} 
+				or Planner = #{param.ApplyUser} 
+				or OQDeptReviewer = #{param.ApplyUser} 
+				or Dept1Reviewer = #{param.ApplyUser} 
+				)
+			</if>
+		</where>
+	</sql>
+
+  
+  
+	
+  <select id="listofTodoInfo" parameterType="map" resultMap="BaseResultMap">
+  	select * from AssetPlanInfoHomePageView 
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+  <select id="countTodoInfo" parameterType="map" resultType="int">
+  	select count(*) from AssetPlanInfoHomePageView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select> -->
+  
+  <select id="getApprovalRecordById" parameterType="int" resultMap="BaseResultMap">
+  	select * from AssetPlanInfoHomePageView
+  		where AssetPlanID = #{assetplanid} 
+  
+  </select>
+  
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.common.dao.SysDicInfoMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.common.entity.SysDicInfo">
+    <result column="id" jdbcType="CHAR" property="id" />
+    <result column="dic_code" jdbcType="VARCHAR" property="dicCode" />
+    <result column="dic_name" jdbcType="VARCHAR" property="dicName" />
+    <result column="dic_type_code" jdbcType="CHAR" property="dicTypeCode" />
+    <result column="dic_type_name" jdbcType="VARCHAR" property="dicTypeName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_able" jdbcType="TINYINT" property="isAble" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="last_modifier" jdbcType="VARCHAR" property="lastModifier" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, dic_code, dic_name, dic_type_code, dic_type_name, remark, is_able, create_time, 
+    last_modify_time, creater, last_modifier
+  </sql>
+  
+  <insert id="insertSysDicInfo" parameterType="com.h3c.platform.common.entity.SysDicInfo">
+    insert into Sys_dicInfo (id, dic_code, dic_name, 
+      dic_type_code, dic_type_name, remark, 
+      is_able, create_time, last_modify_time, 
+      creater, last_modifier)
+    values (#{id,jdbcType=CHAR}, #{dicCode,jdbcType=VARCHAR}, #{dicName,jdbcType=VARCHAR}, 
+      #{dicTypeCode,jdbcType=CHAR}, #{dicTypeName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{isAble,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR}, #{lastModifier,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="selectByColumn" parameterType="com.h3c.platform.common.entity.SysDicInfo" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	
+  	from Sys_dicInfo
+  	<where>
+  		<if test="dicTypeCode">
+  			and dic_type_code = #{dicTypeCode}
+  		</if>
+  		<if test="dicCode">
+  			and dic_code = #{dicCode}
+  		</if>
+  	</where>
+  </select>
+  
+  <update id="updateSysDicInfo" parameterType="com.h3c.platform.common.entity.SysDicInfo">
+  	update Sys_dicInfo
+  	<set>
+  		<if test="dicCode != null">
+  			dic_code = #{dicCode, jdbcType=CHAR},
+  		</if>
+  		<if test="dicName != null">
+  			dic_name = #{dicName, jdbcType=VARCHAR},
+  		</if>
+  		<if test="dicTypeCode != null">
+  			dic_type_code = #{dicTypeCode, jdbcType=VARCHAR},
+  		</if>
+  		<if test="dicTypeName != null">
+  			dic_type_name = #{dicTypeName, jdbcType=VARCHAR},
+  		</if>
+  		<if test="remark != null">
+  			remark = #{remark, jdbcType=VARCHAR},
+  		</if>
+  		<if test="isAble != null">
+  			is_able = #{isAble, jdbcType=TINYINT},
+  		</if>
+  		<if test="createTime != null">
+  			create_time = #{createTime, jdbcType=TIMESTAMP},
+  		</if>
+  		<if test="lastModifyTime != null">
+  			last_modify_time = #{lastModifyTime, jdbcType=TIMESTAMP},
+  		</if>
+  		<if test="creater != null">
+  			creater = #{creater, jdbcType=VARCHAR},
+  		</if>
+  		<if test="lastModifier != null">
+  			last_modifier = #{lastModifier, jdbcType=VARCHAR}
+  		</if>
+  	</set>
+  	<where>
+  		id = #{id, jdbcType=CHAR}
+  	</where>
+  </update>
+  <sql id="param">
+  	instr(
+    		concat(
+    		ifnull(dic_code, ''),
+    		ifnull(dic_name,''),
+    		ifnull(dic_type_code,''),
+    		ifnull(dic_name,''),
+    		ifnull(dic_type_name,''),
+    		ifnull(remark,'')
+    		), #{param}) > 0
+  </sql>
+  <select id="listofSysDicInfo" parameterType="map" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"></include>
+  	from   Sys_dicInfo
+  	
+  	<where>
+  		<if test="param != null">
+    		<include refid="param"></include>
+    	</if>
+    	order by dic_name asc
+		<if test="size != null">
+			limit #{start}, #{size}
+		</if>
+  	</where>
+  
+  </select>
+  
+  <select id="countSysDicInfo" parameterType="map" resultType="int">
+  	select 
+  		count(*)
+  	from   Sys_dicInfo
+  	
+  	<where>
+  		<if test="param != null">
+    		<include refid="param"></include>
+    	</if>
+  	</where>
+  
+  </select>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--去掉注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--需要配置数据库连接-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.90.16.179:3306/apadb?nullCatalogMeansCurrent=true"
+                        userId=  "root"  
+                        password= "Hello@123"   >
+                        
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--指定javaBean生成的位置 javaBean生成的位置-->
+        <javaModelGenerator targetPackage="com.h3c.platform.assetplan.entity" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--sql映射文件生成的位置-->
+        <sqlMapGenerator targetPackage="com.h3c.platform.assetplan.dao"  targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--指定dao接口生成的位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.h3c.platform.assetplan.dao"  targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+         <table tableName="ProjectInfo" domainObjectName="ProjectInfo"></table>
+          <!--
+         <table tableName="PDMAN_DB_VERSION" domainObjectName="PDMAN_DB_VERSION"></table>
+         <table tableName="PurchaseReportInfo" domainObjectName="PurchaseReportInfo"></table>
+         <table tableName="RequestsNumApproveRecord" domainObjectName="RequestsNumApproveRecord"></table>
+         <table tableName="SpecifyManufacturerInfo" domainObjectName="SpecifyManufacturerInfo"></table>-->
+         <!-- <table tableName="AssetPlanInfoView" domainObjectName="AssetPlanInfoView"></table> -->
+    </context>
+</generatorConfiguration>

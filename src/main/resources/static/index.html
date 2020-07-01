@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Ê×Ò³</title>
+</head>
+<body>
+test
+
+
+<input type='button' id='btn1' value="testPost"  onclick='sendPost();' />
+
+<input type='button' id='btn2' value="testGet"  onclick='sendGet();' />
+<input type='button' id='btn3' value="testErrorPost"  onclick='sendErrorPost();' />
+
+<input type='button' id='btn4' value="testloginout"  onclick='testloginOut();' />
+
+<input type='button' id='btn5' value="testSendMail"  onclick='testSendMail();' />
+<input type='button' id='btn6' value="testHttpClientGet"  onclick='testHttpClientGet();' />
+<input type='button' id='btn7' value="testHttpClientPost"  onclick='testHttpClientPost();' />
+<script type="text/javascript" src="static/jquery-3.1.1/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="static/jquery-3.1.1/jquery.cookie.js"></script>
+<script type="text/javascript" src="static/jquery-3.1.1/jquery.cookie.js"></script>
+<script>
+var token="";
+$(function(){
+	$.get("/login?userCode=lkf7579",function(result){debugger
+		alert(result.data.token);
+		token=result.data.token;
+	});
+})
+	function sendPost(){	
+		$.ajax({
+	        type: "post",
+	        url: "/login/test1",
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("token", token);
+	            /request.setRequestHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxeXMzNDMzIiwibmJmIjoxNTkxOTI4MTA2LCJleHAiOjE1OTE5NDYxMDYsImlhdCI6MTU5MTkyODEwNn0.OeZDfeu7A-3rjRUef8tMM3dW0-qkFRJYVi78MuvW6rY");
+	        },
+	        success: function(result) {
+	        	alert(result);
+	        }
+	    });
+	}
+	
+	function sendGet(){
+		$.ajax({
+	        type: "get",
+	        url: "/login/test2",
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("Authorization", token);
+	        },
+	        success: function(result) {
+	        	alert(result);
+	        }
+	    });
+	}
+	
+	function sendErrorPost(){	
+		$.ajax({
+	        type: "post",
+	        url: "/login/test1",
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("Authorization", token+"1");
+	        },
+	        success: function(result) {
+	        	alert(result);
+	        	window.location.href=result.message
+	        }
+	    });
+	}
+	
+	function testloginOut(){	
+		$.ajax({
+	        type: "get",
+	        url: "/ssoLoginOut",
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("Authorization", token+"1");
+	        },
+	        success: function(result) {
+	        	alert(result.msg);
+	        	window.location.href=result.message
+	        }
+	    });
+	}
+	
+	function testSendMail(){
+		$.ajax({
+	        type: "post",
+	        url: "/sendTestMail",
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("Authorization", token);
+	        },
+	        success: function(result) {
+	        	alert(result);
+	        }
+	    });
+	}
+	
+	function testHttpClientGet(){
+		$.ajax({
+	        type: "get",
+	        url: "/testHttpClientGet",	
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("Authorization", token);
+	        },
+	        success: function(result) {
+	        	alert(result);
+	        }
+	    });
+	}
+	
+	function testHttpClientPost(){
+		$.ajax({
+	        type: "get",
+	        url: "/testHttpClientPost",	
+	        beforeSend: function(request) {
+	        	console.log(token);
+	            request.setRequestHeader("Authorization", token);
+	        },
+	        success: function(result) {
+	        	alert(result);
+	        }
+	    });
+	}
+</script>  
+</body>
+</html>

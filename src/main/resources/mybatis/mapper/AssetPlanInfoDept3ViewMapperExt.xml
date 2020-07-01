@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoDept3ViewMapper">
+ 
+	<sql id="condition_sql">
+		<where>
+			DeleteFlag=1 and ReviewResult=1 and OutTimePlanEnum !=0
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+		</where>
+	</sql>
+
+  <select id="getSumTotalMoneyForDept3" parameterType="map" resultType="java.lang.String">
+  	select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoDept3View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+  <select id="getSumActualMoneySumForDept3" parameterType="map" resultType="java.lang.String">
+  	select ifnull(SUM(ActualMoney),0) as m from AssetPlanInfoDept3View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+  
+  </select>
+  
+  
+<select id="listofDept3Detail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  	select * from AssetPlanInfoDept3View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if>
+	order by ApplyUser asc,CompleteSetCode asc,AssetPlanID	
+  
+  </select>
+  
+ <select id="getBudgetTotalMoneyForDept3" parameterType="map" resultType="java.lang.String">
+  	select SUM(TotalMoney) as m from AssetPlanInfoDept3View
+  		<if test="_parameter != null">
+    		<include refid="condition_sql1"></include>
+    	</if>
+  
+  </select>
+  
+  <sql id="condition_sql1">
+		<where>
+			DeleteFlag=1 and ReviewResult=1
+			<if test="param.DeptCode !=null">
+				and DeptCode = #{param.DeptCode}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+		</where>
+	</sql>
+	
+	
+</mapper>
