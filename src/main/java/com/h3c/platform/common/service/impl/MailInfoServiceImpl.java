@@ -26,7 +26,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 	@Autowired
 	private MailInfoMapper mailInfoMapper;
 
-	@Value("${sso.main.url}")
+	@Value("${spring.main.url}")
 	private String siteMainUrl;
 	@Value("${defaultMail}")
 	private String defaultMail;
@@ -95,7 +95,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 			content="您有采购流程需要处理！";
 		}
 		//content = "文档链接：<a href='" + siteMainUrl + "/mailLogin?mailid=" + id + "'>打开文档</a>";
-		content += " </br><div>此邮件来自：APA管理平台" + siteMainUrl + "。</br>如有使用问题请联系管理员，请勿直接回信。 </div>";
+		content += " </br><div>此邮件来自：研发资源计划管理平台" + siteMainUrl + "。</br>如有使用问题请联系管理员，请勿直接回信。 </div>";
 		List<String> sendList = new ArrayList<>();
 		List<String> ccList = new ArrayList<>();
 		//测试邮件开关开启，重置测试人员，发送测试邮件
