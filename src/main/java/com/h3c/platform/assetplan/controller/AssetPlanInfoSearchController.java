@@ -418,13 +418,13 @@ public class AssetPlanInfoSearchController {
 				json.put("assetcategory", sysDicCategory.getAssetCategory());
 				json.put("pprice", record.getPprice());
 				//规范审核结果 规范1/不规范2/未审核3/再审核4
-				if("1".equals(record.getReviewresult())) {
+				if(record.getReviewresult()==1) {
 					json.put("reviewresult", "规范");
-				}else if("2".equals(record.getReviewresult())) {
-					json.put("reviewresult", "不规范");
-				}else if("3".equals(record.getReviewresult())) {
+				}else if(record.getReviewresult()==2) {
+					json.put("reviewresult", "不规范");	
+				}else if(record.getReviewresult()==3) {
 					json.put("reviewresult", "未审核");
-				}else if("4".equals(record.getReviewresult())) {
+				}else if(record.getReviewresult()==4) {
 					json.put("reviewresult", "再审核");
 				}else {
 					json.put("reviewresult", "状态错误");
