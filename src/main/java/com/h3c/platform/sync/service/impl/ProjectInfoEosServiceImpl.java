@@ -55,8 +55,7 @@ public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 				}
 				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("project_start_date")))) {
 					pro.setProjectStartDate(sdf.parse(map.get("project_start_date").toString()));
-				}
-			
+				}			
 //				pro.setAssignPointDesc(ObjToStrUtil.ReplaceNullValue(map.get("assign_point_desc")));
 				pro.setStatus(ObjToStrUtil.ReplaceNullValue(map.get("status")));
 				pro.setMark(ObjToStrUtil.ReplaceNullValue(map.get("mark")));
