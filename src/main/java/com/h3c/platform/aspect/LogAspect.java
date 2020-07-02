@@ -1,19 +1,17 @@
 package com.h3c.platform.aspect;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
@@ -33,8 +31,6 @@ import com.h3c.platform.sysmgr.service.OperationLogService;
 import com.h3c.platform.util.UserUtils;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.BasicAuthDefinition;
-
 
 
 @Aspect
@@ -55,10 +51,8 @@ public class LogAspect {
 	public  void doAfterThrowing(JoinPoint joinPoint, Throwable e) {  
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		String modelname="";
-		String url=request.getRequestURL().toString();
-		StringWriter sw = new StringWriter();
-	    e.printStackTrace(new PrintWriter(sw, true));	    
-		String content= e.getMessage()+sw.getBuffer().toString();
+		String url=request.getRequestURL().toString();    
+		String content= ExceptionUtils.getFullStackTrace(e);
 		//方法名
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		String methodName = signature.getName(); 
