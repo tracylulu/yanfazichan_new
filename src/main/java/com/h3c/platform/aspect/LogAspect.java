@@ -1,5 +1,7 @@
 package com.h3c.platform.aspect;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -54,7 +56,9 @@ public class LogAspect {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		String modelname="";
 		String url=request.getRequestURL().toString();
-		String content= e.getMessage();
+		StringWriter sw = new StringWriter();
+	    e.printStackTrace(new PrintWriter(sw, true));	    
+		String content= e.getMessage()+sw.getBuffer().toString();
 		//方法名
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		String methodName = signature.getName(); 
