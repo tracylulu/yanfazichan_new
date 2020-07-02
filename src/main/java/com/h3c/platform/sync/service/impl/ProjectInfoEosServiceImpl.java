@@ -45,11 +45,11 @@ public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 				pro.setTypeName(ObjToStrUtil.ReplaceNullValue(map.get("type_name")));
 				pro.setProjectNo(ObjToStrUtil.ReplaceNullValue(map.get("project_no")));
 				pro.setProjectName(ObjToStrUtil.ReplaceNullValue(map.get("project_name")));
-				pro.setProjectCode(ObjToStrUtil.ReplaceNullValue(map.get("project_code")));
-				pro.setReleaseNo(ObjToStrUtil.ReplaceNullValue(map.get("release_no")));
-				pro.setBuildNo(ObjToStrUtil.ReplaceNullValue(map.get("build_no")));
-				pro.setTelecomPercent(ObjToStrUtil.ReplaceNullValue(map.get("telecom_percent")));
-				pro.setNonTelecomPercent(ObjToStrUtil.ReplaceNullValue(map.get("non_telecom_percent")));
+				pro.setProjectCode(ObjToStrUtil.ReplaceNullValue(map.get("project_code")));				
+//				pro.setReleaseNo(ObjToStrUtil.ReplaceNullValue(map.get("release_no")));
+//				pro.setBuildNo(ObjToStrUtil.ReplaceNullValue(map.get("build_no")));
+//				pro.setTelecomPercent(ObjToStrUtil.ReplaceNullValue(map.get("telecom_percent")));
+//				pro.setNonTelecomPercent(ObjToStrUtil.ReplaceNullValue(map.get("non_telecom_percent")));
 				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("effective_date")))) {
 					pro.setEffectiveDate(sdf.parse(map.get("effective_date").toString()));
 				}
@@ -57,7 +57,7 @@ public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 					pro.setProjectStartDate(sdf.parse(map.get("project_start_date").toString()));
 				}
 			
-				pro.setAssignPointDesc(ObjToStrUtil.ReplaceNullValue(map.get("assign_point_desc")));
+//				pro.setAssignPointDesc(ObjToStrUtil.ReplaceNullValue(map.get("assign_point_desc")));
 				pro.setStatus(ObjToStrUtil.ReplaceNullValue(map.get("status")));
 				pro.setMark(ObjToStrUtil.ReplaceNullValue(map.get("mark")));
 				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("create_date")))) {
