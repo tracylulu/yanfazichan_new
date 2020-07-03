@@ -1106,62 +1106,52 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeEqualTo(String value) {
+        public Criteria andDept2codeEqualTo(Integer value) {
             addCriterion("Dept2Code =", value, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeNotEqualTo(String value) {
+        public Criteria andDept2codeNotEqualTo(Integer value) {
             addCriterion("Dept2Code <>", value, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeGreaterThan(String value) {
+        public Criteria andDept2codeGreaterThan(Integer value) {
             addCriterion("Dept2Code >", value, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeGreaterThanOrEqualTo(String value) {
+        public Criteria andDept2codeGreaterThanOrEqualTo(Integer value) {
             addCriterion("Dept2Code >=", value, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeLessThan(String value) {
+        public Criteria andDept2codeLessThan(Integer value) {
             addCriterion("Dept2Code <", value, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeLessThanOrEqualTo(String value) {
+        public Criteria andDept2codeLessThanOrEqualTo(Integer value) {
             addCriterion("Dept2Code <=", value, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeLike(String value) {
-            addCriterion("Dept2Code like", value, "dept2code");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2codeNotLike(String value) {
-            addCriterion("Dept2Code not like", value, "dept2code");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2codeIn(List<String> values) {
+        public Criteria andDept2codeIn(List<Integer> values) {
             addCriterion("Dept2Code in", values, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeNotIn(List<String> values) {
+        public Criteria andDept2codeNotIn(List<Integer> values) {
             addCriterion("Dept2Code not in", values, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeBetween(String value1, String value2) {
+        public Criteria andDept2codeBetween(Integer value1, Integer value2) {
             addCriterion("Dept2Code between", value1, value2, "dept2code");
             return (Criteria) this;
         }
 
-        public Criteria andDept2codeNotBetween(String value1, String value2) {
+        public Criteria andDept2codeNotBetween(Integer value1, Integer value2) {
             addCriterion("Dept2Code not between", value1, value2, "dept2code");
             return (Criteria) this;
         }
@@ -1246,62 +1236,52 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeEqualTo(String value) {
+        public Criteria andDept1codeEqualTo(Integer value) {
             addCriterion("Dept1Code =", value, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeNotEqualTo(String value) {
+        public Criteria andDept1codeNotEqualTo(Integer value) {
             addCriterion("Dept1Code <>", value, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeGreaterThan(String value) {
+        public Criteria andDept1codeGreaterThan(Integer value) {
             addCriterion("Dept1Code >", value, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeGreaterThanOrEqualTo(String value) {
+        public Criteria andDept1codeGreaterThanOrEqualTo(Integer value) {
             addCriterion("Dept1Code >=", value, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeLessThan(String value) {
+        public Criteria andDept1codeLessThan(Integer value) {
             addCriterion("Dept1Code <", value, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeLessThanOrEqualTo(String value) {
+        public Criteria andDept1codeLessThanOrEqualTo(Integer value) {
             addCriterion("Dept1Code <=", value, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeLike(String value) {
-            addCriterion("Dept1Code like", value, "dept1code");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1codeNotLike(String value) {
-            addCriterion("Dept1Code not like", value, "dept1code");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1codeIn(List<String> values) {
+        public Criteria andDept1codeIn(List<Integer> values) {
             addCriterion("Dept1Code in", values, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeNotIn(List<String> values) {
+        public Criteria andDept1codeNotIn(List<Integer> values) {
             addCriterion("Dept1Code not in", values, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeBetween(String value1, String value2) {
+        public Criteria andDept1codeBetween(Integer value1, Integer value2) {
             addCriterion("Dept1Code between", value1, value2, "dept1code");
             return (Criteria) this;
         }
 
-        public Criteria andDept1codeNotBetween(String value1, String value2) {
+        public Criteria andDept1codeNotBetween(Integer value1, Integer value2) {
             addCriterion("Dept1Code not between", value1, value2, "dept1code");
             return (Criteria) this;
         }
@@ -2173,6 +2153,76 @@ public class AssetPlanInfoSearchViewExample {
 
         public Criteria andApstageNotBetween(String value1, String value2) {
             addCriterion("APStage not between", value1, value2, "apstage");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonIsNull() {
+            addCriterion("ApprovalPerson is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonIsNotNull() {
+            addCriterion("ApprovalPerson is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonEqualTo(String value) {
+            addCriterion("ApprovalPerson =", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonNotEqualTo(String value) {
+            addCriterion("ApprovalPerson <>", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonGreaterThan(String value) {
+            addCriterion("ApprovalPerson >", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonGreaterThanOrEqualTo(String value) {
+            addCriterion("ApprovalPerson >=", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonLessThan(String value) {
+            addCriterion("ApprovalPerson <", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonLessThanOrEqualTo(String value) {
+            addCriterion("ApprovalPerson <=", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonLike(String value) {
+            addCriterion("ApprovalPerson like", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonNotLike(String value) {
+            addCriterion("ApprovalPerson not like", value, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonIn(List<String> values) {
+            addCriterion("ApprovalPerson in", values, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonNotIn(List<String> values) {
+            addCriterion("ApprovalPerson not in", values, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonBetween(String value1, String value2) {
+            addCriterion("ApprovalPerson between", value1, value2, "approvalperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andApprovalpersonNotBetween(String value1, String value2) {
+            addCriterion("ApprovalPerson not between", value1, value2, "approvalperson");
             return (Criteria) this;
         }
 

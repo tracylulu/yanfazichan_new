@@ -17,9 +17,9 @@
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
-    <result column="Dept2Code" jdbcType="VARCHAR" property="dept2code" />
+    <result column="Dept2Code" jdbcType="INTEGER" property="dept2code" />
     <result column="Dept2Name" jdbcType="VARCHAR" property="dept2name" />
-    <result column="Dept1Code" jdbcType="VARCHAR" property="dept1code" />
+    <result column="Dept1Code" jdbcType="INTEGER" property="dept1code" />
     <result column="Dept1Name" jdbcType="VARCHAR" property="dept1name" />
     <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
     <result column="ReceiverPlace" jdbcType="VARCHAR" property="receiverplace" />
@@ -33,6 +33,7 @@
     <result column="APStatus" jdbcType="VARCHAR" property="apstatus" />
     <result column="APStatusDetail" jdbcType="VARCHAR" property="apstatusdetail" />
     <result column="APStage" jdbcType="VARCHAR" property="apstage" />
+    <result column="ApprovalPerson" jdbcType="VARCHAR" property="approvalperson" />
     <result column="IsReqPurchaseReport" jdbcType="VARCHAR" property="isreqpurchasereport" />
     <result column="ISSpecifyManufacturer" jdbcType="VARCHAR" property="isspecifymanufacturer" />
     <result column="ManufacturerTypeEnum" jdbcType="INTEGER" property="manufacturertypeenum" />
@@ -102,8 +103,8 @@
     Requireds, RequiredsAudit, PPrice, TotalMoney, ActualMoney, RequiredUser, RequiredUserName, 
     DeptCode, Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, 
     OutTimePlanEnum, AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, 
-    APStatus, APStatusDetail, APStage, IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, 
-    ReviewResult, DeleteFlag
+    APStatus, APStatusDetail, APStage, ApprovalPerson, IsReqPurchaseReport, ISSpecifyManufacturer, 
+    ManufacturerTypeEnum, ReviewResult, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultMap="BaseResultMap">
     select
@@ -136,22 +137,22 @@
       AbnormalPlanEnum, OutTimePlanEnum, AssetNote, 
       ApplyUser, ApplyTime, IsCompleteSet, 
       CompleteSetCode, APStatus, APStatusDetail, 
-      APStage, IsReqPurchaseReport, ISSpecifyManufacturer, 
-      ManufacturerTypeEnum, ReviewResult, DeleteFlag
-      )
+      APStage, ApprovalPerson, IsReqPurchaseReport, 
+      ISSpecifyManufacturer, ManufacturerTypeEnum, 
+      ReviewResult, DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, 
       #{assetname,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, 
       #{assetcategory,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
       #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
-      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, 
+      #{dept2code,jdbcType=INTEGER}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=INTEGER}, 
       #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, 
       #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
       #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, 
       #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
-      #{apstage,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
-      #{manufacturertypeenum,jdbcType=INTEGER}, #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR}
-      )
+      #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
+      #{isspecifymanufacturer,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=INTEGER}, 
+      #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView">
     insert into AssetPlanInfoSearchView
@@ -249,6 +250,9 @@
       <if test="apstage != null">
         APStage,
       </if>
+      <if test="approvalperson != null">
+        ApprovalPerson,
+      </if>
       <if test="isreqpurchasereport != null">
         IsReqPurchaseReport,
       </if>
@@ -312,13 +316,13 @@
         #{deptcode,jdbcType=VARCHAR},
       </if>
       <if test="dept2code != null">
-        #{dept2code,jdbcType=VARCHAR},
+        #{dept2code,jdbcType=INTEGER},
       </if>
       <if test="dept2name != null">
         #{dept2name,jdbcType=VARCHAR},
       </if>
       <if test="dept1code != null">
-        #{dept1code,jdbcType=VARCHAR},
+        #{dept1code,jdbcType=INTEGER},
       </if>
       <if test="dept1name != null">
         #{dept1name,jdbcType=VARCHAR},
@@ -358,6 +362,9 @@
       </if>
       <if test="apstage != null">
         #{apstage,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalperson != null">
+        #{approvalperson,jdbcType=VARCHAR},
       </if>
       <if test="isreqpurchasereport != null">
         #{isreqpurchasereport,jdbcType=VARCHAR},
@@ -431,13 +438,13 @@
         DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       </if>
       <if test="record.dept2code != null">
-        Dept2Code = #{record.dept2code,jdbcType=VARCHAR},
+        Dept2Code = #{record.dept2code,jdbcType=INTEGER},
       </if>
       <if test="record.dept2name != null">
         Dept2Name = #{record.dept2name,jdbcType=VARCHAR},
       </if>
       <if test="record.dept1code != null">
-        Dept1Code = #{record.dept1code,jdbcType=VARCHAR},
+        Dept1Code = #{record.dept1code,jdbcType=INTEGER},
       </if>
       <if test="record.dept1name != null">
         Dept1Name = #{record.dept1name,jdbcType=VARCHAR},
@@ -478,6 +485,9 @@
       <if test="record.apstage != null">
         APStage = #{record.apstage,jdbcType=VARCHAR},
       </if>
+      <if test="record.approvalperson != null">
+        ApprovalPerson = #{record.approvalperson,jdbcType=VARCHAR},
+      </if>
       <if test="record.isreqpurchasereport != null">
         IsReqPurchaseReport = #{record.isreqpurchasereport,jdbcType=VARCHAR},
       </if>
@@ -515,9 +525,9 @@
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
-      Dept2Code = #{record.dept2code,jdbcType=VARCHAR},
+      Dept2Code = #{record.dept2code,jdbcType=INTEGER},
       Dept2Name = #{record.dept2name,jdbcType=VARCHAR},
-      Dept1Code = #{record.dept1code,jdbcType=VARCHAR},
+      Dept1Code = #{record.dept1code,jdbcType=INTEGER},
       Dept1Name = #{record.dept1name,jdbcType=VARCHAR},
       ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       ReceiverPlace = #{record.receiverplace,jdbcType=VARCHAR},
@@ -531,6 +541,7 @@
       APStatus = #{record.apstatus,jdbcType=VARCHAR},
       APStatusDetail = #{record.apstatusdetail,jdbcType=VARCHAR},
       APStage = #{record.apstage,jdbcType=VARCHAR},
+      ApprovalPerson = #{record.approvalperson,jdbcType=VARCHAR},
       IsReqPurchaseReport = #{record.isreqpurchasereport,jdbcType=VARCHAR},
       ISSpecifyManufacturer = #{record.isspecifymanufacturer,jdbcType=VARCHAR},
       ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=INTEGER},

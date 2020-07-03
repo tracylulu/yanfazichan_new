@@ -34,11 +34,11 @@ public class AssetPlanInfoSearchView {
 
     private String deptcode;
 
-    private String dept2code;
+    private Integer dept2code;
 
     private String dept2name;
 
-    private String dept1code;
+    private Integer dept1code;
 
     private String dept1name;
 
@@ -65,6 +65,8 @@ public class AssetPlanInfoSearchView {
     private String apstatusdetail;
 
     private String apstage;
+
+    private String approvalperson;
 
     private String isreqpurchasereport;
 
@@ -196,12 +198,12 @@ public class AssetPlanInfoSearchView {
         this.deptcode = deptcode == null ? null : deptcode.trim();
     }
 
-    public String getDept2code() {
+    public Integer getDept2code() {
         return dept2code;
     }
 
-    public void setDept2code(String dept2code) {
-        this.dept2code = dept2code == null ? null : dept2code.trim();
+    public void setDept2code(Integer dept2code) {
+        this.dept2code = dept2code;
     }
 
     public String getDept2name() {
@@ -212,12 +214,12 @@ public class AssetPlanInfoSearchView {
         this.dept2name = dept2name == null ? null : dept2name.trim();
     }
 
-    public String getDept1code() {
+    public Integer getDept1code() {
         return dept1code;
     }
 
-    public void setDept1code(String dept1code) {
-        this.dept1code = dept1code == null ? null : dept1code.trim();
+    public void setDept1code(Integer dept1code) {
+        this.dept1code = dept1code;
     }
 
     public String getDept1name() {
@@ -322,6 +324,14 @@ public class AssetPlanInfoSearchView {
 
     public void setApstage(String apstage) {
         this.apstage = apstage == null ? null : apstage.trim();
+    }
+
+    public String getApprovalperson() {
+        return approvalperson;
+    }
+
+    public void setApprovalperson(String approvalperson) {
+        this.approvalperson = approvalperson == null ? null : approvalperson.trim();
     }
 
     public String getIsreqpurchasereport() {
