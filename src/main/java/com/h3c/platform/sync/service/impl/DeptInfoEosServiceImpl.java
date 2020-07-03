@@ -41,8 +41,8 @@ public class DeptInfoEosServiceImpl implements DeptInfoEosService{
 			dept.setSupDeptCode(ObjToStrUtil.ReplaceNullValue(map.get("sup_dept_code")));
 			dept.setTypeId(ObjToStrUtil.ReplaceNullValue(map.get("type_id")));
 			dept.setDeptType(ObjToStrUtil.ReplaceNullValue(map.get("dept_type")));
-			dept.setDeptManagerCode(ObjToStrUtil.ReplaceNullValue(map.get("dept_manager_code")));
-			dept.setDeptPlannerCode(ObjToStrUtil.ReplaceNullValue(map.get("dept_planner_code")));
+			dept.setDeptManagerCode(ObjToStrUtil.ReplaceNullValue(map.get("director")));
+			dept.setDeptPlannerCode(ObjToStrUtil.ReplaceNullValue(map.get("planner")));
 			dept.setDeptCodeChain(ObjToStrUtil.ReplaceNullValue(map.get("dept_code_chain")));
 			dept.setUpdateTime(new Date());
 			deptInfoEOSMapper.insertSelective(dept);
