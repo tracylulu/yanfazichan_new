@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoSearchExportViewMapper">
  <select id="exportAssetPlanInfoByIds" parameterType="map" resultMap="BaseResultMap">
-  	 select * from AssetPlanInfoSearchView 
+  	 select * from AssetPlanInfoSearchExportView 
   	 	<if test="_parameter != null">
     		<include refid="condition_sql_export"></include>
     	</if>
