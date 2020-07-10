@@ -304,33 +304,32 @@ public class AssetPlanInfoReviewController {
    	   				ap.setModifier(applyuser);
    	   				ap.setModifitime(new Date());
    	   				ap.setReviewtime(new Date());
-   					//得传递型号，三级部门，规范审核时间，向楠那边做后续的判断：*交换机和路由产品线，预算划分到三级，其余部门预算在二级。
-   	   				ResponseResult rate = rateInfoService.getRate(ap.getAssetmodel(), ap.getDeptcode(), ap.getReviewtime());
-   	   				Map data = (Map) rate.getData();
-   	   				//研发总体的信息
-   	   				Map RD = (Map)data.get("RD");
-   	   				Boolean rdFlag = (Boolean)RD.get("isEmpty");
-   	   				String rdRate = (String) RD.get("rate");
-   	   				String[] rdRatesplit = rdRate.split("%");
-   	   				//部门的信息
-   	   				Map dept = (Map)data.get("dept");
-   	   				Boolean deptFlag = (Boolean)dept.get("isEmpty");
-   	   				String deptRate = (String) dept.get("rate");
-   	   				String[] deptRatesplit = deptRate.split("%");
-   	   				//都为true，研发总体和部门都没有使用率
-   	   				if(rdFlag && deptFlag) {
-   	   					ap.setUsagerate("/");
-   	   				//研发总体不为true，部门为true，说明研发总体有使用率，部门没有
-   	   				}else if(!rdFlag && deptFlag) {
-   	   					ap.setUsagerate("-/"+rdRatesplit[0]);
-   	   				//两者都不为true，说明都有使用率
-   	   				}else {
-   	   					ap.setUsagerate(deptRatesplit[0]+"/"+rdRatesplit[0]);
-   	   				}
-   	   				
+   	//   	   				ResponseResult rate = rateInfoService.getRate(ap.getAssetmodel(), ap.getDeptcode(), ap.getReviewtime());
+//   	   				Map data = (Map) rate.getData();
+//   	   				//研发总体的信息
+//   	   				Map RD = (Map)data.get("RD");
+//   	   				Boolean rdFlag = (Boolean)RD.get("isEmpty");
+//   	   				String rdRate = (String) RD.get("rate");
+//   	   				String[] rdRatesplit = rdRate.split("%");
+//   	   				//部门的信息
+//   	   				Map dept = (Map)data.get("dept");
+//   	   				Boolean deptFlag = (Boolean)dept.get("isEmpty");
+//   	   				String deptRate = (String) dept.get("rate");
+//   	   				String[] deptRatesplit = deptRate.split("%");
+//   	   				//都为true，研发总体和部门都没有使用率
+//   	   				if(rdFlag && deptFlag) {
+//   	   					ap.setUsagerate("/");
+//   	   				//研发总体不为true，部门为true，说明研发总体有使用率，部门没有
+//   	   				}else if(!rdFlag && deptFlag) {
+//   	   					ap.setUsagerate("-/"+rdRatesplit[0]);
+//   	   				//两者都不为true，说明都有使用率
+//   	   				}else {
+//   	   					ap.setUsagerate(deptRatesplit[0]+"/"+rdRatesplit[0]);
+//   	   				}
    	   				lst.add(ap);
-   	   			}
-   	   			assetPlanInfoService.batchEditAssetPlanInfo(lst);
+   			}
+   	   			assetPlanInfoService.batchEditAssetPlanAndRate(lst, allReviewListID);
+   	   			
    			}else {
    				return ResponseResult.success(true, "仅规范的条目可提交！");
    			}

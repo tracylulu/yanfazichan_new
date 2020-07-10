@@ -3,6 +3,8 @@ package com.h3c.platform.assetplan.dao;
 import com.h3c.platform.assetplan.entity.AssetRateInfo;
 import com.h3c.platform.assetplan.entity.AssetRateInfoExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface AssetRateInfoMapper {
@@ -27,4 +29,6 @@ public interface AssetRateInfoMapper {
     int updateByPrimaryKeySelective(AssetRateInfo record);
 
     int updateByPrimaryKey(AssetRateInfo record);
+    
+    List<AssetRateInfo> selectbyMap(@Param("param") Map<String,Object> param);
 }

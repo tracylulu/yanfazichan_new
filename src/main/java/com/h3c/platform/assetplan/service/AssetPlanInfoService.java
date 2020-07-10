@@ -21,6 +21,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoMenuView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
@@ -36,6 +37,13 @@ public interface AssetPlanInfoService {
 	//int batchAddAssetPlanInfo(List<AssetPlanInfo> lst);
 	
 	int editAssetPlanInfo(AssetPlanInfo assetPlanInfo);
+	
+	/**
+	 * 更新规范性审核流程状态，回写使用率
+	 * @param lst
+	 * @return
+	 */
+	int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstID) throws Exception;
 	
 	int batchEditAssetPlanInfo(List<AssetPlanInfo> lst);
 	
@@ -193,7 +201,7 @@ public interface AssetPlanInfoService {
   	
      int activateAssetPlanInfoByIds(Map<String,Object> param);   
   	
-     List<AssetPlanInfoSearchView> exportAssetPlanInfoByIds(Map<String, Object> param); 
+     List<AssetPlanInfoSearchExportView> exportAssetPlanInfoByIds(Map<String, Object> param); 
   	
      List<DeptInfo> getDeptInfoList();
   	

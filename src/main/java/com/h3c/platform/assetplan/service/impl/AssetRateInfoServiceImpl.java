@@ -1,26 +1,32 @@
 package com.h3c.platform.assetplan.service.impl;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.assetplan.dao.AssetRateInfoMapper;
 import com.h3c.platform.assetplan.entity.AssetRateInfo;
 import com.h3c.platform.assetplan.entity.AssetRateInfoExample;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.service.AssetRateInfoService;
 import com.h3c.platform.assetplan.service.DeptInfoService;
-import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.response.ResponseResult;
+
+import com.h3c.platform.assetplan.entity.RateTotalInfo;
 
 @Service
 public class AssetRateInfoServiceImpl implements AssetRateInfoService {
@@ -29,6 +35,74 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	private AssetRateInfoMapper assetRateInfoMapper;
 	@Autowired
 	private DeptInfoService deptInfoService;
+	
+	/**
+	 * 根据查询条件获取使用率  查询日期前60天
+	 * @param model 小类
+	 * @param deptCode 部门编码
+	 * @param date 日期
+	 * @return
+	 */
+	private List<AssetRateInfo> getRateInfo(String model,String deptCode ,Date date)  {
+		Calendar calendar=Calendar.getInstance();  
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH,-62);
+//		AssetRateInfoExample example = new AssetRateInfoExample();
+//		AssetRateInfoExample.Criteria cri= example.createCriteria();
+//		cri.andDeptCodeEqualTo(deptCode);
+//		cri.andAssetCategoryEqualTo(model);
+//		cri.andCollectTimeBetween(calendar.getTime(), date);
+//		
+//		List<AssetRateInfo> lst = assetRateInfoMapper.selectByExample(example);
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("begin", calendar.getTime());
+		param.put("end", date);
+		param.put("model", model);
+		param.put("deptCode", deptCode);
+		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
+		return lst;
+	}
+	
+	/**
+	 * 获取研发整体前60天使用率数据
+	 * @param model
+	 * @param deptCode
+	 * @param date
+	 * @return
+	 */
+	private List<AssetRateInfo> getRDRateInfo(String model ,Date date)  {
+		Calendar calendar=Calendar.getInstance();  
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH,-62);
+//		AssetRateInfoExample example = new AssetRateInfoExample();
+//		AssetRateInfoExample.Criteria cri= example.createCriteria();
+//		cri.andDeptNameEqualTo("研发总体");
+//		cri.andAssetCategoryEqualTo(model);
+//		cri.andCollectTimeBetween(calendar.getTime(), date);
+		
+//		List<AssetRateInfo> lst = assetRateInfoMapper.selectByExample(example);
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("begin", calendar.getTime());
+		param.put("end", date);
+		param.put("model", model);
+		param.put("deptName", "研发总体");
+		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
+		return lst;
+	}
+	
+	private List<AssetRateInfo> getRDRateInfoWithRD(String model ,String deptCode ,Date date)  {
+		Calendar calendar=Calendar.getInstance();  
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH,-62);
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("begin", calendar.getTime());
+		param.put("end", date);
+		param.put("model", model);
+		param.put("deptCode", deptCode);
+		param.put("deptName", "研发总体");
+		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
+		return lst;
+	}
 
 	/**
 	 *@model 型号
@@ -36,30 +110,113 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 *@date 日期
 	 */
 	@Override
-	public ResponseResult getRate(String model,String deptCode ,Date date) {
+	public Map<String,Object> getRate(String model,String deptCode ,Date date)throws Exception  {
+		RateTotalInfo rateTotal=new RateTotalInfo();	
+		Map<String,Object> mapRD= new HashMap<>();		
+		
+		//存储使用路分布
+		List<String> lstDis=new ArrayList<String>();
 		DeptInfo deptInfo = deptInfoService.getByCode(deptCode);
+		if(deptInfo.getDeptCode()==null) {
+			throw new Exception("未找到当前部门");
+		}
 		//交换机和路由器预算部门为三级，其余为二级
 		if(!"50042493".contentEquals(deptInfo.getSupDeptCode())&&!"50042499".contentEquals(deptInfo.getSupDeptCode())) {
 			deptCode = deptInfo.getSupDeptCode();
 		}
+		rateTotal.setDeptCode(deptInfo.getDeptCode().toString());
+		rateTotal.setDeptName(StringUtils.isBlank(deptInfo.getDeptName())?"":deptInfo.getDeptName());
+		rateTotal.setModel(model);	
+		
+		//使用率数据集合
+		List<AssetRateInfo> lstAll = getRDRateInfoWithRD( model, deptCode , date); 
+		List<AssetRateInfo> lst = lstAll.stream().filter(o->!"研发总体".equals(o.getDeptName())).collect(Collectors.toList());
+		List<AssetRateInfo> lstRD = lstAll.stream().filter(o->"研发总体".equals(o.getDeptName())).collect(Collectors.toList());
+		//平均值
+		String deptUsageRate=getRateAvg(lst);	
+
+		if(CollectionUtils.isEmpty(lst)) {
+			rateTotal.setRate("");
+		}else {
+			rateTotal.setRate(deptUsageRate+"%");
+		}
+		rateTotal.setNumber(lst.size());
+		rateTotal.setDistribution(getDistribution(lst));
+		rateTotal.setDetail(getRateDetail(lst));
+
+		mapRD=getRDRate( model, deptCode,date,lstRD);
+		rateTotal.setRdRate((String)mapRD.get("rate"));
+		rateTotal.setRdNumber((Integer)mapRD.get("number"));
+		rateTotal.setRatedetail((rateTotal.getRate()+"/"+rateTotal.getRdRate()).replace("%", ""));
+		
+		Map<String,Object> result= new HashMap<>();	
+		result.put("rate", rateTotal);
+		result.put("detail", lst);
+		
+		return result;
+	}
+	
+	/**
+	 * 获取使用分布
+	 * @param lst
+	 * @return
+	 */
+	private String getDistribution(List<AssetRateInfo> lst) {
+		List<String> lstDis= new ArrayList<String>();
+		Map<String,List<AssetRateInfo>> mapDis= lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.groupingBy(AssetRateInfo::getArea));
+		for(String key:mapDis.keySet()) {
+			lstDis.add(key+"："+mapDis.size()+"pcs");
+		}
+		return String.join(";", lstDis);
+	}
+	
+	/**
+	 * 获取使用率明细
+	 * @param lst
+	 * @return
+	 */
+	private String getRateDetail(List<AssetRateInfo> lst) {
+		int lessThirty=0,lessSixty=0,lessHundred=0;
+		Map<String,List<AssetRateInfo>> mapDetail= lst.stream().collect(Collectors.groupingBy(AssetRateInfo::getAssertNumber));
+		for(String key:mapDetail.keySet()) {
+			List<Double> lstDetailRate=new ArrayList<Double>();
+			List<AssetRateInfo> lstTemp=mapDetail.get(key);
+			lstTemp.stream().forEach(o->{
+				if(StringUtils.isNotBlank(o.getUsageRate())) {
+					lstDetailRate.add(Double.parseDouble(o.getUsageRate()));					
+				}
+			});
+			double avg = lstDetailRate.stream().collect(Collectors.averagingDouble(Double::doubleValue));
+			
+			//0-30
+			if(Double.compare(avg, 0)!=-1 &&Double.compare(avg, 0.3)==-1) {
+				++lessThirty;
+			}
+			//30-60
+			if(Double.compare(avg, 0.3)!=-1 &&Double.compare(avg, 0.6)==-1) {
+				++lessSixty;
+			}
+			//60-100
+			if(Double.compare(avg, 0.6)!=-1 &&Double.compare(avg, 1)==-1) {
+				++lessHundred;
+			}
+		}
+		return "使用率0~30%: "+lessThirty+"pcs;使用率30~60%: "+lessSixty+"pcs;使用率60~100%："+lessHundred+"pcs";
+	}
+	
+	/**
+	 * 求使用率平均值 ，百分比保留整数
+	 * @param lst
+	 * @return
+	 */
+	private String getRateAvg(List<AssetRateInfo> lst) {
 		double rates=0 ,usageRate=0;
-		Calendar calendar=Calendar.getInstance();  
-		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH,-62);
-		AssetRateInfoExample example = new AssetRateInfoExample();
-		AssetRateInfoExample.Criteria cri= example.createCriteria();
-		cri.andDeptCodeEqualTo(deptCode);
-		cri.andAssetCategoryEqualTo(model);
-		cri.andCollectTimeBetween(calendar.getTime(), date);
-		
-		List<AssetRateInfo> lst = assetRateInfoMapper.selectByExample(example);
-		
 		for(AssetRateInfo rateInfo : lst) {
 			if(StringUtils.isNotBlank(rateInfo.getUsageRate())) {
 				rates += Double.parseDouble(rateInfo.getUsageRate());
 			}
 		}		 
-		
+	
 		if(Double.NaN !=rates && CollectionUtils.isNotEmpty(lst)) {
 			usageRate = rates/lst.size();
 		}
@@ -67,32 +224,9 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		NumberFormat nf = NumberFormat.getNumberInstance();
 		nf.setMaximumFractionDigits(0);
 		
-		String deptUsageRate=nf.format(usageRate*100);
+		String deptUsageRate=nf.format(usageRate*100);		
 		
-		Map<String,Object> mapDept= new HashMap<>();	
-		
-		mapDept.put("deptName", deptInfo.getDeptName());
-		mapDept.put("type", model);
-		if(CollectionUtils.isEmpty(lst)) {
-			mapDept.put("rate", "");
-			mapDept.put("isEmpty", true);
-		}else {
-			mapDept.put("rate",deptUsageRate+"%");
-			mapDept.put("isEmpty", false);
-		}
-		
-		
-		Map<String,Object> mapRD= new HashMap<>();
-		
-		mapRD=getRDRate( model, deptCode,calendar.getTime(),date);
-
-		
-		Map<String,Object> result= new HashMap<>();	
-		result.put("dept", mapDept);
-		result.put("RD", mapRD);
-		result.put("detail", lst);
-		
-		return ResponseResult.success(result);
+		return deptUsageRate;
 	}
 	
 	/**
@@ -103,40 +237,30 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 * @param end
 	 * @return
 	 */
-	private Map<String,Object> getRDRate(String model,String deptCode,Date bef,Date end) {
+	private Map<String,Object> getRDRate(String model,String deptCode,Date date,List<AssetRateInfo> lst) {
 		Map<String,Object> mapRD= new HashMap<>();
 		mapRD.put("deptName", "研发总体");
 		mapRD.put("type", model);
 		double rates=0 ,usageRate=0;
-		AssetRateInfoExample example = new AssetRateInfoExample();
-		AssetRateInfoExample.Criteria cri= example.createCriteria();
-		cri.andDeptNameEqualTo("研发总体");
-		cri.andAssetCategoryEqualTo(model);
-		cri.andCollectTimeBetween(bef, end);
 		
-		List<AssetRateInfo> lst = assetRateInfoMapper.selectByExample(example);
+		//List<AssetRateInfo> lst = getRDRateInfo(model,date);
 
 		
 		if(CollectionUtils.isEmpty(lst)) {
 			mapRD.put("rate", "");
-			mapRD.put("isEmpty", true);
+			mapRD.put("isEmpty", true);			
 		}else {
-			for(AssetRateInfo rateInfo : lst) {
-				if(StringUtils.isNotBlank(rateInfo.getUsageRate())) {
-					rates += Double.parseDouble(rateInfo.getUsageRate());
-				}
-			}		 
 			
-			if(Double.NaN !=rates && CollectionUtils.isNotEmpty(lst)) {
-				usageRate = rates/lst.size();
-			}
-			NumberFormat nf = NumberFormat.getNumberInstance();
-			nf.setMaximumFractionDigits(0);
-			String RDUsageRate =nf.format(usageRate*100);
+			String RDUsageRate =getRateAvg(lst);
 			mapRD.put("rate",RDUsageRate+"%");
 			mapRD.put("isEmpty", false);
 		}
-	
+		mapRD.put("number", lst.size());
 		return mapRD ;
+	}
+	
+	public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+		  Set<Object> seen = ConcurrentHashMap.newKeySet();
+		  return t -> seen.add(keyExtractor.apply(t));
 	}
 }

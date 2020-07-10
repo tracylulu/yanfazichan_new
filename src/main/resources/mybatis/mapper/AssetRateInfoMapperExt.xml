@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetRateInfoMapper">
+  <select id="selectbyMap" parameterType="map" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"></include> from AssetRateInfo
+  	<where>
+  		collect_time between #{param.begin} and #{param.end}
+  		and asset_category=#{param.model}
+  		and  (dept_code=#{param.deptCode} or dept_name=#{param.deptName})
+  		<!-- <if test="param.deptCode!=null and param.deptCode!=''">
+  			
+  		</if>
+  		<if test="param.deptName!=null and param.deptname!=''">
+  			and dept_name=#{param.deptName}
+  		</if> -->
+  	</where> 
+  </select>
+</mapper>
