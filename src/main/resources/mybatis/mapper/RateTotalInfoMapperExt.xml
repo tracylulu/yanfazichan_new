@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.RateTotalInfoMapper">
+  
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into RateTotalInfo (id, dept_code, dept_name, 
+      model, rate, number, 
+      distribution, detail, rd_rate, 
+      rd_number, rateDetail, createtime
+      )
+    values 
+    <foreach collection="lst" item="item" index="index" separator=",">  
+    	(#{item.id,jdbcType=INTEGER}, #{item.deptCode,jdbcType=VARCHAR}, #{item.deptName,jdbcType=VARCHAR}, 
+      #{item.model,jdbcType=VARCHAR}, #{item.rate,jdbcType=VARCHAR}, #{item.number,jdbcType=INTEGER}, 
+      #{item.distribution,jdbcType=VARCHAR}, #{item.detail,jdbcType=VARCHAR}, #{item.rdRate,jdbcType=VARCHAR}, 
+      #{item.rdNumber,jdbcType=INTEGER}, #{item.ratedetail,jdbcType=VARCHAR}, #{item.createtime,jdbcType=TIMESTAMP}
+      )
+       </foreach>
+  </insert>
+  <delete id="deleteByID" parameterType="java.util.List">
+  	delete from RateTotalInfo where id in 
+  	  <foreach collection="lst" item="item" index="index" open="(" close=")" separator=",">  
+  	  	#{item}
+  	  </foreach>
+  </delete>
+</mapper>

@@ -1,5 +1,6 @@
 package com.h3c.platform.assetplan.service.impl;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,9 +10,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,15 +69,20 @@ import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
 import com.h3c.platform.assetplan.entity.ProjectInfo;
 import com.h3c.platform.assetplan.entity.PurchaseReportInfo;
+import com.h3c.platform.assetplan.entity.RateTotalInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
 import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
+import com.h3c.platform.assetplan.service.AssetRateInfoService;
+import com.h3c.platform.assetplan.service.RateTotalInfoService;
 import com.h3c.platform.common.service.PlanTimeWindowsService;
 import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.util.UserUtils;
 
 @Service
 public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
+	
+	public static Logger log =LoggerFactory.getLogger(AssetPlanInfoServiceImpl.class);	
 	
 	@Autowired
 	private AssetPlanInfoMapper assetPlanInfoMapper;
@@ -107,6 +122,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	private PlanTimeWindowsService planTimeWindowsService;
 	@Autowired
 	private AssetPlanInfoTodoViewMapper todoViewMapper;
+	@Autowired
+	private AssetRateInfoService assetRateInfoService;
+	@Autowired
+	private RateTotalInfoService rateTotalInfoService;
 	
 	/*@Override
 	public int addAssetPlanInfo(AssetPlanInfo ap) {
@@ -145,6 +164,129 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		}
 		return lst.size();
  	}
+	
+	/**
+	 * 第二环节提交至第三环节用
+	 * 写入使用率
+	 */
+	@Override
+	@Transactional
+	public int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstID) throws Exception{
+		
+		
+		//更新流程状态
+		Long startbatchEditTime = System.currentTimeMillis();
+		batchEdit(lst);
+		
+	
+		Long endbatchEditTime = System.currentTimeMillis();
+		
+		log.info("batch:"+(endbatchEditTime-startbatchEditTime)+"ms");
+		
+		log.info("lstCount"+lst.size());
+		
+		syncEdit( lst, lstID);
+		
+//		new Thread((new Runnable() {
+//	        @Override
+//	        public void run() {
+//	            // 批量同步数据
+//	            try {
+//	            	syncEdit( lst, lstID);        	
+//	            } catch (Exception e) {
+////	                throw e;
+//	            }
+//	        }
+//	    })).start(); 
+		return lst.size();
+	}
+	
+	/**
+	 * 批量更新
+	 * @param lst
+	 * @return
+	 */
+	@Transactional
+	private  int batchEdit(List<AssetPlanInfo> lst) {	
+		
+		int count = lst.size();
+		int groupSize = 200;
+		int groupNo = count / groupSize;
+		if (lst.size() <= groupSize) {
+			assetPlanInfoMapper.updateBatchAssetPlanInfo(lst);
+		} else {
+			List<AssetPlanInfo> subList=null;
+			for (int i = 1; i <= groupNo; i++) {
+				int begin =(i-1)*groupSize;
+				int end= 0;
+				if(i==groupNo) {
+					end = lst.size()-1;
+				}else {
+					end=i*groupSize;
+				}
+				
+				subList = lst.subList(begin, end);
+				assetPlanInfoMapper.updateBatchAssetPlanInfo(subList);
+			}
+			//sub 不包含最后一条 单独处理  数据不够 groupSize
+			if (CollectionUtils.isNotEmpty(lst)) {
+				assetPlanInfoMapper.updateByPrimaryKeySelective(lst.get(lst.size()-1));
+			}
+		}
+		return count;
+	}
+	
+	private void syncEdit(List<AssetPlanInfo> lst, List<Integer> lstID) throws Exception {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.initialize();
+		// 配置核心线程数
+		executor.setCorePoolSize(1);
+		// 配置最大线程数
+		executor.setMaxPoolSize(1);
+		executor.submit(new Runnable() {
+			@Override
+			public void run() {
+				// 批量同步数据
+				try {
+					List<RateTotalInfo> lstTotal = new ArrayList<RateTotalInfo>();
+					Long startForTime = System.currentTimeMillis();
+					int i = 0;
+					for (AssetPlanInfo info : lst) {
+						Map<String, Object> result = assetRateInfoService.getRate(info.getAssetmodel(),
+								info.getDeptcode(), info.getReviewtime());
+						RateTotalInfo rateTotalInfo = (RateTotalInfo) result.get("rate");
+						rateTotalInfo.setId(info.getAssetplanid());
+						rateTotalInfo.setCreatetime(new Date());
+						lstTotal.add(rateTotalInfo);
+						i++;
+					}
+					log.info("循环测试" + i);
+					log.info("计算后的数值" + lstTotal.size());
+					Long endForTime = System.currentTimeMillis();
+					Long startinsertRateTime = System.currentTimeMillis();
+					// 存储 使用率统计信息
+					rateTotalInfoService.deleteByID(lstID);
+					if (CollectionUtils.isNotEmpty(lstTotal)) {
+						rateTotalInfoService.insertBatch(lstTotal);
+					}
+					Long endinsertRateTime = System.currentTimeMillis();
+
+					// 回写使用率
+					Long startupdaterateTime = System.currentTimeMillis();
+					assetPlanInfoMapper.updateUserRate(lstID);
+					Long endupdaterateTime = System.currentTimeMillis();
+
+					log.info("for:" + (endForTime - startForTime) + "ms");
+					log.info("insert:" + (endinsertRateTime - startinsertRateTime) + "ms");
+					log.info("update:" + (endupdaterateTime - startupdaterateTime) + "ms");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
 
 	
 	@Override	

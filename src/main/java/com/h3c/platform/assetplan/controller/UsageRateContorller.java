@@ -30,7 +30,7 @@ public class UsageRateContorller {
 	@ApiOperation("获取使用率")	
 	@DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
 	public ResponseResult getRate(@RequestBody AssetRateInfo assetRateInfo) throws Exception{
-		return rateInfoService.getRate(assetRateInfo.getAssetCategory(), assetRateInfo.getDeptCode(), assetRateInfo.getCollectTime());		
+		return ResponseResult.success(rateInfoService.getRate(assetRateInfo.getAssetCategory(), assetRateInfo.getDeptCode(), assetRateInfo.getCollectTime()));		
 	} 
 
 }

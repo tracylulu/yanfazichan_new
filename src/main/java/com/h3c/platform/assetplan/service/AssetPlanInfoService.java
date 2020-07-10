@@ -37,6 +37,13 @@ public interface AssetPlanInfoService {
 	
 	int editAssetPlanInfo(AssetPlanInfo assetPlanInfo);
 	
+	/**
+	 * 更新规范性审核流程状态，回写使用率
+	 * @param lst
+	 * @return
+	 */
+	int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstID) throws Exception;
+	
 	int batchEditAssetPlanInfo(List<AssetPlanInfo> lst);
 	
 	
