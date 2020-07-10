@@ -304,7 +304,9 @@ public class AssetPlanInfoReviewController {
    	   				ap.setModifier(applyuser);
    	   				ap.setModifitime(new Date());
    	   				ap.setReviewtime(new Date());
-   	//   	   				ResponseResult rate = rateInfoService.getRate(ap.getAssetmodel(), ap.getDeptcode(), ap.getReviewtime());
+
+   	   				//得传递型号，三级部门，规范审核时间，向楠那边做后续的判断：*交换机和路由产品线，预算划分到三级，其余部门预算在二级。
+//   	   				ResponseResult rate = rateInfoService.getRate(ap.getAssetmodel(), ap.getDeptcode(), ap.getReviewtime());
 //   	   				Map data = (Map) rate.getData();
 //   	   				//研发总体的信息
 //   	   				Map RD = (Map)data.get("RD");
@@ -327,7 +329,9 @@ public class AssetPlanInfoReviewController {
 //   	   					ap.setUsagerate(deptRatesplit[0]+"/"+rdRatesplit[0]);
 //   	   				}
    	   				lst.add(ap);
-   			}
+
+   	   			}
+//   	   			assetPlanInfoService.batchEditAssetPlanInfo(lst);
    	   			assetPlanInfoService.batchEditAssetPlanAndRate(lst, allReviewListID);
    	   			
    			}else {
