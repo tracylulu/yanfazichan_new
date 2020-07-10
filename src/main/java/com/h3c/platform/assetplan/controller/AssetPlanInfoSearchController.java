@@ -315,11 +315,15 @@ public class AssetPlanInfoSearchController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.EXPORT)
    	public void exportAssetPlanInfoByIds(HttpServletRequest request,@RequestBody SearchAssetParamEntity searchAssetParamEntity,HttpServletResponse response)throws Exception {
-    	String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价","申购金额", "同意金额",
-										"申购人", "二级部门", "项目编码", "备注","使用率","数量","设备分布","使用率明细","研发总体","研发总体数量"};
-		String[] column = new String[] { "Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
-										"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name", "Itemcode", "Assetnote","Rate","Number",
+    	System.out.println("000-----"+new Date());
+    	String[] header = new String[] { "评审结果","物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价","申购金额", "同意金额",
+										"申购人", "二级部门", "三级部门", "项目编码", "类别", "货期（天）", "用途", "到货地点", "备注", "评审意见",
+										"使用率","数量","设备分布","使用率明细","研发总体","研发总体数量"};
+		String[] column = new String[] { "Approvalresult","Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
+										"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name","Dept3name", "Itemcode", 
+										"Assetcategory","Goodstime","Purpose","Receiverplace","Assetnote","Approvalnote","Rate","Number",
 										"Distribution","Detail","RdRate","RdNumber"};
+		String currentUserId = UserUtils.getCurrentUserId();
 		List<String> lstHeader = Arrays.asList(header);
 		List<String> lsth = new ArrayList<>(lstHeader);
 		header = (String[]) lsth.toArray(new String[lsth.size()]);
@@ -390,7 +394,7 @@ public class AssetPlanInfoSearchController {
             param.put("pageNum", (pageNum-1)*pageSize);
             param.put("pageSize", pageSize);
             
-           /* //普通用户查看，只能查看申请人/申购人是当前用户的信息
+            //普通用户查看，只能查看申请人/申购人是当前用户的信息
             //123级主管、系统管理员可看到全部数据
             Boolean isDeptManager=false;
             DeptInfo deptManagerInfo = deptInfoService.getByDeptManagerCode(currentUserId);
@@ -403,7 +407,7 @@ public class AssetPlanInfoSearchController {
             	param.put("NotAdmin", "NotAdmin");
             	param.put("currentUserId", currentUserId);
             }
-            */
+            
             
 			List<AssetPlanInfoSearchExportView> lst = assetPlanInfoService.exportAssetPlanInfoByIds(param);
 			System.out.println("111-----"+new Date());
