@@ -12,7 +12,11 @@ public class DeptTreeInfo {
     private String supDeptDode;
     
     private String deptLevel;
+    
+    private String deptPlannerCode;
 
+    private String deptPlannerName;
+    
     private List<DeptTreeInfo> children;
 
 	public Integer getDeptCode() {
@@ -53,6 +57,22 @@ public class DeptTreeInfo {
 
 	public void setDeptLevel(String deptLevel) {
 		this.deptLevel = deptLevel;
+	}
+
+	public String getDeptPlannerCode() {
+		return deptPlannerCode;
+	}
+
+	public void setDeptPlannerCode(String deptPlannerCode) {
+		this.deptPlannerCode = deptPlannerCode;
+	}
+
+	public String getDeptPlannerName() {
+		return deptPlannerName;
+	}
+
+	public void setDeptPlannerName(String deptPlannerName) {
+		this.deptPlannerName = deptPlannerName;
 	}
     
     

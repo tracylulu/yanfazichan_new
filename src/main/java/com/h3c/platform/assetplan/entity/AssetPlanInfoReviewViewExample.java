@@ -505,6 +505,66 @@ public class AssetPlanInfoReviewViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andRequiredsauditIsNull() {
+            addCriterion("RequiredsAudit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditIsNotNull() {
+            addCriterion("RequiredsAudit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditEqualTo(Integer value) {
+            addCriterion("RequiredsAudit =", value, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditNotEqualTo(Integer value) {
+            addCriterion("RequiredsAudit <>", value, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditGreaterThan(Integer value) {
+            addCriterion("RequiredsAudit >", value, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditGreaterThanOrEqualTo(Integer value) {
+            addCriterion("RequiredsAudit >=", value, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditLessThan(Integer value) {
+            addCriterion("RequiredsAudit <", value, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditLessThanOrEqualTo(Integer value) {
+            addCriterion("RequiredsAudit <=", value, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditIn(List<Integer> values) {
+            addCriterion("RequiredsAudit in", values, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditNotIn(List<Integer> values) {
+            addCriterion("RequiredsAudit not in", values, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditBetween(Integer value1, Integer value2) {
+            addCriterion("RequiredsAudit between", value1, value2, "requiredsaudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredsauditNotBetween(Integer value1, Integer value2) {
+            addCriterion("RequiredsAudit not between", value1, value2, "requiredsaudit");
+            return (Criteria) this;
+        }
+
         public Criteria andPpriceIsNull() {
             addCriterion("PPrice is null");
             return (Criteria) this;
@@ -622,6 +682,66 @@ public class AssetPlanInfoReviewViewExample {
 
         public Criteria andTotalmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("TotalMoney not between", value1, value2, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyIsNull() {
+            addCriterion("ActualMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyIsNotNull() {
+            addCriterion("ActualMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney =", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyNotEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney <>", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyGreaterThan(BigDecimal value) {
+            addCriterion("ActualMoney >", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney >=", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyLessThan(BigDecimal value) {
+            addCriterion("ActualMoney <", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney <=", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyIn(List<BigDecimal> values) {
+            addCriterion("ActualMoney in", values, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyNotIn(List<BigDecimal> values) {
+            addCriterion("ActualMoney not in", values, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ActualMoney between", value1, value2, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ActualMoney not between", value1, value2, "actualmoney");
             return (Criteria) this;
         }
 

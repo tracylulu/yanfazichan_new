@@ -32,6 +32,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.ProjectInfo;
 import com.h3c.platform.assetplan.entity.PurchaseReportInfo;
+import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
 import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -44,11 +45,13 @@ import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoMapper;
 import com.h3c.platform.assetplan.dao.DeptInfoMapper;
 import com.h3c.platform.assetplan.dao.PurchaseReportInfoMapper;
+import com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper;
 import com.h3c.platform.assetplan.dao.SpecifyManufacturerInfoMapper;
 import com.h3c.platform.assetplan.entity.AssetInfoSubmitEntity;
 import com.h3c.platform.assetplan.entity.AssetPlanGlobalInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanGlobalInfoAll;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
+import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.MailInfoService;
@@ -88,7 +91,10 @@ public class AssetPlanInfoApplyController {
 	private SysDicInfoService dicService;
 	@Autowired
 	private SysDicInfoService sysDicInfoService;
-	
+	@Autowired
+	private RequestsNumApproveRecordMapper recordMapper;
+	@Autowired
+	private DeptInfoService deptInfoService;
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
 	@PostMapping("/addAssetPlanInfo")
@@ -590,6 +596,19 @@ public class AssetPlanInfoApplyController {
 			}
    			assetPlanInfoService.batchEditAssetPlanInfo(lst);
    		
+   			//提交之前对表RequestsNumApproveRecord创建记录数据，与主表对应
+			for (int k = 0; k < newLstsubmitID.size(); k++) {
+				RequestsNumApproveRecord record = recordMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+				if(record==null) {
+					AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+   					Integer requiredsaudit = ap.getRequiredsaudit();
+   					RequestsNumApproveRecord numApproveRecord = new RequestsNumApproveRecord();
+   					numApproveRecord.setAssetplanid(newLstsubmitID.get(k));
+   					numApproveRecord.setReviewercount(requiredsaudit);
+   					recordMapper.insert(numApproveRecord);
+				}
+			}
+   			
 			//提交资源计划申请后，发送邮件给规范审核环节计划员，抄送申购人和申请人。
 			//这个参数得先写死，到时候我这边写一个接口前台把这个url给我传过来
 			String url="";
@@ -718,6 +737,8 @@ public class AssetPlanInfoApplyController {
 				String dept3Name = "";
 				String dept3PlannerCode="";
 				String dept3PlannerName="";
+				//申购人的角色（1,2,3,0 分别表示：一级主管、二级主管、三级主管、普通用户）
+				String requiredUserType="";
 				
 				if(StringUtils.isNotBlank(dept1Code)) {
 					DeptInfo deptInfo1 = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept1Code));
@@ -746,6 +767,8 @@ public class AssetPlanInfoApplyController {
 								dept3PlannerName = userByEmpCode.getEmpName();
 							}
 						}
+						//一级部门主管
+						requiredUserType="1";
 					}else {
 						DeptInfo deptInfo2 = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept2Code));
 						//计划员工号
@@ -757,6 +780,8 @@ public class AssetPlanInfoApplyController {
 								dept3PlannerName = userByEmpCode.getEmpName();
 							}
 						}
+						//二级部门主管
+						requiredUserType="2";
 					}
 				}else {
 					//三级部门的人员或者四级部门的统一取三级部门的计划员
@@ -770,6 +795,15 @@ public class AssetPlanInfoApplyController {
 							dept3PlannerName = userByEmpCode.getEmpName();
 						}
 					}
+		            DeptInfo deptManagerInfo = deptInfoService.getByDeptManagerCode(empCode);
+		            if(deptManagerInfo==null) {
+		            	//普通用户
+		            	requiredUserType="0";
+		            }else {
+		            	//三级部门主管
+		            	requiredUserType="3";
+		            }
+					
 				}
 					
 					
@@ -784,6 +818,8 @@ public class AssetPlanInfoApplyController {
 				json.put("dept3name", dept3Name);
 				json.put("dept3plannercode", dept3PlannerCode);
 				json.put("dept3plannername", dept3PlannerName);
+				json.put("requiredUserType", requiredUserType);
+				
 				return ResponseResult.success(0, "查询成功", json, 0);
 			}
     	/*} catch (Exception e) {

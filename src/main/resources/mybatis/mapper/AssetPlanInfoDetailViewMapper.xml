@@ -6,7 +6,7 @@
     <result column="PlanCode" jdbcType="VARCHAR" property="plancode" />
     <result column="PPrice" jdbcType="DECIMAL" property="pprice" />
     <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
-    <result column="ActualMoney" jdbcType="VARCHAR" property="actualmoney" />
+    <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
     <result column="AssetName" jdbcType="VARCHAR" property="assetname" />
     <result column="AssetManufacturer" jdbcType="VARCHAR" property="assetmanufacturer" />
     <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
@@ -59,12 +59,13 @@
     <result column="Dept1ReviewTime" jdbcType="TIMESTAMP" property="dept1reviewtime" />
     <result column="Dept1ReviewNote" jdbcType="VARCHAR" property="dept1reviewnote" />
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
+    <result column="ItemName" jdbcType="VARCHAR" property="itemname" />
     <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
     <result column="Dept2Code" jdbcType="VARCHAR" property="dept2code" />
     <result column="Dept2Name" jdbcType="VARCHAR" property="dept2name" />
     <result column="Dept1Code" jdbcType="VARCHAR" property="dept1code" />
     <result column="Dept1Name" jdbcType="VARCHAR" property="dept1name" />
-    <result column="ItemName" jdbcType="VARCHAR" property="itemname" />
+    <result column="RequiredUserType" jdbcType="VARCHAR" property="requiredusertype" />
     <result column="ReviewerName" jdbcType="VARCHAR" property="reviewername" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -135,8 +136,8 @@
     ReviewTime, ReviewResult, ReviewNote, Dept3Manager, Dept3CheckTime, Dept3CheckNote, 
     Dept2Manager, Dept2CheckTime, Dept2CheckNote, Planner, PlannerTime, PlannerNote, 
     OQDeptReviewer, OQDeptReviewTime, OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
-    Dept1ReviewNote, RequiredUserName, Dept3Name, Dept2Code, Dept2Name, Dept1Code, Dept1Name, 
-    ItemName, ReviewerName
+    Dept1ReviewNote, RequiredUserName, ItemName, Dept3Name, Dept2Code, Dept2Name, Dept1Code, 
+    Dept1Name, RequiredUserType, ReviewerName
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDetailViewExample" resultMap="BaseResultMap">
     select
@@ -178,12 +179,12 @@
       Dept2CheckNote, Planner, PlannerTime, 
       PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
       OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
-      Dept1ReviewNote, RequiredUserName, Dept3Name, 
-      Dept2Code, Dept2Name, Dept1Code, 
-      Dept1Name, ItemName, ReviewerName
-      )
+      Dept1ReviewNote, RequiredUserName, ItemName, 
+      Dept3Name, Dept2Code, Dept2Name, 
+      Dept1Code, Dept1Name, RequiredUserType, 
+      ReviewerName)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{pprice,jdbcType=DECIMAL}, 
-      #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
+      #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
       #{planmonth,jdbcType=DATE}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
       #{purpose,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
@@ -201,10 +202,10 @@
       #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
       #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
       #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
-      #{dept1reviewnote,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
-      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, 
-      #{dept1name,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{reviewername,jdbcType=VARCHAR}
-      )
+      #{dept1reviewnote,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, 
+      #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
+      #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, #{requiredusertype,jdbcType=VARCHAR}, 
+      #{reviewername,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDetailView">
     insert into AssetPlanInfoDetailView
@@ -380,6 +381,9 @@
       <if test="requiredusername != null">
         RequiredUserName,
       </if>
+      <if test="itemname != null">
+        ItemName,
+      </if>
       <if test="dept3name != null">
         Dept3Name,
       </if>
@@ -395,8 +399,8 @@
       <if test="dept1name != null">
         Dept1Name,
       </if>
-      <if test="itemname != null">
-        ItemName,
+      <if test="requiredusertype != null">
+        RequiredUserType,
       </if>
       <if test="reviewername != null">
         ReviewerName,
@@ -416,7 +420,7 @@
         #{totalmoney,jdbcType=DECIMAL},
       </if>
       <if test="actualmoney != null">
-        #{actualmoney,jdbcType=VARCHAR},
+        #{actualmoney,jdbcType=DECIMAL},
       </if>
       <if test="assetname != null">
         #{assetname,jdbcType=VARCHAR},
@@ -574,6 +578,9 @@
       <if test="requiredusername != null">
         #{requiredusername,jdbcType=VARCHAR},
       </if>
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
       <if test="dept3name != null">
         #{dept3name,jdbcType=VARCHAR},
       </if>
@@ -589,8 +596,8 @@
       <if test="dept1name != null">
         #{dept1name,jdbcType=VARCHAR},
       </if>
-      <if test="itemname != null">
-        #{itemname,jdbcType=VARCHAR},
+      <if test="requiredusertype != null">
+        #{requiredusertype,jdbcType=VARCHAR},
       </if>
       <if test="reviewername != null">
         #{reviewername,jdbcType=VARCHAR},
@@ -619,7 +626,7 @@
         TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
       </if>
       <if test="record.actualmoney != null">
-        ActualMoney = #{record.actualmoney,jdbcType=VARCHAR},
+        ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       </if>
       <if test="record.assetname != null">
         AssetName = #{record.assetname,jdbcType=VARCHAR},
@@ -777,6 +784,9 @@
       <if test="record.requiredusername != null">
         RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       </if>
+      <if test="record.itemname != null">
+        ItemName = #{record.itemname,jdbcType=VARCHAR},
+      </if>
       <if test="record.dept3name != null">
         Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       </if>
@@ -792,8 +802,8 @@
       <if test="record.dept1name != null">
         Dept1Name = #{record.dept1name,jdbcType=VARCHAR},
       </if>
-      <if test="record.itemname != null">
-        ItemName = #{record.itemname,jdbcType=VARCHAR},
+      <if test="record.requiredusertype != null">
+        RequiredUserType = #{record.requiredusertype,jdbcType=VARCHAR},
       </if>
       <if test="record.reviewername != null">
         ReviewerName = #{record.reviewername,jdbcType=VARCHAR},
@@ -809,7 +819,7 @@
       PlanCode = #{record.plancode,jdbcType=VARCHAR},
       PPrice = #{record.pprice,jdbcType=DECIMAL},
       TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
-      ActualMoney = #{record.actualmoney,jdbcType=VARCHAR},
+      ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       AssetName = #{record.assetname,jdbcType=VARCHAR},
       AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
       AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
@@ -862,12 +872,13 @@
       Dept1ReviewTime = #{record.dept1reviewtime,jdbcType=TIMESTAMP},
       Dept1ReviewNote = #{record.dept1reviewnote,jdbcType=VARCHAR},
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
+      ItemName = #{record.itemname,jdbcType=VARCHAR},
       Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       Dept2Code = #{record.dept2code,jdbcType=VARCHAR},
       Dept2Name = #{record.dept2name,jdbcType=VARCHAR},
       Dept1Code = #{record.dept1code,jdbcType=VARCHAR},
       Dept1Name = #{record.dept1name,jdbcType=VARCHAR},
-      ItemName = #{record.itemname,jdbcType=VARCHAR},
+      RequiredUserType = #{record.requiredusertype,jdbcType=VARCHAR},
       ReviewerName = #{record.reviewername,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

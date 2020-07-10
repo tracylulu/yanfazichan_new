@@ -3,6 +3,8 @@ package com.h3c.platform.assetplan.entity;
 public class RequestsNumApproveRecord {
     private Integer assetplanid;
 
+    private Integer reviewercount;
+
     private Integer dept3managercount;
 
     private Integer dept2managercount;
@@ -19,6 +21,14 @@ public class RequestsNumApproveRecord {
 
     public void setAssetplanid(Integer assetplanid) {
         this.assetplanid = assetplanid;
+    }
+
+    public Integer getReviewercount() {
+        return reviewercount;
+    }
+
+    public void setReviewercount(Integer reviewercount) {
+        this.reviewercount = reviewercount;
     }
 
     public Integer getDept3managercount() {

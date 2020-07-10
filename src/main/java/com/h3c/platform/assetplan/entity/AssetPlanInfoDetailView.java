@@ -12,7 +12,7 @@ public class AssetPlanInfoDetailView {
 
     private BigDecimal totalmoney;
 
-    private String actualmoney;
+    private BigDecimal actualmoney;
 
     private String assetname;
 
@@ -118,6 +118,8 @@ public class AssetPlanInfoDetailView {
 
     private String requiredusername;
 
+    private String itemname;
+
     private String dept3name;
 
     private String dept2code;
@@ -128,7 +130,7 @@ public class AssetPlanInfoDetailView {
 
     private String dept1name;
 
-    private String itemname;
+    private String requiredusertype;
 
     private String reviewername;
 
@@ -164,12 +166,12 @@ public class AssetPlanInfoDetailView {
         this.totalmoney = totalmoney;
     }
 
-    public String getActualmoney() {
+    public BigDecimal getActualmoney() {
         return actualmoney;
     }
 
-    public void setActualmoney(String actualmoney) {
-        this.actualmoney = actualmoney == null ? null : actualmoney.trim();
+    public void setActualmoney(BigDecimal actualmoney) {
+        this.actualmoney = actualmoney;
     }
 
     public String getAssetname() {
@@ -588,6 +590,14 @@ public class AssetPlanInfoDetailView {
         this.requiredusername = requiredusername == null ? null : requiredusername.trim();
     }
 
+    public String getItemname() {
+        return itemname;
+    }
+
+    public void setItemname(String itemname) {
+        this.itemname = itemname == null ? null : itemname.trim();
+    }
+
     public String getDept3name() {
         return dept3name;
     }
@@ -628,12 +638,12 @@ public class AssetPlanInfoDetailView {
         this.dept1name = dept1name == null ? null : dept1name.trim();
     }
 
-    public String getItemname() {
-        return itemname;
+    public String getRequiredusertype() {
+        return requiredusertype;
     }
 
-    public void setItemname(String itemname) {
-        this.itemname = itemname == null ? null : itemname.trim();
+    public void setRequiredusertype(String requiredusertype) {
+        this.requiredusertype = requiredusertype == null ? null : requiredusertype.trim();
     }
 
     public String getReviewername() {

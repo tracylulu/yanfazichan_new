@@ -200,10 +200,12 @@ public class AssetPlanInfoDept3Controller {
    				ap.setModifier(applyuser);
    				ap.setModifitime(new Date());
    				//根据申购人获取待提交的二级部门主管
-	   			UserInfo user = userService.getUserByEmpCode(ap.getRequireduser());
-	   			DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(user.getDept2Code()));
-	   			if(StringUtils.isNotBlank(deptInfo.getDeptManagerCode())) {
-	   				ap.setDept2manager(deptInfo.getDeptManagerCode());
+   				//modify on 20200707.不能根据申购人取，得根据存的三级部门code取二级部门再去取
+	   			//UserInfo user = userService.getUserByEmpCode(ap.getRequireduser());
+   				DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
+	   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
+	   			if(StringUtils.isNotBlank(dept2Info.getDeptManagerCode())) {
+	   				ap.setDept2manager(dept2Info.getDeptManagerCode());
 	   			}else {
 	   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
 	   			}

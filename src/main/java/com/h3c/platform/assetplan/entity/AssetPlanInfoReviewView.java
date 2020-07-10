@@ -15,9 +15,13 @@ public class AssetPlanInfoReviewView {
 
     private Integer requireds;
 
+    private Integer requiredsaudit;
+
     private BigDecimal pprice;
 
     private BigDecimal totalmoney;
+
+    private BigDecimal actualmoney;
 
     private String requireduser;
 
@@ -103,6 +107,14 @@ public class AssetPlanInfoReviewView {
         this.requireds = requireds;
     }
 
+    public Integer getRequiredsaudit() {
+        return requiredsaudit;
+    }
+
+    public void setRequiredsaudit(Integer requiredsaudit) {
+        this.requiredsaudit = requiredsaudit;
+    }
+
     public BigDecimal getPprice() {
         return pprice;
     }
@@ -117,6 +129,14 @@ public class AssetPlanInfoReviewView {
 
     public void setTotalmoney(BigDecimal totalmoney) {
         this.totalmoney = totalmoney;
+    }
+
+    public BigDecimal getActualmoney() {
+        return actualmoney;
+    }
+
+    public void setActualmoney(BigDecimal actualmoney) {
+        this.actualmoney = actualmoney;
     }
 
     public String getRequireduser() {

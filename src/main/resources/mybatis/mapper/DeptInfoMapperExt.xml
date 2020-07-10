@@ -24,7 +24,7 @@
 		
 		</if> -->
 		<!-- SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code  from DeptInfo t -->
-		SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code  from DeptInfo t 
+		SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code,t.dept_planner_code  from DeptInfo t 
 		
 		where t.dept_level !='4' and t.dept_level !='0'
 		order by t.dept_level

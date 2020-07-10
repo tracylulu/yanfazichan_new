@@ -209,20 +209,21 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Override	
 	@Transactional
 	public void editAssetPlanInfo(AssetPlanGlobalInfo assetPlanGlobalInfo) {
+		String currentUserId = UserUtils.getCurrentUserId();
 		if(assetPlanGlobalInfo.purchaseReportInfo!=null) {
-			assetPlanGlobalInfo.purchaseReportInfo.setModifier(assetPlanGlobalInfo.getLst().get(0).getApplyuser());
+			assetPlanGlobalInfo.purchaseReportInfo.setModifier(currentUserId);
 			assetPlanGlobalInfo.purchaseReportInfo.setModifitime(new Date());
 			priMapper.updateByPrimaryKey(assetPlanGlobalInfo.purchaseReportInfo);
 		}
 		
 		if(assetPlanGlobalInfo.specifyManufacturerInfo!=null) {
-			assetPlanGlobalInfo.specifyManufacturerInfo.setModifier(assetPlanGlobalInfo.getLst().get(0).getApplyuser());
+			assetPlanGlobalInfo.specifyManufacturerInfo.setModifier(currentUserId);
 			assetPlanGlobalInfo.specifyManufacturerInfo.setModifitime(new Date());
 			smiMapper.updateByPrimaryKey(assetPlanGlobalInfo.specifyManufacturerInfo);
 		}		
 		
 		for(AssetPlanInfo ap:assetPlanGlobalInfo.lst) {
-			ap.setModifier(ap.getApplyuser());
+			ap.setModifier(currentUserId);
 			ap.setModifitime(new Date());
 			assetPlanInfoMapper.updateByPrimaryKey(ap);
 		}

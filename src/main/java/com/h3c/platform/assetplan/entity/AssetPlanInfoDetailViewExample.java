@@ -393,62 +393,52 @@ public class AssetPlanInfoDetailViewExample {
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyEqualTo(String value) {
+        public Criteria andActualmoneyEqualTo(BigDecimal value) {
             addCriterion("ActualMoney =", value, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyNotEqualTo(String value) {
+        public Criteria andActualmoneyNotEqualTo(BigDecimal value) {
             addCriterion("ActualMoney <>", value, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyGreaterThan(String value) {
+        public Criteria andActualmoneyGreaterThan(BigDecimal value) {
             addCriterion("ActualMoney >", value, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyGreaterThanOrEqualTo(String value) {
+        public Criteria andActualmoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("ActualMoney >=", value, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyLessThan(String value) {
+        public Criteria andActualmoneyLessThan(BigDecimal value) {
             addCriterion("ActualMoney <", value, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyLessThanOrEqualTo(String value) {
+        public Criteria andActualmoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("ActualMoney <=", value, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyLike(String value) {
-            addCriterion("ActualMoney like", value, "actualmoney");
-            return (Criteria) this;
-        }
-
-        public Criteria andActualmoneyNotLike(String value) {
-            addCriterion("ActualMoney not like", value, "actualmoney");
-            return (Criteria) this;
-        }
-
-        public Criteria andActualmoneyIn(List<String> values) {
+        public Criteria andActualmoneyIn(List<BigDecimal> values) {
             addCriterion("ActualMoney in", values, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyNotIn(List<String> values) {
+        public Criteria andActualmoneyNotIn(List<BigDecimal> values) {
             addCriterion("ActualMoney not in", values, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyBetween(String value1, String value2) {
+        public Criteria andActualmoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("ActualMoney between", value1, value2, "actualmoney");
             return (Criteria) this;
         }
 
-        public Criteria andActualmoneyNotBetween(String value1, String value2) {
+        public Criteria andActualmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("ActualMoney not between", value1, value2, "actualmoney");
             return (Criteria) this;
         }
@@ -3893,6 +3883,76 @@ public class AssetPlanInfoDetailViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andItemnameIsNull() {
+            addCriterion("ItemName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameIsNotNull() {
+            addCriterion("ItemName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameEqualTo(String value) {
+            addCriterion("ItemName =", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameNotEqualTo(String value) {
+            addCriterion("ItemName <>", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameGreaterThan(String value) {
+            addCriterion("ItemName >", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameGreaterThanOrEqualTo(String value) {
+            addCriterion("ItemName >=", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameLessThan(String value) {
+            addCriterion("ItemName <", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameLessThanOrEqualTo(String value) {
+            addCriterion("ItemName <=", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameLike(String value) {
+            addCriterion("ItemName like", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameNotLike(String value) {
+            addCriterion("ItemName not like", value, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameIn(List<String> values) {
+            addCriterion("ItemName in", values, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameNotIn(List<String> values) {
+            addCriterion("ItemName not in", values, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameBetween(String value1, String value2) {
+            addCriterion("ItemName between", value1, value2, "itemname");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemnameNotBetween(String value1, String value2) {
+            addCriterion("ItemName not between", value1, value2, "itemname");
+            return (Criteria) this;
+        }
+
         public Criteria andDept3nameIsNull() {
             addCriterion("Dept3Name is null");
             return (Criteria) this;
@@ -4243,73 +4303,73 @@ public class AssetPlanInfoDetailViewExample {
             return (Criteria) this;
         }
 
-        public Criteria andItemnameIsNull() {
-            addCriterion("ItemName is null");
+        public Criteria andRequiredusertypeIsNull() {
+            addCriterion("RequiredUserType is null");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameIsNotNull() {
-            addCriterion("ItemName is not null");
+        public Criteria andRequiredusertypeIsNotNull() {
+            addCriterion("RequiredUserType is not null");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameEqualTo(String value) {
-            addCriterion("ItemName =", value, "itemname");
+        public Criteria andRequiredusertypeEqualTo(String value) {
+            addCriterion("RequiredUserType =", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameNotEqualTo(String value) {
-            addCriterion("ItemName <>", value, "itemname");
+        public Criteria andRequiredusertypeNotEqualTo(String value) {
+            addCriterion("RequiredUserType <>", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameGreaterThan(String value) {
-            addCriterion("ItemName >", value, "itemname");
+        public Criteria andRequiredusertypeGreaterThan(String value) {
+            addCriterion("RequiredUserType >", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameGreaterThanOrEqualTo(String value) {
-            addCriterion("ItemName >=", value, "itemname");
+        public Criteria andRequiredusertypeGreaterThanOrEqualTo(String value) {
+            addCriterion("RequiredUserType >=", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameLessThan(String value) {
-            addCriterion("ItemName <", value, "itemname");
+        public Criteria andRequiredusertypeLessThan(String value) {
+            addCriterion("RequiredUserType <", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameLessThanOrEqualTo(String value) {
-            addCriterion("ItemName <=", value, "itemname");
+        public Criteria andRequiredusertypeLessThanOrEqualTo(String value) {
+            addCriterion("RequiredUserType <=", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameLike(String value) {
-            addCriterion("ItemName like", value, "itemname");
+        public Criteria andRequiredusertypeLike(String value) {
+            addCriterion("RequiredUserType like", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameNotLike(String value) {
-            addCriterion("ItemName not like", value, "itemname");
+        public Criteria andRequiredusertypeNotLike(String value) {
+            addCriterion("RequiredUserType not like", value, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameIn(List<String> values) {
-            addCriterion("ItemName in", values, "itemname");
+        public Criteria andRequiredusertypeIn(List<String> values) {
+            addCriterion("RequiredUserType in", values, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameNotIn(List<String> values) {
-            addCriterion("ItemName not in", values, "itemname");
+        public Criteria andRequiredusertypeNotIn(List<String> values) {
+            addCriterion("RequiredUserType not in", values, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameBetween(String value1, String value2) {
-            addCriterion("ItemName between", value1, value2, "itemname");
+        public Criteria andRequiredusertypeBetween(String value1, String value2) {
+            addCriterion("RequiredUserType between", value1, value2, "requiredusertype");
             return (Criteria) this;
         }
 
-        public Criteria andItemnameNotBetween(String value1, String value2) {
-            addCriterion("ItemName not between", value1, value2, "itemname");
+        public Criteria andRequiredusertypeNotBetween(String value1, String value2) {
+            addCriterion("RequiredUserType not between", value1, value2, "requiredusertype");
             return (Criteria) this;
         }
 

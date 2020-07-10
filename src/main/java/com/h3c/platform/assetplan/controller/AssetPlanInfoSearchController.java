@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -50,8 +51,10 @@ import com.h3c.platform.assetplan.entity.DeptTreeInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
 import com.h3c.platform.assetplan.entity.SearchAssetParamEntity;
 import com.h3c.platform.assetplan.entity.SysDicCategoryEntity;
+import com.h3c.platform.assetplan.entity.SysDicReceiverPlaceEntity;
 import com.h3c.platform.assetplan.service.AssetPlanInfoSearchService;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
+import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.entity.SearchParamEntity;
@@ -63,6 +66,7 @@ import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.sysmgr.entity.OperationLog;
 import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.OperationLogService;
+import com.h3c.platform.sysmgr.service.RoleService;
 import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.ExportExcelWrapper;
 import com.h3c.platform.util.SysDicInfoUtil;
@@ -97,6 +101,10 @@ public class AssetPlanInfoSearchController {
 	private SysDicInfoUtil sysDicInfoUtil;
 	@Autowired
 	private  OperationLogService operationLogService;
+	@Autowired
+	private RoleService roleService;
+	@Autowired
+	private DeptInfoService deptInfoService;
 	
     @PostMapping("/listOfAssetPlanInfo")
     @ApiOperation(value = "获取所有资产查询列表信息")
@@ -104,6 +112,7 @@ public class AssetPlanInfoSearchController {
     @UserLoginToken
     public ResponseResult listOfAssetPlanInfo(@RequestBody @ApiParam(name="查询对象",value="传入json格式",required=true) SearchAssetParamEntity searchAssetParamEntity) throws Exception{
     	//try {
+    	    String currentUserId = UserUtils.getCurrentUserId();
     		Map<String, Object> param = new HashMap<>();
             param.put("APStage", searchAssetParamEntity.getAPStage());
             param.put("PlanCode", searchAssetParamEntity.getPlanCode());
@@ -163,6 +172,20 @@ public class AssetPlanInfoSearchController {
             }
             param.put("pageNum", (pageNum-1)*pageSize);
             param.put("pageSize", pageSize);
+            
+            //普通用户查看，只能查看申请人/申购人是当前用户的信息
+            //123级主管、系统管理员可看到全部数据
+            Boolean isDeptManager=false;
+            DeptInfo deptManagerInfo = deptInfoService.getByDeptManagerCode(currentUserId);
+            if(deptManagerInfo==null) {
+            }else {
+            	isDeptManager=true;
+            }
+            if(roleService.checkIsAdmin() || isDeptManager) {
+            }else {
+            	param.put("NotAdmin", "NotAdmin");
+            	param.put("currentUserId", currentUserId);
+            }
             
    			List<AssetPlanInfoSearchView> planInfoList = assetPlanInfoSearchService.listofAssetPlanInfo(param);
    			int totalCount = assetPlanInfoSearchService.countAssetPlanInfo(param);
@@ -292,10 +315,13 @@ public class AssetPlanInfoSearchController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.EXPORT)
    	public void exportAssetPlanInfoByIds(HttpServletRequest request,@RequestBody SearchAssetParamEntity searchAssetParamEntity,HttpServletResponse response)throws Exception {
-    	String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价","申购金额", "同意金额",
-										"申购人", "二级部门", "项目编码", "备注"};
-		String[] column = new String[] { "Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
-										"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name", "Itemcode", "Assetnote"};
+    	String currentUserId = UserUtils.getCurrentUserId();
+    	System.out.println("000-----"+new Date());
+    	String[] header = new String[] { "评审结果","物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价","申购金额", "同意金额",
+										"申购人", "二级部门", "三级部门", "项目编码", "类别", "货期（天）", "用途", "到货地点", "备注", "评审意见"};
+		String[] column = new String[] { "Approvalresult","Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
+										"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name","Dept3name", "Itemcode", 
+										"Assetcategory","Goodstime","Purpose","Receiverplace","Assetnote","Approvalnote"};
 		List<String> lstHeader = Arrays.asList(header);
 		List<String> lsth = new ArrayList<>(lstHeader);
 		header = (String[]) lsth.toArray(new String[lsth.size()]);
@@ -365,11 +391,37 @@ public class AssetPlanInfoSearchController {
             }
             param.put("pageNum", (pageNum-1)*pageSize);
             param.put("pageSize", pageSize);
+            
+            //普通用户查看，只能查看申请人/申购人是当前用户的信息
+            //123级主管、系统管理员可看到全部数据
+            Boolean isDeptManager=false;
+            DeptInfo deptManagerInfo = deptInfoService.getByDeptManagerCode(currentUserId);
+            if(deptManagerInfo==null) {
+            }else {
+            	isDeptManager=true;
+            }
+            if(roleService.checkIsAdmin() || isDeptManager) {
+            }else {
+            	param.put("NotAdmin", "NotAdmin");
+            	param.put("currentUserId", currentUserId);
+            }
+            
+            
 			List<AssetPlanInfoSearchView> lst = assetPlanInfoService.exportAssetPlanInfoByIds(param);
-			
+			System.out.println("111-----"+new Date());
+			//类别，货期，到货地点转换成汉字重新赋值导出
+			for (int i = 0; i < lst.size(); i++) {
+					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(lst.get(i).getAssetcategory());
+					lst.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
+					lst.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+					SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(lst.get(i).getReceiverplace());
+					lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
+			}
+			System.out.println("222-----"+new Date());
 			ExportExcelWrapper<AssetPlanInfoSearchView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoSearchView>();
 
 			StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExport", "资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");
+			System.out.println("333-----"+new Date());
 			OperationLog log=new OperationLog();
 			log.setModelcode("com.h3c.platform.assetplan.controller.exportAssetPlanInfoByIds");
 			log.setModelname("导出到Excel");
@@ -380,6 +432,7 @@ public class AssetPlanInfoSearchController {
 			log.setIp("IP:"+IPUtils.getIpAddr(request)+";service:"+InetAddress.getLocalHost().getHostAddress());			
 				
 			operationLogService.SaveLog(log);
+			System.out.println("444-----"+new Date());
     }
     
     @ApiOperation(value="审批记录查询")
@@ -539,6 +592,21 @@ public class AssetPlanInfoSearchController {
    				tree.setDeptName(list.get(i).getDeptName());
    				tree.setDeptLevel(list.get(i).getDeptLevel());
    				tree.setSupDeptDode(list.get(i).getSupDeptCode());
+   				//把计划员的信息加上
+   				if(StringUtils.isBlank(list.get(i).getDeptPlannerCode())) {
+   					tree.setDeptPlannerCode("");
+   					tree.setDeptPlannerName("");
+   				}else {
+   					tree.setDeptPlannerCode(list.get(i).getDeptPlannerCode());
+   					UserInfo userByEmpCode = userService.getUserByEmpCode(list.get(i).getDeptPlannerCode());
+   					if(userByEmpCode!=null) {
+   						//计划员姓名
+   						tree.setDeptPlannerName(userByEmpCode.getEmpName());
+   					}else {
+   						tree.setDeptPlannerName("");
+   					}
+   				}
+				
    				address.add(tree);
 			}
    			List<DeptTreeInfo> recursiveAddress = TreeUtil.RecursiveAddress(address);		

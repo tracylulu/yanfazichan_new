@@ -18,4 +18,7 @@ public interface DeptInfoService {
 	List<DeptInfo> getAllChildDept(String supDeptCode);
 	
 	boolean checkIsPlanner();
+	
+	//根据传入的deptManagerCode。判断是不是123级部门主管
+	DeptInfo getByDeptManagerCode(String deptManagerCode);
 }

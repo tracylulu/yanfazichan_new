@@ -62,4 +62,16 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 		return false;
 	}
 
+	@Override
+	public DeptInfo getByDeptManagerCode(String deptManagerCode) {
+		DeptInfoExample example= new DeptInfoExample();
+		DeptInfoExample.Criteria cri = example.createCriteria();
+		cri.andDeptManagerCodeEqualTo(deptManagerCode);
+		List<DeptInfo> lst = deptInfoMapper.selectByExample(example);
+		if(CollectionUtils.isNotEmpty(lst)) {
+			return lst.get(0);
+		}
+		return null;
+	}
+
 }

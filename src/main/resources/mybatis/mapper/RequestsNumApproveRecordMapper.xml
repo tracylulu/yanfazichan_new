@@ -3,6 +3,7 @@
 <mapper namespace="com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper">
   <resultMap id="BaseResultMap" type="com.h3c.platform.assetplan.entity.RequestsNumApproveRecord">
     <id column="AssetPlanID" jdbcType="INTEGER" property="assetplanid" />
+    <result column="ReviewerCount" jdbcType="INTEGER" property="reviewercount" />
     <result column="Dept3ManagerCount" jdbcType="INTEGER" property="dept3managercount" />
     <result column="Dept2ManagerCount" jdbcType="INTEGER" property="dept2managercount" />
     <result column="PlannerCount" jdbcType="INTEGER" property="plannercount" />
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    AssetPlanID, Dept3ManagerCount, Dept2ManagerCount, PlannerCount, OQDeptReviewerCount, 
+    AssetPlanID, ReviewerCount, Dept3ManagerCount, Dept2ManagerCount, PlannerCount, OQDeptReviewerCount, 
     Dept1ReviewerCount
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.RequestsNumApproveRecordExample" resultMap="BaseResultMap">
@@ -102,18 +103,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.RequestsNumApproveRecord">
-    insert into RequestsNumApproveRecord (AssetPlanID, Dept3ManagerCount, Dept2ManagerCount, 
-      PlannerCount, OQDeptReviewerCount, Dept1ReviewerCount
-      )
-    values (#{assetplanid,jdbcType=INTEGER}, #{dept3managercount,jdbcType=INTEGER}, #{dept2managercount,jdbcType=INTEGER}, 
-      #{plannercount,jdbcType=INTEGER}, #{oqdeptreviewercount,jdbcType=INTEGER}, #{dept1reviewercount,jdbcType=INTEGER}
-      )
+    insert into RequestsNumApproveRecord (AssetPlanID, ReviewerCount, Dept3ManagerCount, 
+      Dept2ManagerCount, PlannerCount, OQDeptReviewerCount, 
+      Dept1ReviewerCount)
+    values (#{assetplanid,jdbcType=INTEGER}, #{reviewercount,jdbcType=INTEGER}, #{dept3managercount,jdbcType=INTEGER}, 
+      #{dept2managercount,jdbcType=INTEGER}, #{plannercount,jdbcType=INTEGER}, #{oqdeptreviewercount,jdbcType=INTEGER}, 
+      #{dept1reviewercount,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.RequestsNumApproveRecord">
     insert into RequestsNumApproveRecord
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="assetplanid != null">
         AssetPlanID,
+      </if>
+      <if test="reviewercount != null">
+        ReviewerCount,
       </if>
       <if test="dept3managercount != null">
         Dept3ManagerCount,
@@ -134,6 +138,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="assetplanid != null">
         #{assetplanid,jdbcType=INTEGER},
+      </if>
+      <if test="reviewercount != null">
+        #{reviewercount,jdbcType=INTEGER},
       </if>
       <if test="dept3managercount != null">
         #{dept3managercount,jdbcType=INTEGER},
@@ -164,6 +171,9 @@
       <if test="record.assetplanid != null">
         AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
       </if>
+      <if test="record.reviewercount != null">
+        ReviewerCount = #{record.reviewercount,jdbcType=INTEGER},
+      </if>
       <if test="record.dept3managercount != null">
         Dept3ManagerCount = #{record.dept3managercount,jdbcType=INTEGER},
       </if>
@@ -187,6 +197,7 @@
   <update id="updateByExample" parameterType="map">
     update RequestsNumApproveRecord
     set AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
+      ReviewerCount = #{record.reviewercount,jdbcType=INTEGER},
       Dept3ManagerCount = #{record.dept3managercount,jdbcType=INTEGER},
       Dept2ManagerCount = #{record.dept2managercount,jdbcType=INTEGER},
       PlannerCount = #{record.plannercount,jdbcType=INTEGER},
@@ -199,6 +210,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.h3c.platform.assetplan.entity.RequestsNumApproveRecord">
     update RequestsNumApproveRecord
     <set>
+      <if test="reviewercount != null">
+        ReviewerCount = #{reviewercount,jdbcType=INTEGER},
+      </if>
       <if test="dept3managercount != null">
         Dept3ManagerCount = #{dept3managercount,jdbcType=INTEGER},
       </if>
@@ -219,7 +233,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.h3c.platform.assetplan.entity.RequestsNumApproveRecord">
     update RequestsNumApproveRecord
-    set Dept3ManagerCount = #{dept3managercount,jdbcType=INTEGER},
+    set ReviewerCount = #{reviewercount,jdbcType=INTEGER},
+      Dept3ManagerCount = #{dept3managercount,jdbcType=INTEGER},
       Dept2ManagerCount = #{dept2managercount,jdbcType=INTEGER},
       PlannerCount = #{plannercount,jdbcType=INTEGER},
       OQDeptReviewerCount = #{oqdeptreviewercount,jdbcType=INTEGER},

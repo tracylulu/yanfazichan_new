@@ -8,6 +8,8 @@ public class AssetPlanInfoSearchView {
 
     private String plancode;
 
+    private String planmonth;
+
     private String applymonth;
 
     private String assetname;
@@ -18,15 +20,19 @@ public class AssetPlanInfoSearchView {
 
     private String assetcategory;
 
+    private Integer goodstime;
+
+    private String purpose;
+
     private Integer requireds;
 
     private Integer requiredsaudit;
 
-    private BigDecimal pprice;
+    private String pprice;
 
-    private BigDecimal totalmoney;
+    private String totalmoney;
 
-    private BigDecimal actualmoney;
+    private String actualmoney;
 
     private String requireduser;
 
@@ -34,11 +40,13 @@ public class AssetPlanInfoSearchView {
 
     private String deptcode;
 
-    private Integer dept2code;
+    private String dept3name;
+
+    private String dept2code;
 
     private String dept2name;
 
-    private Integer dept1code;
+    private String dept1code;
 
     private String dept1name;
 
@@ -68,6 +76,10 @@ public class AssetPlanInfoSearchView {
 
     private String approvalperson;
 
+    private String approvalnote;
+
+    private String approvalresult;
+
     private String isreqpurchasereport;
 
     private String isspecifymanufacturer;
@@ -92,6 +104,14 @@ public class AssetPlanInfoSearchView {
 
     public void setPlancode(String plancode) {
         this.plancode = plancode == null ? null : plancode.trim();
+    }
+
+    public String getPlanmonth() {
+        return planmonth;
+    }
+
+    public void setPlanmonth(String planmonth) {
+        this.planmonth = planmonth;
     }
 
     public String getApplymonth() {
@@ -134,6 +154,22 @@ public class AssetPlanInfoSearchView {
         this.assetcategory = assetcategory == null ? null : assetcategory.trim();
     }
 
+    public Integer getGoodstime() {
+        return goodstime;
+    }
+
+    public void setGoodstime(Integer goodstime) {
+        this.goodstime = goodstime;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose == null ? null : purpose.trim();
+    }
+
     public Integer getRequireds() {
         return requireds;
     }
@@ -150,27 +186,27 @@ public class AssetPlanInfoSearchView {
         this.requiredsaudit = requiredsaudit;
     }
 
-    public BigDecimal getPprice() {
+    public String getPprice() {
         return pprice;
     }
 
-    public void setPprice(BigDecimal pprice) {
+    public void setPprice(String pprice) {
         this.pprice = pprice;
     }
 
-    public BigDecimal getTotalmoney() {
+    public String getTotalmoney() {
         return totalmoney;
     }
 
-    public void setTotalmoney(BigDecimal totalmoney) {
+    public void setTotalmoney(String totalmoney) {
         this.totalmoney = totalmoney;
     }
 
-    public BigDecimal getActualmoney() {
+    public String getActualmoney() {
         return actualmoney;
     }
 
-    public void setActualmoney(BigDecimal actualmoney) {
+    public void setActualmoney(String actualmoney) {
         this.actualmoney = actualmoney;
     }
 
@@ -198,12 +234,20 @@ public class AssetPlanInfoSearchView {
         this.deptcode = deptcode == null ? null : deptcode.trim();
     }
 
-    public Integer getDept2code() {
+    public String getDept3name() {
+        return dept3name;
+    }
+
+    public void setDept3name(String dept3name) {
+        this.dept3name = dept3name == null ? null : dept3name.trim();
+    }
+
+    public String getDept2code() {
         return dept2code;
     }
 
-    public void setDept2code(Integer dept2code) {
-        this.dept2code = dept2code;
+    public void setDept2code(String dept2code) {
+        this.dept2code = dept2code == null ? null : dept2code.trim();
     }
 
     public String getDept2name() {
@@ -214,12 +258,12 @@ public class AssetPlanInfoSearchView {
         this.dept2name = dept2name == null ? null : dept2name.trim();
     }
 
-    public Integer getDept1code() {
+    public String getDept1code() {
         return dept1code;
     }
 
-    public void setDept1code(Integer dept1code) {
-        this.dept1code = dept1code;
+    public void setDept1code(String dept1code) {
+        this.dept1code = dept1code == null ? null : dept1code.trim();
     }
 
     public String getDept1name() {
@@ -332,6 +376,22 @@ public class AssetPlanInfoSearchView {
 
     public void setApprovalperson(String approvalperson) {
         this.approvalperson = approvalperson == null ? null : approvalperson.trim();
+    }
+
+    public String getApprovalnote() {
+        return approvalnote;
+    }
+
+    public void setApprovalnote(String approvalnote) {
+        this.approvalnote = approvalnote == null ? null : approvalnote.trim();
+    }
+
+    public String getApprovalresult() {
+        return approvalresult;
+    }
+
+    public void setApprovalresult(String approvalresult) {
+        this.approvalresult = approvalresult == null ? null : approvalresult.trim();
     }
 
     public String getIsreqpurchasereport() {
