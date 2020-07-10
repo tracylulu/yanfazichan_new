@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoSearchExportViewMapper">
+ <select id="exportAssetPlanInfoByIds" parameterType="map" resultMap="BaseResultMap">
+  	 select * from AssetPlanInfoSearchView 
+  	 	<if test="_parameter != null">
+    		<include refid="condition_sql_export"></include>
+    	</if>
+    	order by AssetPlanID desc
+    	limit 50000
+  </select>
+  <sql id="condition_sql_export">
+		<where>
+			<if test="param.APStage !=null and param.APStage !='' ">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.PlanCode !=null and param.PlanCode !='' ">
+				and PlanCode LIKE concat('%',#{param.PlanCode},'%')
+			</if>
+			<if test="param.AssetName !=null and param.AssetName !='' ">
+				and AssetName LIKE concat('%',#{param.AssetName},'%')
+			</if>
+			<if test="param.RequiredUser !=null and param.RequiredUser !='' ">
+				and RequiredUser LIKE concat('%',#{param.RequiredUser},'%')
+			</if>
+			<if test="param.AssetModel !=null and param.AssetModel !='' ">
+				and AssetModel LIKE concat('%',#{param.AssetModel},'%')
+			</if>
+			
+             <!--三级部门  -->
+             <if test="param.DeptCode !=null and param.DeptCode !='' ">
+				and DeptCode = #{param.DeptCode}
+			</if>
+			<!--二级部门  -->
+			 <if test="param.Dept2Code !=null and param.Dept2Code !='' ">
+				and Dept2Code = #{param.Dept2Code}
+			</if>
+			 <if test="param.Dept1Code !=null and param.Dept1Code !='' ">
+				and Dept1Code = #{param.Dept1Code}
+			</if>
+			
+			<if test="param.AssetManufacturer !=null and param.AssetManufacturer !='' ">
+				and AssetManufacturer LIKE concat('%',#{param.AssetManufacturer},'%')
+			</if>
+			
+			<if test="param.ReceiverPlace !=null and param.ReceiverPlace !='' ">
+				and ReceiverPlace = #{param.ReceiverPlace}
+			</if>
+			
+			<if test="param.AbnormalPlanEnum !=null and param.AbnormalPlanEnum !='' ">
+				and AbnormalPlanEnum = #{param.AbnormalPlanEnum}
+			</if>
+			
+			<if test="param.OutTimePlanEnum !=null and param.OutTimePlanEnum !='' ">
+				and OutTimePlanEnum = #{param.OutTimePlanEnum}
+			</if>
+			
+			<if test="param.ItemCode !=null and param.ItemCode !='' ">
+				and ItemCode LIKE concat('%',#{param.ItemCode},'%')
+			</if>
+             <!--PurchaseReportID的值为0的时候，因为其数据类型为Integer，所以这个判断是为false的，就是说int类型的判断，Mybatis是认定0为''的，所以为false。  -->
+             <!--不为0说明有申购报告   -->
+             <if test="param.IsReqPurchaseReport !=null  and param.IsReqPurchaseReport !='' ">
+				and IsReqPurchaseReport = #{param.IsReqPurchaseReport}
+			</if>
+			
+			<if test="param.ISSpecifyManufacturer !=null and param.ISSpecifyManufacturer !='' ">
+				and ISSpecifyManufacturer = #{param.ISSpecifyManufacturer}
+			</if>
+			
+             <if test="param.ApplyResult !=null and param.ApplyResult ==1 ">
+             	and Requireds = RequiredsAudit and Requireds !=0
+             </if>
+             <if test="param.ApplyResult !=null and param.ApplyResult ==3 ">
+             	and RequiredsAudit =0 and Requireds !=0
+             </if>
+             <if test="param.ApplyResult !=null and param.ApplyResult ==2 ">
+             	and Requireds &gt; RequiredsAudit and RequiredsAudit !=0 and Requireds !=0
+             </if>
+             <if test="param.ApplyMonthDetail !=null and param.ApplyMonthDetail !='' ">
+				<if test="param.StartApplyTime !=null and param.StartApplyTime !='' ">
+	                 AND ApplyTime &gt;= #{param.StartApplyTime}
+	             </if>
+	             <if test="param.EndApplyTime !=null and param.EndApplyTime !='' ">
+	                 AND ApplyTime &lt;= #{param.EndApplyTime}
+	             </if>
+			</if>
+			<if test="param.id != null and param.id.size>0">
+  	 			AND AssetPlanID in
+				<foreach collection="param.id" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
+	 		
+		</where>
+	</sql>
+</mapper>

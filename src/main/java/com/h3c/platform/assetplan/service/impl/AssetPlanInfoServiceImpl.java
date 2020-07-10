@@ -36,6 +36,7 @@ import com.h3c.platform.assetplan.dao.AssetPlanInfoMenuViewMapper;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoOQDeptViewMapper;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoPlannerViewMapper;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoReviewViewMapper;
+import com.h3c.platform.assetplan.dao.AssetPlanInfoSearchExportViewMapper;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoSearchViewMapper;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoTodoViewMapper;
 import com.h3c.platform.assetplan.dao.DeptInfoMapper;
@@ -64,6 +65,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerViewExample;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewViewExample;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
@@ -126,6 +128,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	private AssetRateInfoService assetRateInfoService;
 	@Autowired
 	private RateTotalInfoService rateTotalInfoService;
+	@Autowired
+	private AssetPlanInfoSearchExportViewMapper  searchExportViewMapper;
 	
 	/*@Override
 	public int addAssetPlanInfo(AssetPlanInfo ap) {
@@ -689,8 +693,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}
 
 	@Override
-	public List<AssetPlanInfoSearchView> exportAssetPlanInfoByIds(Map<String, Object> param) {
-		return searchViewMapper.exportAssetPlanInfoByIds(param);
+	public List<AssetPlanInfoSearchExportView> exportAssetPlanInfoByIds(Map<String, Object> param) {
+		return searchExportViewMapper.exportAssetPlanInfoByIds(param);
 	}
 
 	@Override

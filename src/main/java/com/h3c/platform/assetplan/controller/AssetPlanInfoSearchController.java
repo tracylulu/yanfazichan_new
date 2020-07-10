@@ -20,7 +20,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,9 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eos.common.constant.AssetTableHeaderEnum;
-import com.eos.common.constant.StatusCodeEnum;
-import com.eos.common.util.PageResult;
 import com.eos.common.util.Result;
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoHomePageViewMapper;
@@ -44,6 +42,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanGlobalInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
@@ -293,9 +292,10 @@ public class AssetPlanInfoSearchController {
    	@UserLoginToken(logType=LogType.EXPORT)
    	public void exportAssetPlanInfoByIds(HttpServletRequest request,@RequestBody SearchAssetParamEntity searchAssetParamEntity,HttpServletResponse response)throws Exception {
     	String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价","申购金额", "同意金额",
-										"申购人", "二级部门", "项目编码", "备注"};
+										"申购人", "二级部门", "项目编码", "备注","使用率","数量","设备分布","使用率明细","研发总体","研发总体数量"};
 		String[] column = new String[] { "Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
-										"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name", "Itemcode", "Assetnote"};
+										"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name", "Itemcode", "Assetnote","Rate","Number",
+										"Distribution","Detail","RdRate","RdNumber"};
 		List<String> lstHeader = Arrays.asList(header);
 		List<String> lsth = new ArrayList<>(lstHeader);
 		header = (String[]) lsth.toArray(new String[lsth.size()]);
@@ -314,7 +314,7 @@ public class AssetPlanInfoSearchController {
             //param.put("StartApplyTime", searchAssetParamEntity.getStartApplyTime());
             //param.put("EndApplyTime", searchAssetParamEntity.getEndApplyTime());
             List<String> applyTimeList = searchAssetParamEntity.getApplyTime();
-            if(applyTimeList.size()>0) {
+            if(CollectionUtils.isNotEmpty(applyTimeList)) {
             	String applyMonthDetail = applyTimeList.get(0);
             	param.put("ApplyMonthDetail", applyMonthDetail);
             	String startApplyTime = applyTimeList.get(0)+"-01 00:00:00";
@@ -326,7 +326,7 @@ public class AssetPlanInfoSearchController {
                 param.put("ApplyMonthDetail", null);
             }
             param.put("AssetModel", searchAssetParamEntity.getAssetModel());
-            if(searchAssetParamEntity.getDeptCode()==null) {
+            if(StringUtils.isBlank(searchAssetParamEntity.getDeptCode())) {
             	param.put("DeptCode", null);
             }else {
             	DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(searchAssetParamEntity.getDeptCode()));
@@ -365,9 +365,9 @@ public class AssetPlanInfoSearchController {
             }
             param.put("pageNum", (pageNum-1)*pageSize);
             param.put("pageSize", pageSize);
-			List<AssetPlanInfoSearchView> lst = assetPlanInfoService.exportAssetPlanInfoByIds(param);
+			List<AssetPlanInfoSearchExportView> lst = assetPlanInfoService.exportAssetPlanInfoByIds(param);
 			
-			ExportExcelWrapper<AssetPlanInfoSearchView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoSearchView>();
+			ExportExcelWrapper<AssetPlanInfoSearchExportView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoSearchExportView>();
 
 			StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExport", "资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");
 			OperationLog log=new OperationLog();
