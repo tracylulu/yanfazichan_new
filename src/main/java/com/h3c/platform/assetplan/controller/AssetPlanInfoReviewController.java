@@ -264,7 +264,7 @@ public class AssetPlanInfoReviewController {
 	   					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
 	   					sendTo0.add(ap.getApplyuser());
 	   					ccTo0.add(ap.getRequireduser());
-	   					//mailInfoService.sendRemindMail(sendTo0.toString(), ccTo0.toString(), "规范审核结束", url);
+	   					mailInfoService.sendRemindMail(sendTo0.toString(), ccTo0.toString(), "规范审核结束", url);
 	   				}else {
 	   					if("1".equals(deptInfo.getDeptLevel())) {
 	   						ap.setApstatus("50");
