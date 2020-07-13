@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,9 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
+import com.h3c.platform.assetplan.entity.PurchaseReportInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
+import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo;
 import com.h3c.platform.assetplan.entity.SysDicCategoryEntity;
 import com.h3c.platform.assetplan.entity.SysDicReceiverPlaceEntity;
 import com.eos.common.constant.AssetTableHeaderEnum;
@@ -51,6 +54,7 @@ import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.MailInfoService;
 import com.h3c.platform.common.service.SysDicInfoService;
+import com.h3c.platform.common.util.UUIDUtil;
 import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.UserService;
@@ -603,11 +607,11 @@ public class AssetPlanInfoReviewController {
 			//是否需要申购报告 是否需要申购报告,1需要0不需要
 			String isreqpurchasereport = assetPlanGlobalInfo.getLst().get(0).getIsreqpurchasereport();
 			//申购报告 ID
-			 Integer purchasereportid = assetPlanGlobalInfo.getLst().get(0).getPurchasereportid();
+			String purchasereportid = assetPlanGlobalInfo.getLst().get(0).getPurchasereportid();
 			//是否指定供应商,1是0否
 			String isspecifymanufacturer = assetPlanGlobalInfo.getLst().get(0).getIsspecifymanufacturer();
 			//供应商 ID
-			Integer specifymanufacturerid = assetPlanGlobalInfo.getLst().get(0).getSpecifymanufacturerid();
+			String specifymanufacturerid = assetPlanGlobalInfo.getLst().get(0).getSpecifymanufacturerid();
 			
 			//数据库中原来的成套id集合
 			List<Integer> oldLstsubmitID =new ArrayList<>();
@@ -622,18 +626,29 @@ public class AssetPlanInfoReviewController {
 				if("0".equals(isreqpurchasereport)) {
 					lst.get(i).setIsreqpurchasereport("0");
 				//从无到有
-				}else if("1".equals(isreqpurchasereport) && purchasereportid==0) {
-					if(assetPlanGlobalInfo.purchaseReportInfo.getPurchasereportid()==0) {
+				}else if("1".equals(isreqpurchasereport) && StringUtils.isBlank(purchasereportid) ) {
+					Optional<PurchaseReportInfo> temp=assetPlanGlobalInfo.getPurchaseReportInfo().stream()
+							.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
+					if(!temp.isPresent()) {
+						String purchasereportID = UUIDUtil.UUID();
+						String currentUserId = UserUtils.getCurrentUserId();
 						//新生成申购报告，并建立与主表的关系
-						assetPlanGlobalInfo.getPurchaseReportInfo().setDeleteflag("1");
-						priMapper.insertBackID(assetPlanGlobalInfo.purchaseReportInfo);
-						lst.get(i).setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.getPurchasereportid());	
+						for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
+							info.setDeleteflag("1");
+							info.setCreatetime(new Date());
+							info.setCreator(UserUtils.getCurrentUserId());
+							info.setModifier(UserUtils.getCurrentUserId());
+							info.setModifitime(new Date());
+							info.setPurchasereportid(purchasereportID);
+							priMapper.insertSelective(info);
+						}
+						lst.get(i).setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid());	
 					}else {
-						lst.get(i).setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.getPurchasereportid());	
+						lst.get(i).setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid());	
 					}
 					
 				//从有到有，不做处理，直接update
-				}else if("1".equals(isreqpurchasereport) && purchasereportid!=0) {
+				}else if("1".equals(isreqpurchasereport) && StringUtils.isNotBlank(purchasereportid)) {
 				}
 				
 				//供应商
@@ -641,18 +656,28 @@ public class AssetPlanInfoReviewController {
 				if("0".equals(isspecifymanufacturer)) {
 					lst.get(i).setIsspecifymanufacturer("0");
 				//从无到有
-				}else if("1".equals(isspecifymanufacturer) && specifymanufacturerid==0) {
-					if(assetPlanGlobalInfo.specifyManufacturerInfo.getSpecifymanufacturerid()==0) {
+				}else if("1".equals(isspecifymanufacturer) &&StringUtils.isBlank(specifymanufacturerid)) {
+					Optional<SpecifyManufacturerInfo> temp=assetPlanGlobalInfo.getSpecifyManufacturerInfo().stream()
+							.filter(o->StringUtils.isNotBlank(o.getSpecifymanufacturerid())).findAny();
+					if(!temp.isPresent()) {
 						//新生成供应商，并建立与主表的关系
-						assetPlanGlobalInfo.getSpecifyManufacturerInfo().setDeleteflag("1");
-						smiMapper.insertBackID(assetPlanGlobalInfo.specifyManufacturerInfo);
-						lst.get(i).setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.getSpecifymanufacturerid());		
+						String surchasereportid = UUIDUtil.UUID();
+						for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
+							info.setDeleteflag("1");
+							info.setCreatetime(new Date());
+							info.setCreator(UserUtils.getCurrentUserId());
+							info.setModifier(UserUtils.getCurrentUserId());
+							info.setModifitime(new Date());
+							info.setSpecifymanufacturerid(surchasereportid);
+							smiMapper.insertSelective(info);
+						}							
+						lst.get(i).setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid());		
 					}else {
-						lst.get(i).setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.getSpecifymanufacturerid());	
+						lst.get(i).setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid());	
 					}
 					
 				//从有到有，不做处理，直接update
-				}else if("1".equals(isspecifymanufacturer) && specifymanufacturerid!=0) {
+				}else if("1".equals(isspecifymanufacturer) && StringUtils.isNotBlank(specifymanufacturerid)) {
 				}
 				
 				//是否成套
