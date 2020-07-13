@@ -344,13 +344,13 @@ public class AssetPlanInfoApplyController {
 	@UserLoginToken
 	public ResponseResult getAssetPlanInfoById(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception {
 		//try {
-			//System.out.println("000-----"+System.currentTimeMillis());
+			
 			AssetPlanGlobalInfoAll assetPlanGlobalInfoAll = new AssetPlanGlobalInfoAll();
 			List<AssetPlanInfoDetailView> lst =new ArrayList<>();
 			assetPlanGlobalInfoAll.setLst(lst);
-			//System.out.println("111-----"+System.currentTimeMillis());
+		
 			AssetPlanInfoDetailView ap = assetPlanInfoService.getByAssetID(assetplanid);
-			//System.out.println("222-----"+System.currentTimeMillis());
+		
 			if(StringUtils.isNotBlank(ap.getDeleteflag()) && !"0".equals(ap.getDeleteflag()) ) {
 				//有成套设备
 				if(StringUtils.isNotBlank(ap.getIscompleteset()) && "1".equals(ap.getIscompleteset())) {
