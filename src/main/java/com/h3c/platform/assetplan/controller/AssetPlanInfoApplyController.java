@@ -33,8 +33,10 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.ProjectInfo;
 import com.h3c.platform.assetplan.entity.PurchaseReportInfo;
+import com.h3c.platform.assetplan.entity.PurchaseReportInfoExt;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
 import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo;
+import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfoExt;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eos.common.constant.AssetTableHeaderEnum;
@@ -53,6 +55,8 @@ import com.h3c.platform.assetplan.entity.AssetPlanGlobalInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanGlobalInfoAll;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
 import com.h3c.platform.assetplan.service.DeptInfoService;
+import com.h3c.platform.assetplan.service.PurchaseReportInfoService;
+import com.h3c.platform.assetplan.service.SpecifyManufacturerInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.MailInfoService;
@@ -97,6 +101,10 @@ public class AssetPlanInfoApplyController {
 	private RequestsNumApproveRecordMapper recordMapper;
 	@Autowired
 	private DeptInfoService deptInfoService;
+	@Autowired
+	private PurchaseReportInfoService purchaseReportInfoService;
+	@Autowired
+	private SpecifyManufacturerInfoService  specifyManufacturerInfoService;
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
 	@PostMapping("/addAssetPlanInfo")
@@ -368,18 +376,19 @@ public class AssetPlanInfoApplyController {
 				//System.out.println("333-----"+System.currentTimeMillis());
 				//有申购报告
 				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
-					Integer purchasereportid = ap.getPurchasereportid();
-					PurchaseReportInfo purchaseReportInfo = priMapper.selectByPrimaryKey(purchasereportid);
-					assetPlanGlobalInfoAll.setPurchaseReportInfo(purchaseReportInfo);
+					String purchasereportid = ap.getPurchasereportid();
+					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportID(purchasereportid);
+					assetPlanGlobalInfoAll.setPurchaseReportInfo(lstPur);
 				}else {
 					assetPlanGlobalInfoAll.setPurchaseReportInfo(null);
 				}
 				//System.out.println("444-----"+System.currentTimeMillis());
 				//有指定供应商
 				if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
-					Integer specifymanufacturerid = ap.getSpecifymanufacturerid();
-					SpecifyManufacturerInfo specifyManufacturerInfo = smiMapper.selectByPrimaryKey(specifymanufacturerid);
-					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(specifyManufacturerInfo);
+					String specifymanufacturerid = ap.getSpecifymanufacturerid();
+					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerID(specifymanufacturerid);
+					
+					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(lstSpec);
 				}else {
 					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(null);
 				}
@@ -427,18 +436,18 @@ public class AssetPlanInfoApplyController {
    				}
    				//有申购报告
    				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
-   					Integer purchasereportid = ap.getPurchasereportid();
-   					PurchaseReportInfo purchaseReportInfo = priMapper.selectByPrimaryKey(purchasereportid);
-   					assetPlanGlobalInfoAll.setPurchaseReportInfo(purchaseReportInfo);
+   					String purchasereportid = ap.getPurchasereportid();
+   					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportID(purchasereportid);
+   					assetPlanGlobalInfoAll.setPurchaseReportInfo(lstPur);   					
    				}else {
    					assetPlanGlobalInfoAll.setPurchaseReportInfo(null);
    				}
    				
    				//有指定供应商
    				if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
-   					Integer specifymanufacturerid = ap.getSpecifymanufacturerid();
-   					SpecifyManufacturerInfo specifyManufacturerInfo = smiMapper.selectByPrimaryKey(specifymanufacturerid);
-   					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(specifyManufacturerInfo);
+   					String specifymanufacturerid = ap.getSpecifymanufacturerid();
+   					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerID(specifymanufacturerid);
+   					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(lstSpec);
    				}else {
    					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(null);
    				}
@@ -942,5 +951,15 @@ public class AssetPlanInfoApplyController {
    		}*/
    	}
 
-	
+    @ApiOperation(value="获取申购报告及指定供应商信息")
+   	@GetMapping("/getTitleAndField")
+   	@ResponseBody
+   	@UserLoginToken
+	public ResponseResult getTitleAndField() throws Exception {
+    	AssetPlanGlobalInfoAll assetPlanGlobalInfoAll=new AssetPlanGlobalInfoAll();
+    	assetPlanGlobalInfoAll.setPurchaseReportInfo(purchaseReportInfoService.getEmptyFiled());
+    	assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(specifyManufacturerInfoService.getEmptyFiled());	
+		return ResponseResult.success(assetPlanGlobalInfoAll);
+	}
+
 }

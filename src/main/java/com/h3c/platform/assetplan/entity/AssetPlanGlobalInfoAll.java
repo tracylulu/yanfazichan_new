@@ -8,9 +8,9 @@ public class AssetPlanGlobalInfoAll   {
     //AssetPlanInfo  实体集合
 	public List<AssetPlanInfoDetailView> lst ;
 
-    public  SpecifyManufacturerInfo specifyManufacturerInfo;
+    public  List<SpecifyManufacturerInfoExt> specifyManufacturerInfo;
 
-    public PurchaseReportInfo purchaseReportInfo;
+    public List<PurchaseReportInfoExt> purchaseReportInfo;
 
 	public List<AssetPlanInfoDetailView> getLst() {
 		return lst;
@@ -20,19 +20,19 @@ public class AssetPlanGlobalInfoAll   {
 		this.lst = lst;
 	}
 
-	public SpecifyManufacturerInfo getSpecifyManufacturerInfo() {
+	public List<SpecifyManufacturerInfoExt> getSpecifyManufacturerInfo() {
 		return specifyManufacturerInfo;
 	}
 
-	public void setSpecifyManufacturerInfo(SpecifyManufacturerInfo specifyManufacturerInfo) {
+	public void setSpecifyManufacturerInfo(List<SpecifyManufacturerInfoExt> specifyManufacturerInfo) {
 		this.specifyManufacturerInfo = specifyManufacturerInfo;
 	}
 
-	public PurchaseReportInfo getPurchaseReportInfo() {
+	public List<PurchaseReportInfoExt> getPurchaseReportInfo() {
 		return purchaseReportInfo;
 	}
 
-	public void setPurchaseReportInfo(PurchaseReportInfo purchaseReportInfo) {
+	public void setPurchaseReportInfo(List<PurchaseReportInfoExt> purchaseReportInfo) {
 		this.purchaseReportInfo = purchaseReportInfo;
 	}
     

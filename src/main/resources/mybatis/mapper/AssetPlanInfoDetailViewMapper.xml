@@ -29,10 +29,10 @@
     <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
     <result column="CompleteSetCode" jdbcType="INTEGER" property="completesetcode" />
     <result column="IsReqPurchaseReport" jdbcType="VARCHAR" property="isreqpurchasereport" />
-    <result column="PurchaseReportID" jdbcType="INTEGER" property="purchasereportid" />
+    <result column="PurchaseReportID" jdbcType="VARCHAR" property="purchasereportid" />
     <result column="ISSpecifyManufacturer" jdbcType="VARCHAR" property="isspecifymanufacturer" />
     <result column="ManufacturerTypeEnum" jdbcType="INTEGER" property="manufacturertypeenum" />
-    <result column="SpecifyManufacturerID" jdbcType="INTEGER" property="specifymanufacturerid" />
+    <result column="SpecifyManufacturerID" jdbcType="VARCHAR" property="specifymanufacturerid" />
     <result column="AbnormalPlanEnum" jdbcType="INTEGER" property="abnormalplanenum" />
     <result column="APStatus" jdbcType="VARCHAR" property="apstatus" />
     <result column="APStage" jdbcType="VARCHAR" property="apstage" />
@@ -192,8 +192,8 @@
       #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
       #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=INTEGER}, #{reqarrivaldate,jdbcType=DATE}, 
       #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
-      #{purchasereportid,jdbcType=INTEGER}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
-      #{manufacturertypeenum,jdbcType=INTEGER}, #{specifymanufacturerid,jdbcType=INTEGER}, 
+      #{purchasereportid,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{manufacturertypeenum,jdbcType=INTEGER}, #{specifymanufacturerid,jdbcType=VARCHAR}, 
       #{abnormalplanenum,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
       #{deleteflag,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, #{usagerate,jdbcType=VARCHAR}, 
       #{reviewer,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, #{reviewresult,jdbcType=INTEGER}, 
@@ -489,7 +489,7 @@
         #{isreqpurchasereport,jdbcType=VARCHAR},
       </if>
       <if test="purchasereportid != null">
-        #{purchasereportid,jdbcType=INTEGER},
+        #{purchasereportid,jdbcType=VARCHAR},
       </if>
       <if test="isspecifymanufacturer != null">
         #{isspecifymanufacturer,jdbcType=VARCHAR},
@@ -498,7 +498,7 @@
         #{manufacturertypeenum,jdbcType=INTEGER},
       </if>
       <if test="specifymanufacturerid != null">
-        #{specifymanufacturerid,jdbcType=INTEGER},
+        #{specifymanufacturerid,jdbcType=VARCHAR},
       </if>
       <if test="abnormalplanenum != null">
         #{abnormalplanenum,jdbcType=INTEGER},
@@ -695,7 +695,7 @@
         IsReqPurchaseReport = #{record.isreqpurchasereport,jdbcType=VARCHAR},
       </if>
       <if test="record.purchasereportid != null">
-        PurchaseReportID = #{record.purchasereportid,jdbcType=INTEGER},
+        PurchaseReportID = #{record.purchasereportid,jdbcType=VARCHAR},
       </if>
       <if test="record.isspecifymanufacturer != null">
         ISSpecifyManufacturer = #{record.isspecifymanufacturer,jdbcType=VARCHAR},
@@ -704,7 +704,7 @@
         ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=INTEGER},
       </if>
       <if test="record.specifymanufacturerid != null">
-        SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=INTEGER},
+        SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=VARCHAR},
       </if>
       <if test="record.abnormalplanenum != null">
         AbnormalPlanEnum = #{record.abnormalplanenum,jdbcType=INTEGER},
@@ -842,10 +842,10 @@
       IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
       CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
       IsReqPurchaseReport = #{record.isreqpurchasereport,jdbcType=VARCHAR},
-      PurchaseReportID = #{record.purchasereportid,jdbcType=INTEGER},
+      PurchaseReportID = #{record.purchasereportid,jdbcType=VARCHAR},
       ISSpecifyManufacturer = #{record.isspecifymanufacturer,jdbcType=VARCHAR},
       ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=INTEGER},
-      SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=INTEGER},
+      SpecifyManufacturerID = #{record.specifymanufacturerid,jdbcType=VARCHAR},
       AbnormalPlanEnum = #{record.abnormalplanenum,jdbcType=INTEGER},
       APStatus = #{record.apstatus,jdbcType=VARCHAR},
       APStage = #{record.apstage,jdbcType=VARCHAR},
