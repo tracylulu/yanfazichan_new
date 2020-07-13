@@ -99,5 +99,18 @@ public class DicConst {
 	 */
 	public static String ASSETPLANINFOMENUVIEW ="AssetPlanInfoMenuView";
 	
+	/**
+	 * 申购报告
+	 */
+	public static String REQPURCHOASEREPORT ="ReqPurchoaseReport";
+	
+	/**
+	 * 指定供应商报告内容
+	 */
+	public static String SPECIFYMAUFACTURER ="SpecifyMaufacturer";
+	
+	
+
+	
 
 }

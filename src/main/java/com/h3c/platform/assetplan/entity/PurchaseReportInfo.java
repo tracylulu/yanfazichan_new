@@ -2,65 +2,65 @@ package com.h3c.platform.assetplan.entity;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class PurchaseReportInfo {
-    private Integer purchasereportid;
+    private Integer id;
 
-    private String purpose;
+    private String purchasereportid;
 
-    private String performanceindicators;
+    private String titlecode;
 
-    private String functionaldescription;
+    private String info;
+
+    private String picturepath;
 
     private String creator;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     private String modifier;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifitime;
 
     private String deleteflag;
 
-    private String addthecontent;
+    public Integer getId() {
+        return id;
+    }
 
-    public Integer getPurchasereportid() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPurchasereportid() {
         return purchasereportid;
     }
 
-    public void setPurchasereportid(Integer purchasereportid) {
-        this.purchasereportid = purchasereportid;
+    public void setPurchasereportid(String purchasereportid) {
+        this.purchasereportid = purchasereportid == null ? null : purchasereportid.trim();
     }
 
-    public String getPurpose() {
-        return purpose;
+    public String getTitlecode() {
+        return titlecode;
     }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose == null ? null : purpose.trim();
+    public void setTitlecode(String titlecode) {
+        this.titlecode = titlecode == null ? null : titlecode.trim();
     }
 
-    public String getPerformanceindicators() {
-        return performanceindicators;
+    public String getInfo() {
+        return info;
     }
 
-    public void setPerformanceindicators(String performanceindicators) {
-        this.performanceindicators = performanceindicators == null ? null : performanceindicators.trim();
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
     }
 
-    public String getFunctionaldescription() {
-        return functionaldescription;
+    public String getPicturepath() {
+        return picturepath;
     }
 
-    public void setFunctionaldescription(String functionaldescription) {
-        this.functionaldescription = functionaldescription == null ? null : functionaldescription.trim();
+    public void setPicturepath(String picturepath) {
+        this.picturepath = picturepath == null ? null : picturepath.trim();
     }
 
     public String getCreator() {
@@ -101,13 +101,5 @@ public class PurchaseReportInfo {
 
     public void setDeleteflag(String deleteflag) {
         this.deleteflag = deleteflag == null ? null : deleteflag.trim();
-    }
-
-    public String getAddthecontent() {
-        return addthecontent;
-    }
-
-    public void setAddthecontent(String addthecontent) {
-        this.addthecontent = addthecontent == null ? null : addthecontent.trim();
     }
 }

@@ -58,13 +58,13 @@ public class AssetPlanInfo {
 
     private String isreqpurchasereport;
 
-    private Integer purchasereportid;
+    private String purchasereportid;
 
     private String isspecifymanufacturer;
 
     private Integer manufacturertypeenum;
 
-    private Integer specifymanufacturerid;
+    private String specifymanufacturerid;
 
     private Integer abnormalplanenum;
 
@@ -332,12 +332,12 @@ public class AssetPlanInfo {
         this.isreqpurchasereport = isreqpurchasereport == null ? null : isreqpurchasereport.trim();
     }
 
-    public Integer getPurchasereportid() {
+    public String getPurchasereportid() {
         return purchasereportid;
     }
 
-    public void setPurchasereportid(Integer purchasereportid) {
-        this.purchasereportid = purchasereportid;
+    public void setPurchasereportid(String purchasereportid) {
+        this.purchasereportid = purchasereportid == null ? null : purchasereportid.trim();
     }
 
     public String getIsspecifymanufacturer() {
@@ -356,12 +356,12 @@ public class AssetPlanInfo {
         this.manufacturertypeenum = manufacturertypeenum;
     }
 
-    public Integer getSpecifymanufacturerid() {
+    public String getSpecifymanufacturerid() {
         return specifymanufacturerid;
     }
 
-    public void setSpecifymanufacturerid(Integer specifymanufacturerid) {
-        this.specifymanufacturerid = specifymanufacturerid;
+    public void setSpecifymanufacturerid(String specifymanufacturerid) {
+        this.specifymanufacturerid = specifymanufacturerid == null ? null : specifymanufacturerid.trim();
     }
 
     public Integer getAbnormalplanenum() {

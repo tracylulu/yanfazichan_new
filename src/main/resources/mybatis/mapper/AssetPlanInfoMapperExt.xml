@@ -342,7 +342,7 @@
 					IsReqPurchaseReport = #{item.isreqpurchasereport,jdbcType=VARCHAR},
 				</if>
 				<if test="item.purchasereportid != null">
-					PurchaseReportID = #{item.purchasereportid,jdbcType=INTEGER},
+					PurchaseReportID = #{item.purchasereportid,jdbcType=VARCHAR},
 				</if>
 				<if test="item.isspecifymanufacturer != null">
 					ISSpecifyManufacturer = #{item.isspecifymanufacturer,jdbcType=VARCHAR},

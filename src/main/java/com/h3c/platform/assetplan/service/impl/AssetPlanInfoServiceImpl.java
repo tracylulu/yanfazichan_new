@@ -79,6 +79,7 @@ import com.h3c.platform.assetplan.service.AssetPlanInfoService;
 import com.h3c.platform.assetplan.service.AssetRateInfoService;
 import com.h3c.platform.assetplan.service.RateTotalInfoService;
 import com.h3c.platform.common.service.PlanTimeWindowsService;
+import com.h3c.platform.common.util.UUIDUtil;
 import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.util.UserUtils;
 
@@ -297,29 +298,45 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Override	
 	@Transactional
 	public void addAssetPlanInfo(AssetPlanGlobalInfo assetPlanGlobalInfo) {
-		
-		if(assetPlanGlobalInfo.purchaseReportInfo!=null) {
-			assetPlanGlobalInfo.getPurchaseReportInfo().setDeleteflag("1");
-			priMapper.insertBackID(assetPlanGlobalInfo.purchaseReportInfo);
+		String purchasereportID = "",surchasereportid="";
+		if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.purchaseReportInfo)) {
+			purchasereportID = UUIDUtil.UUID();
+			for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
+				info.setDeleteflag("1");
+				info.setCreatetime(new Date());
+				info.setCreator(UserUtils.getCurrentUserId());
+				info.setModifier(UserUtils.getCurrentUserId());
+				info.setModifitime(new Date());
+				info.setPurchasereportid(purchasereportID);
+				priMapper.insertSelective(info);
+			}		
 		}
-		if(assetPlanGlobalInfo.specifyManufacturerInfo!=null) {
-			assetPlanGlobalInfo.getSpecifyManufacturerInfo().setDeleteflag("1");
-			smiMapper.insertBackID(assetPlanGlobalInfo.specifyManufacturerInfo);
+		if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.specifyManufacturerInfo)) {
+			surchasereportid = UUIDUtil.UUID();
+			for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
+				info.setDeleteflag("1");
+				info.setCreatetime(new Date());
+				info.setCreator(UserUtils.getCurrentUserId());
+				info.setModifier(UserUtils.getCurrentUserId());
+				info.setModifitime(new Date());
+				info.setSpecifymanufacturerid(surchasereportid);
+				smiMapper.insertSelective(info);
+			}		
 		}
 		//初始化成套设备的code
 		Integer completesetcode = initApplyCode();
 		for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
 			//是否需要申购报告字段为1时才会增加，set主表字段purchasereportid为关联表的id，否则设置默认值为0
 			if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
-				ap.setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.getPurchasereportid());	
+				ap.setPurchasereportid(purchasereportID);	
 			}else {
-				ap.setPurchasereportid(0);
+				ap.setPurchasereportid("");
 			}			
 			//是否指定供应商字段为1时才会增加 ，set主表字段specifymanufacturerid为关联表的id，否则设置默认值为0
 			if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
-				ap.setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.getSpecifymanufacturerid());		
+				ap.setSpecifymanufacturerid(surchasereportid);		
 			}else {
-				ap.setSpecifymanufacturerid(0);
+				ap.setSpecifymanufacturerid("");
 			}
 			//是否成套物品字段为1时说明是成套的设备,set套装编码,否则设置默认值为0
 			if(StringUtils.isNotBlank(ap.getIscompleteset()) && "1".equals(ap.getIscompleteset())) {
@@ -357,16 +374,20 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Transactional
 	public void editAssetPlanInfo(AssetPlanGlobalInfo assetPlanGlobalInfo) {
 		String currentUserId = UserUtils.getCurrentUserId();
-		if(assetPlanGlobalInfo.purchaseReportInfo!=null) {
-			assetPlanGlobalInfo.purchaseReportInfo.setModifier(currentUserId);
-			assetPlanGlobalInfo.purchaseReportInfo.setModifitime(new Date());
-			priMapper.updateByPrimaryKey(assetPlanGlobalInfo.purchaseReportInfo);
+		if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.getPurchaseReportInfo())) {
+			for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {				
+				info.setModifier(UserUtils.getCurrentUserId());
+				info.setModifitime(new Date());			
+				priMapper.updateByPrimaryKeySelective(info);
+			}	
 		}
 		
-		if(assetPlanGlobalInfo.specifyManufacturerInfo!=null) {
-			assetPlanGlobalInfo.specifyManufacturerInfo.setModifier(currentUserId);
-			assetPlanGlobalInfo.specifyManufacturerInfo.setModifitime(new Date());
-			smiMapper.updateByPrimaryKey(assetPlanGlobalInfo.specifyManufacturerInfo);
+		if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.getSpecifyManufacturerInfo())) {
+			for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {			
+				info.setModifier(UserUtils.getCurrentUserId());
+				info.setModifitime(new Date());			
+				smiMapper.updateByPrimaryKeySelective(info);
+			}
 		}		
 		
 		for(AssetPlanInfo ap:assetPlanGlobalInfo.lst) {

@@ -10,29 +10,21 @@ public interface PurchaseReportInfoMapper {
 
     int deleteByExample(PurchaseReportInfoExample example);
 
-    int deleteByPrimaryKey(Integer purchasereportid);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(PurchaseReportInfo record);
 
     int insertSelective(PurchaseReportInfo record);
 
-    List<PurchaseReportInfo> selectByExampleWithBLOBs(PurchaseReportInfoExample example);
-
     List<PurchaseReportInfo> selectByExample(PurchaseReportInfoExample example);
 
-    PurchaseReportInfo selectByPrimaryKey(Integer purchasereportid);
+    PurchaseReportInfo selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") PurchaseReportInfo record, @Param("example") PurchaseReportInfoExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") PurchaseReportInfo record, @Param("example") PurchaseReportInfoExample example);
 
     int updateByExample(@Param("record") PurchaseReportInfo record, @Param("example") PurchaseReportInfoExample example);
 
     int updateByPrimaryKeySelective(PurchaseReportInfo record);
 
-    int updateByPrimaryKeyWithBLOBs(PurchaseReportInfo record);
-
     int updateByPrimaryKey(PurchaseReportInfo record);
-    
-    int insertBackID(PurchaseReportInfo record);
 }

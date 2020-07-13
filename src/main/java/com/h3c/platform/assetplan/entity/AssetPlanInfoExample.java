@@ -1913,52 +1913,62 @@ public class AssetPlanInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidEqualTo(Integer value) {
+        public Criteria andPurchasereportidEqualTo(String value) {
             addCriterion("PurchaseReportID =", value, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidNotEqualTo(Integer value) {
+        public Criteria andPurchasereportidNotEqualTo(String value) {
             addCriterion("PurchaseReportID <>", value, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidGreaterThan(Integer value) {
+        public Criteria andPurchasereportidGreaterThan(String value) {
             addCriterion("PurchaseReportID >", value, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPurchasereportidGreaterThanOrEqualTo(String value) {
             addCriterion("PurchaseReportID >=", value, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidLessThan(Integer value) {
+        public Criteria andPurchasereportidLessThan(String value) {
             addCriterion("PurchaseReportID <", value, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidLessThanOrEqualTo(Integer value) {
+        public Criteria andPurchasereportidLessThanOrEqualTo(String value) {
             addCriterion("PurchaseReportID <=", value, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidIn(List<Integer> values) {
+        public Criteria andPurchasereportidLike(String value) {
+            addCriterion("PurchaseReportID like", value, "purchasereportid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasereportidNotLike(String value) {
+            addCriterion("PurchaseReportID not like", value, "purchasereportid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasereportidIn(List<String> values) {
             addCriterion("PurchaseReportID in", values, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidNotIn(List<Integer> values) {
+        public Criteria andPurchasereportidNotIn(List<String> values) {
             addCriterion("PurchaseReportID not in", values, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidBetween(Integer value1, Integer value2) {
+        public Criteria andPurchasereportidBetween(String value1, String value2) {
             addCriterion("PurchaseReportID between", value1, value2, "purchasereportid");
             return (Criteria) this;
         }
 
-        public Criteria andPurchasereportidNotBetween(Integer value1, Integer value2) {
+        public Criteria andPurchasereportidNotBetween(String value1, String value2) {
             addCriterion("PurchaseReportID not between", value1, value2, "purchasereportid");
             return (Criteria) this;
         }
@@ -2103,52 +2113,62 @@ public class AssetPlanInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridEqualTo(Integer value) {
+        public Criteria andSpecifymanufactureridEqualTo(String value) {
             addCriterion("SpecifyManufacturerID =", value, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridNotEqualTo(Integer value) {
+        public Criteria andSpecifymanufactureridNotEqualTo(String value) {
             addCriterion("SpecifyManufacturerID <>", value, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridGreaterThan(Integer value) {
+        public Criteria andSpecifymanufactureridGreaterThan(String value) {
             addCriterion("SpecifyManufacturerID >", value, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSpecifymanufactureridGreaterThanOrEqualTo(String value) {
             addCriterion("SpecifyManufacturerID >=", value, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridLessThan(Integer value) {
+        public Criteria andSpecifymanufactureridLessThan(String value) {
             addCriterion("SpecifyManufacturerID <", value, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridLessThanOrEqualTo(Integer value) {
+        public Criteria andSpecifymanufactureridLessThanOrEqualTo(String value) {
             addCriterion("SpecifyManufacturerID <=", value, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridIn(List<Integer> values) {
+        public Criteria andSpecifymanufactureridLike(String value) {
+            addCriterion("SpecifyManufacturerID like", value, "specifymanufacturerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpecifymanufactureridNotLike(String value) {
+            addCriterion("SpecifyManufacturerID not like", value, "specifymanufacturerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpecifymanufactureridIn(List<String> values) {
             addCriterion("SpecifyManufacturerID in", values, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridNotIn(List<Integer> values) {
+        public Criteria andSpecifymanufactureridNotIn(List<String> values) {
             addCriterion("SpecifyManufacturerID not in", values, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridBetween(Integer value1, Integer value2) {
+        public Criteria andSpecifymanufactureridBetween(String value1, String value2) {
             addCriterion("SpecifyManufacturerID between", value1, value2, "specifymanufacturerid");
             return (Criteria) this;
         }
 
-        public Criteria andSpecifymanufactureridNotBetween(Integer value1, Integer value2) {
+        public Criteria andSpecifymanufactureridNotBetween(String value1, String value2) {
             addCriterion("SpecifyManufacturerID not between", value1, value2, "specifymanufacturerid");
             return (Criteria) this;
         }

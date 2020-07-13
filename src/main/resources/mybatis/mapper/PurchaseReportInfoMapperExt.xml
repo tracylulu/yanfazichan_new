@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.h3c.platform.assetplan.dao.PurchaseReportInfoMapper">
   <insert id="insertBackID" parameterType="com.h3c.platform.assetplan.entity.PurchaseReportInfo" useGeneratedKeys="true" keyProperty="purchasereportid">
-    insert into PurchaseReportInfo (Purpose, PerformanceIndicators, 
-      FunctionalDescription, Creator, Createtime, 
-      Modifier, ModifiTime, DeleteFlag, 
-      AddtheContent)
-    values (#{purpose,jdbcType=VARCHAR}, #{performanceindicators,jdbcType=VARCHAR}, 
-      #{functionaldescription,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{modifier,jdbcType=VARCHAR}, #{modifitime,jdbcType=TIMESTAMP}, #{deleteflag,jdbcType=VARCHAR}, 
-      #{addthecontent,jdbcType=LONGVARCHAR})
+    insert into PurchaseReportInfo (PurchaseReportID, TitleCode, Info, 
+      PicturePath, Creator, Createtime, 
+      Modifier, ModifiTime, DeleteFlag
+      )
+    values (#{purchasereportid,jdbcType=INTEGER}, #{titlecode,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{picturepath,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{modifitime,jdbcType=TIMESTAMP}, #{deleteflag,jdbcType=VARCHAR}
+      )
   </insert>
 </mapper>

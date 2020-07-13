@@ -10,31 +10,21 @@ public interface SpecifyManufacturerInfoMapper {
 
     int deleteByExample(SpecifyManufacturerInfoExample example);
 
-    int deleteByPrimaryKey(Integer specifymanufacturerid);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(SpecifyManufacturerInfo record);
 
     int insertSelective(SpecifyManufacturerInfo record);
 
-    List<SpecifyManufacturerInfo> selectByExampleWithBLOBs(SpecifyManufacturerInfoExample example);
-
     List<SpecifyManufacturerInfo> selectByExample(SpecifyManufacturerInfoExample example);
 
-    SpecifyManufacturerInfo selectByPrimaryKey(Integer specifymanufacturerid);
+    SpecifyManufacturerInfo selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") SpecifyManufacturerInfo record, @Param("example") SpecifyManufacturerInfoExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") SpecifyManufacturerInfo record, @Param("example") SpecifyManufacturerInfoExample example);
 
     int updateByExample(@Param("record") SpecifyManufacturerInfo record, @Param("example") SpecifyManufacturerInfoExample example);
 
     int updateByPrimaryKeySelective(SpecifyManufacturerInfo record);
 
-    int updateByPrimaryKeyWithBLOBs(SpecifyManufacturerInfo record);
-
     int updateByPrimaryKey(SpecifyManufacturerInfo record);
-    
-    
-    
-    int insertBackID(SpecifyManufacturerInfo record);
 }
