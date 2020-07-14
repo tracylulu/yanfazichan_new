@@ -351,7 +351,7 @@
 					ManufacturerTypeEnum = #{item.manufacturertypeenum,jdbcType=INTEGER},
 				</if>
 				<if test="item.specifymanufacturerid != null">
-					SpecifyManufacturerID = #{item.specifymanufacturerid,jdbcType=INTEGER},
+					SpecifyManufacturerID = #{item.specifymanufacturerid,jdbcType=VARCHAR},
 				</if>
 				<if test="item.abnormalplanenum != null">
 					AbnormalPlanEnum = #{item.abnormalplanenum,jdbcType=INTEGER},

@@ -6,7 +6,7 @@
       Info, PicturePath, Creator, 
       Createtime, Modifier, ModifiTime, 
       DeleteFlag)
-    values (#{specifymanufacturerid,jdbcType=INTEGER}, #{titlecode,jdbcType=VARCHAR}, 
+    values (#{specifymanufacturerid,jdbcType=VARCHAR}, #{titlecode,jdbcType=VARCHAR}, 
       #{info,jdbcType=VARCHAR}, #{picturepath,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifitime,jdbcType=TIMESTAMP}, 
       #{deleteflag,jdbcType=VARCHAR})
