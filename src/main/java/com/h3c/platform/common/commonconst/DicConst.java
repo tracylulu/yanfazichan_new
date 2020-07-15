@@ -109,7 +109,10 @@ public class DicConst {
 	 */
 	public static String SPECIFYMAUFACTURER ="SpecifyMaufacturer";
 	
-	
+	/**
+	 * 物料相关接口
+	 */
+	public static String R_MATERIEL ="R_Materiel";
 
 	
 

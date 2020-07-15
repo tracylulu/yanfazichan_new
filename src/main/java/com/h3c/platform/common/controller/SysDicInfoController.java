@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eos.common.util.Result;
 import com.google.gson.JsonParser;
 import com.h3c.platform.annotation.UserLoginToken;
+import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.entity.EosSearchParamEntity;
 import com.h3c.platform.common.entity.SearchParamEntity;
 import com.h3c.platform.common.entity.SysDicInfo;
@@ -58,20 +59,12 @@ public class SysDicInfoController {
 	public ResponseResult getDicsBycode(String code) throws Exception {
 		return sysDicInfoService.getDicsBycode(code);
 	}
-
-
-//	@UserLoginToken
-//	@ApiOperation(value = "根据类型从afsp获取字典集合")
-//	@GetMapping("/getColumn")
-//	@ResponseBody
-//	public List<Map<String, Object>> getColumn() throws Exception {
-//		return sysDicInfoService.getColumn("AssetPlanInfoApplyView");
-//	}
-//	
-//	@UserLoginToken
-//	@GetMapping("/getManuAndModel")
-//	@ResponseBody
-//	public List<JSONObject> getManuAndModel(String name) throws Exception {
-//		return sysDicInfoService.getManuAndModel(name);
-//	}
+	
+	@UserLoginToken
+	@ApiOperation(value = "获取首页物料信息")
+	@GetMapping("/getMateriel")
+	@ResponseBody
+	public ResponseResult getMateriel() throws Exception {
+		return sysDicInfoService.getDicsByType(DicConst.R_MATERIEL);
+	}
 }
