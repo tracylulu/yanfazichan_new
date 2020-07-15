@@ -619,6 +619,9 @@ public class AssetPlanInfoReviewController {
    			for (int i = 0; i < oldCompleteSetList.size(); i++) {
    				oldLstsubmitID.add(oldCompleteSetList.get(i).getAssetplanid());
    			}
+   			
+   			//初始化成套设备的code--只初始化一次
+			Integer completesetcodeNew = this.initApplyCode();
 			
 			for (int i = 0; i < lst.size(); i++) {
 				//申购报告
@@ -688,7 +691,10 @@ public class AssetPlanInfoReviewController {
 				}else if("0".equals(iscompleteset) && completesetcode!=0) {
 					List<AssetPlanInfo> completeSetList = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
 					for (int j = 0; j < completeSetList.size(); j++) {
-						if(completeSetList.get(j).getAssetplanid()!=lst.get(i).getAssetplanid()) {
+						if(completeSetList.get(j).getAssetplanid().equals(lst.get(i).getAssetplanid())) {
+							//改成非成套的把以前的成套编码去掉
+							lst.get(i).setCompletesetcode(0);	
+						}else {
 							List<Integer> lstDelID=new ArrayList<>();
 							lstDelID.add(completeSetList.get(j).getAssetplanid());
 							assetPlanInfoService.delAssetPlanInfo(lstDelID);
@@ -696,8 +702,6 @@ public class AssetPlanInfoReviewController {
 					}
 				//现在是成套，历史成套id为0  非到成，先生成成套id
 				}else if("1".equals(iscompleteset) && completesetcode==0) {
-					//初始化成套设备的code
-					Integer completesetcodeNew = this.initApplyCode();
 					AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
 					//去数据库中查询有没有这条记录，判断是原来有的还是新增的
 					if(assetPlanInfo==null) {
