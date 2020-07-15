@@ -46,7 +46,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	private List<AssetRateInfo> getRateInfo(String model,String deptCode ,Date date)  {
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH,-62);
+		calendar.add(Calendar.DAY_OF_MONTH,-60);
 //		AssetRateInfoExample example = new AssetRateInfoExample();
 //		AssetRateInfoExample.Criteria cri= example.createCriteria();
 //		cri.andDeptCodeEqualTo(deptCode);
@@ -73,7 +73,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	private List<AssetRateInfo> getRDRateInfo(String model ,Date date)  {
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH,-62);
+		calendar.add(Calendar.DAY_OF_MONTH,-60);
 //		AssetRateInfoExample example = new AssetRateInfoExample();
 //		AssetRateInfoExample.Criteria cri= example.createCriteria();
 //		cri.andDeptNameEqualTo("研发总体");
@@ -93,7 +93,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	private List<AssetRateInfo> getRDRateInfoWithRD(String model ,String deptCode ,Date date)  {
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH,-62);
+		calendar.add(Calendar.DAY_OF_MONTH,-60);
 		Map<String,Object> param=new HashMap<String, Object>();
 		param.put("begin", calendar.getTime());
 		param.put("end", date);
@@ -140,8 +140,9 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		}else {
 			rateTotal.setRate(deptUsageRate+"%");
 		}
-		rateTotal.setNumber(lst.size());
-		rateTotal.setDistribution(getDistribution(lst));
+		List<AssetRateInfo> lstRepeat=lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.toList());
+		rateTotal.setNumber(lstRepeat.size());
+		rateTotal.setDistribution(getDistribution(lstRepeat));
 		rateTotal.setDetail(getRateDetail(lst));
 
 		mapRD=getRDRate( model, deptCode,date,lstRD);
@@ -165,7 +166,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		List<String> lstDis= new ArrayList<String>();
 		Map<String,List<AssetRateInfo>> mapDis= lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.groupingBy(AssetRateInfo::getArea));
 		for(String key:mapDis.keySet()) {
-			lstDis.add(key+"："+mapDis.size()+"pcs");
+			lstDis.add(key+"："+(mapDis.get(key)).size()+"pcs");
 		}
 		return String.join(";", lstDis);
 	}
@@ -255,7 +256,8 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 			mapRD.put("rate",RDUsageRate+"%");
 			mapRD.put("isEmpty", false);
 		}
-		mapRD.put("number", lst.size());
+		List<AssetRateInfo> lstRepeat=lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.toList());
+		mapRD.put("number", lstRepeat.size());
 		return mapRD ;
 	}
 	
