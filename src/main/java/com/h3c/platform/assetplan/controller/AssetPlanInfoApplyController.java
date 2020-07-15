@@ -522,14 +522,27 @@ public class AssetPlanInfoApplyController {
    	   			param.put("ApplyUser",applyuser);
    				param.put("APStage","1");
    				param.put("ApplyMonth",applymonth);
+   				//申请的单子
    				List<AssetPlanInfoAll> draftInfoList = assetPlanInfoService.listofDraftDetail(param);
+   				//打回的单子
+   				Map<String, Object> param1 = new HashMap<>();
+   	   			param1.put("RequiredUser",applyuser);
+   				param1.put("APStage","1");
+   				param1.put("ApplyMonth",applymonth);
+   				List<AssetPlanInfoAll> todoList = assetPlanInfoService.listofTodoDetail(param1);
    				//当前环节该登录人所有待提交的单子
    	   			for (int i = 0; i < draftInfoList.size(); i++) {
    	   				newLstsubmitID.add(draftInfoList.get(i).getAssetplanid());
    	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getApplyuser());
 	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
 	   				getsendToList.add(draftInfoList.get(i).getReviewer());
-   				}		
+   				}
+   	   			for (int j = 0; j < todoList.size(); j++) {
+	   				newLstsubmitID.add(todoList.get(j).getAssetplanid());
+	   				newLstApplyRequiredUserID.add(todoList.get(j).getApplyuser());
+	   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
+	   				getsendToList.add(todoList.get(j).getReviewer());
+				}
    			}else {
    				//选中的部分提交
    	   			for (int i = 0; i < lstsubmitID.size(); i++) {
