@@ -979,5 +979,13 @@ public class AssetPlanInfoApplyController {
     	assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(specifyManufacturerInfoService.getEmptyFiled());	
 		return ResponseResult.success(assetPlanGlobalInfoAll);
 	}
+    
+	@UserLoginToken
+	@ApiOperation(value = "获取申请页面长度")
+	@GetMapping("/getApplyFiledLength")
+	@ResponseBody
+	public ResponseResult getApplyFiledLength() throws Exception {
+		return sysDicInfoService.getDicsByType(DicConst.R_APPLYPAGE);
+	}
 
 }

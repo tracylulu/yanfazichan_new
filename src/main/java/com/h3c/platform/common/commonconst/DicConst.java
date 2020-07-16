@@ -114,6 +114,9 @@ public class DicConst {
 	 */
 	public static String R_MATERIEL ="R_Materiel";
 
-	
+	/**
+	 * 申请页面长度配置
+	 */
+	public static String R_APPLYPAGE="R_ApplyPage";
 
 }
