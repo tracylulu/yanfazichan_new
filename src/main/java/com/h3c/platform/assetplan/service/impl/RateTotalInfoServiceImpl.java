@@ -43,4 +43,9 @@ public class RateTotalInfoServiceImpl implements RateTotalInfoService{
 	public int deleteByID(List<Integer> lst) {
 		return rateTotalInfoMapper.deleteByID(lst);
 	}
+	
+	@Override
+	public RateTotalInfo getRateTotalInfoByID(Integer id) {
+		return rateTotalInfoMapper.selectByPrimaryKey(id);
+	}
 }

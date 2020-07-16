@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.entity.AssetRateInfo;
+import com.h3c.platform.assetplan.entity.SearchRateParamEntity;
 import com.h3c.platform.assetplan.service.AssetRateInfoService;
+import com.h3c.platform.assetplan.service.RateTotalInfoService;
 import com.h3c.platform.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,14 +25,22 @@ import io.swagger.annotations.ApiOperation;
 public class UsageRateContorller {
 	
 	@Autowired
-	private AssetRateInfoService rateInfoService;
+	private AssetRateInfoService rateInfoService; 
+	@Autowired
+	private RateTotalInfoService rateTotalInfoService;
 	
 	@UserLoginToken
-	@PostMapping("/getRate")
+	@GetMapping("/getRate")
 	@ApiOperation("获取使用率")	
-	@DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
-	public ResponseResult getRate(@RequestBody AssetRateInfo assetRateInfo) throws Exception{
-		return ResponseResult.success(rateInfoService.getRate(assetRateInfo.getAssetCategory(), assetRateInfo.getDeptCode(), assetRateInfo.getCollectTime()));		
+	public ResponseResult getRate(Integer id) throws Exception{
+		return ResponseResult.success(rateTotalInfoService.getRateTotalInfoByID(id));		
+	} 
+	
+	@UserLoginToken
+	@PostMapping("/getRateList")
+	@ApiOperation("获取使用率列表详情")		
+	public ResponseResult getRateList(@RequestBody SearchRateParamEntity param) throws Exception{
+		return rateInfoService.getList(param);
 	} 
 
 }

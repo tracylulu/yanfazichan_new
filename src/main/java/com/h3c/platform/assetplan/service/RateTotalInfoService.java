@@ -9,4 +9,6 @@ public interface RateTotalInfoService {
 	int insertBatch(List<RateTotalInfo> lst);
 	
 	int deleteByID(List<Integer> lst);
+	
+	RateTotalInfo getRateTotalInfoByID(Integer id);
 }

@@ -258,9 +258,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 					Long startForTime = System.currentTimeMillis();
 					int i = 0;
 					for (AssetPlanInfo info : lst) {
-						Map<String, Object> result = assetRateInfoService.getRate(info.getAssetmodel(),
-								info.getDeptcode(), info.getReviewtime());
-						RateTotalInfo rateTotalInfo = (RateTotalInfo) result.get("rate");
+						RateTotalInfo rateTotalInfo  = assetRateInfoService.getRate(info.getAssetmodel(),
+								info.getDeptcode(), info.getReviewtime());						
 						rateTotalInfo.setId(info.getAssetplanid());
 						rateTotalInfo.setCreatetime(new Date());
 						lstTotal.add(rateTotalInfo);

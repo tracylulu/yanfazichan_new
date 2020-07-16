@@ -18,7 +18,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.h3c.platform.assetplan.dao.AssetRateInfoMapper;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetRateInfo;
 import com.h3c.platform.assetplan.entity.AssetRateInfoExample;
 import com.h3c.platform.assetplan.entity.DeptInfo;
@@ -27,6 +31,7 @@ import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.response.ResponseResult;
 
 import com.h3c.platform.assetplan.entity.RateTotalInfo;
+import com.h3c.platform.assetplan.entity.SearchRateParamEntity;
 
 @Service
 public class AssetRateInfoServiceImpl implements AssetRateInfoService {
@@ -63,7 +68,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 *@date 日期
 	 */
 	@Override
-	public Map<String,Object> getRate(String model,String deptCode ,Date date)throws Exception  {
+	public RateTotalInfo getRate(String model,String deptCode ,Date date)throws Exception  {
 		RateTotalInfo rateTotal=new RateTotalInfo();	
 		Map<String,Object> mapRD= new HashMap<>();		
 		
@@ -103,11 +108,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		rateTotal.setRdNumber((Integer)mapRD.get("number"));
 		rateTotal.setRatedetail(rateTotal.getRate()+"/"+rateTotal.getRdRate());
 		
-		Map<String,Object> result= new HashMap<>();	
-		result.put("rate", rateTotal);
-		result.put("detail", lst);
-		
-		return result;
+		return rateTotal;
 	}
 	
 	/**
@@ -217,5 +218,22 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
 		  Set<Object> seen = ConcurrentHashMap.newKeySet();
 		  return t -> seen.add(keyExtractor.apply(t));
+	}
+	
+	@Override
+	public ResponseResult getList(SearchRateParamEntity search)throws Exception{
+		Calendar calendar=Calendar.getInstance();  
+		calendar.setTime(search.getCollectTime());
+		calendar.add(Calendar.DAY_OF_MONTH,-60);
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("begin", calendar.getTime());
+		param.put("end", search.getCollectTime());
+		param.put("model", search.getAssetCategory());
+		param.put("deptCode", search.getDeptCode());
+		PageHelper.startPage(search.getPageNum(), search.getPageSize());		
+		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
+		PageInfo<AssetRateInfo> pageInfo=new PageInfo<AssetRateInfo>(lst);
+		
+		return ResponseResult.success(0, "查询成功", search.getPageSize(), pageInfo.getTotal(),null,  pageInfo.getList());
 	}
 }
