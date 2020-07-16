@@ -613,15 +613,6 @@ public class AssetPlanInfoReviewController {
 			//供应商 ID
 			String specifymanufacturerid = assetPlanGlobalInfo.getLst().get(0).getSpecifymanufacturerid();
 			
-			//数据库中原来的成套id集合
-			List<Integer> oldLstsubmitID =new ArrayList<>();
-			List<AssetPlanInfo> oldCompleteSetList = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
-   			for (int i = 0; i < oldCompleteSetList.size(); i++) {
-   				oldLstsubmitID.add(oldCompleteSetList.get(i).getAssetplanid());
-   			}
-   			
-   			//初始化成套设备的code--只初始化一次
-			Integer completesetcodeNew = this.initApplyCode();
 			
 			for (int i = 0; i < lst.size(); i++) {
 				//申购报告
@@ -683,42 +674,6 @@ public class AssetPlanInfoReviewController {
 				}else if("1".equals(isspecifymanufacturer) && StringUtils.isNotBlank(specifymanufacturerid)) {
 				}
 				
-				//是否成套
-				//现在非成套0，历史成套id为0  非到非，不做处理，直接update
-				if("0".equals(iscompleteset) && completesetcode==0) {
-				
-				//现在非成套0，历史成套id不为0  成到非，把缺少的那条软删除
-				}else if("0".equals(iscompleteset) && completesetcode!=0) {
-					List<AssetPlanInfo> completeSetList = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
-					for (int j = 0; j < completeSetList.size(); j++) {
-						if(completeSetList.get(j).getAssetplanid().equals(lst.get(i).getAssetplanid())) {
-							//改成非成套的把以前的成套编码去掉
-							lst.get(i).setCompletesetcode(0);	
-						}else {
-							List<Integer> lstDelID=new ArrayList<>();
-							lstDelID.add(completeSetList.get(j).getAssetplanid());
-							assetPlanInfoService.delAssetPlanInfo(lstDelID);
-						}
-					}
-				//现在是成套，历史成套id为0  非到成，先生成成套id
-				}else if("1".equals(iscompleteset) && completesetcode==0) {
-					AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
-					//去数据库中查询有没有这条记录，判断是原来有的还是新增的
-					if(assetPlanInfo==null) {
-						lst.get(i).setCompletesetcode(completesetcodeNew);
-						assetPlanInfoMapper.insert(lst.get(i));
-					}else {
-						lst.get(i).setCompletesetcode(completesetcodeNew);
-					}
-				//成套到成套
-				}else if("1".equals(iscompleteset) && completesetcode!=0) {
-					AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
-					if(assetPlanInfo==null) {
-						assetPlanInfoMapper.insert(lst.get(i));
-					}else {
-						oldLstsubmitID.remove(lst.get(i).getAssetplanid());
-					}
-				}
 				
 				
 				//规范1  不规范2  未审核3  在审核4 
@@ -739,13 +694,6 @@ public class AssetPlanInfoReviewController {
 				numApproveRecord.setReviewercount(requiredsaudit);
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 				
-				
-			}
-			if("1".equals(iscompleteset) && completesetcode!=0) {
-				//成到成，软删除，把数据库中有的，传过来没有的进行软删除
-				if(oldLstsubmitID.size()>0) {
-					assetPlanInfoService.delAssetPlanInfo(oldLstsubmitID);
-				}
 			}
 			
 			this.assetPlanInfoService.editAssetPlanInfo(assetPlanGlobalInfo);

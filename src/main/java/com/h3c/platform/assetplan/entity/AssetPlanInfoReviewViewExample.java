@@ -1025,6 +1025,146 @@ public class AssetPlanInfoReviewViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andDept2codeIsNull() {
+            addCriterion("Dept2Code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeIsNotNull() {
+            addCriterion("Dept2Code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeEqualTo(String value) {
+            addCriterion("Dept2Code =", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeNotEqualTo(String value) {
+            addCriterion("Dept2Code <>", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeGreaterThan(String value) {
+            addCriterion("Dept2Code >", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeGreaterThanOrEqualTo(String value) {
+            addCriterion("Dept2Code >=", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeLessThan(String value) {
+            addCriterion("Dept2Code <", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeLessThanOrEqualTo(String value) {
+            addCriterion("Dept2Code <=", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeLike(String value) {
+            addCriterion("Dept2Code like", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeNotLike(String value) {
+            addCriterion("Dept2Code not like", value, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeIn(List<String> values) {
+            addCriterion("Dept2Code in", values, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeNotIn(List<String> values) {
+            addCriterion("Dept2Code not in", values, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeBetween(String value1, String value2) {
+            addCriterion("Dept2Code between", value1, value2, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2codeNotBetween(String value1, String value2) {
+            addCriterion("Dept2Code not between", value1, value2, "dept2code");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameIsNull() {
+            addCriterion("Dept2Name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameIsNotNull() {
+            addCriterion("Dept2Name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameEqualTo(String value) {
+            addCriterion("Dept2Name =", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameNotEqualTo(String value) {
+            addCriterion("Dept2Name <>", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameGreaterThan(String value) {
+            addCriterion("Dept2Name >", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameGreaterThanOrEqualTo(String value) {
+            addCriterion("Dept2Name >=", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameLessThan(String value) {
+            addCriterion("Dept2Name <", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameLessThanOrEqualTo(String value) {
+            addCriterion("Dept2Name <=", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameLike(String value) {
+            addCriterion("Dept2Name like", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameNotLike(String value) {
+            addCriterion("Dept2Name not like", value, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameIn(List<String> values) {
+            addCriterion("Dept2Name in", values, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameNotIn(List<String> values) {
+            addCriterion("Dept2Name not in", values, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameBetween(String value1, String value2) {
+            addCriterion("Dept2Name between", value1, value2, "dept2name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2nameNotBetween(String value1, String value2) {
+            addCriterion("Dept2Name not between", value1, value2, "dept2name");
+            return (Criteria) this;
+        }
+
         public Criteria andItemcodeIsNull() {
             addCriterion("ItemCode is null");
             return (Criteria) this;
