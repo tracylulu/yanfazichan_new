@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,8 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 				JSONObject obj=arr.getJSONObject(i);
 				if(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")).equals(info.getTitlecode())) {
 					infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")));
-					infoExt.setOrder(Integer.parseInt(ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"))));
+					String order=ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"));
+					infoExt.setOrder(Integer.parseInt(StringUtils.isBlank(order)?"0":order));					
 				}
 			}
 			
@@ -67,7 +69,8 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 			SpecifyManufacturerInfoExt infoExt = new SpecifyManufacturerInfoExt();
 			infoExt.setTitlecode(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));
 			infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")));
-			infoExt.setOrder(Integer.parseInt(ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"))));
+			String order=ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"));
+			infoExt.setOrder(Integer.parseInt(StringUtils.isBlank(order)?"0":order));
 			lstResult.add(infoExt);
 		}
 		

@@ -37,59 +37,12 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	private DeptInfoService deptInfoService;
 	
 	/**
-	 * 根据查询条件获取使用率  查询日期前60天
-	 * @param model 小类
+	 * 获取前60天部门及研发总体使用率数据
+	 * @param model 型号
 	 * @param deptCode 部门编码
 	 * @param date 日期
 	 * @return
 	 */
-	private List<AssetRateInfo> getRateInfo(String model,String deptCode ,Date date)  {
-		Calendar calendar=Calendar.getInstance();  
-		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH,-60);
-//		AssetRateInfoExample example = new AssetRateInfoExample();
-//		AssetRateInfoExample.Criteria cri= example.createCriteria();
-//		cri.andDeptCodeEqualTo(deptCode);
-//		cri.andAssetCategoryEqualTo(model);
-//		cri.andCollectTimeBetween(calendar.getTime(), date);
-//		
-//		List<AssetRateInfo> lst = assetRateInfoMapper.selectByExample(example);
-		Map<String,Object> param=new HashMap<String, Object>();
-		param.put("begin", calendar.getTime());
-		param.put("end", date);
-		param.put("model", model);
-		param.put("deptCode", deptCode);
-		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
-		return lst;
-	}
-	
-	/**
-	 * 获取研发整体前60天使用率数据
-	 * @param model
-	 * @param deptCode
-	 * @param date
-	 * @return
-	 */
-	private List<AssetRateInfo> getRDRateInfo(String model ,Date date)  {
-		Calendar calendar=Calendar.getInstance();  
-		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH,-60);
-//		AssetRateInfoExample example = new AssetRateInfoExample();
-//		AssetRateInfoExample.Criteria cri= example.createCriteria();
-//		cri.andDeptNameEqualTo("研发总体");
-//		cri.andAssetCategoryEqualTo(model);
-//		cri.andCollectTimeBetween(calendar.getTime(), date);
-		
-//		List<AssetRateInfo> lst = assetRateInfoMapper.selectByExample(example);
-		Map<String,Object> param=new HashMap<String, Object>();
-		param.put("begin", calendar.getTime());
-		param.put("end", date);
-		param.put("model", model);
-		param.put("deptName", "研发总体");
-		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
-		return lst;
-	}
-	
 	private List<AssetRateInfo> getRDRateInfoWithRD(String model ,String deptCode ,Date date)  {
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(date);
@@ -148,7 +101,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		mapRD=getRDRate( model, deptCode,date,lstRD);
 		rateTotal.setRdRate((String)mapRD.get("rate"));
 		rateTotal.setRdNumber((Integer)mapRD.get("number"));
-		rateTotal.setRatedetail((rateTotal.getRate()+"/"+rateTotal.getRdRate()).replace("%", ""));
+		rateTotal.setRatedetail(rateTotal.getRate()+"/"+rateTotal.getRdRate());
 		
 		Map<String,Object> result= new HashMap<>();	
 		result.put("rate", rateTotal);
