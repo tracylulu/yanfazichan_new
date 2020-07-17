@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class AssetPlanInfoSearchViewExample {
+public class AssetPlanInfoReportViewExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public AssetPlanInfoSearchViewExample() {
+    public AssetPlanInfoReportViewExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -923,6 +923,66 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andNopasscountIsNull() {
+            addCriterion("NoPassCount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountIsNotNull() {
+            addCriterion("NoPassCount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountEqualTo(Long value) {
+            addCriterion("NoPassCount =", value, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountNotEqualTo(Long value) {
+            addCriterion("NoPassCount <>", value, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountGreaterThan(Long value) {
+            addCriterion("NoPassCount >", value, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountGreaterThanOrEqualTo(Long value) {
+            addCriterion("NoPassCount >=", value, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountLessThan(Long value) {
+            addCriterion("NoPassCount <", value, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountLessThanOrEqualTo(Long value) {
+            addCriterion("NoPassCount <=", value, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountIn(List<Long> values) {
+            addCriterion("NoPassCount in", values, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountNotIn(List<Long> values) {
+            addCriterion("NoPassCount not in", values, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountBetween(Long value1, Long value2) {
+            addCriterion("NoPassCount between", value1, value2, "nopasscount");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopasscountNotBetween(Long value1, Long value2) {
+            addCriterion("NoPassCount not between", value1, value2, "nopasscount");
+            return (Criteria) this;
+        }
+
         public Criteria andPpriceIsNull() {
             addCriterion("PPrice is null");
             return (Criteria) this;
@@ -1103,6 +1163,66 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andNopassmoneyIsNull() {
+            addCriterion("NopassMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyIsNotNull() {
+            addCriterion("NopassMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyEqualTo(BigDecimal value) {
+            addCriterion("NopassMoney =", value, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyNotEqualTo(BigDecimal value) {
+            addCriterion("NopassMoney <>", value, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyGreaterThan(BigDecimal value) {
+            addCriterion("NopassMoney >", value, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("NopassMoney >=", value, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyLessThan(BigDecimal value) {
+            addCriterion("NopassMoney <", value, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("NopassMoney <=", value, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyIn(List<BigDecimal> values) {
+            addCriterion("NopassMoney in", values, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyNotIn(List<BigDecimal> values) {
+            addCriterion("NopassMoney not in", values, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("NopassMoney between", value1, value2, "nopassmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andNopassmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("NopassMoney not between", value1, value2, "nopassmoney");
+            return (Criteria) this;
+        }
+
         public Criteria andRequireduserIsNull() {
             addCriterion("RequiredUser is null");
             return (Criteria) this;
@@ -1170,426 +1290,6 @@ public class AssetPlanInfoSearchViewExample {
 
         public Criteria andRequireduserNotBetween(String value1, String value2) {
             addCriterion("RequiredUser not between", value1, value2, "requireduser");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerIsNull() {
-            addCriterion("Reviewer is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerIsNotNull() {
-            addCriterion("Reviewer is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerEqualTo(String value) {
-            addCriterion("Reviewer =", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerNotEqualTo(String value) {
-            addCriterion("Reviewer <>", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerGreaterThan(String value) {
-            addCriterion("Reviewer >", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerGreaterThanOrEqualTo(String value) {
-            addCriterion("Reviewer >=", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerLessThan(String value) {
-            addCriterion("Reviewer <", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerLessThanOrEqualTo(String value) {
-            addCriterion("Reviewer <=", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerLike(String value) {
-            addCriterion("Reviewer like", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerNotLike(String value) {
-            addCriterion("Reviewer not like", value, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerIn(List<String> values) {
-            addCriterion("Reviewer in", values, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerNotIn(List<String> values) {
-            addCriterion("Reviewer not in", values, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerBetween(String value1, String value2) {
-            addCriterion("Reviewer between", value1, value2, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewerNotBetween(String value1, String value2) {
-            addCriterion("Reviewer not between", value1, value2, "reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerIsNull() {
-            addCriterion("Dept3Manager is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerIsNotNull() {
-            addCriterion("Dept3Manager is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerEqualTo(String value) {
-            addCriterion("Dept3Manager =", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerNotEqualTo(String value) {
-            addCriterion("Dept3Manager <>", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerGreaterThan(String value) {
-            addCriterion("Dept3Manager >", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerGreaterThanOrEqualTo(String value) {
-            addCriterion("Dept3Manager >=", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerLessThan(String value) {
-            addCriterion("Dept3Manager <", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerLessThanOrEqualTo(String value) {
-            addCriterion("Dept3Manager <=", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerLike(String value) {
-            addCriterion("Dept3Manager like", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerNotLike(String value) {
-            addCriterion("Dept3Manager not like", value, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerIn(List<String> values) {
-            addCriterion("Dept3Manager in", values, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerNotIn(List<String> values) {
-            addCriterion("Dept3Manager not in", values, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerBetween(String value1, String value2) {
-            addCriterion("Dept3Manager between", value1, value2, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept3managerNotBetween(String value1, String value2) {
-            addCriterion("Dept3Manager not between", value1, value2, "dept3manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerIsNull() {
-            addCriterion("Dept2Manager is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerIsNotNull() {
-            addCriterion("Dept2Manager is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerEqualTo(String value) {
-            addCriterion("Dept2Manager =", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerNotEqualTo(String value) {
-            addCriterion("Dept2Manager <>", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerGreaterThan(String value) {
-            addCriterion("Dept2Manager >", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerGreaterThanOrEqualTo(String value) {
-            addCriterion("Dept2Manager >=", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerLessThan(String value) {
-            addCriterion("Dept2Manager <", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerLessThanOrEqualTo(String value) {
-            addCriterion("Dept2Manager <=", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerLike(String value) {
-            addCriterion("Dept2Manager like", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerNotLike(String value) {
-            addCriterion("Dept2Manager not like", value, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerIn(List<String> values) {
-            addCriterion("Dept2Manager in", values, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerNotIn(List<String> values) {
-            addCriterion("Dept2Manager not in", values, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerBetween(String value1, String value2) {
-            addCriterion("Dept2Manager between", value1, value2, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept2managerNotBetween(String value1, String value2) {
-            addCriterion("Dept2Manager not between", value1, value2, "dept2manager");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerIsNull() {
-            addCriterion("Planner is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerIsNotNull() {
-            addCriterion("Planner is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerEqualTo(String value) {
-            addCriterion("Planner =", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerNotEqualTo(String value) {
-            addCriterion("Planner <>", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerGreaterThan(String value) {
-            addCriterion("Planner >", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerGreaterThanOrEqualTo(String value) {
-            addCriterion("Planner >=", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerLessThan(String value) {
-            addCriterion("Planner <", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerLessThanOrEqualTo(String value) {
-            addCriterion("Planner <=", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerLike(String value) {
-            addCriterion("Planner like", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerNotLike(String value) {
-            addCriterion("Planner not like", value, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerIn(List<String> values) {
-            addCriterion("Planner in", values, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerNotIn(List<String> values) {
-            addCriterion("Planner not in", values, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerBetween(String value1, String value2) {
-            addCriterion("Planner between", value1, value2, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andPlannerNotBetween(String value1, String value2) {
-            addCriterion("Planner not between", value1, value2, "planner");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerIsNull() {
-            addCriterion("OQDeptReviewer is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerIsNotNull() {
-            addCriterion("OQDeptReviewer is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerEqualTo(String value) {
-            addCriterion("OQDeptReviewer =", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerNotEqualTo(String value) {
-            addCriterion("OQDeptReviewer <>", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerGreaterThan(String value) {
-            addCriterion("OQDeptReviewer >", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerGreaterThanOrEqualTo(String value) {
-            addCriterion("OQDeptReviewer >=", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerLessThan(String value) {
-            addCriterion("OQDeptReviewer <", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerLessThanOrEqualTo(String value) {
-            addCriterion("OQDeptReviewer <=", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerLike(String value) {
-            addCriterion("OQDeptReviewer like", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerNotLike(String value) {
-            addCriterion("OQDeptReviewer not like", value, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerIn(List<String> values) {
-            addCriterion("OQDeptReviewer in", values, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerNotIn(List<String> values) {
-            addCriterion("OQDeptReviewer not in", values, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerBetween(String value1, String value2) {
-            addCriterion("OQDeptReviewer between", value1, value2, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andOqdeptreviewerNotBetween(String value1, String value2) {
-            addCriterion("OQDeptReviewer not between", value1, value2, "oqdeptreviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerIsNull() {
-            addCriterion("Dept1Reviewer is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerIsNotNull() {
-            addCriterion("Dept1Reviewer is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerEqualTo(String value) {
-            addCriterion("Dept1Reviewer =", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerNotEqualTo(String value) {
-            addCriterion("Dept1Reviewer <>", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerGreaterThan(String value) {
-            addCriterion("Dept1Reviewer >", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerGreaterThanOrEqualTo(String value) {
-            addCriterion("Dept1Reviewer >=", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerLessThan(String value) {
-            addCriterion("Dept1Reviewer <", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerLessThanOrEqualTo(String value) {
-            addCriterion("Dept1Reviewer <=", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerLike(String value) {
-            addCriterion("Dept1Reviewer like", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerNotLike(String value) {
-            addCriterion("Dept1Reviewer not like", value, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerIn(List<String> values) {
-            addCriterion("Dept1Reviewer in", values, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerNotIn(List<String> values) {
-            addCriterion("Dept1Reviewer not in", values, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerBetween(String value1, String value2) {
-            addCriterion("Dept1Reviewer between", value1, value2, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andDept1reviewerNotBetween(String value1, String value2) {
-            addCriterion("Dept1Reviewer not between", value1, value2, "dept1reviewer");
             return (Criteria) this;
         }
 

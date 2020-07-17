@@ -3,7 +3,7 @@ package com.h3c.platform.assetplan.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class AssetPlanInfoSearchExportView {
+public class AssetPlanInfoReportView {
     private Integer assetplanid;
 
     private String plancode;
@@ -28,27 +28,19 @@ public class AssetPlanInfoSearchExportView {
 
     private Integer requiredsaudit;
 
+    private Long nopasscount;
+
     private BigDecimal pprice;
 
     private BigDecimal totalmoney;
 
     private BigDecimal actualmoney;
 
+    private BigDecimal nopassmoney;
+
     private String requireduser;
 
     private String requiredusername;
-
-    private String reviewer;
-
-    private String dept3manager;
-
-    private String dept2manager;
-
-    private String planner;
-
-    private String oqdeptreviewer;
-
-    private String dept1reviewer;
 
     private String deptcode;
 
@@ -101,18 +93,6 @@ public class AssetPlanInfoSearchExportView {
     private Integer reviewresult;
 
     private String deleteflag;
-
-    private String rate;
-
-    private Integer number;
-
-    private String distribution;
-
-    private String detail;
-
-    private String rdRate;
-
-    private Integer rdNumber;
 
     public Integer getAssetplanid() {
         return assetplanid;
@@ -210,6 +190,14 @@ public class AssetPlanInfoSearchExportView {
         this.requiredsaudit = requiredsaudit;
     }
 
+    public Long getNopasscount() {
+        return nopasscount;
+    }
+
+    public void setNopasscount(Long nopasscount) {
+        this.nopasscount = nopasscount;
+    }
+
     public BigDecimal getPprice() {
         return pprice;
     }
@@ -234,6 +222,14 @@ public class AssetPlanInfoSearchExportView {
         this.actualmoney = actualmoney;
     }
 
+    public BigDecimal getNopassmoney() {
+        return nopassmoney;
+    }
+
+    public void setNopassmoney(BigDecimal nopassmoney) {
+        this.nopassmoney = nopassmoney;
+    }
+
     public String getRequireduser() {
         return requireduser;
     }
@@ -248,54 +244,6 @@ public class AssetPlanInfoSearchExportView {
 
     public void setRequiredusername(String requiredusername) {
         this.requiredusername = requiredusername == null ? null : requiredusername.trim();
-    }
-
-    public String getReviewer() {
-        return reviewer;
-    }
-
-    public void setReviewer(String reviewer) {
-        this.reviewer = reviewer == null ? null : reviewer.trim();
-    }
-
-    public String getDept3manager() {
-        return dept3manager;
-    }
-
-    public void setDept3manager(String dept3manager) {
-        this.dept3manager = dept3manager == null ? null : dept3manager.trim();
-    }
-
-    public String getDept2manager() {
-        return dept2manager;
-    }
-
-    public void setDept2manager(String dept2manager) {
-        this.dept2manager = dept2manager == null ? null : dept2manager.trim();
-    }
-
-    public String getPlanner() {
-        return planner;
-    }
-
-    public void setPlanner(String planner) {
-        this.planner = planner == null ? null : planner.trim();
-    }
-
-    public String getOqdeptreviewer() {
-        return oqdeptreviewer;
-    }
-
-    public void setOqdeptreviewer(String oqdeptreviewer) {
-        this.oqdeptreviewer = oqdeptreviewer == null ? null : oqdeptreviewer.trim();
-    }
-
-    public String getDept1reviewer() {
-        return dept1reviewer;
-    }
-
-    public void setDept1reviewer(String dept1reviewer) {
-        this.dept1reviewer = dept1reviewer == null ? null : dept1reviewer.trim();
     }
 
     public String getDeptcode() {
@@ -504,53 +452,5 @@ public class AssetPlanInfoSearchExportView {
 
     public void setDeleteflag(String deleteflag) {
         this.deleteflag = deleteflag == null ? null : deleteflag.trim();
-    }
-
-    public String getRate() {
-        return rate;
-    }
-
-    public void setRate(String rate) {
-        this.rate = rate == null ? null : rate.trim();
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getDistribution() {
-        return distribution;
-    }
-
-    public void setDistribution(String distribution) {
-        this.distribution = distribution == null ? null : distribution.trim();
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail == null ? null : detail.trim();
-    }
-
-    public String getRdRate() {
-        return rdRate;
-    }
-
-    public void setRdRate(String rdRate) {
-        this.rdRate = rdRate == null ? null : rdRate.trim();
-    }
-
-    public Integer getRdNumber() {
-        return rdNumber;
-    }
-
-    public void setRdNumber(Integer rdNumber) {
-        this.rdNumber = rdNumber;
     }
 }

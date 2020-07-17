@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoSearchViewMapper">
-  <resultMap id="BaseResultMap" type="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoReportViewMapper">
+  <resultMap id="BaseResultMap" type="com.h3c.platform.assetplan.entity.AssetPlanInfoReportView">
     <result column="AssetPlanID" jdbcType="INTEGER" property="assetplanid" />
     <result column="PlanCode" jdbcType="VARCHAR" property="plancode" />
     <result column="PlanMonth" jdbcType="DATE" property="planmonth" />
@@ -14,16 +14,12 @@
     <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
     <result column="Requireds" jdbcType="INTEGER" property="requireds" />
     <result column="RequiredsAudit" jdbcType="INTEGER" property="requiredsaudit" />
+    <result column="NoPassCount" jdbcType="BIGINT" property="nopasscount" />
     <result column="PPrice" jdbcType="DECIMAL" property="pprice" />
     <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
     <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
+    <result column="NopassMoney" jdbcType="DECIMAL" property="nopassmoney" />
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
-    <result column="Reviewer" jdbcType="VARCHAR" property="reviewer" />
-    <result column="Dept3Manager" jdbcType="VARCHAR" property="dept3manager" />
-    <result column="Dept2Manager" jdbcType="VARCHAR" property="dept2manager" />
-    <result column="Planner" jdbcType="VARCHAR" property="planner" />
-    <result column="OQDeptReviewer" jdbcType="VARCHAR" property="oqdeptreviewer" />
-    <result column="Dept1Reviewer" jdbcType="VARCHAR" property="dept1reviewer" />
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
     <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
@@ -112,21 +108,20 @@
   </sql>
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, PlanMonth, ApplyMonth, AssetName, AssetManufacturer, AssetModel, 
-    AssetCategory, Goodstime, Purpose, Requireds, RequiredsAudit, PPrice, TotalMoney, 
-    ActualMoney, RequiredUser, Reviewer, Dept3Manager, Dept2Manager, Planner, OQDeptReviewer, 
-    Dept1Reviewer, RequiredUserName, DeptCode, Dept3Name, Dept2Code, Dept2Name, Dept1Code, 
-    Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, AssetNote, 
-    ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, APStatus, APStatusDetail, APStage, 
-    ApprovalPerson, ApprovalNote, ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
-    ManufacturerTypeEnum, ReviewResult, DeleteFlag
+    AssetCategory, Goodstime, Purpose, Requireds, RequiredsAudit, NoPassCount, PPrice, 
+    TotalMoney, ActualMoney, NopassMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, 
+    Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, 
+    OutTimePlanEnum, AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, 
+    APStatus, APStatusDetail, APStage, ApprovalPerson, ApprovalNote, ApprovalResult, 
+    IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, ReviewResult, DeleteFlag
   </sql>
-  <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReportViewExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from AssetPlanInfoSearchView
+    from AssetPlanInfoReportView
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -134,50 +129,48 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample">
-    delete from AssetPlanInfoSearchView
+  <delete id="deleteByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReportViewExample">
+    delete from AssetPlanInfoReportView
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView">
-    insert into AssetPlanInfoSearchView (AssetPlanID, PlanCode, PlanMonth, 
+  <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReportView">
+    insert into AssetPlanInfoReportView (AssetPlanID, PlanCode, PlanMonth, 
       ApplyMonth, AssetName, AssetManufacturer, 
       AssetModel, AssetCategory, Goodstime, 
       Purpose, Requireds, RequiredsAudit, 
-      PPrice, TotalMoney, ActualMoney, 
-      RequiredUser, Reviewer, Dept3Manager, 
-      Dept2Manager, Planner, OQDeptReviewer, 
-      Dept1Reviewer, RequiredUserName, DeptCode, 
-      Dept3Name, Dept2Code, Dept2Name, 
-      Dept1Code, Dept1Name, ItemCode, 
-      ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, 
-      AssetNote, ApplyUser, ApplyTime, 
-      IsCompleteSet, CompleteSetCode, APStatus, 
-      APStatusDetail, APStage, ApprovalPerson, 
-      ApprovalNote, ApprovalResult, IsReqPurchaseReport, 
-      ISSpecifyManufacturer, ManufacturerTypeEnum, 
-      ReviewResult, DeleteFlag)
+      NoPassCount, PPrice, TotalMoney, 
+      ActualMoney, NopassMoney, RequiredUser, 
+      RequiredUserName, DeptCode, Dept3Name, 
+      Dept2Code, Dept2Name, Dept1Code, 
+      Dept1Name, ItemCode, ReceiverPlace, 
+      AbnormalPlanEnum, OutTimePlanEnum, AssetNote, 
+      ApplyUser, ApplyTime, IsCompleteSet, 
+      CompleteSetCode, APStatus, APStatusDetail, 
+      APStage, ApprovalPerson, ApprovalNote, 
+      ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
+      ManufacturerTypeEnum, ReviewResult, DeleteFlag
+      )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, 
       #{applymonth,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, 
       #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{goodstime,jdbcType=INTEGER}, 
       #{purpose,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
-      #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
-      #{requireduser,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, 
-      #{dept2manager,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, 
-      #{dept1reviewer,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
-      #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
-      #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
-      #{receiverplace,jdbcType=VARCHAR}, #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, 
-      #{assetnote,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, 
-      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, 
-      #{apstatusdetail,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, 
-      #{approvalnote,jdbcType=VARCHAR}, #{approvalresult,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
-      #{isspecifymanufacturer,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=INTEGER}, 
-      #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR})
+      #{nopasscount,jdbcType=BIGINT}, #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, 
+      #{actualmoney,jdbcType=DECIMAL}, #{nopassmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, 
+      #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
+      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, 
+      #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, 
+      #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, 
+      #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
+      #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, #{approvalnote,jdbcType=VARCHAR}, 
+      #{approvalresult,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{manufacturertypeenum,jdbcType=INTEGER}, #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView">
-    insert into AssetPlanInfoSearchView
+  <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReportView">
+    insert into AssetPlanInfoReportView
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="assetplanid != null">
         AssetPlanID,
@@ -215,6 +208,9 @@
       <if test="requiredsaudit != null">
         RequiredsAudit,
       </if>
+      <if test="nopasscount != null">
+        NoPassCount,
+      </if>
       <if test="pprice != null">
         PPrice,
       </if>
@@ -224,26 +220,11 @@
       <if test="actualmoney != null">
         ActualMoney,
       </if>
+      <if test="nopassmoney != null">
+        NopassMoney,
+      </if>
       <if test="requireduser != null">
         RequiredUser,
-      </if>
-      <if test="reviewer != null">
-        Reviewer,
-      </if>
-      <if test="dept3manager != null">
-        Dept3Manager,
-      </if>
-      <if test="dept2manager != null">
-        Dept2Manager,
-      </if>
-      <if test="planner != null">
-        Planner,
-      </if>
-      <if test="oqdeptreviewer != null">
-        OQDeptReviewer,
-      </if>
-      <if test="dept1reviewer != null">
-        Dept1Reviewer,
       </if>
       <if test="requiredusername != null">
         RequiredUserName,
@@ -364,6 +345,9 @@
       <if test="requiredsaudit != null">
         #{requiredsaudit,jdbcType=INTEGER},
       </if>
+      <if test="nopasscount != null">
+        #{nopasscount,jdbcType=BIGINT},
+      </if>
       <if test="pprice != null">
         #{pprice,jdbcType=DECIMAL},
       </if>
@@ -373,26 +357,11 @@
       <if test="actualmoney != null">
         #{actualmoney,jdbcType=DECIMAL},
       </if>
+      <if test="nopassmoney != null">
+        #{nopassmoney,jdbcType=DECIMAL},
+      </if>
       <if test="requireduser != null">
         #{requireduser,jdbcType=VARCHAR},
-      </if>
-      <if test="reviewer != null">
-        #{reviewer,jdbcType=VARCHAR},
-      </if>
-      <if test="dept3manager != null">
-        #{dept3manager,jdbcType=VARCHAR},
-      </if>
-      <if test="dept2manager != null">
-        #{dept2manager,jdbcType=VARCHAR},
-      </if>
-      <if test="planner != null">
-        #{planner,jdbcType=VARCHAR},
-      </if>
-      <if test="oqdeptreviewer != null">
-        #{oqdeptreviewer,jdbcType=VARCHAR},
-      </if>
-      <if test="dept1reviewer != null">
-        #{dept1reviewer,jdbcType=VARCHAR},
       </if>
       <if test="requiredusername != null">
         #{requiredusername,jdbcType=VARCHAR},
@@ -477,14 +446,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultType="java.lang.Long">
-    select count(*) from AssetPlanInfoSearchView
+  <select id="countByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReportViewExample" resultType="java.lang.Long">
+    select count(*) from AssetPlanInfoReportView
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update AssetPlanInfoSearchView
+    update AssetPlanInfoReportView
     <set>
       <if test="record.assetplanid != null">
         AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
@@ -522,6 +491,9 @@
       <if test="record.requiredsaudit != null">
         RequiredsAudit = #{record.requiredsaudit,jdbcType=INTEGER},
       </if>
+      <if test="record.nopasscount != null">
+        NoPassCount = #{record.nopasscount,jdbcType=BIGINT},
+      </if>
       <if test="record.pprice != null">
         PPrice = #{record.pprice,jdbcType=DECIMAL},
       </if>
@@ -531,26 +503,11 @@
       <if test="record.actualmoney != null">
         ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       </if>
+      <if test="record.nopassmoney != null">
+        NopassMoney = #{record.nopassmoney,jdbcType=DECIMAL},
+      </if>
       <if test="record.requireduser != null">
         RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
-      </if>
-      <if test="record.reviewer != null">
-        Reviewer = #{record.reviewer,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dept3manager != null">
-        Dept3Manager = #{record.dept3manager,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dept2manager != null">
-        Dept2Manager = #{record.dept2manager,jdbcType=VARCHAR},
-      </if>
-      <if test="record.planner != null">
-        Planner = #{record.planner,jdbcType=VARCHAR},
-      </if>
-      <if test="record.oqdeptreviewer != null">
-        OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dept1reviewer != null">
-        Dept1Reviewer = #{record.dept1reviewer,jdbcType=VARCHAR},
       </if>
       <if test="record.requiredusername != null">
         RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
@@ -639,7 +596,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update AssetPlanInfoSearchView
+    update AssetPlanInfoReportView
     set AssetPlanID = #{record.assetplanid,jdbcType=INTEGER},
       PlanCode = #{record.plancode,jdbcType=VARCHAR},
       PlanMonth = #{record.planmonth,jdbcType=DATE},
@@ -652,16 +609,12 @@
       Purpose = #{record.purpose,jdbcType=VARCHAR},
       Requireds = #{record.requireds,jdbcType=INTEGER},
       RequiredsAudit = #{record.requiredsaudit,jdbcType=INTEGER},
+      NoPassCount = #{record.nopasscount,jdbcType=BIGINT},
       PPrice = #{record.pprice,jdbcType=DECIMAL},
       TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
       ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
+      NopassMoney = #{record.nopassmoney,jdbcType=DECIMAL},
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
-      Reviewer = #{record.reviewer,jdbcType=VARCHAR},
-      Dept3Manager = #{record.dept3manager,jdbcType=VARCHAR},
-      Dept2Manager = #{record.dept2manager,jdbcType=VARCHAR},
-      Planner = #{record.planner,jdbcType=VARCHAR},
-      OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
-      Dept1Reviewer = #{record.dept1reviewer,jdbcType=VARCHAR},
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       Dept3Name = #{record.dept3name,jdbcType=VARCHAR},

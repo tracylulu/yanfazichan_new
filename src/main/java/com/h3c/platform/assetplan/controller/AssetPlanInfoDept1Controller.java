@@ -123,11 +123,11 @@ public class AssetPlanInfoDept1Controller {
    	}
 	
   
-	@ApiOperation(value="一级部门审核页面结束审批后归档")
-   	@PostMapping("/submitInfoFromDept1ToEnd")
+	@ApiOperation(value="一级部门审核页面同意后结束审批后归档")
+   	@PostMapping("/agree")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
-   	public ResponseResult submitInfoFromDept1ToEnd(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
+   	public ResponseResult agree(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
    		//try {
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
@@ -172,6 +172,64 @@ public class AssetPlanInfoDept1Controller {
 				List<String> ccToEnd =new ArrayList<>();
 				sendToEnd.add(ap.getApplyuser());
 				ccToEnd.add(ap.getRequireduser());
+				mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
+				
+   			}
+   			return ResponseResult.success(true, "提交成功");
+   		/*} catch (Exception e) {
+   			e.printStackTrace();
+   			return ResponseResult.fail(false, "提交失败");
+   		}*/
+   	}
+	
+	@ApiOperation(value="一级部门审核页面不同意后结束审批后归档，数量改为0")
+	@PostMapping("/unagree")
+   	@ResponseBody
+   	@UserLoginToken(logType=LogType.MODIFY)
+   	public ResponseResult unAgree(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
+   		//try {
+   			String applymonth = submitEntity.getApplymonth();
+   			String applyuser = submitEntity.getApplyuser();
+   			
+   			List<Integer> newLstsubmitID =new ArrayList<>();
+   			Map<String,Object> param=new HashMap<>();
+   			param.put("GroupFlag",null);
+			param.put("Dept1Reviewer",applyuser);
+			param.put("ApplyMonth",applymonth);
+			List<AssetPlanInfoAll> listofDept1Detail = assetPlanInfoService.listofDept1Detail(param);
+   			//当前环节该登录人所有待提交的单子
+   			for (int i = 0; i < listofDept1Detail.size(); i++) {
+   				newLstsubmitID.add(listofDept1Detail.get(i).getAssetplanid());
+			}
+   			//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
+   			List<AssetPlanInfo> lst=new ArrayList<>();
+   			for (int j = 0; j < newLstsubmitID.size(); j++) {
+   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
+   				//同意申购数量
+				ap.setRequiredsaudit(0);
+				//评审后总金额
+				ap.setActualmoney(new BigDecimal(0));
+				ap.setApstatus("07");
+				ap.setApstage("0");
+   				ap.setModifier(applyuser);
+   				ap.setModifitime(new Date());
+   				ap.setDept1reviewtime(new Date());
+   				lst.add(ap);
+   			}
+   			assetPlanInfoService.batchEditAssetPlanInfo(lst);
+   			
+   			for (int k = 0; k < newLstsubmitID.size(); k++) {
+				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+				Integer requiredsaudit = ap.getRequiredsaudit();
+				RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+				numApproveRecord.setDept1reviewercount(requiredsaudit);
+				recordMapper.updateByPrimaryKey(numApproveRecord);
+			
+				//将审批结束的信息邮件主送申购人抄送申请人，告知审批结果。
+				List<String> sendToEnd =new ArrayList<>();
+				List<String> ccToEnd =new ArrayList<>();
+				sendToEnd.add(ap.getRequireduser());
+				ccToEnd.add(ap.getApplyuser());
 				mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
 				
    			}

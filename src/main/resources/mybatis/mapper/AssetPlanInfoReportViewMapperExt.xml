@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoSearchExportViewMapper">
- <select id="exportAssetPlanInfoByIds" parameterType="map" resultMap="BaseResultMap">
-  	 select * from AssetPlanInfoSearchExportView 
-  	 	<if test="_parameter != null">
-    		<include refid="condition_sql_export"></include>
-    	</if>
-    	order by AssetPlanID desc
-    	limit 50000
-  </select>
-  <sql id="condition_sql_export">
+<mapper namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoReportViewMapper">
+  
+ <!--  
+  <sql id="condition_sql">
 		<where>
 			<if test="param.APStage !=null and param.APStage !='' ">
 				and APStage = #{param.APStage}
@@ -27,11 +21,24 @@
 				and AssetModel LIKE concat('%',#{param.AssetModel},'%')
 			</if>
 			
-             <!--三级部门  -->
+			 <if test="param.StartApplyTime !=null and param.StartApplyTime !='' ">
+                 AND ApplyTime &gt;= #{param.StartApplyTime}
+             </if>
+             <if test="param.EndApplyTime !=null and param.EndApplyTime !='' ">
+                 AND ApplyTime &lt;= #{param.EndApplyTime}
+             </if>
+             
+             <if test="param.ApplyTime !=null and param.ApplyTime !='' ">
+                 AND ApplyTime = #{param.ApplyTime}
+             </if> 
+             <if test="param.ApplyMonth !=null and param.ApplyMonth !='' ">
+                 AND ApplyMonth = #{param.ApplyMonth}
+             </if>
+             三级部门 
              <if test="param.DeptCode !=null and param.DeptCode !='' ">
 				and DeptCode = #{param.DeptCode}
 			</if>
-			<!--二级部门  -->
+			二级部门 
 			 <if test="param.Dept2Code !=null and param.Dept2Code !='' ">
 				and Dept2Code = #{param.Dept2Code}
 			</if>
@@ -58,8 +65,8 @@
 			<if test="param.ItemCode !=null and param.ItemCode !='' ">
 				and ItemCode LIKE concat('%',#{param.ItemCode},'%')
 			</if>
-             <!--PurchaseReportID的值为0的时候，因为其数据类型为Integer，所以这个判断是为false的，就是说int类型的判断，Mybatis是认定0为''的，所以为false。  -->
-             <!--不为0说明有申购报告   -->
+             PurchaseReportID的值为0的时候，因为其数据类型为Integer，所以这个判断是为false的，就是说int类型的判断，Mybatis是认定0为''的，所以为false。 
+             不为0说明有申购报告  
              <if test="param.IsReqPurchaseReport !=null  and param.IsReqPurchaseReport !='' ">
 				and IsReqPurchaseReport = #{param.IsReqPurchaseReport}
 			</if>
@@ -87,25 +94,41 @@
 			</if>
 			<if test="param.NotAdmin !=null and param.NotAdmin !='' ">
 				<if test="param.currentUserId !=null and param.currentUserId !='' ">
-	                 AND 
-	                 (RequiredUser = #{param.currentUserId} 
-	                   or ApplyUser = #{param.currentUserId}
-	                   or Reviewer = #{param.currentUserId}
-	                   or Dept3Manager = #{param.currentUserId}
-	                   or Dept2Manager = #{param.currentUserId}
-	                   or Planner = #{param.currentUserId}
-	                   or OQDeptReviewer = #{param.currentUserId}
-	                   or Dept1Reviewer = #{param.currentUserId})
+	                 AND (RequiredUser = #{param.currentUserId} or ApplyUser = #{param.currentUserId})
 	             </if>
 			</if>
-			<if test="param.id != null and param.id.size>0">
-  	 			AND AssetPlanID in
-				<foreach collection="param.id" item="code" index="index"
-					open="(" close=")" separator=",">
-					#{code}
-				</foreach>
-		 	</if>
-	 		
-		</where>
+			</where>
 	</sql>
+
+	 -->
+	<select id="listofAssetPlanInfoForReport" parameterType="map" resultMap="BaseResultMap">
+  		select * from AssetPlanInfoReportView
+  		<!-- <if test="_parameter != null">
+    		<include refid="condition_sql"></include>
+    	</if> -->
+    	order by AssetPlanID desc
+	</select>
+  
+  
+	<select id="getDataForPieChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
+  		SELECT assetmodel as assetmodel,SUM(NopassMoney) as pieChartMoney FROM  
+  		AssetPlanInfoReportView GROUP BY assetmodel
+	</select>
+  
+	<select id="getDataForBarChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
+  		SELECT deptCode as deptCode,SUM(NopassMoney) as barChartMoney FROM  
+  		AssetPlanInfoReportView GROUP BY deptCode
+	</select>
+	
+	<select id="getDataForLineChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
+  		SELECT applymonth as applymonth,SUM(NopassMoney) as lineChartMoney FROM  
+  		AssetPlanInfoReportView GROUP BY applymonth
+	</select>
+  
+
+  
+  
+  
+	
+  
 </mapper>

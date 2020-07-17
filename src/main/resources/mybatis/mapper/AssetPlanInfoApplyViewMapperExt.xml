@@ -32,7 +32,7 @@
   		<if test="_parameter != null">
     		<include refid="condition_sql"></include>
     	</if>
-	order by AssetPlanID desc		
+	order by CompleteSetCode asc,AssetPlanID desc		
   
   </select>
 
