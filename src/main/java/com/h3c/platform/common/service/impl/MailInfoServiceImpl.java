@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.h3c.platform.common.dao.MailInfoMapper;
 import com.h3c.platform.common.entity.MailInfo;
 import com.h3c.platform.common.executor.MailThreadExecutor;
+import com.h3c.platform.common.service.AfspTokenService;
 import com.h3c.platform.common.service.MailInfoService;
+import com.h3c.platform.common.util.HttpClientUtil;
 import com.h3c.platform.util.UserUtils;
 
 @Service
@@ -38,7 +45,14 @@ public class MailInfoServiceImpl implements MailInfoService {
 	private String defaultUrl;
 	@Autowired
 	private MailThreadExecutor executor;
-
+	
+	
+	@Value("${afsp.mail.sendMailInfoByTemplete}")
+	private String mailTempleteUrl;
+	@Value("${afsp.applicationId}")
+	private String  applicationId;
+	@Autowired
+	private AfspTokenService afspTokenService;
 	@Override
 	@Transactional
 	public void create(MailInfo mailInfo) {
@@ -199,5 +213,26 @@ public class MailInfoServiceImpl implements MailInfoService {
 		}
 		
 		sendMailAndRecord(sendTo,  ccTo,  subject,  content.toString() );
+	}
+
+	@Override
+	public void sendMailByTemplete(String applicationId, String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
+		try {
+			String  token = afspTokenService.getEosToken();
+			Map<String,String> headers = new HashMap<String, String>();
+			headers.put("token", token);
+			
+			JSONObject paramJson = new JSONObject();
+			paramJson.put("applicationId", applicationId);
+			paramJson.put("sendTo", sendTo);
+			paramJson.put("ccTo", ccTo);
+//		paramJson.put("subject", subject);
+//		paramJson.put("content", content);
+			
+//		String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailUrl , paramJson.toJSONString(),headers);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

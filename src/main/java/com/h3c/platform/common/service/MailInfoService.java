@@ -3,6 +3,9 @@ package com.h3c.platform.common.service;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.h3c.platform.common.entity.MailInfo;
 
 public interface MailInfoService {
@@ -58,4 +61,7 @@ public interface MailInfoService {
      * @param url 流程链接  ,为空不加超链接 
      */
     void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url);
+    
+    
+    void sendMailByTemplete(String applicationId, String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr);
 }
