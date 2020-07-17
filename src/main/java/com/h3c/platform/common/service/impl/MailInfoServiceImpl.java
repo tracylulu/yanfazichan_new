@@ -46,7 +46,8 @@ public class MailInfoServiceImpl implements MailInfoService {
 	@Autowired
 	private MailThreadExecutor executor;
 	
-	
+	@Value("${afsp.dic.url}")
+	private String afspUrl;
 	@Value("${afsp.mail.sendMailInfoByTemplete}")
 	private String mailTempleteUrl;
 	@Value("${afsp.applicationId}")
@@ -216,7 +217,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 	}
 
 	@Override
-	public void sendMailByTemplete(String applicationId, String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
+	public void sendMailByTemplete(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
 		try {
 			String  token = afspTokenService.getEosToken();
 			Map<String,String> headers = new HashMap<String, String>();
@@ -226,12 +227,16 @@ public class MailInfoServiceImpl implements MailInfoService {
 			paramJson.put("applicationId", applicationId);
 			paramJson.put("sendTo", sendTo);
 			paramJson.put("ccTo", ccTo);
-//		paramJson.put("subject", subject);
-//		paramJson.put("content", content);
+			paramJson.put("templeteCode", templeteCode);
+			paramJson.put("priority", priority);
+			paramJson.put("templeteArr", templeteArr);
+			paramJson.put("content", content);
+			paramJson.put("titleArr", titleArr);
 			
-//		String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailUrl , paramJson.toJSONString(),headers);
+			
+		String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailTempleteUrl , paramJson.toString(),headers);
+		System.out.println(result);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
