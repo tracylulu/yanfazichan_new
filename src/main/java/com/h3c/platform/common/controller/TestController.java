@@ -44,18 +44,21 @@ public class TestController {
 		List<String> ccTo = new ArrayList<String>();
 		ccTo.add("20095");
 		JSONObject contentJson = new JSONObject();
-		contentJson.put("${name}", "李晟");
-		contentJson.put("${age}", "100");
+		contentJson.put("$name", "李晟");
+//		contentJson.put("${age}", "100");
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
-		tempTempleteJson.put("code", 200);
+		tempTempleteJson.put("code", "$apa_common_tail");
 		templeteArr.add(tempTempleteJson);
 		
 		JSONArray titleArr = new JSONArray();
 		JSONObject titleJson = new JSONObject();
-		titleJson.put("code", "${commonhead}");
+		titleJson.put("code", "$title1");
 		titleArr.add(titleJson);
-		this.mailInfoService.sendMailByTemplete("testCode", null, ccTo, sendTo, contentJson, 1, templeteArr, titleArr);
+		JSONObject titleJson2 = new JSONObject();
+		titleJson2.put("code", "$apa_common_tail");
+		titleArr.add(titleJson2);
+		this.mailInfoService.sendMailByTemplete("apaEnd", null, ccTo, sendTo, contentJson, 1, templeteArr, titleArr);
 		
 		return "ok";
 	}
