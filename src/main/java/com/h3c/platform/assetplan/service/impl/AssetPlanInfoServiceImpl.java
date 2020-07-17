@@ -178,32 +178,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Override
 	@Transactional
 	public int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstID) throws Exception{
-		
-		
 		//更新流程状态
-		Long startbatchEditTime = System.currentTimeMillis();
 		batchEdit(lst);
-		
-	
-		Long endbatchEditTime = System.currentTimeMillis();
-		
-		log.info("batch:"+(endbatchEditTime-startbatchEditTime)+"ms");
-		
-		log.info("lstCount"+lst.size());
-		
+		//异步写入使用率
 		syncEdit( lst, lstID);
-		
-//		new Thread((new Runnable() {
-//	        @Override
-//	        public void run() {
-//	            // 批量同步数据
-//	            try {
-//	            	syncEdit( lst, lstID);        	
-//	            } catch (Exception e) {
-////	                throw e;
-//	            }
-//	        }
-//	    })).start(); 
 		return lst.size();
 	}
 	
@@ -213,8 +191,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	 * @return
 	 */
 	@Transactional
-	private  int batchEdit(List<AssetPlanInfo> lst) {	
-		
+	private  int batchEdit(List<AssetPlanInfo> lst) {			
 		int count = lst.size();
 		int groupSize = 200;
 		int groupNo = count / groupSize;
