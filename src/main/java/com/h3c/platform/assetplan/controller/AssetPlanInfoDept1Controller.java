@@ -183,7 +183,7 @@ public class AssetPlanInfoDept1Controller {
    	}
 	
 	@ApiOperation(value="一级部门审核页面不同意后结束审批后归档，数量改为0")
-	@PostMapping("/unAgree")
+	@PostMapping("/unagree")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult unAgree(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
