@@ -18,6 +18,12 @@
     <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
     <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
+    <result column="Reviewer" jdbcType="VARCHAR" property="reviewer" />
+    <result column="Dept3Manager" jdbcType="VARCHAR" property="dept3manager" />
+    <result column="Dept2Manager" jdbcType="VARCHAR" property="dept2manager" />
+    <result column="Planner" jdbcType="VARCHAR" property="planner" />
+    <result column="OQDeptReviewer" jdbcType="VARCHAR" property="oqdeptreviewer" />
+    <result column="Dept1Reviewer" jdbcType="VARCHAR" property="dept1reviewer" />
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
     <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
@@ -107,10 +113,11 @@
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, PlanMonth, ApplyMonth, AssetName, AssetManufacturer, AssetModel, 
     AssetCategory, Goodstime, Purpose, Requireds, RequiredsAudit, PPrice, TotalMoney, 
-    ActualMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, Dept2Code, Dept2Name, 
-    Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, 
-    AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, APStatus, APStatusDetail, 
-    APStage, ApprovalPerson, ApprovalNote, ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
+    ActualMoney, RequiredUser, Reviewer, Dept3Manager, Dept2Manager, Planner, OQDeptReviewer, 
+    Dept1Reviewer, RequiredUserName, DeptCode, Dept3Name, Dept2Code, Dept2Name, Dept1Code, 
+    Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, AssetNote, 
+    ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, APStatus, APStatusDetail, APStage, 
+    ApprovalPerson, ApprovalNote, ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
     ManufacturerTypeEnum, ReviewResult, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultMap="BaseResultMap">
@@ -139,7 +146,9 @@
       AssetModel, AssetCategory, Goodstime, 
       Purpose, Requireds, RequiredsAudit, 
       PPrice, TotalMoney, ActualMoney, 
-      RequiredUser, RequiredUserName, DeptCode, 
+      RequiredUser, Reviewer, Dept3Manager, 
+      Dept2Manager, Planner, OQDeptReviewer, 
+      Dept1Reviewer, RequiredUserName, DeptCode, 
       Dept3Name, Dept2Code, Dept2Name, 
       Dept1Code, Dept1Name, ItemCode, 
       ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, 
@@ -154,7 +163,9 @@
       #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{goodstime,jdbcType=INTEGER}, 
       #{purpose,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
-      #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
+      #{requireduser,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, 
+      #{dept2manager,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, 
+      #{dept1reviewer,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
       #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
       #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
       #{receiverplace,jdbcType=VARCHAR}, #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, 
@@ -215,6 +226,24 @@
       </if>
       <if test="requireduser != null">
         RequiredUser,
+      </if>
+      <if test="reviewer != null">
+        Reviewer,
+      </if>
+      <if test="dept3manager != null">
+        Dept3Manager,
+      </if>
+      <if test="dept2manager != null">
+        Dept2Manager,
+      </if>
+      <if test="planner != null">
+        Planner,
+      </if>
+      <if test="oqdeptreviewer != null">
+        OQDeptReviewer,
+      </if>
+      <if test="dept1reviewer != null">
+        Dept1Reviewer,
       </if>
       <if test="requiredusername != null">
         RequiredUserName,
@@ -346,6 +375,24 @@
       </if>
       <if test="requireduser != null">
         #{requireduser,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewer != null">
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="dept3manager != null">
+        #{dept3manager,jdbcType=VARCHAR},
+      </if>
+      <if test="dept2manager != null">
+        #{dept2manager,jdbcType=VARCHAR},
+      </if>
+      <if test="planner != null">
+        #{planner,jdbcType=VARCHAR},
+      </if>
+      <if test="oqdeptreviewer != null">
+        #{oqdeptreviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="dept1reviewer != null">
+        #{dept1reviewer,jdbcType=VARCHAR},
       </if>
       <if test="requiredusername != null">
         #{requiredusername,jdbcType=VARCHAR},
@@ -487,6 +534,24 @@
       <if test="record.requireduser != null">
         RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
       </if>
+      <if test="record.reviewer != null">
+        Reviewer = #{record.reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept3manager != null">
+        Dept3Manager = #{record.dept3manager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept2manager != null">
+        Dept2Manager = #{record.dept2manager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planner != null">
+        Planner = #{record.planner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oqdeptreviewer != null">
+        OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept1reviewer != null">
+        Dept1Reviewer = #{record.dept1reviewer,jdbcType=VARCHAR},
+      </if>
       <if test="record.requiredusername != null">
         RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       </if>
@@ -591,6 +656,12 @@
       TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
       ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
+      Reviewer = #{record.reviewer,jdbcType=VARCHAR},
+      Dept3Manager = #{record.dept3manager,jdbcType=VARCHAR},
+      Dept2Manager = #{record.dept2manager,jdbcType=VARCHAR},
+      Planner = #{record.planner,jdbcType=VARCHAR},
+      OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
+      Dept1Reviewer = #{record.dept1reviewer,jdbcType=VARCHAR},
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       Dept3Name = #{record.dept3name,jdbcType=VARCHAR},

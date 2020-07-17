@@ -38,6 +38,18 @@ public class AssetPlanInfoSearchExportView {
 
     private String requiredusername;
 
+    private String reviewer;
+
+    private String dept3manager;
+
+    private String dept2manager;
+
+    private String planner;
+
+    private String oqdeptreviewer;
+
+    private String dept1reviewer;
+
     private String deptcode;
 
     private String dept3name;
@@ -236,6 +248,54 @@ public class AssetPlanInfoSearchExportView {
 
     public void setRequiredusername(String requiredusername) {
         this.requiredusername = requiredusername == null ? null : requiredusername.trim();
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer == null ? null : reviewer.trim();
+    }
+
+    public String getDept3manager() {
+        return dept3manager;
+    }
+
+    public void setDept3manager(String dept3manager) {
+        this.dept3manager = dept3manager == null ? null : dept3manager.trim();
+    }
+
+    public String getDept2manager() {
+        return dept2manager;
+    }
+
+    public void setDept2manager(String dept2manager) {
+        this.dept2manager = dept2manager == null ? null : dept2manager.trim();
+    }
+
+    public String getPlanner() {
+        return planner;
+    }
+
+    public void setPlanner(String planner) {
+        this.planner = planner == null ? null : planner.trim();
+    }
+
+    public String getOqdeptreviewer() {
+        return oqdeptreviewer;
+    }
+
+    public void setOqdeptreviewer(String oqdeptreviewer) {
+        this.oqdeptreviewer = oqdeptreviewer == null ? null : oqdeptreviewer.trim();
+    }
+
+    public String getDept1reviewer() {
+        return dept1reviewer;
+    }
+
+    public void setDept1reviewer(String dept1reviewer) {
+        this.dept1reviewer = dept1reviewer == null ? null : dept1reviewer.trim();
     }
 
     public String getDeptcode() {

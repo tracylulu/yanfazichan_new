@@ -87,7 +87,15 @@
 			</if>
 			<if test="param.NotAdmin !=null and param.NotAdmin !='' ">
 				<if test="param.currentUserId !=null and param.currentUserId !='' ">
-	                 AND (RequiredUser = #{param.currentUserId} or ApplyUser = #{param.currentUserId})
+	                 AND 
+	                 (RequiredUser = #{param.currentUserId} 
+	                   or ApplyUser = #{param.currentUserId}
+	                   or Reviewer = #{param.currentUserId}
+	                   or Dept3Manager = #{param.currentUserId}
+	                   or Dept2Manager = #{param.currentUserId}
+	                   or Planner = #{param.currentUserId}
+	                   or OQDeptReviewer = #{param.currentUserId}
+	                   or Dept1Reviewer = #{param.currentUserId})
 	             </if>
 			</if>
 			<if test="param.id != null and param.id.size>0">

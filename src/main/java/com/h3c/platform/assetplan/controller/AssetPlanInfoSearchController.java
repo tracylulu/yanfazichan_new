@@ -173,15 +173,15 @@ public class AssetPlanInfoSearchController {
             param.put("pageNum", (pageNum-1)*pageSize);
             param.put("pageSize", pageSize);
             
-            //普通用户查看，只能查看申请人/申购人是当前用户的信息
-            //123级主管、系统管理员可看到全部数据
-            Boolean isDeptManager=false;
+            //普通用户查看，只能查看与他有关的所有单子，申请审批的这些关系
+            //系统管理员可看到全部数据
+            /* Boolean isDeptManager=false;
             DeptInfo deptManagerInfo = deptInfoService.getByDeptManagerCode(currentUserId);
             if(deptManagerInfo==null) {
             }else {
             	isDeptManager=true;
-            }
-            if(roleService.checkIsAdmin() || isDeptManager) {
+            }*/
+            if(roleService.checkIsAdmin()) {
             }else {
             	param.put("NotAdmin", "NotAdmin");
             	param.put("currentUserId", currentUserId);
@@ -394,15 +394,15 @@ public class AssetPlanInfoSearchController {
             param.put("pageNum", (pageNum-1)*pageSize);
             param.put("pageSize", pageSize);
             
-            //普通用户查看，只能查看申请人/申购人是当前用户的信息
-            //123级主管、系统管理员可看到全部数据
-            Boolean isDeptManager=false;
+            //普通用户查看，只能查看与他有关的所有单子，申请审批的这些关系
+            //系统管理员可看到全部数据
+            /*Boolean isDeptManager=false;
             DeptInfo deptManagerInfo = deptInfoService.getByDeptManagerCode(currentUserId);
             if(deptManagerInfo==null) {
             }else {
             	isDeptManager=true;
-            }
-            if(roleService.checkIsAdmin() || isDeptManager) {
+            }*/
+            if(roleService.checkIsAdmin()) {
             }else {
             	param.put("NotAdmin", "NotAdmin");
             	param.put("currentUserId", currentUserId);
