@@ -221,7 +221,16 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	}
 	
 	@Override
-	public ResponseResult getList(SearchRateParamEntity search)throws Exception{
+	public ResponseResult getList(SearchRateParamEntity search)throws Exception{		
+		DeptInfo deptInfo = deptInfoService.getByCode(search.getDeptCode());
+		if(deptInfo.getDeptCode()==null) {
+			return ResponseResult.fail("未找到当前部门");
+		}
+		//交换机和路由器预算部门为三级，其余为二级
+		if(!"50042493".contentEquals(deptInfo.getSupDeptCode())&&!"50042499".contentEquals(deptInfo.getSupDeptCode())) {
+			search.setDeptCode(deptInfo.getSupDeptCode());
+		}
+		
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(search.getCollectTime());
 		calendar.add(Calendar.DAY_OF_MONTH,-60);
