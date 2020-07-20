@@ -1,8 +1,11 @@
 package com.h3c.platform.task.config;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -13,11 +16,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import com.h3c.platform.assetplan.service.ProjectInfoService;
+import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.util.HttpClientUtil;
 import com.h3c.platform.common.util.SpringContextUtils;
 import com.h3c.platform.sync.entity.ApiUrl;
 import com.h3c.platform.sync.service.EosApiUrlService;
 import com.h3c.platform.sync.service.ProjectInfoEosService;
+import com.h3c.platform.sysmgr.entity.OperationLog;
+import com.h3c.platform.sysmgr.service.OperationLogService;
+import com.h3c.platform.util.UserUtils;
 
 import net.sf.json.JSONObject;
 
@@ -48,29 +55,48 @@ public class ProjectInfoQuartzJobBean extends QuartzJobBean{
 		logger.info("ProjectInfoEosService job start");
 		String deptData =null;
 		try {
-			deptData = new HttpClientUtil().getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccountPdt(),apiUrl.getPasswordpdt(), apiUrl.getProjectUrl());
- 		} catch (Exception e) {			
-			e.printStackTrace();
-		}
-		if(deptData!=null && deptData.length()!=0) {
-			JSONObject result=JSONObject.fromObject(deptData);
- 			int code = Integer.parseInt(result.get("code").toString());
-			
-			if(code==20216) {
-		        List<Map<String, Object>> lst = (List) result.getJSONArray("data");
-		        try {
-					projectInfoEosService.syncProjectInfoEos(lst);		
-					projectInfoService.syncByEosData();					
-				} catch (Exception e) {
-					e.printStackTrace();
+			try {
+				deptData = new HttpClientUtil().getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccountPdt(),apiUrl.getPasswordpdt(), apiUrl.getProjectUrl());
+			} catch (Exception e) {			
+				e.printStackTrace();
+			}
+			if(deptData!=null && deptData.length()!=0) {
+				JSONObject result=JSONObject.fromObject(deptData);
+				int code = Integer.parseInt(result.get("code").toString());
+				
+				if(code==20216) {
+			        List<Map<String, Object>> lst = (List) result.getJSONArray("data");
+			        try {
+						projectInfoEosService.syncProjectInfoEos(lst);		
+						projectInfoService.syncByEosData();					
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else {
+					logger.info("接口："+apiUrl.getProjectUrl()+"连接失败");
 				}
 			}
 			else {
-				logger.info("接口："+apiUrl.getProjectUrl()+"连接失败");
+				logger.info("接口：:"+apiUrl.getProjectUrl()+"异常，无数据");	
 			}
-		}
-		else {
-			logger.info("接口：:"+apiUrl.getProjectUrl()+"异常，无数据");	
+		} catch (Exception e) {
+			OperationLogService operationLogService=(OperationLogService)SpringContextUtils.getBean(OperationLogService.class);;
+			OperationLog log=new OperationLog();
+			log.setModelcode("com.h3c.platform.task.config.ProjectInfoQuartzJobBean");
+			log.setModelname("项目编码定时任务");
+			log.setSummary("");
+			log.setContent(ExceptionUtils.getFullStackTrace(e));
+			log.setUserid(UserUtils.getCurrentUserId());
+			log.setLogtype(LogType.Task);
+			try {
+				log.setIp("service:"+InetAddress.getLocalHost().getHostAddress());
+			} catch (UnknownHostException ex) {
+				ex.printStackTrace();
+			}
+				
+			operationLogService.SaveLog(log);
+			e.printStackTrace();
 		}
 
 		logger.info("ProjectInfoEosService job end");

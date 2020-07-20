@@ -22,6 +22,8 @@ public class LogType {
 			// 导入
 			IMPORT = 61,
 
-			LOGOUT = 71;
+			LOGOUT = 71,
+			//定时任务
+			Task =81;
 
 }

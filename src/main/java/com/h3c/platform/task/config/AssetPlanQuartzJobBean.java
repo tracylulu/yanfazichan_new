@@ -1,11 +1,14 @@
 package com.h3c.platform.task.config;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -18,10 +21,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.assetplan.service.AssetPlanTaskService;
 import com.h3c.platform.common.commonconst.DicConst;
+import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.CalendarService;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.common.util.SpringContextUtils;
+import com.h3c.platform.sysmgr.entity.OperationLog;
+import com.h3c.platform.sysmgr.service.OperationLogService;
+import com.h3c.platform.util.UserUtils;
 
 @PersistJobDataAfterExecution//持久化
 @DisallowConcurrentExecution//禁止并发执行(Quartz不要并发地执行同一个job定义（这里指一个job类的多个实例）)
@@ -128,7 +135,21 @@ public class AssetPlanQuartzJobBean extends QuartzJobBean{
 				assetPlanTaskService.monthOutTime();
 			}
 		} catch (Exception e) {
-			
+			OperationLogService operationLogService=(OperationLogService)SpringContextUtils.getBean(OperationLogService.class);;
+			OperationLog log=new OperationLog();
+			log.setModelcode("com.h3c.platform.task.config.AssetPlanQuartzJobBean");
+			log.setModelname("流程定时任务");
+			log.setSummary("");
+			log.setContent(ExceptionUtils.getFullStackTrace(e));
+			log.setUserid(UserUtils.getCurrentUserId());
+			log.setLogtype(LogType.Task);
+			try {
+				log.setIp("service:"+InetAddress.getLocalHost().getHostAddress());
+			} catch (UnknownHostException ex) {
+				e.printStackTrace();
+			}
+				
+			operationLogService.SaveLog(log);
 			e.printStackTrace();
 		}
 		
