@@ -620,6 +620,68 @@ public class AssetPlanInfoSearchController {
    		}*/
    	}
     
+    
+    @ApiOperation(value="申请页面的部门树的加载")
+   	@GetMapping("/getDeptTreeInfoForApply")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getDeptTreeInfoForApply() throws Exception{
+   			List<DeptInfo> list = assetPlanInfoService.getDeptInfoList();
+   			System.out.println(list.size());
+   			List<DeptTreeInfo> address=new ArrayList<>();
+   			for (int i = 0; i < list.size(); i++) {
+   				DeptTreeInfo  tree=new DeptTreeInfo();
+   				tree.setDeptCode(list.get(i).getDeptCode());
+   				tree.setDeptName(list.get(i).getDeptName());
+   				tree.setDeptLevel(list.get(i).getDeptLevel());
+   				tree.setSupDeptDode(list.get(i).getSupDeptCode());
+   				//把计划员的信息加上
+   				if(StringUtils.isBlank(list.get(i).getDeptPlannerCode())) {
+   					tree.setDeptPlannerCode("");
+   					tree.setDeptPlannerName("");
+   				}else {
+   					tree.setDeptPlannerCode(list.get(i).getDeptPlannerCode());
+   					UserInfo userByEmpCode = userService.getUserByEmpCode(list.get(i).getDeptPlannerCode());
+   					if(userByEmpCode!=null) {
+   						//计划员姓名
+   						tree.setDeptPlannerName(userByEmpCode.getEmpName());
+   					}else {
+   						tree.setDeptPlannerName("");
+   					}
+   				}
+				
+   				address.add(tree);
+			}
+   			List<DeptTreeInfo> recursiveAddress = TreeUtil.RecursiveAddress(address);	
+   			
+   			//二级或一级如果是最小部门,申请页面中不展示了
+   			int d1=0;
+   			int d2=0;
+   			for (int i = 0; i < recursiveAddress.size(); i++) {
+				if("1".equals(recursiveAddress.get(i).getDeptLevel()) && recursiveAddress.get(i).getChildren()==null) {
+   					recursiveAddress.remove(recursiveAddress.get(i));
+   					d1++;
+   					i--;
+   					continue;
+   				}
+   				
+   				List<DeptTreeInfo> children2 = recursiveAddress.get(i).getChildren();
+   				for (int j = 0; j < children2.size(); j++) {
+   					if("2".equals(children2.get(j).getDeptLevel()) && children2.get(j).getChildren()==null) {
+   						children2.remove(children2.get(j));
+   						d2++;
+   						j--;
+   	   				}
+   				}
+   			}
+   			
+   			System.out.println(d1);
+   			System.out.println(d2);
+   		 
+   			return ResponseResult.success(0, "查询成功", 0, 0, null, recursiveAddress);
+   	}
+    
+    
   //通过HashSet踢除重复元素
     public static List removeDuplicate(List list) {   
         HashSet h = new HashSet(list);   
