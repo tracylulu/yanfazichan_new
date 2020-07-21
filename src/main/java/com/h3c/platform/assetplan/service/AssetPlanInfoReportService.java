@@ -17,7 +17,9 @@ public interface AssetPlanInfoReportService {
 
 	List<AssetInfoReportEntity> getDataForPieChart();
     
-    List<AssetInfoReportEntity> getDataForBarChart();
+	List<AssetInfoReportEntity> getDataForDept3BarChart();
+    
+    List<AssetInfoReportEntity> getDataForDept2BarChart();
     
     List<AssetInfoReportEntity> getDataForLineChart();
 

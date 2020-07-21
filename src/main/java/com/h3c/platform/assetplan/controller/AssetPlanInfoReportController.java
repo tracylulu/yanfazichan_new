@@ -117,7 +117,9 @@ public class AssetPlanInfoReportController {
    	@ResponseBody
    	@UserLoginToken
    	public ResponseResult barChartByDeptCode() throws Exception{
-   		List<AssetInfoReportEntity> dataForBarChart = assetPlanInfoReportService.getDataForBarChart();
+    	
+   		List<AssetInfoReportEntity> dataForDept3BarChart = assetPlanInfoReportService.getDataForDept3BarChart();
+   		List<AssetInfoReportEntity> dataForDept2BarChart = assetPlanInfoReportService.getDataForDept2BarChart();
    		JSONArray arrayData = new JSONArray();
    		List<String> listCode=new ArrayList<>();
    		//获取字典表中的部门code
@@ -128,18 +130,31 @@ public class AssetPlanInfoReportController {
 				listCode.add(code);
 			}
    		
-    	for (int i = 0; i < dataForBarChart.size(); i++) {
-    		if(listCode.contains(dataForBarChart.get(i).getDeptCode())) {
-    			if("0.00".equals(dataForBarChart.get(i).getBarChartMoney())) {
+    	for (int i = 0; i < dataForDept3BarChart.size(); i++) {
+    		if(listCode.contains(dataForDept3BarChart.get(i).getDept3code())) {
+    			if("0.00".equals(dataForDept3BarChart.get(i).getBarChartMoney())) {
         			continue;
         		}else {
         			JSONObject json =new JSONObject();
-            		json.put("x", dataForBarChart.get(i).getDeptCode());
-            		json.put("y", dataForBarChart.get(i).getBarChartMoney());
+            		json.put("x", dataForDept3BarChart.get(i).getDept3name());
+            		json.put("y", dataForDept3BarChart.get(i).getBarChartMoney());
             		arrayData.add(json);
         		}
     		}
 		}
+    	for (int i = 0; i < dataForDept2BarChart.size(); i++) {
+    		if(listCode.contains(dataForDept2BarChart.get(i).getDept2code())) {
+    			if("0.00".equals(dataForDept2BarChart.get(i).getBarChartMoney())) {
+        			continue;
+        		}else {
+        			JSONObject json =new JSONObject();
+            		json.put("x", dataForDept2BarChart.get(i).getDept2name());
+            		json.put("y", dataForDept2BarChart.get(i).getBarChartMoney());
+            		arrayData.add(json);
+        		}
+    		}
+		}
+    	
     	System.out.println(arrayData);
     	return ResponseResult.success(0, "查询成功", arrayData, 0);
    	}

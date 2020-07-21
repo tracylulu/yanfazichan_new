@@ -115,9 +115,14 @@
   		AssetPlanInfoReportView GROUP BY assetmodel
 	</select>
   
-	<select id="getDataForBarChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
-  		SELECT deptCode as deptCode,SUM(NopassMoney) as barChartMoney FROM  
-  		AssetPlanInfoReportView GROUP BY deptCode
+	<select id="getDataForDept2BarChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
+  		SELECT dept2code as dept2code,dept2name as dept2name, SUM(NopassMoney) as barChartMoney FROM  
+  		AssetPlanInfoReportView GROUP BY dept2code,dept2name
+	</select>
+	
+	<select id="getDataForDept3BarChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
+  		SELECT dept3code as dept3code,dept3name as dept3name, SUM(NopassMoney) as barChartMoney FROM  
+  		AssetPlanInfoReportView GROUP BY dept3code,dept3name
 	</select>
 	
 	<select id="getDataForLineChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">

@@ -14,8 +14,14 @@ public class AssetInfoReportEntity {
     private String pieChartMoney;
 
     //柱状图
-    private String deptCode;
+    private String dept3code;
+    
+    private String dept3name;
+    
+    private String dept2code;
 
+    private String dept2name;
+    
     private String barChartMoney;
     
     //折线图
@@ -41,12 +47,21 @@ public class AssetInfoReportEntity {
 		this.pieChartMoney = pieChartMoney;
 	}
 
-	public String getDeptCode() {
-		return deptCode;
+
+	public String getDept3code() {
+		return dept3code;
 	}
 
-	public void setDeptCode(String deptCode) {
-		this.deptCode = deptCode;
+	public void setDept3code(String dept3code) {
+		this.dept3code = dept3code;
+	}
+
+	public String getDept2code() {
+		return dept2code;
+	}
+
+	public void setDept2code(String dept2code) {
+		this.dept2code = dept2code;
 	}
 
 	public String getBarChartMoney() {
@@ -71,6 +86,22 @@ public class AssetInfoReportEntity {
 
 	public void setLineChartMoney(String lineChartMoney) {
 		this.lineChartMoney = lineChartMoney;
+	}
+
+	public String getDept3name() {
+		return dept3name;
+	}
+
+	public void setDept3name(String dept3name) {
+		this.dept3name = dept3name;
+	}
+
+	public String getDept2name() {
+		return dept2name;
+	}
+
+	public void setDept2name(String dept2name) {
+		this.dept2name = dept2name;
 	}
 
     

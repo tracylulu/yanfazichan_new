@@ -33,13 +33,18 @@ public class AssetPlanInfoReportServiceImpl implements AssetPlanInfoReportServic
 	}
 
 	@Override
-	public List<AssetInfoReportEntity> getDataForBarChart() {
-		return reportViewMapper.getDataForBarChart();
+	public List<AssetInfoReportEntity> getDataForLineChart() {
+		return reportViewMapper.getDataForLineChart();
 	}
 
 	@Override
-	public List<AssetInfoReportEntity> getDataForLineChart() {
-		return reportViewMapper.getDataForLineChart();
+	public List<AssetInfoReportEntity> getDataForDept3BarChart() {
+		return reportViewMapper.getDataForDept3BarChart();
+	}
+
+	@Override
+	public List<AssetInfoReportEntity> getDataForDept2BarChart() {
+		return reportViewMapper.getDataForDept2BarChart();
 	}
 
 	
