@@ -1,17 +1,19 @@
 package com.h3c.platform.common.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.executor.MailThreadExecutor;
 import com.h3c.platform.common.service.MailInfoService;
 
@@ -25,30 +27,29 @@ public class TestController {
 	private MailThreadExecutor mailThreadExecutor;
 	@Autowired
 	private MailInfoService mailInfoService;
-	@RequestMapping("/sentEmail")
+	
+	@PostMapping("/sentEmail")
 	public String sentEmail(){
-		List<String> sendTo = new ArrayList<String>();
-		sendTo.add("20095");
-		List<String> ccTo = new ArrayList<String>();
-		ccTo.add("20095");
-		String subject = "ls test";
-		String content = "lstest";
-		mailThreadExecutor.send(sendTo, ccTo, subject, content);
+		String sendTo = "lkf7579";
+		String ccTo = "";
+		mailInfoService.sendProcessEndMail(sendTo, ccTo, "");
+		mailInfoService.sendRemindMail(sendTo, ccTo, "三级部门主管审核", "");
+		mailInfoService.sendRemindMailWithEndTime(sendTo, ccTo, "三级部门主管审核", new Date(), true, "");
 		return "ok";
 	}
 	
-	@RequestMapping("/sendMailByTemplete")
+	@PostMapping("/sendMailByTemplete")
 	public String sendMailByTemplete(){
 		List<String> sendTo = new ArrayList<String>();
-		sendTo.add("20095");
+		sendTo.add("lkf7579");
 		List<String> ccTo = new ArrayList<String>();
-		ccTo.add("20095");
+		ccTo.add("lkf7579");
 		JSONObject contentJson = new JSONObject();
-		contentJson.put("$name", "李晟");
+		contentJson.put("$url", "李晟");
 //		contentJson.put("${age}", "100");
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
-		tempTempleteJson.put("code", "$apa_common_tail");
+		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
 		
 		JSONArray titleArr = new JSONArray();
@@ -58,7 +59,7 @@ public class TestController {
 		JSONObject titleJson2 = new JSONObject();
 		titleJson2.put("code", "$apa_common_tail");
 		titleArr.add(titleJson2);
-		this.mailInfoService.sendMailByTemplete("apaEnd", null, ccTo, sendTo, contentJson, 1, templeteArr, titleArr);
+		this.mailInfoService.sendMailByTemplete("ApprovalEnd", null, ccTo, sendTo, contentJson, 1, templeteArr, titleArr);
 		
 		return "ok";
 	}

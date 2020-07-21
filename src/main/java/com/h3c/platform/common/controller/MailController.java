@@ -30,7 +30,7 @@ public class MailController {
 		if("open".equals(defaultMail)) {
 			return "测试邮件开关没开";
 		}
-		mailInfoService.sendMailAndRecord("", "", "this is  test", "this is test");
+		//mailInfoService.sendMailAndRecord("", "", "this is  test", "this is test");
 		
 		return "ok";
 	}

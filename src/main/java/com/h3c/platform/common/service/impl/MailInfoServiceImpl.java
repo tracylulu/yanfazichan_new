@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.h3c.platform.common.commonconst.MailTempConst;
 import com.h3c.platform.common.dao.MailInfoMapper;
 import com.h3c.platform.common.entity.MailInfo;
 import com.h3c.platform.common.executor.MailThreadExecutor;
@@ -72,21 +74,21 @@ public class MailInfoServiceImpl implements MailInfoService {
 	 * @param processId
 	 */
 	@Override
-	public void sendMailAndRecord(String sendTo, String ccTo, String subject, String content ) {
+	public void sendMailAndRecord(String mailTemp,String sendTo, String ccTo, JSONObject content,  JSONArray templeteArr, JSONArray titleArr ) {
 		MailInfo mailInfo = new MailInfo();		
 		mailInfo.setSendto(sendTo);
 		mailInfo.setCcto(ccTo);
-		mailInfo.setSubject(subject);
-		mailInfo.setContent(content);	
+		mailInfo.setSubject("mailTemp");
+		mailInfo.setContent(content.toString());	
 		create(mailInfo);
 
 		String[] sendArr = sendTo.split(",");
 		if (ccTo != null) {
 			String[] ccArr = ccTo.split(",");
 
-			sendMail(Arrays.asList(sendArr), Arrays.asList(ccArr), subject, content);
+			sendMail(mailTemp ,Arrays.asList(sendArr), Arrays.asList(ccArr), content, templeteArr, titleArr);
 		} else {
-			sendMail(Arrays.asList(sendArr), null, subject, content);
+			sendMail(mailTemp ,Arrays.asList(sendArr), null, content, templeteArr, titleArr);
 		}
 
 	}
@@ -100,17 +102,13 @@ public class MailInfoServiceImpl implements MailInfoService {
 	 * @param processId
 	 */
 	@Override
-	public void sendMailAndRecord(String sendTo, String subject, String content) {
-		sendMailAndRecord(sendTo, null, subject, content);
+	public void sendMailAndRecord(String mailTemp,String sendTo, JSONObject content,  JSONArray templeteArr, JSONArray titleArr ) {
+		sendMailAndRecord( mailTemp, sendTo, null,  content,   templeteArr,  titleArr );
 	}
 
 	@Override
-	public void sendMail(List<String> sendTo, List<String> ccTo, String subject, String content) {
-		if(StringUtils.isBlank(content)) {
-			content="您有采购流程需要处理！";
-		}
-		//content = "文档链接：<a href='" + siteMainUrl + "/mailLogin?mailid=" + id + "'>打开文档</a>";
-		content += " </br><div>此邮件来自：研发资源计划管理平台" + siteMainUrl + "。</br>如有使用问题请联系管理员，请勿直接回信。 </div>";
+	public void sendMail(String mailTemp,List<String> sendTo, List<String> ccTo,  JSONObject content,  JSONArray templeteArr, JSONArray titleArr) {
+		
 		List<String> sendList = new ArrayList<>();
 		List<String> ccList = new ArrayList<>();
 		//测试邮件开关开启，重置测试人员，发送测试邮件
@@ -130,90 +128,82 @@ public class MailInfoServiceImpl implements MailInfoService {
 			}
 		}
 		if (ccTo == null) {
-			send(sendList, new ArrayList<>(), subject, content);
+			send(mailTemp, null, new ArrayList<>(),sendList, content,1, templeteArr,titleArr);
 		} else {
-			send(sendList, ccList, subject, content);
+			send(mailTemp, null, ccList, sendList,  content,1, templeteArr,titleArr);
 		}
 
 	}
 
-	public void send(List<String> sendTo, List<String> ccTo, String subject, String content) {
-		executor.send(sendTo, ccTo, subject, content);
+	public void send(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
+		executor.send( templeteCode,  bccTo,  ccTo,  sendTo,  content,   priority,  templeteArr,  titleArr);
 	}
 
-	@Override
-	public void sendMail(String sendTo, String ccTo, String subject, String content) {
-		List<String> sendList = new ArrayList<>();
-		List<String> ccList = new ArrayList<>();
-		sendList.add(sendTo);
-		if (StringUtils.isNotBlank(ccTo)) {
-			ccList.add(ccTo);
-		}
-		if (ccTo == null) {
-			send(sendList, new ArrayList<>(), subject, content);
-		} else {
-			send(sendList, ccList, subject, content);
-		}
-	}
+//	@Override
+//	public void sendMail(String sendTo, String ccTo, String subject, String content) {
+//		List<String> sendList = new ArrayList<>();
+//		List<String> ccList = new ArrayList<>();
+//		sendList.add(sendTo);
+//		if (StringUtils.isNotBlank(ccTo)) {
+//			ccList.add(ccTo);
+//		}
+//		if (ccTo == null) {
+//			send(sendList, new ArrayList<>(), subject, content);
+//		} else {
+//			send(sendList, ccList, subject, content);
+//		}
+//	}
 	
 	@Override
 	public void sendRemindMail(String sendTo, String ccTo , String process, String url) {
-		String subject ="【邮件提醒】：请处理资源计划审批电子流。当前状态是【"+process+"】";
-		StringBuffer content=new StringBuffer();
-		content.append("请点击任务链接处理</br>");
-
-		if(StringUtils.isNotBlank(url)) {
-			content.append("<a href='" + url + "'>链接</a>");
-		}else {
-			content.append("<a href='" + defaultUrl + "'>链接</a>");
-		}
 		
-		sendMailAndRecord(sendTo,  ccTo,  subject,  content.toString() );		
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$node", process);
+		//contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
+		
+//		JSONArray titleArr = new JSONArray();
+//		JSONObject titleJson = new JSONObject();
+//		titleJson.put("code", "$title1");
+//		titleArr.add(titleJson);		
+		
+		sendMailAndRecord(MailTempConst.APPROVALDATA, sendTo,  ccTo,  contentJson, templeteArr ,null);		
 	}
 	
 	@Override
 	public void sendProcessEndMail(String sendTo, String ccTo ,  String url) {
-		String subject ="【邮件提醒】：您申请的采购流程已结束！";
-		StringBuffer content=new StringBuffer();
-		if(StringUtils.isNotBlank(url)) {
-			content.append("<a href='" + url + "'>链接</a>");
-		}else {
-			content.append("<a href='" + defaultUrl + "'>链接</a>");
-		}
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
 		
-		sendMailAndRecord(sendTo,  ccTo,  subject,  content.toString() );		
+//		JSONArray titleArr = new JSONArray();
+//		JSONObject titleJson = new JSONObject();
+//		titleJson.put("code", "$title1");
+//		titleArr.add(titleJson);
+
+		sendMailAndRecord(MailTempConst.APPROVALEND, sendTo,  ccTo,  contentJson, templeteArr ,null);			
 	}
 	
 	@Override
 	public void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url) {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar calMon = Calendar.getInstance();
-		calMon.setTime(endDate);
-		int maxDay = calMon.getActualMaximum(Calendar.DAY_OF_MONTH);
-		calMon.set(Calendar.DAY_OF_MONTH, maxDay);			
-		
-		String subject ="【邮件提醒】：请处理资源计划审批电子流。当前状态是【"+process+"】";
-		StringBuffer content=new StringBuffer();
-//		if(isAbnormalPlan) {
-//			content.append("采购计划审核截止时间：");
-//			content.append(df.format(endDate)+" 24:00:00</br>");
-//		}else {		
-//		}
-		
-		content.append("采购计划内审核截止时间：");
-		content.append(df.format(endDate)+" 24:00:00</br>");
-		content.append("采购计划外审核截止时间：");
-		content.append(df.format(calMon.getTime())+" 24:00:00</br>");
-		content.append("请在审核截止时间之前处理完毕！");
-		content.append("请点击任务链接处理</br>");
+	
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
 
-		if(StringUtils.isNotBlank(url)) {
-			content.append("<a href='" + url + "'>链接</a>");
-		}else {
-			content.append("<a href='" + defaultUrl + "'>链接</a>");
-		}
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
 		
-		sendMailAndRecord(sendTo,  ccTo,  subject,  content.toString() );
+		sendMailAndRecord(MailTempConst.REGULARMAIL, sendTo,  ccTo,  contentJson, templeteArr ,null);	
 	}
 
 	@Override

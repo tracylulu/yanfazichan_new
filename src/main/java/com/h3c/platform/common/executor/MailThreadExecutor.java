@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.service.AfspTokenService;
 import com.h3c.platform.common.util.HttpClientUtil;
+
+
 			
 @Component
 public class MailThreadExecutor {
@@ -24,8 +27,11 @@ public class MailThreadExecutor {
 	private String mailUrl;
 	@Value("${afsp.applicationId}")
 	private String  applicationId;
+	@Value("${afsp.mail.sendMailInfoByTemplete}")
+	private String mailTempleteUrl;
+	
     @Async("mailExecutor")
-    public void send(List<String> sendTo, List<String> ccTo, String subject, String content){
+    public void send(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
 //        MailUtils.sendMailByCloud(eosAPILoginUrl, eosAPIAccount, eosAPIPassword, sendTo,ccTo, subject, content);
     	try {
 			String token = afspTokenService.getEosToken();
@@ -36,13 +42,15 @@ public class MailThreadExecutor {
 			paramJson.put("applicationId", applicationId);
 			paramJson.put("sendTo", sendTo);
 			paramJson.put("ccTo", ccTo);
-			paramJson.put("subject", subject);
+			paramJson.put("templeteCode", templeteCode);
+			paramJson.put("priority", priority);
+			paramJson.put("templeteArr", templeteArr);
 			paramJson.put("content", content);
+			paramJson.put("titleArr", titleArr);
 			
-			String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailUrl , paramJson.toJSONString(),headers);
+			String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailTempleteUrl , paramJson.toString(),headers);
+			//String result= HttpClientUtil.sendHttpPostJsonWithHeader("http://10.90.14.41:8080" + mailTempleteUrl , paramJson.toString(),headers);
 			
-//			JSONObject jsonResult = JSONObject.parseObject(result);
-//			JSONArray jsonArray =jsonResult.ge("data");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

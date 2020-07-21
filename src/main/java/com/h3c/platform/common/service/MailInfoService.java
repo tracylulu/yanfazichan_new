@@ -3,9 +3,8 @@ package com.h3c.platform.common.service;
 import java.util.Date;
 import java.util.List;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.entity.MailInfo;
 
 public interface MailInfoService {
@@ -18,7 +17,7 @@ public interface MailInfoService {
      * @param subject 
      * @param content
      */
-    void sendMailAndRecord(String sendTo, String ccTo, String subject, String content);
+    void sendMailAndRecord(String mailTemp,String sendTo, String ccTo, JSONObject content,  JSONArray templeteArr, JSONArray titleArr );
 
     /**
      * 发送邮件并记录	无抄送人
@@ -26,11 +25,11 @@ public interface MailInfoService {
      * @param subject   主题
      * @param content    
      */
-    void sendMailAndRecord(String sendTo, String subject, String content);
+    void sendMailAndRecord(String mailTemp,String sendTo,  JSONObject content,  JSONArray templeteArr, JSONArray titleArr );
 
-    void sendMail(List<String> sendTo, List<String> ccTo, String subject, String content);
+    void sendMail(String mailTemp,List<String> sendTo, List<String> ccTo,  JSONObject content,  JSONArray templeteArr, JSONArray titleArr);
 
-    void sendMail(String sendTo, String ccTo, String subject, String content);
+//    void sendMail(String sendTo, String ccTo, String subject, String content);
     
     /**
      * 发送提醒邮件
