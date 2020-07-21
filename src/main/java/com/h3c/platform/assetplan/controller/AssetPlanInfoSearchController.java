@@ -666,12 +666,19 @@ public class AssetPlanInfoSearchController {
    				}
    				
    				List<DeptTreeInfo> children2 = recursiveAddress.get(i).getChildren();
+   				int children2Size = children2.size();
+   				int null2Size = 0;
    				for (int j = 0; j < children2.size(); j++) {
    					if("2".equals(children2.get(j).getDeptLevel()) && children2.get(j).getChildren()==null) {
    						children2.remove(children2.get(j));
    						d2++;
+   						null2Size++;
    						j--;
    	   				}
+   				}
+   				//一级下面的所有二级部门都没有三级部门的话，就把一级部门也去掉。
+   				if(children2Size==null2Size) {
+   					recursiveAddress.remove(recursiveAddress.get(i));
    				}
    			}
    			
