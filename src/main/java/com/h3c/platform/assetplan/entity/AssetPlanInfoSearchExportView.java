@@ -28,11 +28,11 @@ public class AssetPlanInfoSearchExportView {
 
     private Integer requiredsaudit;
 
-    private BigDecimal pprice;
+    private String pprice;
 
-    private BigDecimal totalmoney;
+    private String totalmoney;
 
-    private BigDecimal actualmoney;
+    private String actualmoney;
 
     private String requireduser;
 
@@ -210,27 +210,27 @@ public class AssetPlanInfoSearchExportView {
         this.requiredsaudit = requiredsaudit;
     }
 
-    public BigDecimal getPprice() {
+    public String getPprice() {
         return pprice;
     }
 
-    public void setPprice(BigDecimal pprice) {
+    public void setPprice(String pprice) {
         this.pprice = pprice;
     }
 
-    public BigDecimal getTotalmoney() {
+    public String getTotalmoney() {
         return totalmoney;
     }
 
-    public void setTotalmoney(BigDecimal totalmoney) {
+    public void setTotalmoney(String totalmoney) {
         this.totalmoney = totalmoney;
     }
 
-    public BigDecimal getActualmoney() {
+    public String getActualmoney() {
         return actualmoney;
     }
 
-    public void setActualmoney(BigDecimal actualmoney) {
+    public void setActualmoney(String actualmoney) {
         this.actualmoney = actualmoney;
     }
 
