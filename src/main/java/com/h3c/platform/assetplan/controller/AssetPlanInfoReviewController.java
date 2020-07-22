@@ -235,21 +235,34 @@ public class AssetPlanInfoReviewController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
 	public ResponseResult submitInfoFromReviewToDept3(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
-   			String applymonth = submitEntity.getApplymonth();
-   			String applyuser = submitEntity.getApplyuser();
    			
+		//提交至三级主管按钮，支持选中提交和全部提交两种方法。两种方法均提交所选或全部的规范条目信息。
+			List<Integer> lstsubmitID = submitEntity.getLstsubmitID();
+			String applymonth = submitEntity.getApplymonth();
+   			String applyuser = submitEntity.getApplyuser();
+   			List<Integer> allReviewListID = new ArrayList<>();
+   			if(lstsubmitID.isEmpty()) {
+   				//传过来的集合为空，说明全部提交
+   				Map<String,Object> param1=new HashMap<>();
+   	   			param1.put("Reviewer", applyuser);
+   	   			param1.put("ApplyMonth", applymonth);
+   	   			param1.put("ReviewResult", "1");
+   	   			param1.put("APStage", "2");
+   	   			allReviewListID= assetPlanInfoService.getAllReviewList(param1);
+   			}else {
+   				//选中提交，得把规范的条目找到
+   				Map<String,Object> param2=new HashMap<>();
+   				param2.put("id", lstsubmitID);
+   	   			param2.put("Reviewer", applyuser);
+   	   			param2.put("ApplyMonth", applymonth);
+   	   			param2.put("ReviewResult", "1");
+   	   			param2.put("APStage", "2");
+   	   			allReviewListID= assetPlanInfoService.getAllReviewListForGuiFan(param2);
+   			}	
    			List<String> sendTo3Dept =new ArrayList<>();
    			List<String> sendTo2Dept =new ArrayList<>();
    			List<String> sendToPlanner =new ArrayList<>();
-   			Map<String,Object> param1=new HashMap<>();
-   			param1.put("Reviewer", applyuser);
-   			param1.put("ApplyMonth", applymonth);
-   			param1.put("ReviewResult", "1");
-   			param1.put("APStage", "2");
-   			//当前环节该登录人所有规范审核的单子
    			//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
-   			List<Integer> allReviewListID = assetPlanInfoService.getAllReviewList(param1);
    			if(allReviewListID.size()>0) {
    				List<AssetPlanInfo> lst=new ArrayList<>();
    	   			for (int j = 0; j < allReviewListID.size(); j++) {
@@ -304,56 +317,15 @@ public class AssetPlanInfoReviewController {
 				   			}
 	   					}
 	   				}
-   	   				
    	   				ap.setModifier(applyuser);
    	   				ap.setModifitime(new Date());
    	   				ap.setReviewtime(new Date());
-
-   	   				//得传递型号，三级部门，规范审核时间，向楠那边做后续的判断：*交换机和路由产品线，预算划分到三级，其余部门预算在二级。
-//   	   				ResponseResult rate = rateInfoService.getRate(ap.getAssetmodel(), ap.getDeptcode(), ap.getReviewtime());
-//   	   				Map data = (Map) rate.getData();
-//   	   				//研发总体的信息
-//   	   				Map RD = (Map)data.get("RD");
-//   	   				Boolean rdFlag = (Boolean)RD.get("isEmpty");
-//   	   				String rdRate = (String) RD.get("rate");
-//   	   				String[] rdRatesplit = rdRate.split("%");
-//   	   				//部门的信息
-//   	   				Map dept = (Map)data.get("dept");
-//   	   				Boolean deptFlag = (Boolean)dept.get("isEmpty");
-//   	   				String deptRate = (String) dept.get("rate");
-//   	   				String[] deptRatesplit = deptRate.split("%");
-//   	   				//都为true，研发总体和部门都没有使用率
-//   	   				if(rdFlag && deptFlag) {
-//   	   					ap.setUsagerate("/");
-//   	   				//研发总体不为true，部门为true，说明研发总体有使用率，部门没有
-//   	   				}else if(!rdFlag && deptFlag) {
-//   	   					ap.setUsagerate("-/"+rdRatesplit[0]);
-//   	   				//两者都不为true，说明都有使用率
-//   	   				}else {
-//   	   					ap.setUsagerate(deptRatesplit[0]+"/"+rdRatesplit[0]);
-//   	   				}
    	   				lst.add(ap);
-
    	   			}
-//   	   			assetPlanInfoService.batchEditAssetPlanInfo(lst);
    	   			assetPlanInfoService.batchEditAssetPlanAndRate(lst, allReviewListID);
-   	   			
    			}else {
    				return ResponseResult.success(true, "仅规范的条目可提交！");
    			}
-   			
-			/*//提交之前对表RequestsNumApproveRecord创建记录数据，与主表对应
-			for (int k = 0; k < allReviewListID.size(); k++) {
-				RequestsNumApproveRecord record = recordMapper.selectByPrimaryKey(allReviewListID.get(k));
-				if(record==null) {
-					AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(allReviewListID.get(k));
-   					Integer requiredsaudit = ap.getRequiredsaudit();
-   					RequestsNumApproveRecord numApproveRecord = new RequestsNumApproveRecord();
-   					numApproveRecord.setAssetplanid(allReviewListID.get(k));
-   					numApproveRecord.setDept3managercount(requiredsaudit);
-   					recordMapper.insert(numApproveRecord);
-				}
-			}*/
 			
 			for (int k = 0; k < allReviewListID.size(); k++) {
 				
@@ -392,10 +364,6 @@ public class AssetPlanInfoReviewController {
 			}
 			
 			return ResponseResult.success(true, "提交成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
    	}
 	
 	@ApiOperation(value="手工不规范邮件提醒")

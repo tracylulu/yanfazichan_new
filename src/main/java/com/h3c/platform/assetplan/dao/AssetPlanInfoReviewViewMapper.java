@@ -31,6 +31,8 @@ public interface AssetPlanInfoReviewViewMapper {
     
     List<Integer> getAllReviewList(@Param("param") Map<String, Object> param);
     
+    List<Integer> getAllReviewListForGuiFan(@Param("param") Map<String, Object> param);
+    
     List<AssetPlanInfoReviewView> getNotReviewListByApplyUser(@Param("param") Map<String, Object> param);
 
     List<AssetPlanInfoAll> listofReviewDetail(@Param("param") Map<String, Object> param);

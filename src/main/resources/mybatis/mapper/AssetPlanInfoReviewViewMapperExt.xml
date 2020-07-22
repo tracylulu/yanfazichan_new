@@ -99,7 +99,28 @@
 			</if>
   </select>
 
-
+  <select id="getAllReviewListForGuiFan" parameterType="map" resultType="Integer">
+  	select AssetPlanID from AssetPlanInfoReviewView where DeleteFlag=1
+			 <!--规范  -->
+			<if test="param.ReviewResult !=null">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+             <if test="param.ApplyMonth !=null">
+            	and ApplyMonth = #{param.ApplyMonth}
+             </if>
+             <if test="param.Reviewer !=null">
+				and Reviewer = #{param.Reviewer}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+				and AssetPlanID in
+			<foreach collection="param.id" item="code" index="index"
+				open="(" close=")" separator=",">
+				#{code}
+			</foreach>
+  </select>
+  
 	<select id="listofReviewDetail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
   	select * from AssetPlanInfoReviewView
   		<if test="_parameter != null">

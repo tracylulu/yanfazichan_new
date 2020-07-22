@@ -896,5 +896,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(Map<String, Object> param) {
 		return plannerViewMapper.exportAssetPlanInfoForPlanner(param);
 	}
+
+	@Override
+	public List<Integer> getAllReviewListForGuiFan(Map<String, Object> param) {
+		return reviewViewMapper.getAllReviewListForGuiFan(param);
+	}
 }
 
