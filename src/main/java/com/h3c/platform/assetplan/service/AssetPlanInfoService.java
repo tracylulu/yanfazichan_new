@@ -233,5 +233,5 @@ public interface AssetPlanInfoService {
      
      List<AssetPlanInfoAll> listofTodoDetail(Map<String, Object> param);
      
-     List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(Map<String, Object> param);
+     
 }

@@ -329,7 +329,7 @@ public class AssetPlanInfoPlannerController {
 		Map<String, Object> param = new HashMap<>();
 		param.put("Planner",planner);
 		param.put("ApplyMonth",applymonth);
-		List<AssetPlanInfoPlannerView> lst = assetPlanInfoService.exportAssetPlanInfoForPlanner(param);
+		/*List<AssetPlanInfoPlannerView> lst = assetPlanInfoService.exportAssetPlanInfoForPlanner(param);
 		ExportExcelWrapper<AssetPlanInfoPlannerView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoPlannerView>();
 
 		StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExportForPlanner", "计划员环节资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");
@@ -342,7 +342,7 @@ public class AssetPlanInfoPlannerController {
 		log.setLogtype(LogType.EXPORT);		
 		log.setIp("IP:"+IPUtils.getIpAddr(request)+";service:"+InetAddress.getLocalHost().getHostAddress());			
 			
-		operationLogService.SaveLog(log);
+		operationLogService.SaveLog(log);*/
     }
 	
 	//通过HashSet踢除重复元素
