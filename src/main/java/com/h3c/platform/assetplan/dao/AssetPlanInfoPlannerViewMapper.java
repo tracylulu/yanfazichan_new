@@ -41,5 +41,5 @@ public interface AssetPlanInfoPlannerViewMapper {
   	
   	Integer getListSize(@Param("param") Map<String, Object> param);
   	
-  	//List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(@Param("param") Map<String, Object> param);
+  	List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(@Param("param") Map<String, Object> param);
 }

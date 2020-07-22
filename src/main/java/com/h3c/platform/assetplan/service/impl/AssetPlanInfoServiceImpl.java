@@ -891,5 +891,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		
 		return lst;
 	}
+
+	@Override
+	public List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(Map<String, Object> param) {
+		return plannerViewMapper.exportAssetPlanInfoForPlanner(param);
+	}
 }
 
