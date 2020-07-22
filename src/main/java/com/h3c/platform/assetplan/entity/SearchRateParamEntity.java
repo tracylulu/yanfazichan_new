@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiModelProperty;
 import springfox.documentation.annotations.ApiIgnore;
 
 public class SearchRateParamEntity {
+	
+	private Integer id;
 	//当前页
 	private Integer pageNum;
     //每页记录数
@@ -25,6 +27,13 @@ public class SearchRateParamEntity {
     //申请部门
     private String deptCode;
 
+    public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getPageNum() {
 		return pageNum;
