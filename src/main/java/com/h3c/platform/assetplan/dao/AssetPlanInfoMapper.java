@@ -32,7 +32,7 @@ public interface AssetPlanInfoMapper {
 
     int updateByPrimaryKey(AssetPlanInfo record);
     
-    int updateUserRate(@Param("lst")List<Integer> lst);
+    int updateUseRate(@Param("lst")List<Integer> lst);
     
     int updateBatchAssetPlanInfo(@Param("lst")List<AssetPlanInfo> lst);
     

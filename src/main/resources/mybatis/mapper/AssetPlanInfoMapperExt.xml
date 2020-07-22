@@ -250,7 +250,7 @@
 			#{code}
 		</foreach>
 	</update>
-	<update id="updateUserRate" parameterType="java.util.List">
+	<update id="updateUseRate" parameterType="java.util.List">
 		UPDATE AssetPlanInfo a LEFT JOIN RateTotalInfo b ON a.AssetPlanID=b.id
 		SET a.UsageRate=b.rateDetail WHERE a.AssetPlanID IN
 		<foreach collection="lst" item="item" index="index" open="("

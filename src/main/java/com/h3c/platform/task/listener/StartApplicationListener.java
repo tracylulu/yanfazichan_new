@@ -23,6 +23,7 @@ import com.h3c.platform.task.config.DeptInfoQuartzJobBean;
 import com.h3c.platform.task.config.MailQuartzJobBean;
 import com.h3c.platform.task.config.ProjectInfoQuartzJobBean;
 import com.h3c.platform.task.config.SchedulerConfig;
+import com.h3c.platform.task.config.UseRateQuartzJobBean;
 import com.h3c.platform.task.config.UserInfoQuartzJobBean;
 
 
@@ -45,6 +46,8 @@ public class StartApplicationListener implements ApplicationListener<ContextRefr
 	private String assetCron;
 	@Value("${eos.mail.cron}")
 	private String mailCron;
+	@Value("${eos.rate.cron}")
+	private String rateCron;
 	
 	public static AtomicInteger count = new AtomicInteger(0);
 	
@@ -74,6 +77,8 @@ public class StartApplicationListener implements ApplicationListener<ContextRefr
 			buildJob(scheduler, "jobasset", "asset_job",  "triggerasset", "asset_trigger", AssetPlanQuartzJobBean.class, assetCron);
 			
 			buildJob(scheduler, "jobmail", "mail_job",  "triggermail", "mail_trigger", MailQuartzJobBean.class, mailCron);
+			
+			buildJob(scheduler, "jobrate", "mail_rate",  "triggerrate", "rate_trigger", UseRateQuartzJobBean.class, rateCron);
 			
 			scheduler.start();
 		} catch (Exception e) {

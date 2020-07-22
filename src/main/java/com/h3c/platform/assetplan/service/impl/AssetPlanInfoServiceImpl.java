@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -219,6 +220,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return count;
 	}
 	
+	@Transactional
 	private void syncEdit(List<AssetPlanInfo> lst, List<Integer> lstID) throws Exception {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.initialize();
@@ -247,7 +249,9 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 					Long endForTime = System.currentTimeMillis();
 					Long startinsertRateTime = System.currentTimeMillis();
 					// 存储 使用率统计信息
-					rateTotalInfoService.deleteByID(lstID);
+					if (CollectionUtils.isNotEmpty(lstID)) {
+						rateTotalInfoService.deleteByID(lstID);
+					}
 					if (CollectionUtils.isNotEmpty(lstTotal)) {
 						rateTotalInfoService.insertBatch(lstTotal);
 					}
@@ -255,7 +259,9 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 
 					// 回写使用率
 					Long startupdaterateTime = System.currentTimeMillis();
-					assetPlanInfoMapper.updateUserRate(lstID);
+					if (CollectionUtils.isNotEmpty(lstID)) {
+						assetPlanInfoMapper.updateUseRate(lstID);
+					}
 					Long endupdaterateTime = System.currentTimeMillis();
 
 					log.info("for:" + (endForTime - startForTime) + "ms");
@@ -268,6 +274,38 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 			}
 		});
 
+	}
+	
+	/**
+	 * 同步前一天异步写入有问题的使用率
+	 */
+	@Override
+	@Transactional
+	public void syncUsageRateTask() throws Exception {
+		List<AssetPlanInfo> lst= getUnWriteUseRate();		
+		
+		List<RateTotalInfo> lstTotal = new ArrayList<RateTotalInfo>();
+		List<Integer> lstID=new ArrayList<Integer>();
+		for (AssetPlanInfo info : lst) {
+			RateTotalInfo rateTotalInfo  = assetRateInfoService.getRate(info.getAssetmodel(),
+					info.getDeptcode(), info.getReviewtime());						
+			rateTotalInfo.setId(info.getAssetplanid());
+			rateTotalInfo.setCreatetime(new Date());
+			lstTotal.add(rateTotalInfo);
+			lstID.add(info.getAssetplanid());
+		}
+		// 存储 使用率统计信息
+		if (CollectionUtils.isNotEmpty(lstID)) {
+			rateTotalInfoService.deleteByID(lstID);
+		}
+		if (CollectionUtils.isNotEmpty(lstTotal)) {
+			rateTotalInfoService.insertBatch(lstTotal);
+		}
+
+		// 回写使用率
+		if (CollectionUtils.isNotEmpty(lstID)) {
+			assetPlanInfoMapper.updateUseRate(lstID);
+		}
 	}
 
 	
@@ -826,7 +864,32 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}*/
 
 	
-
 	
+	/**
+	 * 获取前一天使用率未计算数据
+	 */
+	private List<AssetPlanInfo> getUnWriteUseRate(){
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE,0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		Calendar cal_end=Calendar.getInstance();
+		cal_end.add(Calendar.DAY_OF_MONTH, -1);
+		cal_end.set(Calendar.HOUR_OF_DAY, 23);
+		cal_end.set(Calendar.MINUTE,59);
+		cal_end.set(Calendar.SECOND, 59);
+		cal_end.set(Calendar.MILLISECOND, 0);
+		
+		AssetPlanInfoExample example=new AssetPlanInfoExample();
+		AssetPlanInfoExample.Criteria cri= example.createCriteria();
+		cri.andUsagerateIsNull();
+		cri.andApstageNotEqualTo("1");
+		cri.andReviewtimeBetween(cal.getTime(), cal_end.getTime());
+		List<AssetPlanInfo> lst=assetPlanInfoMapper.selectByExample(example);
+		
+		return lst;
+	}
 }
 

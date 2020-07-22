@@ -158,8 +158,4 @@ public class AssetPlanQuartzJobBean extends QuartzJobBean{
 		
 	}
 	
-	private void monthOutTime() {
-		
-	}
-	
 }
