@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.entity.AssetRateInfo;
+import com.h3c.platform.assetplan.entity.RateTotalInfo;
 import com.h3c.platform.assetplan.entity.SearchRateParamEntity;
 import com.h3c.platform.assetplan.service.AssetRateInfoService;
 import com.h3c.platform.assetplan.service.RateTotalInfoService;
@@ -31,9 +32,13 @@ public class UsageRateContorller {
 	
 	@UserLoginToken
 	@GetMapping("/getRate")
-	@ApiOperation("获取使用率")	
-	public ResponseResult getRate(Integer id) throws Exception{
-		return ResponseResult.success(rateTotalInfoService.getRateTotalInfoByID(id));		
+	@ApiOperation("获取使用率统计信息")	
+	public ResponseResult getRate(SearchRateParamEntity param) throws Exception{
+		RateTotalInfo total= rateTotalInfoService.getRateTotalInfoByID(param.getId());
+		if(total==null||total.getId()==null||total.getId()==0) {
+			total =rateInfoService.getRate(param.getAssetCategory(), param.getDeptCode(), param.getCollectTime());
+		}
+		return ResponseResult.success(total);		
 	} 
 	
 	@UserLoginToken
