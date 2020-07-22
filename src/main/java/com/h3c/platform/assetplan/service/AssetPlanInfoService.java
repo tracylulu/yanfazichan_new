@@ -47,6 +47,7 @@ public interface AssetPlanInfoService {
 	
 	int batchEditAssetPlanInfo(List<AssetPlanInfo> lst);
 	
+	void syncUsageRateTask() throws Exception ;
 	
 	/**
 	 * 添加打包
@@ -80,6 +81,7 @@ public interface AssetPlanInfoService {
 	//int editQuantity(AssetPlanInfo assetPlanlInfo);
 	
 	AssetPlanInfoDetailView getByAssetID(Integer assetplanid);
+	
 	
 	//查询成套设备
 	List<AssetPlanInfo> selectCompleteSet(String planCode,Integer completeSetCode);
