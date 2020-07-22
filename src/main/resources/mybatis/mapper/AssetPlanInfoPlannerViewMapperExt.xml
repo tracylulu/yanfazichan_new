@@ -90,4 +90,24 @@
   
   </select>
  
+ 
+   <select id="exportAssetPlanInfoForPlanner" parameterType="map" resultMap="BaseResultMap">
+  	select * from AssetPlanInfoPlannerView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql_export"></include>
+    	</if>
+    	order by GroupFlag asc 
+  </select>
+  
+   <sql id="condition_sql_export">
+		<where>
+			<if test="param.Planner !=null">
+				and Planner = #{param.Planner}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+		</where>
+	</sql>
+	
 </mapper>

@@ -1,18 +1,25 @@
 package com.h3c.platform.assetplan.controller;
 
 import java.math.BigDecimal;
+import java.net.InetAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,14 +36,23 @@ import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntity;
 import com.h3c.platform.assetplan.entity.AssetPlanInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
+import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
+import com.h3c.platform.assetplan.entity.SearchAssetParamEntity;
+import com.h3c.platform.assetplan.entity.SysDicCategoryEntity;
+import com.h3c.platform.assetplan.entity.SysDicReceiverPlaceEntity;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.MailInfoService;
 import com.h3c.platform.common.service.SysDicInfoService;
+import com.h3c.platform.common.util.IPUtils;
 import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.sysmgr.entity.OperationLog;
+import com.h3c.platform.sysmgr.service.OperationLogService;
 import com.h3c.platform.sysmgr.service.UserService;
+import com.h3c.platform.util.ExportExcelWrapper;
 import com.h3c.platform.util.UserUtils;
 
 import io.swagger.annotations.Api;
@@ -63,7 +79,8 @@ public class AssetPlanInfoPlannerController {
 	private UserService userService;
 	@Autowired
 	private SysDicInfoService sysDicInfoService;
-	
+	@Autowired
+	private  OperationLogService operationLogService;
 	
 	@ApiOperation(value="展示计划员审核列表信息")
    	@PostMapping("/getPlannerInfoList")
@@ -285,6 +302,48 @@ public class AssetPlanInfoPlannerController {
 			return ResponseResult.fail(false,"修改失败");
 		}*/
 	}
+	
+	
+	@ApiOperation(value="导出到Excel")
+   	@GetMapping("/exportAssetPlanInfoForPlanner")
+   	@ResponseBody
+   	@UserLoginToken(logType=LogType.EXPORT)
+   	public void exportAssetPlanInfoForPlanner(HttpServletRequest request,HttpServletResponse response,
+   			@RequestParam @ApiParam(name="planner",value="计划员审核环节处理人(当前登录人)",required=true)String planner,
+   			@RequestParam @ApiParam(name="applymonth",value="申请月份",required=true)String applymonth)throws Exception {
+    	
+		String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价", "同意金额","申购人", "二级部门",
+    									"用途", "使用率（部门/研发总体）", "供应商类别-事实上独家供应","预计总价", "项目编码", "评审意见"};
+		String[] column = new String[] { "Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
+										"Pprice","Actualmoney", "Requiredusername","Dept2name","Purpose", "Usagerate", 
+										"Manufacturertypeenum","Totalmoney","Itemcode","Plannernote"};
+		String currentUserId = UserUtils.getCurrentUserId();
+		List<String> lstHeader = Arrays.asList(header);
+		List<String> lsth = new ArrayList<>(lstHeader);
+		header = (String[]) lsth.toArray(new String[lsth.size()]);
+		
+		List<String> lstcolumn = Arrays.asList(column);
+		List lstc = new ArrayList(lstcolumn);
+		column = (String[]) lstc.toArray(new String[lstc.size()]);
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("Planner",planner);
+		param.put("ApplyMonth",applymonth);
+		List<AssetPlanInfoPlannerView> lst = assetPlanInfoService.exportAssetPlanInfoForPlanner(param);
+		ExportExcelWrapper<AssetPlanInfoPlannerView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoPlannerView>();
+
+		StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExportForPlanner", "计划员环节资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");
+		OperationLog log=new OperationLog();
+		log.setModelcode("com.h3c.platform.assetplan.controller.exportAssetPlanInfoForPlanner");
+		log.setModelname("导出到Excel");
+		log.setSummary(request.getRequestURL().toString());
+		log.setContent(buffer.toString());
+		log.setUserid(UserUtils.getCurrentUserId());
+		log.setLogtype(LogType.EXPORT);		
+		log.setIp("IP:"+IPUtils.getIpAddr(request)+";service:"+InetAddress.getLocalHost().getHostAddress());			
+			
+		operationLogService.SaveLog(log);
+    }
 	
 	//通过HashSet踢除重复元素
     public static List removeDuplicate(List list) {   

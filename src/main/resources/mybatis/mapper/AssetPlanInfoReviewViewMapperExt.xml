@@ -46,7 +46,7 @@
   		<if test="_parameter != null">
     		<include refid="condition_sql"></include>
     	</if>
-    order by ReviewResult desc,CompleteSetCode asc,PPrice asc,DeptCode asc,ApplyUser asc
+    order by Dept2Code asc,ReviewResult desc,CompleteSetCode desc,PPrice desc,AssetPlanID desc
   </select>
   
   
@@ -105,7 +105,7 @@
   		<if test="_parameter != null">
     		<include refid="condition_sql"></include>
     	</if>
-		order by ReviewResult desc,CompleteSetCode asc,PPrice asc,DeptCode asc,ApplyUser asc,AssetPlanID
+		order by Dept2Code asc,ReviewResult desc,CompleteSetCode desc,PPrice desc,AssetPlanID desc
   </select>
 
 </mapper>

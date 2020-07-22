@@ -40,4 +40,6 @@ public interface AssetPlanInfoPlannerViewMapper {
   	Map<String,Object>getGroupMess(@Param("param") Map<String, Object> param); 
   	
   	Integer getListSize(@Param("param") Map<String, Object> param);
+  	
+  	List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(@Param("param") Map<String, Object> param);
 }

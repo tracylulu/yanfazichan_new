@@ -815,6 +815,11 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return menuViewMapper.listofTodoInfoForRequiredUser(param);
 	}
 
+	@Override
+	public List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(Map<String, Object> param) {
+		return plannerViewMapper.exportAssetPlanInfoForPlanner(param);
+	}
+
 	/*@Override
 	public List<AssetPlanInfoAll> listofPlannerDetailAfter(Map<String, Object> param) {
 		return plannerViewMapper.listofPlannerDetailAfter(param);
