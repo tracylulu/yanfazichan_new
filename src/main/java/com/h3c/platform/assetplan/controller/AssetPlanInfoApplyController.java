@@ -540,13 +540,21 @@ public class AssetPlanInfoApplyController {
    	   				newLstsubmitID.add(draftInfoList.get(i).getAssetplanid());
    	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getApplyuser());
 	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
-	   				getsendToList.add(draftInfoList.get(i).getReviewer());
+	   				String[] split = draftInfoList.get(i).getReviewperson().split(",");
+	   				for (int j = 0; j < split.length; j++) {
+	   					getsendToList.add(split[j]);
+					}
+	   				
    				}
    	   			for (int j = 0; j < todoList.size(); j++) {
 	   				newLstsubmitID.add(todoList.get(j).getAssetplanid());
 	   				newLstApplyRequiredUserID.add(todoList.get(j).getApplyuser());
 	   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
-	   				getsendToList.add(todoList.get(j).getReviewer());
+	   				String[] split = todoList.get(j).getReviewperson().split(",");
+	   				for (int k = 0; k < split.length; k++) {
+	   					getsendToList.add(split[k]);
+					}
+	   				
 				}
    			}else {
    				//选中的部分提交
@@ -560,14 +568,20 @@ public class AssetPlanInfoApplyController {
    	   						newLstsubmitID.add(completeSetList.get(j).getAssetplanid());
    	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getApplyuser());
    	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getRequireduser());
-   	   						getsendToList.add(completeSetList.get(j).getReviewer());
+   	   					    String[] split = completeSetList.get(j).getReviewperson().split(",");
+	   	   					for (int k = 0; k < split.length; k++) {
+	   		   					getsendToList.add(split[k]);
+	   						}
    	   					}
    	   				//无成套设备	
    	   				}else {
    	   					newLstsubmitID.add(assetplanid);
    	   					newLstApplyRequiredUserID.add(ap.getApplyuser());
   						newLstApplyRequiredUserID.add(ap.getRequireduser());
-  						getsendToList.add(ap.getReviewer());
+  						String[] split = ap.getReviewperson().split(",");
+  						for (int k = 0; k < split.length; k++) {
+   		   					getsendToList.add(split[k]);
+   						}
    	   				}
    	   			}
    	   			newLstsubmitID=removeDuplicate(newLstsubmitID);
@@ -705,8 +719,15 @@ public class AssetPlanInfoApplyController {
 				json.put("receiverplace",  arrvalue[1]);
 				json.put("receiverplacedetail",  arrvalue[2]);
 
-   				arrayData.add(json);
-   			}
+				//长度为4说明配置了审核人，否则没有配置
+				if(arrvalue.length==4) {
+					String[] split3 = arrvalue[3].split(" ");
+					json.put("receiverpeople",  split3[1]);
+				}else {
+					json.put("receiverpeople", "");
+				} 
+   					arrayData.add(json);
+   				}
 
    			return ResponseResult.success(0, "查询成功", 0, 0, null, arrayData);
    		/*} catch (Exception e) {

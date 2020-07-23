@@ -22,6 +22,7 @@
     <result column="Dept1Name" jdbcType="VARCHAR" property="dept1name" />
     <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
+    <result column="ReviewPerson" jdbcType="VARCHAR" property="reviewperson" />
     <result column="Reviewer" jdbcType="VARCHAR" property="reviewer" />
     <result column="ReviewResult" jdbcType="INTEGER" property="reviewresult" />
     <result column="ReviewNote" jdbcType="VARCHAR" property="reviewnote" />
@@ -96,9 +97,9 @@
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, Requireds, RequiredsAudit, 
     PPrice, TotalMoney, ActualMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, 
-    Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, AssetCategory, Reviewer, ReviewResult, 
-    ReviewNote, OutTimePlanEnum, IsCompleteSet, CompleteSetCode, IsReqPurchaseReport, 
-    APStatus, APStage, ApplyUser, ApplyMonth, DeleteFlag
+    Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, AssetCategory, ReviewPerson, 
+    Reviewer, ReviewResult, ReviewNote, OutTimePlanEnum, IsCompleteSet, CompleteSetCode, 
+    IsReqPurchaseReport, APStatus, APStage, ApplyUser, ApplyMonth, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReviewViewExample" resultMap="BaseResultMap">
     select
@@ -127,22 +128,24 @@
       ActualMoney, RequiredUser, RequiredUserName, 
       DeptCode, Dept3Name, Dept2Code, 
       Dept2Name, Dept1Code, Dept1Name, 
-      ItemCode, AssetCategory, Reviewer, 
-      ReviewResult, ReviewNote, OutTimePlanEnum, 
-      IsCompleteSet, CompleteSetCode, IsReqPurchaseReport, 
-      APStatus, APStage, ApplyUser, 
-      ApplyMonth, DeleteFlag)
+      ItemCode, AssetCategory, ReviewPerson, 
+      Reviewer, ReviewResult, ReviewNote, 
+      OutTimePlanEnum, IsCompleteSet, CompleteSetCode, 
+      IsReqPurchaseReport, APStatus, APStage, 
+      ApplyUser, ApplyMonth, DeleteFlag
+      )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
       #{requiredsaudit,jdbcType=INTEGER}, #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, 
       #{actualmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, 
       #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, 
       #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, 
-      #{itemcode,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, 
-      #{reviewresult,jdbcType=INTEGER}, #{reviewnote,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, 
-      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
-      #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, 
-      #{applymonth,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR})
+      #{itemcode,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, 
+      #{reviewer,jdbcType=VARCHAR}, #{reviewresult,jdbcType=INTEGER}, #{reviewnote,jdbcType=VARCHAR}, 
+      #{outtimeplanenum,jdbcType=INTEGER}, #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, 
+      #{isreqpurchasereport,jdbcType=VARCHAR}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView">
     insert into AssetPlanInfoReviewView
@@ -206,6 +209,9 @@
       </if>
       <if test="assetcategory != null">
         AssetCategory,
+      </if>
+      <if test="reviewperson != null">
+        ReviewPerson,
       </if>
       <if test="reviewer != null">
         Reviewer,
@@ -304,6 +310,9 @@
       </if>
       <if test="assetcategory != null">
         #{assetcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewperson != null">
+        #{reviewperson,jdbcType=VARCHAR},
       </if>
       <if test="reviewer != null">
         #{reviewer,jdbcType=VARCHAR},
@@ -412,6 +421,9 @@
       <if test="record.assetcategory != null">
         AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
       </if>
+      <if test="record.reviewperson != null">
+        ReviewPerson = #{record.reviewperson,jdbcType=VARCHAR},
+      </if>
       <if test="record.reviewer != null">
         Reviewer = #{record.reviewer,jdbcType=VARCHAR},
       </if>
@@ -475,6 +487,7 @@
       Dept1Name = #{record.dept1name,jdbcType=VARCHAR},
       ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
+      ReviewPerson = #{record.reviewperson,jdbcType=VARCHAR},
       Reviewer = #{record.reviewer,jdbcType=VARCHAR},
       ReviewResult = #{record.reviewresult,jdbcType=INTEGER},
       ReviewNote = #{record.reviewnote,jdbcType=VARCHAR},

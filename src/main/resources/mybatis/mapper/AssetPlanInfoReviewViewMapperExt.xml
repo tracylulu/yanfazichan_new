@@ -6,7 +6,8 @@
 		<where>
 			DeleteFlag=1 and OutTimePlanEnum !=0
 			<if test="param.Reviewer !=null">
-				and Reviewer = #{param.Reviewer}
+				<!-- and Reviewer = #{param.Reviewer} -->
+				and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
 			</if>
 			
 			<if test="param.ApplyMonth !=null">
@@ -37,10 +38,11 @@
   <select id="getSumTotalMoneyForReview" parameterType="map" resultType="java.lang.String">
   	select SUM(TotalMoney) as m from AssetPlanInfoReviewView
   		<if test="_parameter != null">
-    		<include refid="condition_sql_search"></include>
+    		<include refid="condition_sql"></include>
     	</if>
   </select>
   
+  <!--不用这个接口了  -->
   <select id="getReviewResult" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
   	select  * from AssetPlanInfoReviewView
   		<if test="_parameter != null">
@@ -62,7 +64,8 @@
 		<where>
 			DeleteFlag=1 and OutTimePlanEnum !=0
 			<if test="param.Reviewer !=null">
-				and Reviewer = #{param.Reviewer}
+				<!-- and Reviewer = #{param.Reviewer} -->
+				and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
 			</if>
 			
 			<if test="param.ApplyMonth !=null">
@@ -120,7 +123,8 @@
             	and ApplyMonth = #{param.ApplyMonth}
              </if>
              <if test="param.Reviewer !=null">
-            	and Reviewer = #{param.Reviewer}
+            	<!-- and Reviewer = #{param.Reviewer} -->
+            	and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
              </if>
     	GROUP BY RequiredUser
   </select>
@@ -138,7 +142,8 @@
        		and ApplyMonth = #{param.ApplyMonth}
         </if>
     	<if test="param.Reviewer !=null">
-            and Reviewer = #{param.Reviewer}
+           <!-- and Reviewer = #{param.Reviewer} -->
+            and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
         </if>
   </select>
   
@@ -152,7 +157,8 @@
             	and ApplyMonth = #{param.ApplyMonth}
              </if>
              <if test="param.Reviewer !=null">
-				and Reviewer = #{param.Reviewer}
+				 <!-- and Reviewer = #{param.Reviewer} -->
+            	and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
 			</if>
 			<if test="param.APStage !=null">
 				and APStage = #{param.APStage}
@@ -169,7 +175,8 @@
             	and ApplyMonth = #{param.ApplyMonth}
              </if>
              <if test="param.Reviewer !=null">
-				and Reviewer = #{param.Reviewer}
+				 <!-- and Reviewer = #{param.Reviewer} -->
+           		 and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
 			</if>
 			<if test="param.APStage !=null">
 				and APStage = #{param.APStage}

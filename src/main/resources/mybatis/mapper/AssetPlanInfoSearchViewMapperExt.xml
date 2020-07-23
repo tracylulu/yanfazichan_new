@@ -97,7 +97,8 @@
 	                 AND 
 	                 (RequiredUser = #{param.currentUserId} 
 	                   or ApplyUser = #{param.currentUserId}
-	                   or Reviewer = #{param.currentUserId}
+	                   <!-- or Reviewer = #{param.currentUserId} -->
+	                   or (FIND_IN_SET(#{param.currentUserId}, ReviewPerson))
 	                   or Dept3Manager = #{param.currentUserId}
 	                   or Dept2Manager = #{param.currentUserId}
 	                   or Planner = #{param.currentUserId}

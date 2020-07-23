@@ -28,13 +28,17 @@ public class AssetPlanInfoSearchView {
 
     private Integer requiredsaudit;
 
-    private String pprice;
+    private BigDecimal pprice;
 
-    private String totalmoney;
+    private BigDecimal totalmoney;
 
-    private String actualmoney;
+    private BigDecimal actualmoney;
 
     private String requireduser;
+
+    private String requiredusername;
+
+    private String reviewperson;
 
     private String reviewer;
 
@@ -47,8 +51,6 @@ public class AssetPlanInfoSearchView {
     private String oqdeptreviewer;
 
     private String dept1reviewer;
-
-    private String requiredusername;
 
     private String deptcode;
 
@@ -198,27 +200,27 @@ public class AssetPlanInfoSearchView {
         this.requiredsaudit = requiredsaudit;
     }
 
-    public String getPprice() {
+    public BigDecimal getPprice() {
         return pprice;
     }
 
-    public void setPprice(String pprice) {
+    public void setPprice(BigDecimal pprice) {
         this.pprice = pprice;
     }
 
-    public String getTotalmoney() {
+    public BigDecimal getTotalmoney() {
         return totalmoney;
     }
 
-    public void setTotalmoney(String totalmoney) {
+    public void setTotalmoney(BigDecimal totalmoney) {
         this.totalmoney = totalmoney;
     }
 
-    public String getActualmoney() {
+    public BigDecimal getActualmoney() {
         return actualmoney;
     }
 
-    public void setActualmoney(String actualmoney) {
+    public void setActualmoney(BigDecimal actualmoney) {
         this.actualmoney = actualmoney;
     }
 
@@ -228,6 +230,22 @@ public class AssetPlanInfoSearchView {
 
     public void setRequireduser(String requireduser) {
         this.requireduser = requireduser == null ? null : requireduser.trim();
+    }
+
+    public String getRequiredusername() {
+        return requiredusername;
+    }
+
+    public void setRequiredusername(String requiredusername) {
+        this.requiredusername = requiredusername == null ? null : requiredusername.trim();
+    }
+
+    public String getReviewperson() {
+        return reviewperson;
+    }
+
+    public void setReviewperson(String reviewperson) {
+        this.reviewperson = reviewperson == null ? null : reviewperson.trim();
     }
 
     public String getReviewer() {
@@ -276,14 +294,6 @@ public class AssetPlanInfoSearchView {
 
     public void setDept1reviewer(String dept1reviewer) {
         this.dept1reviewer = dept1reviewer == null ? null : dept1reviewer.trim();
-    }
-
-    public String getRequiredusername() {
-        return requiredusername;
-    }
-
-    public void setRequiredusername(String requiredusername) {
-        this.requiredusername = requiredusername == null ? null : requiredusername.trim();
     }
 
     public String getDeptcode() {

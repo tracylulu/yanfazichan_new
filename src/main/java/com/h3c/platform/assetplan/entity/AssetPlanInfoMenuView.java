@@ -26,6 +26,8 @@ public class AssetPlanInfoMenuView {
 
     private Date applytime;
 
+    private String reviewperson;
+
     private String reviewer;
 
     private Integer reviewresult;
@@ -136,6 +138,14 @@ public class AssetPlanInfoMenuView {
 
     public void setApplytime(Date applytime) {
         this.applytime = applytime;
+    }
+
+    public String getReviewperson() {
+        return reviewperson;
+    }
+
+    public void setReviewperson(String reviewperson) {
+        this.reviewperson = reviewperson == null ? null : reviewperson.trim();
     }
 
     public String getReviewer() {

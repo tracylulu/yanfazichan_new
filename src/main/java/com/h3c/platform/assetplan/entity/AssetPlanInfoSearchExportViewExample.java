@@ -1243,6 +1243,76 @@ public class AssetPlanInfoSearchExportViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andReviewpersonIsNull() {
+            addCriterion("ReviewPerson is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonIsNotNull() {
+            addCriterion("ReviewPerson is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonEqualTo(String value) {
+            addCriterion("ReviewPerson =", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotEqualTo(String value) {
+            addCriterion("ReviewPerson <>", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonGreaterThan(String value) {
+            addCriterion("ReviewPerson >", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonGreaterThanOrEqualTo(String value) {
+            addCriterion("ReviewPerson >=", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonLessThan(String value) {
+            addCriterion("ReviewPerson <", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonLessThanOrEqualTo(String value) {
+            addCriterion("ReviewPerson <=", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonLike(String value) {
+            addCriterion("ReviewPerson like", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotLike(String value) {
+            addCriterion("ReviewPerson not like", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonIn(List<String> values) {
+            addCriterion("ReviewPerson in", values, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotIn(List<String> values) {
+            addCriterion("ReviewPerson not in", values, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonBetween(String value1, String value2) {
+            addCriterion("ReviewPerson between", value1, value2, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotBetween(String value1, String value2) {
+            addCriterion("ReviewPerson not between", value1, value2, "reviewperson");
+            return (Criteria) this;
+        }
+
         public Criteria andReviewerIsNull() {
             addCriterion("Reviewer is null");
             return (Criteria) this;

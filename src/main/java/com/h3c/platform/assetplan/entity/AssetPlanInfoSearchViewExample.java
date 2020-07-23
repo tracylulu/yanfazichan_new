@@ -1173,6 +1173,146 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andRequiredusernameIsNull() {
+            addCriterion("RequiredUserName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameIsNotNull() {
+            addCriterion("RequiredUserName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameEqualTo(String value) {
+            addCriterion("RequiredUserName =", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameNotEqualTo(String value) {
+            addCriterion("RequiredUserName <>", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameGreaterThan(String value) {
+            addCriterion("RequiredUserName >", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameGreaterThanOrEqualTo(String value) {
+            addCriterion("RequiredUserName >=", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameLessThan(String value) {
+            addCriterion("RequiredUserName <", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameLessThanOrEqualTo(String value) {
+            addCriterion("RequiredUserName <=", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameLike(String value) {
+            addCriterion("RequiredUserName like", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameNotLike(String value) {
+            addCriterion("RequiredUserName not like", value, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameIn(List<String> values) {
+            addCriterion("RequiredUserName in", values, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameNotIn(List<String> values) {
+            addCriterion("RequiredUserName not in", values, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameBetween(String value1, String value2) {
+            addCriterion("RequiredUserName between", value1, value2, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequiredusernameNotBetween(String value1, String value2) {
+            addCriterion("RequiredUserName not between", value1, value2, "requiredusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonIsNull() {
+            addCriterion("ReviewPerson is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonIsNotNull() {
+            addCriterion("ReviewPerson is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonEqualTo(String value) {
+            addCriterion("ReviewPerson =", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotEqualTo(String value) {
+            addCriterion("ReviewPerson <>", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonGreaterThan(String value) {
+            addCriterion("ReviewPerson >", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonGreaterThanOrEqualTo(String value) {
+            addCriterion("ReviewPerson >=", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonLessThan(String value) {
+            addCriterion("ReviewPerson <", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonLessThanOrEqualTo(String value) {
+            addCriterion("ReviewPerson <=", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonLike(String value) {
+            addCriterion("ReviewPerson like", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotLike(String value) {
+            addCriterion("ReviewPerson not like", value, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonIn(List<String> values) {
+            addCriterion("ReviewPerson in", values, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotIn(List<String> values) {
+            addCriterion("ReviewPerson not in", values, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonBetween(String value1, String value2) {
+            addCriterion("ReviewPerson between", value1, value2, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewpersonNotBetween(String value1, String value2) {
+            addCriterion("ReviewPerson not between", value1, value2, "reviewperson");
+            return (Criteria) this;
+        }
+
         public Criteria andReviewerIsNull() {
             addCriterion("Reviewer is null");
             return (Criteria) this;
@@ -1590,76 +1730,6 @@ public class AssetPlanInfoSearchViewExample {
 
         public Criteria andDept1reviewerNotBetween(String value1, String value2) {
             addCriterion("Dept1Reviewer not between", value1, value2, "dept1reviewer");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameIsNull() {
-            addCriterion("RequiredUserName is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameIsNotNull() {
-            addCriterion("RequiredUserName is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameEqualTo(String value) {
-            addCriterion("RequiredUserName =", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameNotEqualTo(String value) {
-            addCriterion("RequiredUserName <>", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameGreaterThan(String value) {
-            addCriterion("RequiredUserName >", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameGreaterThanOrEqualTo(String value) {
-            addCriterion("RequiredUserName >=", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameLessThan(String value) {
-            addCriterion("RequiredUserName <", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameLessThanOrEqualTo(String value) {
-            addCriterion("RequiredUserName <=", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameLike(String value) {
-            addCriterion("RequiredUserName like", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameNotLike(String value) {
-            addCriterion("RequiredUserName not like", value, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameIn(List<String> values) {
-            addCriterion("RequiredUserName in", values, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameNotIn(List<String> values) {
-            addCriterion("RequiredUserName not in", values, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameBetween(String value1, String value2) {
-            addCriterion("RequiredUserName between", value1, value2, "requiredusername");
-            return (Criteria) this;
-        }
-
-        public Criteria andRequiredusernameNotBetween(String value1, String value2) {
-            addCriterion("RequiredUserName not between", value1, value2, "requiredusername");
             return (Criteria) this;
         }
 

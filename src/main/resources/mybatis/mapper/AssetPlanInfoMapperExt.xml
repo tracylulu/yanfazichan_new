@@ -29,7 +29,7 @@
 	<select id="getInfoListByReviewer" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from AssetPlanInfo
-		where Reviewer=#{param.Reviewer} and
+		where  FIND_IN_SET(#{param.Reviewer}, ReviewPerson) and
 		AssetPlanID in
 		<foreach collection="param.id" item="code" index="index"
 			open="(" close=")" separator=",">

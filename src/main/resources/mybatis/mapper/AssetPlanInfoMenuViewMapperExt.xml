@@ -9,7 +9,7 @@
 			<if test="param.ApplyUser !=null and param.ApplyUser !='' ">
 				and 
 				(ApplyUser = #{param.ApplyUser} 
-				or Reviewer = #{param.ApplyUser} 
+				or (FIND_IN_SET(#{param.Reviewer}, ReviewPerson))
 				or Dept3Manager = #{param.ApplyUser} 
 				or Dept2Manager = #{param.ApplyUser} 
 				or Planner = #{param.ApplyUser} 
@@ -29,7 +29,7 @@
   <select id="listofTodoInfo" parameterType="map" resultMap="BaseResultMap">
   		
 	SELECT APStatusDetail,ApplyMonth,APStage FROM 
-	AssetPlanInfoMenuView WHERE APStage='2' AND Reviewer= #{param.ApplyUser}
+	AssetPlanInfoMenuView WHERE APStage='2' AND FIND_IN_SET(#{param.ApplyUser}, ReviewPerson)
 	group BY APStatusDetail,ApplyMonth,APStage
 	UNION ALL 
 	 

@@ -43,6 +43,8 @@ public class AssetPlanInfoReviewView {
 
     private String assetcategory;
 
+    private String reviewperson;
+
     private String reviewer;
 
     private Integer reviewresult;
@@ -225,6 +227,14 @@ public class AssetPlanInfoReviewView {
 
     public void setAssetcategory(String assetcategory) {
         this.assetcategory = assetcategory == null ? null : assetcategory.trim();
+    }
+
+    public String getReviewperson() {
+        return reviewperson;
+    }
+
+    public void setReviewperson(String reviewperson) {
+        this.reviewperson = reviewperson == null ? null : reviewperson.trim();
     }
 
     public String getReviewer() {
