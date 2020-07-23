@@ -704,6 +704,14 @@ public class AssetPlanInfoApplyController {
 				json.put("receiverperson",  arrvalue[0]);
 				json.put("receiverplace",  arrvalue[1]);
 				json.put("receiverplacedetail",  arrvalue[2]);
+				//长度为4说明配置了审核人，否则没有配置
+				if(arrvalue.length==4) {
+					String[] split3 = arrvalue[3].split(" ");
+					json.put("receiverperson",  split3[1]);
+				}else {
+					json.put("receiverperson",  "");
+				}
+				
 
    				arrayData.add(json);
    			}

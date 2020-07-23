@@ -58,6 +58,7 @@
     <result column="Dept1Reviewer" jdbcType="VARCHAR" property="dept1reviewer" />
     <result column="Dept1ReviewTime" jdbcType="TIMESTAMP" property="dept1reviewtime" />
     <result column="Dept1ReviewNote" jdbcType="VARCHAR" property="dept1reviewnote" />
+    <result column="ReviewPerson" jdbcType="VARCHAR" property="reviewperson" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -127,7 +128,7 @@
     ReviewTime, ReviewResult, ReviewNote, Dept3Manager, Dept3CheckTime, Dept3CheckNote, 
     Dept2Manager, Dept2CheckTime, Dept2CheckNote, Planner, PlannerTime, PlannerNote, 
     OQDeptReviewer, OQDeptReviewTime, OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
-    Dept1ReviewNote
+    Dept1ReviewNote, ReviewPerson
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoExample" resultMap="BaseResultMap">
     select
@@ -179,7 +180,7 @@
       Dept2CheckNote, Planner, PlannerTime, 
       PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
       OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
-      Dept1ReviewNote)
+      Dept1ReviewNote, ReviewPerson)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{pprice,jdbcType=DECIMAL}, 
       #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
@@ -199,7 +200,7 @@
       #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
       #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
       #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
-      #{dept1reviewnote,jdbcType=VARCHAR})
+      #{dept1reviewnote,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfo">
     insert into AssetPlanInfo
@@ -372,6 +373,9 @@
       <if test="dept1reviewnote != null">
         Dept1ReviewNote,
       </if>
+      <if test="reviewperson != null">
+        ReviewPerson,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="assetplanid != null">
@@ -541,6 +545,9 @@
       </if>
       <if test="dept1reviewnote != null">
         #{dept1reviewnote,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewperson != null">
+        #{reviewperson,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -721,6 +728,9 @@
       <if test="record.dept1reviewnote != null">
         Dept1ReviewNote = #{record.dept1reviewnote,jdbcType=VARCHAR},
       </if>
+      <if test="record.reviewperson != null">
+        ReviewPerson = #{record.reviewperson,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -783,7 +793,8 @@
       OQDeptReviewNote = #{record.oqdeptreviewnote,jdbcType=VARCHAR},
       Dept1Reviewer = #{record.dept1reviewer,jdbcType=VARCHAR},
       Dept1ReviewTime = #{record.dept1reviewtime,jdbcType=TIMESTAMP},
-      Dept1ReviewNote = #{record.dept1reviewnote,jdbcType=VARCHAR}
+      Dept1ReviewNote = #{record.dept1reviewnote,jdbcType=VARCHAR},
+      ReviewPerson = #{record.reviewperson,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -956,6 +967,9 @@
       <if test="dept1reviewnote != null">
         Dept1ReviewNote = #{dept1reviewnote,jdbcType=VARCHAR},
       </if>
+      <if test="reviewperson != null">
+        ReviewPerson = #{reviewperson,jdbcType=VARCHAR},
+      </if>
     </set>
     where AssetPlanID = #{assetplanid,jdbcType=INTEGER}
   </update>
@@ -1015,7 +1029,8 @@
       OQDeptReviewNote = #{oqdeptreviewnote,jdbcType=VARCHAR},
       Dept1Reviewer = #{dept1reviewer,jdbcType=VARCHAR},
       Dept1ReviewTime = #{dept1reviewtime,jdbcType=TIMESTAMP},
-      Dept1ReviewNote = #{dept1reviewnote,jdbcType=VARCHAR}
+      Dept1ReviewNote = #{dept1reviewnote,jdbcType=VARCHAR},
+      ReviewPerson = #{reviewperson,jdbcType=VARCHAR}
     where AssetPlanID = #{assetplanid,jdbcType=INTEGER}
   </update>
 </mapper>

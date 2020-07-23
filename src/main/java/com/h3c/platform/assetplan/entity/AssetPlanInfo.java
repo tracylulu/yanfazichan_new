@@ -116,6 +116,8 @@ public class AssetPlanInfo {
 
     private String dept1reviewnote;
 
+    private String reviewperson;
+
     public Integer getAssetplanid() {
         return assetplanid;
     }
@@ -562,5 +564,13 @@ public class AssetPlanInfo {
 
     public void setDept1reviewnote(String dept1reviewnote) {
         this.dept1reviewnote = dept1reviewnote == null ? null : dept1reviewnote.trim();
+    }
+
+    public String getReviewperson() {
+        return reviewperson;
+    }
+
+    public void setReviewperson(String reviewperson) {
+        this.reviewperson = reviewperson == null ? null : reviewperson.trim();
     }
 }

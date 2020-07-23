@@ -125,6 +125,9 @@ public class AssetPlanInfoAll {
 
     private String dept1reviewnote;
 	
+    private String reviewperson;
+    
+    
 	//菜单页面视图多加的字段
 	private String apstatusdetail;
 
@@ -691,6 +694,14 @@ public class AssetPlanInfoAll {
 
 	public void setReceiverplaceId(String receiverplaceId) {
 		this.receiverplaceId = receiverplaceId;
+	}
+
+	public String getReviewperson() {
+		return reviewperson;
+	}
+
+	public void setReviewperson(String reviewperson) {
+		this.reviewperson = reviewperson;
 	}
 
 	
