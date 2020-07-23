@@ -163,8 +163,8 @@ public class AssetPlanInfoOQDeptController {
    					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
-   					mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "专家团审核", url);
-   					
+   					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "专家团审核", url);
+   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
    				}else {
    					ap.setApstatus("70");
    					ap.setApstage("7");

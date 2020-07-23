@@ -194,8 +194,8 @@ public class AssetPlanInfoPlannerController {
 		   					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
 		   					sendTo.add(ap.getApplyuser());
 		   					ccTo.add(ap.getRequireduser());
-		   					mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "计划员审核", url);
-		   					
+		   					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "计划员审核", url);
+		   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
 		   				}else {
 		   					ap.setApstatus("60");
 		   					ap.setApstage("6");
@@ -258,8 +258,8 @@ public class AssetPlanInfoPlannerController {
 	   					List<String> ccToEnd =new ArrayList<>();
 	   					sendToEnd.add(ap.getApplyuser());
 	   					ccToEnd.add(ap.getRequireduser());
-	   					mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "计划员审核环节归档", "");
-	   					
+	   					//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "计划员审核环节归档", "");
+	   					mailInfoService.sendProcessEndMail(sendToEnd.toString(), ccToEnd.toString(), "");
 	   				}
    				}
    				return ResponseResult.success(true, "提交成功");

@@ -180,7 +180,8 @@ public class AssetPlanInfoDept3Controller {
    					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
-   					mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "三级部门主管审核", url);
+   					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "三级部门主管审核", url);
+   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
    				}else {
    				//三级提交至2级，都为41，所有的三级都提交完，后根据定时然后改成40，二级视图现在只展示的都是40状态的，测的时候先手动去数据库改成40
    				//在配置文件增加了开关，open为直接提交到40状态

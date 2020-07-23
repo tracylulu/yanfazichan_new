@@ -172,7 +172,8 @@ public class AssetPlanInfoDept1Controller {
 				List<String> ccToEnd =new ArrayList<>();
 				sendToEnd.add(ap.getApplyuser());
 				ccToEnd.add(ap.getRequireduser());
-				mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
+				//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
+				mailInfoService.sendProcessEndMail(sendToEnd.toString(), ccToEnd.toString(), "");
 				
    			}
    			return ResponseResult.success(true, "提交成功");
@@ -230,8 +231,8 @@ public class AssetPlanInfoDept1Controller {
 				List<String> ccToEnd =new ArrayList<>();
 				sendToEnd.add(ap.getRequireduser());
 				ccToEnd.add(ap.getApplyuser());
-				mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
-				
+				//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
+				mailInfoService.sendProcessEndMail(sendToEnd.toString(), ccToEnd.toString(), "");
    			}
    			return ResponseResult.success(true, "提交成功");
    		/*} catch (Exception e) {
