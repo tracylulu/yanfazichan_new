@@ -495,76 +495,70 @@ public class AssetPlanInfoReviewController {
 	
 	
 	@ApiOperation(value="规范审核页面查询筛选功能部门（支持1-3级部门），审核状态（全部、规范、不规范、未审核），金额（支持范围筛选）")
-   	@GetMapping("/getSearchResultForReview")
+   	@PostMapping("/getSearchResultForReview")
    	@ResponseBody
    	@UserLoginToken
-   	public ResponseResult getSearchResultForReview(@RequestBody @ApiParam(name="查询对象",value="传入json格式",required=true) AssetInfoReviewEntity assetInfoReviewEntity) throws Exception{
-   			
+   	public ResponseResult getSearchResultForReview(@RequestBody @ApiParam(name="查询规范审核列表",value="传入json格式",required=true) AssetInfoReviewEntity assetInfoReviewEntity) throws Exception{
 		//封装返回数据的表头信息
-   			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOREVIEWVIEW);
-   			
-   			Map<String, Object> param = new HashMap<>();
-   			Integer pageNum = assetInfoReviewEntity.getPageNum();
-   			Integer pageSize = assetInfoReviewEntity.getPageSize();
-   			String reviewer = assetInfoReviewEntity.getReviewer();
-   			String applymonth = assetInfoReviewEntity.getApplymonth();
-   			String reviewResult = assetInfoReviewEntity.getReviewResult();
-   			String deptCode = assetInfoReviewEntity.getDeptCode();
-   			String startPrice = assetInfoReviewEntity.getStartPrice();
-   			String endPrice = assetInfoReviewEntity.getEndPrice();
-   			
-   			
-   			param.put("Reviewer",reviewer);
-			param.put("ApplyMonth",applymonth);
-			//全选0  规范1  不规范2  未审核3  在审核4 
-			param.put("ReviewResult",reviewResult);
-            if(deptCode==null) {
-            	param.put("DeptCode", null);
-            }else {
-            	DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(deptCode));
-            	String deptLevel = deptInfo.getDeptLevel();
-            	if("1".equals(deptLevel)) {
-            		param.put("Dept1Code", deptCode);
-            	}else if("2".equals(deptLevel)) {
-            		param.put("Dept2Code", deptCode);
-            	}else {
-            		param.put("DeptCode", deptCode);
-            	}
-            }
-            param.put("StartPrice",startPrice);
-			param.put("EndPrice",endPrice);
-			
-   			JSONArray arrayData = new JSONArray();
-   			JSONObject json=new JSONObject();
-   			
-				
-   				PageHelper.startPage(pageNum, pageSize);
-   				List<AssetPlanInfoAll> reviewResultList = assetPlanInfoService.getSearchResultForReview(param);
-   				for (int i = 0; i < reviewResultList.size(); i++) {
-   					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());
-   					reviewResultList.get(i).setAssetcategoryId(sysDicCategory.getAssetCategoryId());
-   					reviewResultList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
-   					reviewResultList.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
-   					SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewResultList.get(i).getReceiverplace());
-   					reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
-   					reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
-   				}
-   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(reviewResultList);
-   				if(reviewResultList.size()>0) {
-	   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForReview(param);
-	   				//审核状态
-	   				json.put("ReviewResult",reviewResult);
-	   				//申购金额合计  totalmoneySum
-	   				json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
-	   				//数据集list
-	   				json.put("DataSet" , pageInfo.getList());
-	   				arrayData.add(json);	
-	   				return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, arrayData);
-   				}else {
-   					return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, null);
-   				}
+		List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOREVIEWVIEW);
 		
-			
+		Map<String, Object> param = new HashMap<>();
+		Integer pageNum = assetInfoReviewEntity.getPageNum();
+		Integer pageSize = assetInfoReviewEntity.getPageSize();
+		String reviewer = assetInfoReviewEntity.getReviewer();
+		String applymonth = assetInfoReviewEntity.getApplymonth();
+		String reviewResult = assetInfoReviewEntity.getReviewResult();
+		String deptCode = assetInfoReviewEntity.getDeptCode();
+		String startPrice = assetInfoReviewEntity.getStartPrice();
+		String endPrice = assetInfoReviewEntity.getEndPrice();
+		
+		param.put("Reviewer",reviewer);
+		param.put("ApplyMonth",applymonth);
+		//全选0  规范1  不规范2  未审核3  在审核4 
+		param.put("ReviewResult",reviewResult);
+        if(deptCode==null) {
+        	param.put("DeptCode", null);
+        }else {
+        	DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(deptCode));
+        	String deptLevel = deptInfo.getDeptLevel();
+        	if("1".equals(deptLevel)) {
+        		param.put("Dept1Code", deptCode);
+        	}else if("2".equals(deptLevel)) {
+        		param.put("Dept2Code", deptCode);
+        	}else {
+        		param.put("DeptCode", deptCode);
+        	}
+        }
+        param.put("StartPrice",startPrice);
+		param.put("EndPrice",endPrice);
+		
+		JSONArray arrayData = new JSONArray();
+		JSONObject json=new JSONObject();
+		PageHelper.startPage(pageNum, pageSize);
+		List<AssetPlanInfoAll> reviewResultList = assetPlanInfoService.getSearchResultForReview(param);
+		for (int i = 0; i < reviewResultList.size(); i++) {
+			SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());
+			reviewResultList.get(i).setAssetcategoryId(sysDicCategory.getAssetCategoryId());
+			reviewResultList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
+			reviewResultList.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+			SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewResultList.get(i).getReceiverplace());
+			reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
+			reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
+		}
+		PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(reviewResultList);
+		if(reviewResultList.size()>0) {
+			String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForReview(param);
+			//审核状态
+			json.put("ReviewResult",reviewResult);
+			//申购金额合计  totalmoneySum
+			json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
+			//数据集list
+			json.put("DataSet" , pageInfo.getList());
+			arrayData.add(json);	
+			return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, arrayData);
+		}else {
+			return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, null);
+		}
    	}
 	
 	//通过HashSet踢除重复元素

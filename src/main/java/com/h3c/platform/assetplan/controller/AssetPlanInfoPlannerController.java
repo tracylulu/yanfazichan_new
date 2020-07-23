@@ -31,6 +31,8 @@ import com.eos.common.constant.AssetTableHeaderEnum;
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoMapper;
 import com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper;
+import com.h3c.platform.assetplan.entity.AssetInfoPlannerExportEntity;
+import com.h3c.platform.assetplan.entity.AssetInfoReviewEntity;
 import com.h3c.platform.assetplan.entity.AssetInfoSubmitEntity;
 import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntity;
 import com.h3c.platform.assetplan.entity.AssetPlanInfo;
@@ -305,13 +307,14 @@ public class AssetPlanInfoPlannerController {
 	
 	
 	@ApiOperation(value="导出到Excel")
-   	@GetMapping("/exportAssetPlanInfoForPlanner")
+   	@PostMapping("/exportAssetPlanInfoForPlanner")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.EXPORT)
    	public void exportAssetPlanInfoForPlanner(HttpServletRequest request,HttpServletResponse response,
-   			@RequestParam @ApiParam(name="planner",value="计划员审核环节处理人(当前登录人)",required=true)String planner,
-   			@RequestParam @ApiParam(name="applymonth",value="申请月份",required=true)String applymonth)throws Exception {
-    	
+   			@RequestBody @ApiParam(name="计划员环节导出入参",value="传入json格式",required=true) AssetInfoPlannerExportEntity assetInfoPlannerExportEntity)throws Exception {
+		
+		String planner = assetInfoPlannerExportEntity.getPlanner();
+		String applymonth = assetInfoPlannerExportEntity.getApplymonth();
 		String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价", "同意金额","申购人", "二级部门",
     									"用途", "使用率（部门/研发总体）", "供应商类别-事实上独家供应","预计总价", "项目编码", "评审意见"};
 		String[] column = new String[] { "Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 

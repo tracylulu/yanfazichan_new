@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import springfox.documentation.annotations.ApiIgnore;
 
-@ApiModel(value="查询对象",description="查询对象")
+@ApiModel(value="查询规范审核列表",description="查询规范审核列表")
 public class AssetInfoReviewEntity {
 	//当前页
     @ApiModelProperty(value="当前页",required=true)
