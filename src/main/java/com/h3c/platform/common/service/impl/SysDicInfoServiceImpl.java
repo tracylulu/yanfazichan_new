@@ -50,7 +50,8 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
     public  ResponseResult getDicsByType(String type) throws Exception{
     	EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
-		eosSearchParamEntity.setSearchParam(type);
+		eosSearchParamEntity.setSearchParam("1");
+		eosSearchParamEntity.setDicType(type);
 		
 		JSONObject json = new JSONObject();
 		
@@ -71,7 +72,8 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
     public ResponseResult getDicsBycode(String code) throws Exception{
     	EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
-		eosSearchParamEntity.setSearchParam(code);
+		eosSearchParamEntity.setSearchParam("1");
+		eosSearchParamEntity.setDicType(code);
 		
 		JSONObject json = new JSONObject();
 		
@@ -94,9 +96,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
     @Override
     public List<Map<String,Object>> getColumn(String viewName) throws Exception{
     	List<Map<String,Object>> lstColumns= new ArrayList<Map<String,Object>>();
-    	JSONArray arrName = getJSONArrayDicsByType("R_"+viewName+"_CNName");
-    	JSONArray arrLength = getJSONArrayDicsByType("R_"+viewName+"_Length");
-    	JSONArray arrisEdit = getJSONArrayDicsByType("R_"+viewName+"_isEdit");
+    	JSONArray arrName = getJSONArrayDicsByType("R_"+viewName+"_CNName","1");
+    	JSONArray arrLength = getJSONArrayDicsByType("R_"+viewName+"_Length","1");
+    	JSONArray arrisEdit = getJSONArrayDicsByType("R_"+viewName+"_isEdit","1");
     	
     	if(arrName!=null&& arrName.size()>0) {
     		for(int i=0;i<arrName.size();i++){
@@ -137,10 +139,11 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
      * @return JSONArray
      */   
     @Override
-    public  JSONArray getJSONArrayDicsByType(String type) throws Exception{
+    public  JSONArray getJSONArrayDicsByType(String type, String isDelete) throws Exception{
     	EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
-		eosSearchParamEntity.setSearchParam(type);
+		eosSearchParamEntity.setSearchParam(isDelete);
+		eosSearchParamEntity.setDicType(type);
 		
 		JSONObject json = new JSONObject();
 		
@@ -189,7 +192,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
     @Override
     public JSONObject getDicByTypeAndCode(String type,String code) throws Exception{
     	JSONObject result=new JSONObject();
-    	JSONArray arr= getJSONArrayDicsByType(type);
+    	JSONArray arr= getJSONArrayDicsByType(type,"1");
     	
     	for(int i=0;i<arr.size();i++) {
     		JSONObject obj=arr.getJSONObject(i);
@@ -218,7 +221,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
     
     private String getDicCode(String type) throws Exception {
-    	JSONArray jsonArray=getJSONArrayDicsByType(type);
+    	JSONArray jsonArray=getJSONArrayDicsByType(type,"1");
     	if(jsonArray.size()==0) {
     		return "";
     	}

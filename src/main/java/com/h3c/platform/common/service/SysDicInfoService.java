@@ -26,7 +26,7 @@ public interface SysDicInfoService {
 	
 	List<Map<String,Object>> getColumn(String viewName) throws Exception;
 	
-	JSONArray getJSONArrayDicsByType(String type) throws Exception;
+	JSONArray getJSONArrayDicsByType(String type, String isDelete) throws Exception;
 	
 	List<JSONObject> getManuAndModel(String name);
     

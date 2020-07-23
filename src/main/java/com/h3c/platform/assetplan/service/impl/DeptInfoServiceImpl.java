@@ -73,5 +73,13 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<DeptInfo> getAll(){
+		DeptInfoExample example= new DeptInfoExample();		
+		List<DeptInfo> lst = deptInfoMapper.selectByExample(example);
+		
+		return lst;
+	}
 
 }

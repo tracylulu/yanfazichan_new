@@ -666,7 +666,7 @@ public class AssetPlanInfoApplyController {
    	public ResponseResult getAssetCategoryAndGoodstime() throws Exception{
    		//try {
    			JSONArray arrayData = new JSONArray();
-   			com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY);
+   			com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
    			
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
@@ -692,7 +692,7 @@ public class AssetPlanInfoApplyController {
    	public ResponseResult getReceiverPlaceList() throws Exception{
    		//try {
    			JSONArray arrayData = new JSONArray();
-   			com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_ADDRESS);
+   			com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_ADDRESS,"1");
    			
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
@@ -704,14 +704,6 @@ public class AssetPlanInfoApplyController {
 				json.put("receiverperson",  arrvalue[0]);
 				json.put("receiverplace",  arrvalue[1]);
 				json.put("receiverplacedetail",  arrvalue[2]);
-				//长度为4说明配置了审核人，否则没有配置
-				if(arrvalue.length==4) {
-					String[] split3 = arrvalue[3].split(" ");
-					json.put("receiverperson",  split3[1]);
-				}else {
-					json.put("receiverperson",  "");
-				}
-				
 
    				arrayData.add(json);
    			}

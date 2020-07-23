@@ -5,6 +5,8 @@ public class EosSearchParamEntity {
 	private String applicationId;
 	
 	private String searchParam;
+	
+	private String dicType;
 
 //	private Integer num;
 //
@@ -28,6 +30,14 @@ public class EosSearchParamEntity {
 
 	public void setSearchParam(String searchParam) {
 		this.searchParam = searchParam;
+	}
+	
+	public String getDicType() {
+		return dicType;
+	}
+	
+	public void setDicType(String dicType) {
+		this.dicType=dicType;
 	}
 
 //	public Integer getNum() {

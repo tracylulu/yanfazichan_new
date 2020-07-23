@@ -36,7 +36,7 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 		cri.andSpecifymanufactureridEqualTo(SpecifyManufacturerID);
 		List<SpecifyManufacturerInfo> lst=specifyManufacturerInfoMapper.selectByExample(example);
 		
-		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.SPECIFYMAUFACTURER);
+		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.SPECIFYMAUFACTURER,"1");
 		
 		for(SpecifyManufacturerInfo info : lst) {
 			SpecifyManufacturerInfoExt infoExt = new SpecifyManufacturerInfoExt();
@@ -63,7 +63,7 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 	public List<SpecifyManufacturerInfoExt> getEmptyFiled() throws Exception{
 		List<SpecifyManufacturerInfoExt> lstResult= new ArrayList<SpecifyManufacturerInfoExt>();
 		
-		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.SPECIFYMAUFACTURER);
+		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.SPECIFYMAUFACTURER,"1");
 		for(int i =0;i<arr.size();i++) {
 			JSONObject obj=arr.getJSONObject(i);
 			SpecifyManufacturerInfoExt infoExt = new SpecifyManufacturerInfoExt();

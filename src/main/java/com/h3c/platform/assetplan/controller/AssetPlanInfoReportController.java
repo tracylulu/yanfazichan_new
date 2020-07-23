@@ -123,7 +123,7 @@ public class AssetPlanInfoReportController {
    		JSONArray arrayData = new JSONArray();
    		List<String> listCode=new ArrayList<>();
    		//获取字典表中的部门code
-   		JSONArray objDicBudget=sysDicInfoService.getJSONArrayDicsByType(DicConst.R_BUDGET);
+   		JSONArray objDicBudget=sysDicInfoService.getJSONArrayDicsByType(DicConst.R_BUDGET,"1");
    		for (int i = 0; i < objDicBudget.size(); i++) {
 				JSONObject obj= objDicBudget.getJSONObject(i);
 				String code= obj.get("dic_code")==null?"":obj.get("dic_code").toString();

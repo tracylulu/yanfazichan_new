@@ -9,13 +9,11 @@ public class SysDicInfo {
 
     private String dicName;
 
-    private String dicTypeCode;
+    private String dicTypeId;
 
-    private String dicTypeName;
+    private String sortOrder;
 
     private String remark;
-
-    private Byte isAble;
 
     private Date createTime;
 
@@ -24,6 +22,10 @@ public class SysDicInfo {
     private String creater;
 
     private String lastModifier;
+    
+    private Byte isDeleted;
+
+    private Byte isAble;
 
     public String getId() {
         return id;
@@ -49,20 +51,20 @@ public class SysDicInfo {
         this.dicName = dicName == null ? null : dicName.trim();
     }
 
-    public String getDicTypeCode() {
-        return dicTypeCode;
+    public String getDicTypeId() {
+        return dicTypeId;
     }
 
-    public void setDicTypeCode(String dicTypeCode) {
-        this.dicTypeCode = dicTypeCode == null ? null : dicTypeCode.trim();
+    public void setDicTypeId(String dicTypeId) {
+        this.dicTypeId = dicTypeId == null ? null : dicTypeId.trim();
     }
 
-    public String getDicTypeName() {
-        return dicTypeName;
+    public String getSortOrder() {
+        return sortOrder;
     }
 
-    public void setDicTypeName(String dicTypeName) {
-        this.dicTypeName = dicTypeName == null ? null : dicTypeName.trim();
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder == null ? null : sortOrder.trim();
     }
 
     public String getRemark() {
@@ -71,14 +73,6 @@ public class SysDicInfo {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
-
-    public Byte getIsAble() {
-        return isAble;
-    }
-
-    public void setIsAble(Byte isAble) {
-        this.isAble = isAble;
     }
 
     public Date getCreateTime() {
@@ -111,5 +105,21 @@ public class SysDicInfo {
 
     public void setLastModifier(String lastModifier) {
         this.lastModifier = lastModifier == null ? null : lastModifier.trim();
+    }
+    
+    public Byte getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Byte isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+    
+    public Byte getIsAble() {
+        return isAble;
+    }
+
+    public void setIsAble(Byte isAble) {
+        this.isAble = isAble;
     }
 }
