@@ -901,5 +901,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public List<Integer> getAllReviewListForGuiFan(Map<String, Object> param) {
 		return reviewViewMapper.getAllReviewListForGuiFan(param);
 	}
+
+	@Override
+	public List<AssetPlanInfoAll> getSearchResultForReview(Map<String, Object> param) {
+		return reviewViewMapper.getSearchResultForReview(param);
+	}
 }
 

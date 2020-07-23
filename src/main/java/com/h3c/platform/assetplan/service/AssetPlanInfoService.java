@@ -238,4 +238,7 @@ public interface AssetPlanInfoService {
      List<AssetPlanInfoPlannerView> exportAssetPlanInfoForPlanner(Map<String, Object> param);
      
      List<Integer> getAllReviewListForGuiFan(Map<String, Object> param);
+     
+     List<AssetPlanInfoAll> getSearchResultForReview(Map<String, Object> param);
+     
 }

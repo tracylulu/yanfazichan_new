@@ -35,6 +35,10 @@ public class AssetPlanInfoReviewView {
 
     private String dept2name;
 
+    private String dept1code;
+
+    private String dept1name;
+
     private String itemcode;
 
     private String assetcategory;
@@ -189,6 +193,22 @@ public class AssetPlanInfoReviewView {
 
     public void setDept2name(String dept2name) {
         this.dept2name = dept2name == null ? null : dept2name.trim();
+    }
+
+    public String getDept1code() {
+        return dept1code;
+    }
+
+    public void setDept1code(String dept1code) {
+        this.dept1code = dept1code == null ? null : dept1code.trim();
+    }
+
+    public String getDept1name() {
+        return dept1name;
+    }
+
+    public void setDept1name(String dept1name) {
+        this.dept1name = dept1name == null ? null : dept1name.trim();
     }
 
     public String getItemcode() {

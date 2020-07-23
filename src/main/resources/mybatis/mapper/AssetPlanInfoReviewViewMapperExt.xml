@@ -37,7 +37,7 @@
   <select id="getSumTotalMoneyForReview" parameterType="map" resultType="java.lang.String">
   	select SUM(TotalMoney) as m from AssetPlanInfoReviewView
   		<if test="_parameter != null">
-    		<include refid="condition_sql"></include>
+    		<include refid="condition_sql_search"></include>
     	</if>
   </select>
   
@@ -49,6 +49,66 @@
     order by Dept2Code asc,ReviewResult desc,CompleteSetCode desc,PPrice desc,AssetPlanID desc
   </select>
   
+  <select id="getSearchResultForReview" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  	select  * from AssetPlanInfoReviewView
+  		<if test="_parameter != null">
+    		<include refid="condition_sql_search"></include>
+    	</if>
+    order by Dept2Code asc,ReviewResult desc,CompleteSetCode desc,PPrice desc,AssetPlanID desc
+  </select>
+  
+  
+  <sql id="condition_sql_search">
+		<where>
+			DeleteFlag=1 and OutTimePlanEnum !=0
+			<if test="param.Reviewer !=null">
+				and Reviewer = #{param.Reviewer}
+			</if>
+			
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+			<!--全选  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==0 ">
+             </if>
+             <!--规范  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==1 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+			 <!--不规范  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==2 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+              <!--未审核  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==3 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+              <!--再审核  -->
+			<if test="param.ReviewResult !=null and param.ReviewResult ==4 ">
+            	and ReviewResult = #{param.ReviewResult}
+             </if>
+              <!--三级部门  -->
+             <if test="param.DeptCode !=null and param.DeptCode !='' ">
+				and DeptCode = #{param.DeptCode}
+			</if>
+			<!--二级部门  -->
+			 <if test="param.Dept2Code !=null and param.Dept2Code !='' ">
+				and Dept2Code = #{param.Dept2Code}
+			</if>
+			<!--一级部门  -->
+			 <if test="param.Dept1Code !=null and param.Dept1Code !='' ">
+				and Dept1Code = #{param.Dept1Code}
+			</if>
+            <if test="param.StartPrice !=null and param.StartPrice !='' ">
+                 AND PPrice &gt;= #{param.StartPrice}
+             </if>
+             <if test="param.EndPrice !=null and param.EndPrice !='' ">
+                 AND PPrice &lt;= #{param.EndPrice}
+             </if> 
+             
+		</where>
+	</sql>
+	
   
   <select id="getNotReviewApplyUserList" parameterType="map" resultType="String">
   	select RequiredUser from AssetPlanInfoReviewView where DeleteFlag=1
