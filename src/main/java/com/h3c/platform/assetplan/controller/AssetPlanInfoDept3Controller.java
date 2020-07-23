@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -149,6 +150,7 @@ public class AssetPlanInfoDept3Controller {
    			String applyuser = submitEntity.getApplyuser();
    			
    			List<Integer> newLstsubmitID =new ArrayList<>();
+   			List<String> sendToDept2ForJHW =new ArrayList<>();
    			Map<String,Object> param=new HashMap<>();
    			param.put("Dept3Manager",applyuser);
 			param.put("APStage","3");
@@ -183,6 +185,15 @@ public class AssetPlanInfoDept3Controller {
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "三级部门主管审核", url);
    					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
    				}else {
+   				//获得下一步审批人	
+				DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
+	   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
+	   			if(StringUtils.isNotBlank(dept2Info.getDeptManagerCode())) {
+	   				ap.setDept2manager(dept2Info.getDeptManagerCode());
+	   			}else {
+	   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
+	   			}	
+				
    				//三级提交至2级，都为41，所有的三级都提交完，后根据定时然后改成40，二级视图现在只展示的都是40状态的，测的时候先手动去数据库改成40
    				//在配置文件增加了开关，open为直接提交到40状态
    				//计划外单子，三级主管提交至二级，应立即到达二级主管。为0是计划内的
@@ -195,6 +206,7 @@ public class AssetPlanInfoDept3Controller {
    				//计划外
    				}else {
    					ap.setApstatus("40");
+   					sendToDept2ForJHW.add(dept2Info.getDeptManagerCode());
    				}
    					ap.setApstage("4");
 	   			}
@@ -203,13 +215,7 @@ public class AssetPlanInfoDept3Controller {
    				//根据申购人获取待提交的二级部门主管
    				//modify on 20200707.不能根据申购人取，得根据存的三级部门code取二级部门再去取
 	   			//UserInfo user = userService.getUserByEmpCode(ap.getRequireduser());
-   				DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
-	   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
-	   			if(StringUtils.isNotBlank(dept2Info.getDeptManagerCode())) {
-	   				ap.setDept2manager(dept2Info.getDeptManagerCode());
-	   			}else {
-	   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
-	   			}
+   				
    				ap.setDept3checktime(new Date());
    				lst.add(ap);
    			}
@@ -225,6 +231,14 @@ public class AssetPlanInfoDept3Controller {
 					recordMapper.updateByPrimaryKey(numApproveRecord);
 				}
    			
+			//计划员外的单子，邮件通知二级部门主管审核
+			String url="";
+			//去重后的二级部门code
+			sendToDept2ForJHW = removeDuplicate(sendToDept2ForJHW);
+			for (int j = 0; j < sendToDept2ForJHW.size(); j++) {
+				mailInfoService.sendRemindMail(sendToDept2ForJHW.toString(), "", "二级部门审核", url);
+			}
+				
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
@@ -501,5 +515,11 @@ public class AssetPlanInfoDept3Controller {
 		}*/
 	}
 	
-	
+	//通过HashSet踢除重复元素
+    public static List removeDuplicate(List list) {   
+        HashSet h = new HashSet(list);   
+        list.clear();   
+        list.addAll(h);   
+        return list;   
+    } 
 }
