@@ -153,6 +153,14 @@ public class AssetPlanInfoOQDeptController {
    			List<AssetPlanInfo> lst=new ArrayList<>();
    			for (int j = 0; j < newLstsubmitID.size(); j++) {
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
+   				//下一环节审批人
+   				String dept1 = sysDicInfoService.getFirstDeptMgn();
+   				if(StringUtils.isNotBlank(dept1)) {
+   					ap.setDept1reviewer(dept1);
+   				}else {
+   					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
+   				}
+   				
    				if(ap.getRequiredsaudit()==0) {
    					ap.setApstatus("06");
    					ap.setApstage("0");
@@ -168,17 +176,11 @@ public class AssetPlanInfoOQDeptController {
    				}else {
    					ap.setApstatus("70");
    					ap.setApstage("7");
+   					sendToDept1.add(dept1);
 	   			}
    				ap.setModifier(applyuser);
    				ap.setModifitime(new Date());
-   				//下一环节审批人
-   				String dept1 = sysDicInfoService.getFirstDeptMgn();
-   				if(StringUtils.isNotBlank(dept1)) {
-   					ap.setDept1reviewer(dept1);
-   	   				sendToDept1.add(dept1);
-   				}else {
-   					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
-   				}
+   				
    				ap.setOqdeptreviewtime(new Date());
    				lst.add(ap);
    			}

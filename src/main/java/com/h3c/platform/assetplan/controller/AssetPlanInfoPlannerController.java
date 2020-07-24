@@ -183,6 +183,13 @@ public class AssetPlanInfoPlannerController {
 		   			List<String> sendToOQ =new ArrayList<>();
 		   			for (int j = 0; j < newLstsubmitID.size(); j++) {
 		   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
+		   				//下一环节审批人
+		   				String oq = sysDicInfoService.getOQ();
+		   				if(StringUtils.isNotBlank(oq)) {
+		   					ap.setOqdeptreviewer(oq);
+		   				}else {
+		   					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
+		   				}
 		   				if(ap.getRequiredsaudit()==0) {
 		   					//同意数量改成0的单子,标记状态为051
 		   					ap.setApstatus("051");
@@ -199,17 +206,11 @@ public class AssetPlanInfoPlannerController {
 		   				}else {
 		   					ap.setApstatus("60");
 		   					ap.setApstage("6");
+		   					sendToOQ.add(oq);
 			   			}
 		   				ap.setModifier(applyuser);
 		   				ap.setModifitime(new Date());
-		   				//下一环节审批人
-		   				String oq = sysDicInfoService.getOQ();
-		   				if(StringUtils.isNotBlank(oq)) {
-		   					ap.setOqdeptreviewer(oq);
-		   					sendToOQ.add(oq);
-		   				}else {
-		   					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
-		   				}
+		   				
 		   				ap.setPlannertime(new Date());
 		   				lst.add(ap);
 		   			}
