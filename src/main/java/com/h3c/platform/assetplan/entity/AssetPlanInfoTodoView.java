@@ -47,6 +47,8 @@ public class AssetPlanInfoTodoView {
 
     private String reviewer;
 
+    private String reviewperson;
+
     private String applymonth;
 
     private String deleteflag;
@@ -225,6 +227,14 @@ public class AssetPlanInfoTodoView {
 
     public void setReviewer(String reviewer) {
         this.reviewer = reviewer == null ? null : reviewer.trim();
+    }
+
+    public String getReviewperson() {
+        return reviewperson;
+    }
+
+    public void setReviewperson(String reviewperson) {
+        this.reviewperson = reviewperson == null ? null : reviewperson.trim();
     }
 
     public String getApplymonth() {

@@ -24,6 +24,7 @@
     <result column="APStage" jdbcType="VARCHAR" property="apstage" />
     <result column="ApplyUser" jdbcType="VARCHAR" property="applyuser" />
     <result column="Reviewer" jdbcType="VARCHAR" property="reviewer" />
+    <result column="ReviewPerson" jdbcType="VARCHAR" property="reviewperson" />
     <result column="ApplyMonth" jdbcType="VARCHAR" property="applymonth" />
     <result column="DeleteFlag" jdbcType="VARCHAR" property="deleteflag" />
   </resultMap>
@@ -89,7 +90,7 @@
     AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, Requireds, PPrice, 
     TotalMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, ItemCode, Purpose, 
     OutTimePlanEnum, IsCompleteSet, CompleteSetCode, AssetNote, APStatus, APStage, ApplyUser, 
-    Reviewer, ApplyMonth, DeleteFlag
+    Reviewer, ReviewPerson, ApplyMonth, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyViewExample" resultMap="BaseResultMap">
     select
@@ -119,8 +120,8 @@
       ItemCode, Purpose, OutTimePlanEnum, 
       IsCompleteSet, CompleteSetCode, AssetNote, 
       APStatus, APStage, ApplyUser, 
-      Reviewer, ApplyMonth, DeleteFlag
-      )
+      Reviewer, ReviewPerson, ApplyMonth, 
+      DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, 
@@ -128,8 +129,8 @@
       #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, 
       #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
       #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, 
-      #{reviewer,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR}
-      )
+      #{reviewer,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, 
+      #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView">
     insert into AssetPlanInfoApplyView
@@ -199,6 +200,9 @@
       </if>
       <if test="reviewer != null">
         Reviewer,
+      </if>
+      <if test="reviewperson != null">
+        ReviewPerson,
       </if>
       <if test="applymonth != null">
         ApplyMonth,
@@ -273,6 +277,9 @@
       </if>
       <if test="reviewer != null">
         #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewperson != null">
+        #{reviewperson,jdbcType=VARCHAR},
       </if>
       <if test="applymonth != null">
         #{applymonth,jdbcType=VARCHAR},
@@ -357,6 +364,9 @@
       <if test="record.reviewer != null">
         Reviewer = #{record.reviewer,jdbcType=VARCHAR},
       </if>
+      <if test="record.reviewperson != null">
+        ReviewPerson = #{record.reviewperson,jdbcType=VARCHAR},
+      </if>
       <if test="record.applymonth != null">
         ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
       </if>
@@ -392,6 +402,7 @@
       APStage = #{record.apstage,jdbcType=VARCHAR},
       ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
       Reviewer = #{record.reviewer,jdbcType=VARCHAR},
+      ReviewPerson = #{record.reviewperson,jdbcType=VARCHAR},
       ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
       DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR}
     <if test="_parameter != null">

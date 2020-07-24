@@ -423,7 +423,8 @@ public class AssetPlanInfoReviewController {
 				}else {
 					sendTo.add(requiredUser);
 				}
-				mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "规范审核", "");
+				//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "规范审核", "");
+				mailInfoService.sendNonstandardMail(sendTo.toString(), ccTo.toString(), "规范审核");
 				sendTo.clear();
 				ccTo.clear();
 			}
@@ -517,7 +518,7 @@ public class AssetPlanInfoReviewController {
 		param.put("ApplyMonth",applymonth);
 		//全选0  规范1  不规范2  未审核3  在审核4 
 		param.put("ReviewResult",reviewResult);
-        if(deptCode==null) {
+        if(StringUtils.isBlank(deptCode)) {
         	param.put("DeptCode", null);
         }else {
         	DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(deptCode));

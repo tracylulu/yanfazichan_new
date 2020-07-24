@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -134,6 +135,7 @@ public class AssetPlanInfoDept2Controller {
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
+   			List<String> sendToPlannerForJHW =new ArrayList<>();
    			List<Integer> newLstsubmitID =new ArrayList<>();
    			Map<String,Object> param=new HashMap<>();
    			param.put("Dept2Manager",applyuser);
@@ -180,6 +182,14 @@ public class AssetPlanInfoDept2Controller {
    				}else {
    					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
    				}
+   				
+   				//计划外单子审批完就发邮件提醒下一环节审批，计划内的走定时邮件就行了
+   				if(ap.getAbnormalplanenum()==0) {
+   				//计划外
+   				}else {
+   					sendToPlannerForJHW.add(planner);
+   				}
+   				
    				ap.setDept2checktime(new Date());
    				lst.add(ap);
    			}
@@ -193,6 +203,15 @@ public class AssetPlanInfoDept2Controller {
 					numApproveRecord.setPlannercount(requiredsaudit);
 					recordMapper.updateByPrimaryKey(numApproveRecord);
 			}
+
+			//计划员外的单子，邮件通知计划员审核
+			String url="";
+			//去重后的计划员code
+			sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
+			for (int j = 0; j < sendToPlannerForJHW.size(); j++) {
+				mailInfoService.sendRemindMail(sendToPlannerForJHW.toString(), "", "计划员审核", url);
+			}
+   			
    			
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
@@ -239,7 +258,13 @@ public class AssetPlanInfoDept2Controller {
 		}*/
 	}
     
-    
+	//通过HashSet踢除重复元素
+    public static List removeDuplicate(List list) {   
+        HashSet h = new HashSet(list);   
+        list.clear();   
+        list.addAll(h);   
+        return list;   
+    } 
 	
 	
 }
