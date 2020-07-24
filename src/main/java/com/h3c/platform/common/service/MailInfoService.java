@@ -61,6 +61,16 @@ public interface MailInfoService {
      */
     void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url);
     
+    /**
+     * 不规范邮件
+     * @param sendTo
+     * @param ccTo
+     * @param subject 邮件主题
+     * @param process 流程环节名称
+     * @param url 流程链接  ,为空不加超链接 
+     */
+    void sendNonstandardMail(String sendTo, String ccTo, String process);
+    
     
     void sendMailByTemplete(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr);
 }

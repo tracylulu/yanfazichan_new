@@ -197,6 +197,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 	
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
+		contentJson.put("$endDate", endDate);
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
@@ -204,6 +205,28 @@ public class MailInfoServiceImpl implements MailInfoService {
 		templeteArr.add(tempTempleteJson);
 		
 		sendMailAndRecord(MailTempConst.REGULARMAIL, sendTo,  ccTo,  contentJson, templeteArr ,null);	
+	}
+	
+	/**
+     * 不规范邮件
+     * @param sendTo
+     * @param ccTo
+     * @param subject 邮件主题
+     * @param process 流程环节名称
+     * @param url 流程链接  ,为空不加超链接 
+     */
+
+	@Override
+	public void  sendNonstandardMail(String sendTo, String ccTo, String process) {
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", defaultUrl);
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
+		
+		sendMailAndRecord(MailTempConst.NONSTANDARD, sendTo,  ccTo,  contentJson, templeteArr ,null);	
 	}
 
 	@Override
