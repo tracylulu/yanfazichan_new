@@ -41,8 +41,8 @@ public class TokenUtil {
         String token = null;
         try {
             //过期时间5h
-            //Date expiresAt = new Date(System.currentTimeMillis() + 5L * 60L * 60L * 1000L);
-        	Date expiresAt = new Date(System.currentTimeMillis() + 10000L);
+            Date expiresAt = new Date(System.currentTimeMillis() + 5L * 60L * 60L * 1000L);
+
             //签发日期
             Date issueAt = new Date(System.currentTimeMillis());
             //userId是重要信息，进行加密下
