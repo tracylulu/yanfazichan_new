@@ -116,11 +116,4 @@ public class LoginConroller {
 
 		}
 	}
-	
-	@GetMapping(value = "/testerror")
-	public void testerror() throws Exception {
-		
-		throw new Exception("123123");
-		
-	}
 }
