@@ -35,6 +35,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler ) throws Exception {
+//    	httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+//    	httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+//    	httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
+//    	httpServletResponse.setHeader("Access-Control-Max-Age", "86400");
+//    	httpServletResponse.setHeader("Access-Control-Allow-Headers", "Authorization");
         String token = httpServletRequest.getHeader("Authorization");// 从 http 请求头中取出 token
         // 如果不是映射到方法直接通过
         if(!(handler  instanceof HandlerMethod)){
@@ -62,8 +67,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                  try {
                      jwtVerifier.verify(token);
                  } catch (JWTVerificationException e) {
+                	 //httpServletResponse.sendError(200);
+                	 
                 	 e.printStackTrace();
-                     throw new RuntimeException("验证token失败，请重新登录");
+                     throw new JWTVerificationException("验证token失败，请重新登录");
                  }
                  
                  // 获取 token 中的 user id
@@ -72,14 +79,16 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                      userId = TokenUtil.getUser(token);
                  } catch (JWTDecodeException j) {
                 	 j.printStackTrace();
-                     throw new RuntimeException("401");
+                     throw new JWTVerificationException("401");
                  }
                  UserInfo user = userService.getUserByAccount(userId);
                  if (user == null) {
-                     throw new RuntimeException("用户不存在，请重新登录");
+                	 httpServletResponse.sendError(200);
+                     throw new JWTVerificationException("用户不存在，请重新登录");
                  }
                  if(!TokenUtil.checkExpireTime(token)) {
-                	 throw new RuntimeException("登录已过期，请重新登录");
+                	 httpServletResponse.sendError(200);
+                	 throw new JWTVerificationException("登录已过期，请重新登录");
                  }
                  UserCache.setCurrentHandler(user.getEmpCode());
                  return true;

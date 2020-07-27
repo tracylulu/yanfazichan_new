@@ -49,4 +49,12 @@ public interface SysDicInfoService {
 	 * @return
 	 */
 	String getFirstDeptMgn() throws Exception;
+	
+	ResponseResult add(JSONObject model) throws Exception;
+	
+	ResponseResult edit(JSONObject model) throws Exception;
+	
+	ResponseResult del(String ids) throws Exception;
+	
+	JSONObject getByID(Integer id) throws Exception;
 }

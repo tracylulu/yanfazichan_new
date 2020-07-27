@@ -1,0 +1,139 @@
+package com.h3c.platform.common.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.h3c.platform.annotation.UserLoginToken;
+import com.h3c.platform.assetplan.entity.DeptInfo;
+import com.h3c.platform.assetplan.service.DeptInfoService;
+import com.h3c.platform.common.commonconst.DicConst;
+import com.h3c.platform.common.commonconst.LogType;
+import com.h3c.platform.common.entity.SearchParamEntity;
+import com.h3c.platform.common.service.SysDicInfoService;
+import com.h3c.platform.common.util.ObjToStrUtil;
+import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.util.UserUtils;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@RestController
+@RequestMapping("/addr")
+@Api(value="到货地点相关配置",tags="到货地点相关配置")
+public class AddressController {
+	@Value("${afsp.applicationId}")
+	private String  applicationId;
+	@Autowired
+	private SysDicInfoService dicServer;
+	@Autowired
+	private DeptInfoService deptService;
+	
+	@UserLoginToken
+	@PostMapping("/list")
+	@ApiOperation(value="获取列表")
+	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
+		List<JSONObject> lstResultAll=new ArrayList<>();
+		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		List<DeptInfo> lstDept=deptService.getAll();
+		for(int i=0;i<lst.size();i++) {
+			JSONObject obj=lst.getJSONObject(i);
+			obj.put("dicCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));			
+			
+			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")).split("_");
+			obj.put("consignee", dicNameArr[0]);
+			obj.put("place", dicNameArr[1]);
+			obj.put("detail", dicNameArr[2]);
+			if(dicNameArr.length==4) {
+				obj.put("approver", dicNameArr[3]);
+			}else {
+				obj.put("approver", "");
+			}			
+			
+			lstResultAll.add(obj);
+		}
+		
+		Integer count = lstResultAll.size(); // 记录总数	
+        Integer pageCount = 0; // 页数
+        if (count % param.getSize() == 0) {
+            pageCount = count / param.getSize();
+        } else {
+            pageCount = count / param.getSize() + 1;
+        }
+
+        int fromIndex = 0; // 开始索引
+        int toIndex = 0; // 结束索引
+ 
+        if (param.getNum() != pageCount) {
+            fromIndex = (param.getNum() - 1) * param.getSize();
+            toIndex = fromIndex + param.getSize();
+        } else {
+            fromIndex = (param.getNum() - 1) * param.getSize();
+            toIndex = count;
+        }
+        if(fromIndex > pageCount) {
+        	return ResponseResult.success(0, "查询成功", param.getNum(), count, null, new ArrayList<>());
+        }
+		List<JSONObject> lstResult= lstResultAll.subList(fromIndex, toIndex);
+		return ResponseResult.success(0, "查询成功", param.getNum(), count, null, lstResult);
+	}
+	
+	@UserLoginToken(logType=LogType.ADD)
+	@PostMapping("/add")
+	@ApiOperation(value="新增")
+	public ResponseResult add(@RequestBody JSONObject model) throws Exception {		
+		model.put("dicName", model.getString("consignee")+"_"+model.getString("place")+"_"+model.getString("detail")+"_"+model.getString("approver"));
+		model.put("applicationId",applicationId);
+		model.put("dicTypeId", DicConst.R_ADDRESS);
+		model.put("creater", UserUtils.getCurrentUserId());
+		model.put("lastModifier", UserUtils.getCurrentUserId());
+		
+		return dicServer.add(model);		
+	}
+	
+	@UserLoginToken(logType=LogType.MODIFY)
+	@PutMapping("/edit")
+	@ApiOperation(value="修改")
+	public ResponseResult edit(@RequestBody JSONObject model) throws Exception {		
+		model.put("dicName", model.getString("consignee")+"_"+model.getString("place")+"_"+model.getString("detail")+"_"+model.getString("approver"));
+		model.put("applicationId",applicationId);
+		model.put("dicTypeId", DicConst.R_ADDRESS);
+		model.put("lastModifier", UserUtils.getCurrentUserId());
+		return dicServer.edit(model);
+	}
+
+	@UserLoginToken(logType=LogType.DELETE)
+	@PostMapping("/del")
+	@ApiOperation(value="删除")
+	public ResponseResult delete(String ids) throws Exception {
+		return dicServer.del(ids);
+	}
+	
+	@UserLoginToken()
+	@PostMapping("/getByID")
+	@ApiOperation(value="根据主键获取数据")
+	public ResponseResult getByID(Integer id) throws Exception {
+		JSONObject model=dicServer.getByID(id);
+	
+		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicName")).split("_");
+		model.put("consignee", dicNameArr[0]);
+		model.put("place", dicNameArr[1]);
+		model.put("detail", dicNameArr[2]);
+		if(dicNameArr.length==4) {
+			model.put("approver", dicNameArr[3]);
+		}else {
+			model.put("approver", "");
+		}
+		return ResponseResult.success(model);
+	}
+}
