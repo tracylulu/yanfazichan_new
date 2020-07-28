@@ -3,7 +3,10 @@ package com.h3c.platform.common.dao;
 import com.h3c.platform.common.entity.ManufacturerInfo;
 import com.h3c.platform.common.entity.ManufacturerInfoExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface ManufacturerInfoMapper {
     long countByExample(ManufacturerInfoExample example);
@@ -29,5 +32,7 @@ public interface ManufacturerInfoMapper {
     int updateByPrimaryKey(ManufacturerInfo record);
     
     List<ManufacturerInfo> getManufacturerInfoByName(@Param("name")String Name);
+    
+    List<ManufacturerInfo> getAll();
     
 }

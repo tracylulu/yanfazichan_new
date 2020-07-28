@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +24,14 @@ import com.h3c.platform.common.entity.SearchParamEntity;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.sysmgr.entity.UserInfo;
+import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.UserUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/addr")
 @Api(value="到货地点相关配置",tags="到货地点相关配置")
@@ -37,7 +41,7 @@ public class AddressController {
 	@Autowired
 	private SysDicInfoService dicServer;
 	@Autowired
-	private DeptInfoService deptService;
+	private UserService userService;
 	
 	@UserLoginToken
 	@PostMapping("/list")
@@ -45,7 +49,8 @@ public class AddressController {
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
-		List<DeptInfo> lstDept=deptService.getAll();
+		
+		List<UserInfo> lstUser=userService.getAll();
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 			obj.put("dicCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));			
@@ -58,7 +63,10 @@ public class AddressController {
 				obj.put("approver", dicNameArr[3]);
 			}else {
 				obj.put("approver", "");
-			}			
+			}
+			
+			obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
+			obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
 			
 			lstResultAll.add(obj);
 		}
@@ -95,8 +103,8 @@ public class AddressController {
 		model.put("dicName", model.getString("consignee")+"_"+model.getString("place")+"_"+model.getString("detail")+"_"+model.getString("approver"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_ADDRESS);
-		model.put("creater", UserUtils.getCurrentUserId());
-		model.put("lastModifier", UserUtils.getCurrentUserId());
+		model.put("creater", UserUtils.getCurrentDominAccount());
+		model.put("lastModifier", UserUtils.getCurrentDominAccount());
 		
 		return dicServer.add(model);		
 	}
@@ -108,7 +116,7 @@ public class AddressController {
 		model.put("dicName", model.getString("consignee")+"_"+model.getString("place")+"_"+model.getString("detail")+"_"+model.getString("approver"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_ADDRESS);
-		model.put("lastModifier", UserUtils.getCurrentUserId());
+		model.put("lastModifier", UserUtils.getCurrentDominAccount());
 		return dicServer.edit(model);
 	}
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h3c.platform.common.dao.ModelInfoMapper">
+	<select id="getAll" resultMap="BaseResultMap">
+		SELECT a.id,a.name,a.manufacturer_id,a.delete_flag,concat(
+		b.emp_name,'',b.emp_code) creator,a.create_time,
+		concat( c.emp_name,'',c.emp_code) modifier,a.modifi_time FROM ModelInfo a
+		LEFT JOIN UserInfo b ON a.creator=b.emp_code 
+		LEFT JOIN UserInfo c ON a.modifier=b.emp_code;
+	</select>
+</mapper>

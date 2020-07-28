@@ -72,5 +72,13 @@ public class UserServiceImpl implements UserService {
 			return lst.get(0);
 		}
 	}
+	
+	@Override
+	public List<UserInfo> getAll(){
+		UserInfoExample example = new UserInfoExample();
+		List<UserInfo> lst = userMapper.selectByExample(example);
+		
+		return lst;
+	}
 
 }

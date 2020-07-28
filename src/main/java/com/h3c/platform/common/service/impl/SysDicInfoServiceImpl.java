@@ -24,6 +24,7 @@ import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.HttpClientUtil;
 import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.util.UserUtils;
 
 @Service
 public class SysDicInfoServiceImpl implements SysDicInfoService {
@@ -176,7 +177,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 * 获取厂家型号
 	 */
 	@Override
-	public List<JSONObject> getManuAndModel(String name) {
+	public List<JSONObject> getManuAndModel(String name) throws Exception{
 		List<JSONObject> lst = new ArrayList<JSONObject>();
 
 		List<ManufacturerInfo> lstmf = manufacturerInfoService.getManufacturerInfoByName(name);
@@ -283,6 +284,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
 		eosSearchParamEntity.setSearchParam(ids);
+		eosSearchParamEntity.setLastModifier(UserUtils.getCurrentDominAccount());
 
 		JSONObject json = new JSONObject();
 

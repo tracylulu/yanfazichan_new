@@ -7,6 +7,8 @@ public class EosSearchParamEntity {
 	private String searchParam;
 	
 	private String dicType;
+	
+	private String lastModifier;
 
 //	private Integer num;
 //
@@ -38,6 +40,14 @@ public class EosSearchParamEntity {
 	
 	public void setDicType(String dicType) {
 		this.dicType=dicType;
+	}
+	
+	public String getLastModifier() {
+		return lastModifier;
+	}
+	
+	public void setLastModifier(String lastModifier) {
+		this.lastModifier=lastModifier;
 	}
 
 //	public Integer getNum() {

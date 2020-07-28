@@ -1,5 +1,7 @@
 package com.h3c.platform.sysmgr.service;
 
+import java.util.List;
+
 import com.h3c.platform.sysmgr.entity.UserInfo;
 
 public interface UserService {
@@ -14,4 +16,6 @@ public interface UserService {
 	 * @return
 	 */
 	int syncByEosData();	
+	
+	List<UserInfo> getAll();
 }
