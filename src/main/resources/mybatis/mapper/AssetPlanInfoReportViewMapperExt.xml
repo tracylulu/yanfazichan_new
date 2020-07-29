@@ -111,8 +111,8 @@
   
   
 	<select id="getDataForPieChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
-  		SELECT assetmodel as assetmodel,SUM(NopassMoney) as pieChartMoney FROM  
-  		AssetPlanInfoReportView GROUP BY assetmodel
+  		SELECT AssetCategory as assetCategory,SUM(NopassMoney) as pieChartMoney FROM  
+  		AssetPlanInfoReportView GROUP BY AssetCategory
 	</select>
   
 	<select id="getDataForDept2BarChart" resultType="com.h3c.platform.assetplan.entity.AssetInfoReportEntity">
