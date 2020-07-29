@@ -40,6 +40,8 @@ public class AssetPlanInfoReportController {
 	@Autowired
 	private SysDicInfoService sysDicInfoService;
 
+	@Autowired
+	private SysDicInfoService dicService;
 	
     @GetMapping("/listOfAssetPlanInfoReport")
     @ApiOperation(value = "获取所有资产查询报表数据信息")
@@ -59,19 +61,32 @@ public class AssetPlanInfoReportController {
     }
     
    
-    @ApiOperation(value="饼图按类型和收益统计")
+    @ApiOperation(value="饼图按物品类别和收益统计")
     @GetMapping("/pieChartByModel")
    	@ResponseBody
    	@UserLoginToken
    	public ResponseResult pieChartByModel() throws Exception{
    		List<AssetInfoReportEntity> dataForPieChart = assetPlanInfoReportService.getDataForPieChart();
    		JSONArray arrayData = new JSONArray();
+   		JSONObject json =new JSONObject();
+		//JSONArray arrayData = new JSONArray();
+		com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
     	for (int i = 0; i < dataForPieChart.size(); i++) {
     		if("0.00".equals(dataForPieChart.get(i).getPieChartMoney())) {
     			continue;
     		}else {
-    			JSONObject json =new JSONObject();
-        		json.put("x", dataForPieChart.get(i).getAssetmodel());
+       			for (int j = 0; i < objDic.size(); j++) {
+       				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(j);
+       				String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
+       				String[] arrvalue =value.split("_");
+       				String id= (String) obj.get("dic_code");
+       				String assetcategory= arrvalue[2];
+       				//String goodstime=arrvalue[3];
+       				if(id.equals(dataForPieChart.get(i).getAssetCategory())) {
+       					json.put("x", assetcategory);
+       					break;
+       				}
+       			}
         		json.put("y", dataForPieChart.get(i).getPieChartMoney());
         		arrayData.add(json);
     		}

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AssetInfoReportEntity {
 	//饼状图
-    private String assetmodel;
+    private String assetCategory;
 
     private String pieChartMoney;
 
@@ -31,12 +31,12 @@ public class AssetInfoReportEntity {
     
 
     
-	public String getAssetmodel() {
-		return assetmodel;
+	public String getAssetCategory() {
+		return assetCategory;
 	}
 
-	public void setAssetmodel(String assetmodel) {
-		this.assetmodel = assetmodel;
+	public void setAssetCategory(String assetCategory) {
+		this.assetCategory = assetCategory;
 	}
 
 	public String getPieChartMoney() {
