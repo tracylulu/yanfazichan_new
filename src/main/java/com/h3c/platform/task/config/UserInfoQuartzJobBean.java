@@ -42,15 +42,11 @@ public class UserInfoQuartzJobBean extends QuartzJobBean{
 		ApiUrl apiUrl=eosApiUrlService.getEosUrl();
 
 		logger.info("UserInfoQuartzJobBean job start");
-		String deptData =null;
+		String data =null;
 		try {
-			try {
-				deptData = new HttpClientUtil().getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccount(),apiUrl.getPassword(), apiUrl.getUserUrl());
-			} catch (Exception e) {			
-				e.printStackTrace();
-			}
-			if(deptData!=null && deptData.length()!=0) {
-				JSONObject result=JSONObject.fromObject(deptData);
+			data = new HttpClientUtil().getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccount(),apiUrl.getPassword(), apiUrl.getUserUrl());
+			if(data!=null && data.length()!=0) {
+				JSONObject result=JSONObject.fromObject(data);
 				int code = Integer.parseInt(result.get("code").toString());
 				
 				if(code==20216) {

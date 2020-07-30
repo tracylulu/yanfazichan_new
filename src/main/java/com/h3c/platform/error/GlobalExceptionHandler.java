@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -74,10 +75,10 @@ public class GlobalExceptionHandler implements ErrorController {
 	 * JSON格式错误信息
 	 */
 	@RequestMapping(value = ERROR_PATH, produces = { MediaType.APPLICATION_JSON_VALUE })
-
+	
 	// @ExceptionHandler(JWTVerificationException.class)
 	public ResponseResult error(HttpServletRequest request, WebRequest webRequest) {
-
+		
 		RequestAttributes requestAttributes = new ServletRequestAttributes(request);
 		Map<String, Object> body = this.errorAttributes.getErrorAttributes(webRequest, true);
 		int status = getStatus(request);

@@ -22,6 +22,7 @@ import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
+import com.h3c.platform.common.entity.BudgetEntity;
 import com.h3c.platform.common.entity.SearchParamEntity;
 import com.h3c.platform.common.entity.SysDicInfo;
 import com.h3c.platform.common.service.SysDicInfoService;
@@ -103,13 +104,16 @@ public class BudgetController {
 	@UserLoginToken(logType=LogType.ADD)
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
-	public ResponseResult add(@RequestBody JSONObject model) throws Exception {
-		model.put("dicCode", model.getString("deptCode"));
-		model.put("dicName", model.getString("daoHuo")+"_"+model.getString("zaiTu")+"_"+model.getString("budget"));
+	public ResponseResult add(@RequestBody BudgetEntity entity) throws Exception {
+		JSONObject model= new JSONObject();
+		
+		model.put("dicCode", entity.getDeptCode());
+		model.put("dicName", entity.getDaoHuo()+"_"+entity.getZaiTu()+"_"+entity.getBudget());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_BUDGET);
 		model.put("creater", UserUtils.getCurrentDominAccount());
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
+		model.put("isAble", entity.getIsAble());
 		
 		return dicServer.add(model);		
 	}
@@ -117,12 +121,16 @@ public class BudgetController {
 	@UserLoginToken(logType=LogType.MODIFY)
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
-	public ResponseResult edit(@RequestBody JSONObject model) throws Exception {
-		model.put("dicCode", model.getString("deptCode"));
-		model.put("dicName", model.getString("daoHuo")+"_"+model.getString("zaiTu")+"_"+model.getString("budget"));
+	public ResponseResult edit(@RequestBody BudgetEntity entity) throws Exception {
+		JSONObject model= new JSONObject();		
+		model.put("id",  entity.getId());
+		model.put("dicCode", entity.getDeptCode());
+		model.put("dicName", entity.getDaoHuo()+"_"+entity.getZaiTu()+"_"+entity.getBudget());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_BUDGET);
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
+		model.put("isAble", entity.getIsAble());
+		model.put("sortOrder", entity.getSortOrder());
 		return dicServer.edit(model);
 	}
 
