@@ -147,14 +147,16 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 	/**
 	 * 根据类型获取字典，
-	 * 
+	 * isDelete (0:失效，1：有效，空：所有)
 	 * @return JSONArray
 	 */
 	@Override
 	public JSONArray getJSONArrayDicsByType(String type, String isDelete) throws Exception {
 		EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
-		eosSearchParamEntity.setSearchParam(isDelete);
+		if(StringUtils.isNotBlank(isDelete)) {
+			eosSearchParamEntity.setSearchParam(isDelete);
+		}		
 		eosSearchParamEntity.setDicType(type);
 
 		JSONObject json = new JSONObject();

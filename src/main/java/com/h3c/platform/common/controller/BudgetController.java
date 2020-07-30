@@ -94,7 +94,7 @@ public class BudgetController {
             fromIndex = (param.getNum() - 1) * param.getSize();
             toIndex = count;
         }
-        if(fromIndex > pageCount) {
+        if(fromIndex > count) {
         	return ResponseResult.success(0, "查询成功", param.getNum(), count, null, new ArrayList<>());
         }
 		List<JSONObject> lstResult= lstResultAll.subList(fromIndex, toIndex);

@@ -19,6 +19,7 @@ import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
+import com.h3c.platform.common.entity.CategoryEntity;
 import com.h3c.platform.common.entity.SearchParamEntity;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
@@ -84,7 +85,7 @@ public class CategoryController {
             fromIndex = (param.getNum() - 1) * param.getSize();
             toIndex = count;
         }
-        if(fromIndex > pageCount) {
+        if(fromIndex > count) {
         	return ResponseResult.success(0, "查询成功", param.getNum(), count, null, new ArrayList<>());
         }
 		List<JSONObject> lstResult= lstResultAll.subList(fromIndex, toIndex);
@@ -94,13 +95,15 @@ public class CategoryController {
 	@UserLoginToken(logType=LogType.ADD)
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
-	public ResponseResult add(@RequestBody JSONObject model) throws Exception {
-		
-		model.put("dicName", model.getString("certifier")+"_"+model.getString("name")+"_"+model.getString("category")+"_"+model.getString("deliveryTime"));
+	public ResponseResult add(@RequestBody CategoryEntity entity) throws Exception {
+		JSONObject model= new JSONObject();
+		model.put("dicCode", entity.getDicCode());
+		model.put("dicName", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
 		model.put("creater", UserUtils.getCurrentDominAccount());
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
+		model.put("isAble", entity.getIsAble());
 		
 		return dicServer.add(model);		
 	}
@@ -108,12 +111,15 @@ public class CategoryController {
 	@UserLoginToken(logType=LogType.MODIFY)
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
-	public ResponseResult edit(@RequestBody JSONObject model) throws Exception {
-		
-		model.put("dicName", model.getString("certifier")+"_"+model.getString("name")+"_"+model.getString("category")+"_"+model.getString("deliveryTime"));
+	public ResponseResult edit(@RequestBody CategoryEntity entity) throws Exception {
+		JSONObject model= new JSONObject();		
+		model.put("id",  entity.getId());
+		model.put("dicCode", entity.getDicCode());
+		model.put("dicName", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
+		model.put("isAble", entity.getIsAble());
 		return dicServer.edit(model);
 	}
 
