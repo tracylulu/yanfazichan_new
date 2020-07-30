@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eos.common.util.Result;
-import com.google.gson.JsonParser;
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.common.commonconst.DicConst;
