@@ -68,13 +68,13 @@ public class AssetPlanInfoReportController {
    	public ResponseResult pieChartByModel() throws Exception{
    		List<AssetInfoReportEntity> dataForPieChart = assetPlanInfoReportService.getDataForPieChart();
    		JSONArray arrayData = new JSONArray();
-   		JSONObject json =new JSONObject();
 		//JSONArray arrayData = new JSONArray();
 		com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
     	for (int i = 0; i < dataForPieChart.size(); i++) {
     		if("0.00".equals(dataForPieChart.get(i).getPieChartMoney())) {
     			continue;
     		}else {
+    	   		JSONObject json =new JSONObject();
        			for (int j = 0; i < objDic.size(); j++) {
        				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(j);
        				String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
