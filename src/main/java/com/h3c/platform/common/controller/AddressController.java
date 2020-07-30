@@ -20,6 +20,7 @@ import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
+import com.h3c.platform.common.entity.AddressEntity;
 import com.h3c.platform.common.entity.SearchParamEntity;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
@@ -51,6 +52,7 @@ public class AddressController {
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
 		
 		List<UserInfo> lstUser=userService.getAll();
+		//JSON.toJSONStringWithDateFormat(rs, "yyyy-MM-dd hh:mm:ss", SerializerFeature.WriteDateUseDateFormat);
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 			obj.put("dicCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));			
@@ -99,12 +101,15 @@ public class AddressController {
 	@UserLoginToken(logType=LogType.ADD)
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
-	public ResponseResult add(@RequestBody JSONObject model) throws Exception {		
-		model.put("dicName", model.getString("consignee")+"_"+model.getString("place")+"_"+model.getString("detail")+"_"+model.getString("approver"));
+	public ResponseResult add(@RequestBody AddressEntity entity) throws Exception {	
+		JSONObject model=new JSONObject();
+		model.put("dicCode", entity.getDicCode());
+		model.put("dicName", entity.getConsignee()+"_"+entity.getPlace()+"_"+entity.getDetail()+"_"+entity.getApprover());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_ADDRESS);
 		model.put("creater", UserUtils.getCurrentDominAccount());
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
+		model.put("isAble", entity.getIsAble());
 		
 		return dicServer.add(model);		
 	}
@@ -112,11 +117,16 @@ public class AddressController {
 	@UserLoginToken(logType=LogType.MODIFY)
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
-	public ResponseResult edit(@RequestBody JSONObject model) throws Exception {		
-		model.put("dicName", model.getString("consignee")+"_"+model.getString("place")+"_"+model.getString("detail")+"_"+model.getString("approver"));
+	public ResponseResult edit(@RequestBody AddressEntity entity) throws Exception {		
+		JSONObject model=new JSONObject();
+		model.put("id",  entity.getId());
+		model.put("dicCode", entity.getDicCode());
+		model.put("dicName", entity.getConsignee()+"_"+entity.getPlace()+"_"+entity.getDetail()+"_"+entity.getApprover());
 		model.put("applicationId",applicationId);
-		model.put("dicTypeId", DicConst.R_ADDRESS);
+		model.put("dicTypeId", DicConst.R_ADDRESS);		
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
+		model.put("isAble", entity.getIsAble());
+		model.put("sortOrder", entity.getSortOrder());
 		return dicServer.edit(model);
 	}
 

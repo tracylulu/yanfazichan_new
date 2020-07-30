@@ -26,6 +26,8 @@ public class SysDicInfo {
     private Byte isDeleted;
 
     private Byte isAble;
+    
+    private String applicationId; 
 
     public Integer getId() {
         return id;
@@ -121,5 +123,13 @@ public class SysDicInfo {
 
     public void setIsAble(Byte isAble) {
         this.isAble = isAble;
+    }
+    
+    public String getApplicationId() {
+    	return applicationId;
+    }
+    
+    public void setApplicationId(String applicationId) {
+    	this.applicationId=applicationId;
     }
 }
