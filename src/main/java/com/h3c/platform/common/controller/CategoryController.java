@@ -139,7 +139,7 @@ public class CategoryController {
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=dicServer.getByID(id);
 		model.put("deptCode", ObjToStrUtil.ReplaceNullValue(model.get("dicCode")));
-		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dic_name")).split("_");
+		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicName")).split("_");
 		model.put("certifier", dicNameArr[0]);
 		model.put("name", dicNameArr[1]);
 		model.put("category", dicNameArr[2]);

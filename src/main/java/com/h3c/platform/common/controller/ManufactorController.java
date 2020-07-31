@@ -19,6 +19,7 @@ import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.entity.ManufacturerInfo;
 import com.h3c.platform.common.entity.ModelInfo;
+import com.h3c.platform.common.entity.ModelInfoExt;
 import com.h3c.platform.common.service.ManufacturerInfoService;
 import com.h3c.platform.common.service.ModelInfoService;
 import com.h3c.platform.response.ResponseResult;
@@ -42,7 +43,7 @@ public class ManufactorController {
 	@ApiOperation(value="获取列表")
 	public ResponseResult list() throws Exception {
 		List<Map<String,Object>> lst=new ArrayList<Map<String,Object>>();
-		List<ManufacturerInfo> lstmf = manufacturerInfoService.getManufacturerInfoByName("");
+		List<ManufacturerInfo> lstmf = manufacturerInfoService.getAll();
 		List<ModelInfo> lstmi = modelInfoService.getAll();
 
 		for (ManufacturerInfo mfInfo : lstmf) {
@@ -100,7 +101,23 @@ public class ManufactorController {
 	@PostMapping("/getByMOdelID")
 	@ApiOperation(value="根据主键获取型号数据")
 	public ResponseResult getByMOdelID(Integer id) throws Exception {
+
+		ModelInfoExt modelExt=new ModelInfoExt();
+		ModelInfo info =modelInfoService.getByPrimaryKey(id);
+		if(info!=null) {
+			ManufacturerInfo maInfo= manufacturerInfoService.getByPrimaryKey(info.getManufacturerId());
+			
+			modelExt.setCreateTime(info.getCreateTime());
+			modelExt.setCreator(info.getCreator());
+			modelExt.setDeleteFlag(info.getDeleteFlag());
+			modelExt.setId(info.getId());
+			modelExt.setManufacturerId(info.getManufacturerId());
+			modelExt.setManufacturerName(maInfo.getManufacturerName());
+			modelExt.setModifier(info.getModifier());
+			modelExt.setModifiTime(info.getModifiTime());
+			modelExt.setName(info.getName());
+		}
 		
-		return ResponseResult.success(modelInfoService.getByPrimaryKey(id));
+		return ResponseResult.success(modelExt);
 	}
 }
