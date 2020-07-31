@@ -34,6 +34,8 @@ public interface DeptInfoMapper {
     
     List<DeptInfo> getDeptInfoList();
     
+    List<DeptInfo> getDeptInfoListValid();
+    
     int insertByEosData();
     
     int deleteInvalidData();

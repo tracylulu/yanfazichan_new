@@ -206,6 +206,8 @@ public interface AssetPlanInfoService {
      List<AssetPlanInfoSearchExportView> exportAssetPlanInfoByIds(Map<String, Object> param); 
   	
      List<DeptInfo> getDeptInfoList();
+     
+     List<DeptInfo> getDeptInfoListValid();
   	
      List<AssetPlanInfo> getNotReviewList(Map<String, Object> param);
      

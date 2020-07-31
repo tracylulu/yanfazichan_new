@@ -586,33 +586,56 @@ public class AssetPlanInfoSearchController {
    	public ResponseResult getDeptTreeInfo() throws Exception{
    			//try {
    			List<DeptInfo> list = assetPlanInfoService.getDeptInfoList();
-   			System.out.println(list.size());
+   			//System.out.println(list.size());
    			List<DeptTreeInfo> address=new ArrayList<>();
    			for (int i = 0; i < list.size(); i++) {
+   			//将非研发属性的三级部门移除
+   				if("3".equals(list.get(i).getDeptLevel()) && !"RD".equals(list.get(i).getTypeId()))
+   					continue;
+   				else {
    				DeptTreeInfo  tree=new DeptTreeInfo();
    				tree.setDeptCode(list.get(i).getDeptCode());
    				tree.setDeptName(list.get(i).getDeptName());
    				tree.setDeptLevel(list.get(i).getDeptLevel());
    				tree.setSupDeptDode(list.get(i).getSupDeptCode());
+   				tree.setTypeId(list.get(i).getTypeId());
    				//把计划员的信息加上
-   				if(StringUtils.isBlank(list.get(i).getDeptPlannerCode())) {
-   					tree.setDeptPlannerCode("");
-   					tree.setDeptPlannerName("");
+   				tree.setDeptPlannerCode(list.get(i).getDeptPlannerCode());
+   				UserInfo userByEmpCode = userService.getUserByEmpCode(list.get(i).getDeptPlannerCode());
+   				if(userByEmpCode!=null) {
+   					//计划员姓名
+   					tree.setDeptPlannerName(userByEmpCode.getEmpName());
    				}else {
-   					tree.setDeptPlannerCode(list.get(i).getDeptPlannerCode());
-   					UserInfo userByEmpCode = userService.getUserByEmpCode(list.get(i).getDeptPlannerCode());
-   					if(userByEmpCode!=null) {
-   						//计划员姓名
-   						tree.setDeptPlannerName(userByEmpCode.getEmpName());
-   					}else {
-   						tree.setDeptPlannerName("");
-   					}
+   					tree.setDeptPlannerName("");
    				}
-				
    				address.add(tree);
+   				}
 			}
    			List<DeptTreeInfo> recursiveAddress = TreeUtil.RecursiveAddress(address);		
-   			
+   		    //二级或一级如果是最小部门且非研发,查询页面中不展示了
+   			for (int i = 0; i < recursiveAddress.size(); i++) {
+				if(recursiveAddress.get(i).getChildren()==null && !"RD".equals(recursiveAddress.get(i).getTypeId())) {
+   					recursiveAddress.remove(i);
+   					i--;
+   					continue;
+   				}
+   				
+   				List<DeptTreeInfo> children2 = recursiveAddress.get(i).getChildren();
+   				int children2Size = children2.size();
+   				int null2Size = 0;
+   				for (int j = 0; j < children2.size(); j++) {
+   					if(children2.get(j).getChildren()==null && !"RD".equals(children2.get(j).getTypeId())) {
+   						children2.remove(j);
+   						null2Size++;
+   						j--;
+   	   				}
+   				}
+   				//一级下面的所有二级部门都没有研发属性三级部门的话，就把一级部门也去掉。
+   				if(children2Size==null2Size) {
+   					recursiveAddress.remove(i);
+   					i--;
+   				}
+   			}
    			return ResponseResult.success(0, "查询成功", 0, 0, null, recursiveAddress);
    		/*} catch (Exception e) {
    			e.printStackTrace();
@@ -626,41 +649,38 @@ public class AssetPlanInfoSearchController {
    	@ResponseBody
    	@UserLoginToken
    	public ResponseResult getDeptTreeInfoForApply() throws Exception{
-   			List<DeptInfo> list = assetPlanInfoService.getDeptInfoList();
-   			System.out.println(list.size());
+   			List<DeptInfo> list = assetPlanInfoService.getDeptInfoListValid();
+   			//System.out.println(list.size());
    			List<DeptTreeInfo> address=new ArrayList<>();
    			for (int i = 0; i < list.size(); i++) {
+   				//将非研发属性的三级部门移除
+   				if("3".equals(list.get(i).getDeptLevel()) && !"RD".equals(list.get(i).getTypeId()))
+   					continue;
+   				else {
    				DeptTreeInfo  tree=new DeptTreeInfo();
    				tree.setDeptCode(list.get(i).getDeptCode());
    				tree.setDeptName(list.get(i).getDeptName());
    				tree.setDeptLevel(list.get(i).getDeptLevel());
    				tree.setSupDeptDode(list.get(i).getSupDeptCode());
+   				tree.setTypeId(list.get(i).getTypeId());
    				//把计划员的信息加上
-   				if(StringUtils.isBlank(list.get(i).getDeptPlannerCode())) {
-   					tree.setDeptPlannerCode("");
-   					tree.setDeptPlannerName("");
+   				tree.setDeptPlannerCode(list.get(i).getDeptPlannerCode());
+   				UserInfo userByEmpCode = userService.getUserByEmpCode(list.get(i).getDeptPlannerCode());
+   				if(userByEmpCode!=null) {
+   					//计划员姓名
+   					tree.setDeptPlannerName(userByEmpCode.getEmpName());
    				}else {
-   					tree.setDeptPlannerCode(list.get(i).getDeptPlannerCode());
-   					UserInfo userByEmpCode = userService.getUserByEmpCode(list.get(i).getDeptPlannerCode());
-   					if(userByEmpCode!=null) {
-   						//计划员姓名
-   						tree.setDeptPlannerName(userByEmpCode.getEmpName());
-   					}else {
-   						tree.setDeptPlannerName("");
-   					}
+   					tree.setDeptPlannerName("");
    				}
-				
    				address.add(tree);
+   				}
 			}
    			List<DeptTreeInfo> recursiveAddress = TreeUtil.RecursiveAddress(address);	
    			
    			//二级或一级如果是最小部门,申请页面中不展示了
-   			int d1=0;
-   			int d2=0;
    			for (int i = 0; i < recursiveAddress.size(); i++) {
-				if("1".equals(recursiveAddress.get(i).getDeptLevel()) && recursiveAddress.get(i).getChildren()==null) {
-   					recursiveAddress.remove(recursiveAddress.get(i));
-   					d1++;
+				if(recursiveAddress.get(i).getChildren()==null) {
+   					recursiveAddress.remove(i);
    					i--;
    					continue;
    				}
@@ -669,22 +689,18 @@ public class AssetPlanInfoSearchController {
    				int children2Size = children2.size();
    				int null2Size = 0;
    				for (int j = 0; j < children2.size(); j++) {
-   					if("2".equals(children2.get(j).getDeptLevel()) && children2.get(j).getChildren()==null) {
-   						children2.remove(children2.get(j));
-   						d2++;
+   					if(children2.get(j).getChildren()==null) {
+   						children2.remove(j);
    						null2Size++;
    						j--;
    	   				}
    				}
    				//一级下面的所有二级部门都没有三级部门的话，就把一级部门也去掉。
    				if(children2Size==null2Size) {
-   					recursiveAddress.remove(recursiveAddress.get(i));
+   					recursiveAddress.remove(i);
+   					i--;
    				}
    			}
-   			
-   			System.out.println(d1);
-   			System.out.println(d2);
-   		 
    			return ResponseResult.success(0, "查询成功", 0, 0, null, recursiveAddress);
    	}
     

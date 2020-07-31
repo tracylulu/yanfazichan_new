@@ -738,6 +738,11 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public List<DeptInfo> getDeptInfoList() {
 		return deptInfoMapper.getDeptInfoList();
 	}
+	
+	@Override
+	public List<DeptInfo> getDeptInfoListValid() {
+		return deptInfoMapper.getDeptInfoListValid();
+	}
 
 	@Override
 	public List<AssetPlanInfo> getNotReviewList(Map<String, Object> param) {

@@ -13,7 +13,9 @@ public class DeptTreeInfo {
     
     private String deptLevel;
     
-    private String deptPlannerCode;
+    private String typeId;
+
+	private String deptPlannerCode;
 
     private String deptPlannerName;
     
@@ -57,6 +59,14 @@ public class DeptTreeInfo {
 
 	public void setDeptLevel(String deptLevel) {
 		this.deptLevel = deptLevel;
+	}
+    
+    public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
 	}
 
 	public String getDeptPlannerCode() {

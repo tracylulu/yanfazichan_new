@@ -11,7 +11,7 @@ public class TreeUtil {
 		List<DeptTreeInfo> trees = new ArrayList<DeptTreeInfo>();  
 		        for (DeptTreeInfo treeNode : treeNodes) {  
 		            //if ("".equals(treeNode.getSupDeptDode()) || null==treeNode.getSupDeptDode() ) {  
-		        	if ("50040000".equals(treeNode.getSupDeptDode()) ) {  
+		        	if ("1".equals(treeNode.getDeptLevel()) ) {
 		                trees.add(findAddressChildren(treeNode,treeNodes));  
 		            }  
 		        }  
@@ -25,12 +25,6 @@ public class TreeUtil {
 	     */  
 	 public static DeptTreeInfo findAddressChildren(DeptTreeInfo treeNode,List<DeptTreeInfo> treeNodes) {  
 	        for (DeptTreeInfo it : treeNodes) {  
-	        	String deptLevel = it.getDeptLevel();
-	        	//System.out.println(deptLevel);
-	        	String supDeptDode = it.getSupDeptDode();
-	        	//System.out.println(supDeptDode);
-	        	
-	        	
 	            if((treeNode.getDeptCode()+"").equals(it.getSupDeptDode())) {  
 	                if (treeNode.getChildren() == null) {  
 	                    treeNode.setChildren(new ArrayList<DeptTreeInfo>());  
