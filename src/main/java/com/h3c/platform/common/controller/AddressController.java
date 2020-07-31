@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.PropertyFilter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.service.DeptInfoService;
@@ -50,9 +54,9 @@ public class AddressController {
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
-		
+	
 		List<UserInfo> lstUser=userService.getAll();
-		//JSON.toJSONStringWithDateFormat(rs, "yyyy-MM-dd hh:mm:ss", SerializerFeature.WriteDateUseDateFormat);
+	
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 			obj.put("dicCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));			
@@ -69,7 +73,8 @@ public class AddressController {
 			
 			obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
 			obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-			
+			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
+			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
 		}
 		
@@ -95,6 +100,7 @@ public class AddressController {
         	return ResponseResult.success(0, "查询成功", param.getNum(), count, null, new ArrayList<>());
         }
 		List<JSONObject> lstResult= lstResultAll.subList(fromIndex, toIndex);
+		
 		return ResponseResult.success(0, "查询成功", param.getNum(), count, null, lstResult);
 	}
 	
@@ -152,6 +158,8 @@ public class AddressController {
 		}else {
 			model.put("approver", "");
 		}
+		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("createTime"));
 		return ResponseResult.success(model);
 	}
 }

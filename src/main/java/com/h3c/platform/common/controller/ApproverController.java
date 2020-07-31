@@ -2,7 +2,6 @@ package com.h3c.platform.common.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.annotation.UserLoginToken;
-import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
-import com.h3c.platform.common.entity.CategoryEntity;
+import com.h3c.platform.common.entity.AddressEntity;
 import com.h3c.platform.common.entity.SearchParamEntity;
+import com.h3c.platform.common.entity.SysDicInfo;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.response.ResponseResult;
@@ -34,15 +33,13 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/category")
-@Api(value="物品类别和货期配置",tags="物品类别和货期配置")
-public class CategoryController {
+@RequestMapping("/approver")
+@Api(value="审核人相关配置",tags="审核人相关配置")
+public class ApproverController {
 	@Value("${afsp.applicationId}")
 	private String  applicationId;
 	@Autowired
 	private SysDicInfoService dicServer;
-	@Autowired
-	private DeptInfoService deptService;
 	@Autowired
 	private UserService userService;
 	
@@ -51,23 +48,24 @@ public class CategoryController {
 	@ApiOperation(value="获取列表")
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
-		
+		JSONArray lstPlanner= dicServer.getJSONArrayDicsByType(DicConst.R_PLANNER,"");
+		JSONArray lstOQ= dicServer.getJSONArrayDicsByType(DicConst.R_OQ,"");
+		JSONArray lstDept= dicServer.getJSONArrayDicsByType(DicConst.R_FISRTDEPTMGN,"");
 		List<UserInfo> lstUser=userService.getAll();
-		for(int i=0;i<lst.size();i++) {
-			JSONObject obj=lst.getJSONObject(i);
+	
+		for(int i=0;i<lstPlanner.size();i++) {
+			JSONObject obj=lstPlanner.getJSONObject(i);				
+			lstResultAll.add(getData(obj,"计划员",lstUser));
+		}
 		
-			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")).split("_");
-			obj.put("certifier", dicNameArr[0]);
-			obj.put("name", dicNameArr[1]);
-			obj.put("category", dicNameArr[2]);
-			obj.put("deliveryTime", dicNameArr[3]);
-
-			obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-			obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
-			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
-			lstResultAll.add(obj);
+		for(int i=0;i<lstOQ.size();i++) {
+			JSONObject obj=lstOQ.getJSONObject(i);
+			lstResultAll.add(getData(obj,"专家团",lstUser));
+		}
+		
+		for(int i=0;i<lstDept.size();i++) {
+			JSONObject obj=lstDept.getJSONObject(i);
+			lstResultAll.add(getData(obj,"一级主管",lstUser));
 		}
 		
 		Integer count = lstResultAll.size(); // 记录总数	
@@ -80,7 +78,7 @@ public class CategoryController {
 
         int fromIndex = 0; // 开始索引
         int toIndex = 0; // 结束索引
-
+ 
         if (param.getNum() != pageCount) {
             fromIndex = (param.getNum() - 1) * param.getSize();
             toIndex = fromIndex + param.getSize();
@@ -92,45 +90,40 @@ public class CategoryController {
         	return ResponseResult.success(0, "查询成功", param.getNum(), count, null, new ArrayList<>());
         }
 		List<JSONObject> lstResult= lstResultAll.subList(fromIndex, toIndex);
+		
 		return ResponseResult.success(0, "查询成功", param.getNum(), count, null, lstResult);
 	}
 	
-	@UserLoginToken(logType=LogType.ADD)
-	@PostMapping("/add")
-	@ApiOperation(value="新增")
-	public ResponseResult add(@RequestBody CategoryEntity entity) throws Exception {
-		JSONObject model= new JSONObject();
-		model.put("dicCode", entity.getDicCode());
-		model.put("dicName", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
-		model.put("applicationId",applicationId);
-		model.put("dicTypeId", DicConst.R_CATEGORY);
-		model.put("creater", UserUtils.getCurrentDominAccount());
-		model.put("lastModifier", UserUtils.getCurrentDominAccount());
-		model.put("isAble", entity.getIsAble());
+	private JSONObject getData(JSONObject obj,String name,List<UserInfo> lstUser) {
+		obj.put("dic_code", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))));
+		obj.put("dic_name", name);
 		
-		return dicServer.add(model);		
+		obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
+		obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
+		obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
+		obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
+		return obj;
 	}
 	
 	@UserLoginToken(logType=LogType.MODIFY)
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
-	public ResponseResult edit(@RequestBody CategoryEntity entity) throws Exception {
-		JSONObject model= new JSONObject();		
+	public ResponseResult edit(@RequestBody SysDicInfo entity) throws Exception {
+		String[] nameArr=entity.getDicCode().split(" ");
+		UserInfo user=userService.getUserByEmpCode(nameArr[1]);
+		if(user==null) {
+			return ResponseResult.fail("未找到人员"+entity.getDicCode());
+		}
+		JSONObject model=new JSONObject();
 		model.put("id",  entity.getId());
-		model.put("dicCode", entity.getDicCode());
-		model.put("dicName", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicCode", user.getEmpCode());
+		model.put("dicName", user.getEmpName());
 		model.put("applicationId",applicationId);
-		model.put("dicTypeId", DicConst.R_CATEGORY);
+		model.put("dicTypeId", entity.getDicTypeId());
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
 		model.put("isAble", entity.getIsAble());
+		model.put("sortOrder", entity.getSortOrder());
 		return dicServer.edit(model);
-	}
-
-	@UserLoginToken(logType=LogType.DELETE)
-	@PostMapping("/del")
-	@ApiOperation(value="删除")
-	public ResponseResult delete(String ids) throws Exception {
-		return dicServer.del(ids);
 	}
 	
 	@UserLoginToken()
@@ -138,14 +131,21 @@ public class CategoryController {
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=dicServer.getByID(id);
-		model.put("deptCode", ObjToStrUtil.ReplaceNullValue(model.get("dicCode")));
-		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dic_name")).split("_");
-		model.put("certifier", dicNameArr[0]);
-		model.put("name", dicNameArr[1]);
-		model.put("category", dicNameArr[2]);
-		model.put("deliveryTime", dicNameArr[3]);
-		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("createTime"));
+		UserInfo user=userService.getUserByEmpCode(ObjToStrUtil.ReplaceNullValue(model.get("dic_code")));
+		switch (ObjToStrUtil.ReplaceNullValue(model.get("dic_type_id"))) {
+		case "R_Planner":
+			model.put("dic_name", "计划员");	
+			break;
+		case "R_OQ":
+			model.put("dic_name", "专家团");	
+			break;
+		case "R_FisrtDeptMgn":
+			model.put("dic_name", "一级主管");	
+			break;
+		}
+		if(user!=null) {
+			model.put("dic_code", user.getEmpName()+" "+user.getEmpCode());			
+		}
 		return ResponseResult.success(model);
 	}
 }
