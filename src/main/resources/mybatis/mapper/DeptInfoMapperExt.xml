@@ -24,11 +24,17 @@
 		
 		</if> -->
 		<!-- SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code  from DeptInfo t -->
-		SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code,t.dept_planner_code  from DeptInfo t 
+		SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code,t.dept_planner_code,t.type_id  from DeptInfo t 
 		
 		where t.dept_level !='4' and t.dept_level !='0'
 		order by t.dept_level
 	</select>
+	
+  <select id="getDeptInfoListValid" resultMap="BaseResultMap">
+	SELECT t.dept_code,t.dept_name,t.dept_level,t.sup_dept_code,t.dept_planner_code,t.type_id  from DeptInfo t 
+	where t.dept_level !='4' and t.dept_level !='0' and t.delete_flag='1'
+	order by t.dept_level
+  </select>	
   
   <insert id="insertByEosData">
  	INSERT INTO DeptInfo(dept_code,dept_name,coa,dept_level,sup_dept_code,type_id,dept_type,dept_manager_code,
