@@ -47,8 +47,9 @@
   <update id="updateByEosData">  	
 	UPDATE DeptInfo a LEFT JOIN DeptInfo_EOS b ON a.dept_code=b.dept_code
 	SET a.dept_name=b.dept_name,a.coa=b.coa,a.dept_level=b.dept_level,a.sup_dept_code=b.sup_dept_code,a.type_id=b.type_id,a.dept_type=b.dept_type,
-		 a.dept_manager_code=b.dept_manager_code,a.dept_planner_code=b.dept_planner_code,a.dept_code_chain=b.dept_code_chain,a.modifi_time=SYSDATE(),a.modifier='sys'
- 	WHERE b.dept_code IS NOT NULL  AND a.delete_flag=1
+		 a.dept_manager_code=b.dept_manager_code,a.dept_planner_code=b.dept_planner_code,a.dept_code_chain=b.dept_code_chain,a.modifi_time=SYSDATE(),a.modifier='sys',
+		 a.delete_flag=1
+ 	WHERE b.dept_code IS NOT NULL  
   
   </update>
   
