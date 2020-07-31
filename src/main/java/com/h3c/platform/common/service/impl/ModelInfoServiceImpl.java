@@ -45,7 +45,7 @@ public class ModelInfoServiceImpl implements ModelInfoService{
 		info.setModifier(UserUtils.getCurrentUserId());
 		info.setModifiTime(new Date());
 		
-		modelInfoMapper.updateByPrimaryKey(info);
+		modelInfoMapper.updateByPrimaryKeySelective(info);
 		return ResponseResult.success("修改成功！");
 	}
 	
