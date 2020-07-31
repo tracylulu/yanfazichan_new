@@ -22,6 +22,6 @@
 		b.emp_name,'',b.emp_code) creator,a.create_time,concat(
 		c.emp_name,'',c.emp_code) modifier,a.modifi_time FROM ManufacturerInfo
 		a LEFT JOIN UserInfo b ON a.creator=b.emp_code
-		LEFT JOIN UserInfo c ON a.modifier=c.emp_code;
+		LEFT JOIN UserInfo c ON a.modifier=c.emp_code ORDER BY a.delete_flag desc;
 	</select>
 </mapper>
