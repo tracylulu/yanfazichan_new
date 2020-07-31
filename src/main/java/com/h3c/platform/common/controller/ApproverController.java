@@ -131,20 +131,20 @@ public class ApproverController {
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=dicServer.getByID(id);
-		UserInfo user=userService.getUserByEmpCode(ObjToStrUtil.ReplaceNullValue(model.get("dic_code")));
-		switch (ObjToStrUtil.ReplaceNullValue(model.get("dic_type_id"))) {
+		UserInfo user=userService.getUserByEmpCode(ObjToStrUtil.ReplaceNullValue(model.get("dicCode")));
+		switch (ObjToStrUtil.ReplaceNullValue(model.get("dicTypeId"))) {
 		case "R_Planner":
-			model.put("dic_name", "计划员");	
+			model.put("dicName", "计划员");	
 			break;
 		case "R_OQ":
-			model.put("dic_name", "专家团");	
+			model.put("dicName", "专家团");	
 			break;
 		case "R_FisrtDeptMgn":
-			model.put("dic_name", "一级主管");	
+			model.put("dicName", "一级主管");	
 			break;
 		}
 		if(user!=null) {
-			model.put("dic_code", user.getEmpName()+" "+user.getEmpCode());			
+			model.put("dicCode", user.getEmpName()+" "+user.getEmpCode());			
 		}
 		return ResponseResult.success(model);
 	}
