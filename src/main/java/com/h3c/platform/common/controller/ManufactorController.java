@@ -43,7 +43,7 @@ public class ManufactorController {
 	@ApiOperation(value="获取列表")
 	public ResponseResult list() throws Exception {
 		List<Map<String,Object>> lst=new ArrayList<Map<String,Object>>();
-		List<ManufacturerInfo> lstmf = manufacturerInfoService.getManufacturerInfoByName("");
+		List<ManufacturerInfo> lstmf = manufacturerInfoService.getAll();
 		List<ModelInfo> lstmi = modelInfoService.getAll();
 
 		for (ManufacturerInfo mfInfo : lstmf) {
