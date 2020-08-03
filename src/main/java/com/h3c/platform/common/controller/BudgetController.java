@@ -151,7 +151,7 @@ public class BudgetController {
 		}else {
 			model.put("deptName", "");
 		}
-		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicName")).split("_");
+		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicValue")).split("_");
 		model.put("daoHuo", dicNameArr[0]);
 		model.put("zaiTu", dicNameArr[1]);
 		model.put("budget", dicNameArr[2]);

@@ -147,7 +147,7 @@ public class AddressController {
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=dicServer.getByID(id);
 	
-		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicName")).split("_");
+		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicValue")).split("_");
 		model.put("consignee", dicNameArr[0]);
 		model.put("place", dicNameArr[1]);
 		model.put("detail", dicNameArr[2]);
