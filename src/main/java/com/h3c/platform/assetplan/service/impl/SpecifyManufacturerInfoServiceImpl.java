@@ -44,7 +44,7 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 			for(int i =0;i<arr.size();i++) {
 				JSONObject obj=arr.getJSONObject(i);
 				if(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")).equals(info.getTitlecode())) {
-					infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")));
+					infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")));
 					String order=ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"));
 					infoExt.setOrder(Integer.parseInt(StringUtils.isBlank(order)?"0":order));					
 				}
@@ -68,7 +68,7 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 			JSONObject obj=arr.getJSONObject(i);
 			SpecifyManufacturerInfoExt infoExt = new SpecifyManufacturerInfoExt();
 			infoExt.setTitlecode(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));
-			infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")));
+			infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")));
 			String order=ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"));
 			infoExt.setOrder(Integer.parseInt(StringUtils.isBlank(order)?"0":order));
 			lstResult.add(infoExt);

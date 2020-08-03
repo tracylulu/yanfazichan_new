@@ -77,7 +77,7 @@ public class AssetPlanInfoReportController {
     	   		JSONObject json =new JSONObject();
        			for (int j = 0; i < objDic.size(); j++) {
        				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(j);
-       				String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
+       				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
        				String[] arrvalue =value.split("_");
        				String id= (String) obj.get("dic_code");
        				String assetcategory= arrvalue[2];

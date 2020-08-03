@@ -684,7 +684,7 @@ public class AssetPlanInfoApplyController {
    			
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
-   				String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
+   				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
    				String[] arrvalue =value.split("_");
    				JSONObject json=new JSONObject();
    				json.put("id", obj.get("dic_code"));
@@ -710,7 +710,7 @@ public class AssetPlanInfoApplyController {
    			
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
-   				String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
+   				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
    				String[] arrvalue =value.split("_");
    				JSONObject json=new JSONObject();
    				

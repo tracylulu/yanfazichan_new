@@ -29,7 +29,7 @@ public class SysDicInfoUtil {
 				JSONObject obj= objDic.getJSONObject(i);
 				String dicCode = ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"));
 				if(dicCode.equals(assetCategoryId)) {
-					String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
+					String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
 					String[] arrvalue =value.split("_");
 					categoryEntity.setAssetCategoryId(dicCode);
 					categoryEntity.setAssetCategory(arrvalue[2]);
@@ -47,7 +47,7 @@ public class SysDicInfoUtil {
 				JSONObject obj= objDic.getJSONObject(i);
 				String dicCode = ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"));
 				if(dicCode.equals(receiverPlaceId)) {
-					String value= obj.get("dic_name")==null?"":obj.get("dic_name").toString();
+					String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
 					String[] arrvalue =value.split("_");
 					receiverPlaceEntity.setReceiverPlaceId(dicCode);
 					receiverPlaceEntity.setReceiverPlace(arrvalue[1]);

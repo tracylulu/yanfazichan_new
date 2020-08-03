@@ -64,7 +64,7 @@ public class BudgetController {
 			}else {
 				obj.put("deptName", "");
 			}
-			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")).split("_");
+			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_");
 			obj.put("daoHuo", dicNameArr[0]);
 			obj.put("zaiTu", dicNameArr[1]);
 			obj.put("budget", dicNameArr[2]);

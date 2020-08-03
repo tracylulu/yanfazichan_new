@@ -61,7 +61,7 @@ public class AddressController {
 			JSONObject obj=lst.getJSONObject(i);
 			obj.put("dicCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));			
 			
-			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")).split("_");
+			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_");
 			obj.put("consignee", dicNameArr[0]);
 			obj.put("place", dicNameArr[1]);
 			obj.put("detail", dicNameArr[2]);

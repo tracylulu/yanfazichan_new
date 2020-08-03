@@ -54,7 +54,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 			for(int i=0;i<dicArr.size();i++) {
 				JSONObject obj=dicArr.getJSONObject(i);
 				if(obj.getInteger("dic_code").equals(month)) {
-					day=obj.getInteger("dic_name");
+					day=obj.getInteger("dic_value");
 				}
 				
 			}

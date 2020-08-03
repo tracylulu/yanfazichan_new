@@ -57,7 +57,7 @@ public class CategoryController {
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 		
-			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_name")).split("_");
+			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_");
 			obj.put("certifier", dicNameArr[0]);
 			obj.put("name", dicNameArr[1]);
 			obj.put("category", dicNameArr[2]);

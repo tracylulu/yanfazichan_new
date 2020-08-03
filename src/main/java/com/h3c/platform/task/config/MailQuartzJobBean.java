@@ -65,7 +65,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 
 			JSONArray approveDate = sysDicInfoService.getJSONArrayDicsByType(DicConst.R_APPROVEDATE,"1");
 			JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());
-			startDay = objStartDay.getIntValue("dic_name");
+			startDay = objStartDay.getIntValue("dic_value");
 			Calendar startCal = null;
 			startCal = Calendar.getInstance();
 			startCal.set(Calendar.DAY_OF_MONTH, startDay);
@@ -79,19 +79,19 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				for (int i = 0; i < approveDate.size(); i++) {
 					JSONObject obj = approveDate.getJSONObject(i);
 					if ("1".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
-						firstLen = obj.getInteger("dic_name");
+						firstLen = obj.getInteger("dic_value");
 					}
 
 					if ("2".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
-						secondLen = obj.getInteger("dic_name");
+						secondLen = obj.getInteger("dic_value");
 					}
 
 					if ("3".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
-						thirdLen = obj.getInteger("dic_name");
+						thirdLen = obj.getInteger("dic_value");
 					}
 
 					if ("4".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
-						fourthLen = obj.getInteger("dic_name");
+						fourthLen = obj.getInteger("dic_value");
 					}
 				}
 			}

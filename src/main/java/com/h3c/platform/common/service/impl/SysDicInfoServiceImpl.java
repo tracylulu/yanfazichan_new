@@ -119,12 +119,12 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 				JSONObject obj = arrName.getJSONObject(i);
 
 				column.put("prop", obj.get("dic_code"));
-				column.put("label", obj.get("dic_name"));
+				column.put("label", obj.get("dic_value"));
 
 				for (int j = 0; j < arrLength.size(); j++) {
 					JSONObject objLength = arrLength.getJSONObject(j);
 					if (obj.get("dic_code").toString().equals(objLength.get("dic_code").toString())) {
-						column.put("maxlen", objLength.get("dic_name"));
+						column.put("maxlen", objLength.get("dic_value"));
 					}
 				}
 				if (!column.containsKey("maxlen")) {
@@ -134,7 +134,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 				for (int k = 0; k < arrisEdit.size(); k++) {
 					JSONObject objEdit = arrisEdit.getJSONObject(k);
 					if (obj.get("dic_code").toString().equals(objEdit.get("dic_code").toString())) {
-						column.put("isEdit", objEdit.get("dic_name"));
+						column.put("isEdit", objEdit.get("dic_value"));
 					}
 				}
 
@@ -248,6 +248,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	@Override
 	public ResponseResult add(JSONObject model) throws Exception {
 		model.put("dicValue", model.getString("dicName"));
+		model.put("dicName", model.getString("dicCode"));
 		JSONObject json = new JSONObject();
 
 		String token = afspTokenService.getEosToken();

@@ -33,7 +33,7 @@ public class PlanTimeWindowsServiceImpl implements  PlanTimeWindowsService{
 		
 		JSONArray approveDate=sysDicInfoService.getJSONArrayDicsByType(DicConst.R_APPROVEDATE,"1");
 		JSONObject objStartDay= sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE,month.toString());
-		int startDay =objStartDay.getIntValue("dic_name");
+		int startDay =objStartDay.getIntValue("dic_value");
 		Calendar startCal=null;
 		startCal = Calendar.getInstance();
 		startCal.set(Calendar.DAY_OF_MONTH, startDay);	
@@ -54,7 +54,7 @@ public class PlanTimeWindowsServiceImpl implements  PlanTimeWindowsService{
 		for(int i=0;i<approveDate.size();i++) {
 			JSONObject obj=approveDate.getJSONObject(i);
 			if("1".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))){
-				interval=obj.getInteger("dic_name");				
+				interval=obj.getInteger("dic_value");				
 			}		
 		}	
 		
