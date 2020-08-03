@@ -44,8 +44,6 @@ public class BudgetController {
 	private SysDicInfoService dicServer;
 	@Autowired
 	private DeptInfoService deptService;
-	@Autowired
-	private UserService userService;
 	
 	@UserLoginToken
 	@PostMapping("/list")
@@ -54,7 +52,7 @@ public class BudgetController {
 		List<JSONObject> lstResultAll=new ArrayList<>();
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET,"");
 		List<DeptInfo> lstDept=deptService.getAll();
-		List<UserInfo> lstUser=userService.getAll();
+		
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 			obj.put("deptCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));
@@ -69,8 +67,6 @@ public class BudgetController {
 			obj.put("zaiTu", dicNameArr[1]);
 			obj.put("budget", dicNameArr[2]);
 
-			obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-			obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
 			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
@@ -108,7 +104,8 @@ public class BudgetController {
 		JSONObject model= new JSONObject();
 		
 		model.put("dicCode", entity.getDeptCode());
-		model.put("dicName", entity.getDaoHuo()+"_"+entity.getZaiTu()+"_"+entity.getBudget());
+		model.put("dicValue", entity.getDaoHuo()+"_"+entity.getZaiTu()+"_"+entity.getBudget());
+		model.put("dicName", entity.getDeptCode());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_BUDGET);
 		model.put("creater", UserUtils.getCurrentDominAccount());
@@ -125,7 +122,8 @@ public class BudgetController {
 		JSONObject model= new JSONObject();		
 		model.put("id",  entity.getId());
 		model.put("dicCode", entity.getDeptCode());
-		model.put("dicName", entity.getDaoHuo()+"_"+entity.getZaiTu()+"_"+entity.getBudget());
+		model.put("dicValue", entity.getDaoHuo()+"_"+entity.getZaiTu()+"_"+entity.getBudget());
+		model.put("dicName", entity.getDeptCode());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_BUDGET);
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
@@ -158,7 +156,7 @@ public class BudgetController {
 		model.put("zaiTu", dicNameArr[1]);
 		model.put("budget", dicNameArr[2]);
 		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
 }

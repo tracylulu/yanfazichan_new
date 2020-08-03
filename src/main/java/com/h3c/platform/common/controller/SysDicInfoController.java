@@ -80,8 +80,6 @@ public class SysDicInfoController {
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 
-			obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-			obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
 			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
@@ -147,7 +145,7 @@ public class SysDicInfoController {
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=sysDicInfoService.getByID(id);	
 		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
 }

@@ -98,8 +98,6 @@ public class ApproverController {
 		obj.put("dic_code", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))));
 		obj.put("dic_name", name);
 		
-		obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-		obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
 		obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 		obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 		return obj;
@@ -117,7 +115,8 @@ public class ApproverController {
 		JSONObject model=new JSONObject();
 		model.put("id",  entity.getId());
 		model.put("dicCode", user.getEmpCode());
-		model.put("dicName", user.getEmpName());
+		model.put("dicValue", user.getEmpName());
+		model.put("dicName", user.getEmpCode());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", entity.getDicTypeId());
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());

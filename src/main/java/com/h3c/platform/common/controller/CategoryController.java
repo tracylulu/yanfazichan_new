@@ -41,10 +41,6 @@ public class CategoryController {
 	private String  applicationId;
 	@Autowired
 	private SysDicInfoService dicServer;
-	@Autowired
-	private DeptInfoService deptService;
-	@Autowired
-	private UserService userService;
 	
 	@UserLoginToken
 	@PostMapping("/list")
@@ -53,7 +49,6 @@ public class CategoryController {
 		List<JSONObject> lstResultAll=new ArrayList<>();
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
 		
-		List<UserInfo> lstUser=userService.getAll();
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 		
@@ -63,8 +58,6 @@ public class CategoryController {
 			obj.put("category", dicNameArr[2]);
 			obj.put("deliveryTime", dicNameArr[3]);
 
-			obj.put("creater", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
-			obj.put("last_modifier", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("creater"))));
 			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
@@ -101,7 +94,8 @@ public class CategoryController {
 	public ResponseResult add(@RequestBody CategoryEntity entity) throws Exception {
 		JSONObject model= new JSONObject();
 		model.put("dicCode", entity.getDicCode());
-		model.put("dicName", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicName", entity.getDicCode());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
 		model.put("creater", UserUtils.getCurrentDominAccount());
@@ -118,7 +112,8 @@ public class CategoryController {
 		JSONObject model= new JSONObject();		
 		model.put("id",  entity.getId());
 		model.put("dicCode", entity.getDicCode());
-		model.put("dicName", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicName", entity.getDicCode());
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
@@ -145,7 +140,7 @@ public class CategoryController {
 		model.put("category", dicNameArr[2]);
 		model.put("deliveryTime", dicNameArr[3]);
 		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
 }
