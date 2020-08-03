@@ -247,6 +247,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 	@Override
 	public ResponseResult add(JSONObject model) throws Exception {
+		model.put("dicValue", model.getString("dicName"));
 		JSONObject json = new JSONObject();
 
 		String token = afspTokenService.getEosToken();
@@ -265,6 +266,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 	@Override
 	public ResponseResult edit(JSONObject model) throws Exception {
+		model.put("dicValue", model.getString("dicName"));
 		JSONObject json = new JSONObject();
 
 		String token = afspTokenService.getEosToken();
