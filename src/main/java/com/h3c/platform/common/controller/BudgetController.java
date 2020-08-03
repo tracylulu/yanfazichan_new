@@ -58,7 +58,7 @@ public class BudgetController {
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 			obj.put("deptCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));
-			Optional<DeptInfo> temp= lstDept.stream().filter(o->ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")).equals(o.getDeptCode())).findAny();
+			Optional<DeptInfo> temp= lstDept.stream().filter(o->ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")).equals(o.getDeptCode().toString())).findAny();
 			if(temp.isPresent()) {
 				obj.put("deptName", temp.get().getDeptName());
 			}else {
