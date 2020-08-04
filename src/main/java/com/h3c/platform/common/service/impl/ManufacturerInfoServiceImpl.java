@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.h3c.platform.common.dao.ManufacturerInfoMapper;
 import com.h3c.platform.common.entity.ManufacturerInfo;
 import com.h3c.platform.common.entity.ManufacturerInfoExample;
+import com.h3c.platform.common.entity.ModelInfo;
 import com.h3c.platform.common.service.ManufacturerInfoService;
+import com.h3c.platform.common.service.ModelInfoService;
 import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.UserUtils;
@@ -23,6 +25,8 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 	private ManufacturerInfoMapper manufacturerInfoMapper;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ModelInfoService modelInfoService;
 	
 	@Override
 	public 	List<ManufacturerInfo> getManufacturerInfoByName(String name) {
@@ -52,6 +56,10 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 		info.setModifier(UserUtils.getCurrentUserId());
 		info.setModifiTime(new Date());
 		manufacturerInfoMapper.updateByPrimaryKeySelective(info);
+		
+		if("0".equals(info.getDeleteFlag())) {
+			modelInfoService.DelByManufacturerID(info.getId());
+		}
 		
 		return ResponseResult.success("修改成功！");
 	}

@@ -13,4 +13,10 @@ public interface ModelInfoService {
 	ResponseResult edit(ModelInfo info) throws Exception;
 	
 	ModelInfo getByPrimaryKey(Integer id) throws Exception;
+	
+	/**
+	 * 根据厂家删除型号
+	 * @param id
+	 */
+	void DelByManufacturerID(Integer id);
 }

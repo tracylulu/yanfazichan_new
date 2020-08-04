@@ -30,4 +30,6 @@ public interface ModelInfoMapper {
     int updateByPrimaryKey(ModelInfo record);
     
     List<ModelInfo> getAll();
+    
+    int delByManufacturerId(@Param("id") Integer id);
 }

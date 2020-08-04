@@ -3,6 +3,7 @@ package com.h3c.platform.common.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,5 +53,11 @@ public class ModelInfoServiceImpl implements ModelInfoService{
 	@Override
 	public ModelInfo getByPrimaryKey(Integer id) throws Exception{
 		return modelInfoMapper.selectByPrimaryKey(id);
+	}
+	
+	@Override
+	@Transactional
+	public void DelByManufacturerID(Integer id) {
+		modelInfoMapper.delByManufacturerId(id);
 	}
 }
