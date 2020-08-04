@@ -911,5 +911,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public List<AssetPlanInfoAll> getSearchResultForReview(Map<String, Object> param) {
 		return reviewViewMapper.getSearchResultForReview(param);
 	}
+	
+	@Override
+	public  List<AssetPlanInfo> selectByIDs(List<String> lst){
+		return assetPlanInfoMapper.selectByIDs(lst);
+	}
 }
 

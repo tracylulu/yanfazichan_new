@@ -44,7 +44,7 @@ public class AssetPlanQuartzJobBean extends QuartzJobBean{
 		CalendarService calendarService =(CalendarService)SpringContextUtils.getBean(CalendarService.class);
 		AssetPlanTaskService assetPlanTaskService = (AssetPlanTaskService)SpringContextUtils.getBean(AssetPlanTaskService.class);
 		
-		logger.info("SubmitDept2ManagerQuartzJobBean job start");
+		logger.info("AssetPlanQuartzJobBean job start");
 		Calendar cal= null;
 		cal=Calendar.getInstance();
 		Integer month=cal.get(Calendar.MONTH)+1;
@@ -128,10 +128,9 @@ public class AssetPlanQuartzJobBean extends QuartzJobBean{
 			
 			//月超时  下月第一天0点
 			Calendar calMon = Calendar.getInstance();
-			calMon.set(Calendar.DAY_OF_MONTH, 1);
-			calMon.set(Calendar.MONTH, month);
+
 			//下月第一天0点执行任务
-			if(df.format(calMon.getTime()).equals(df.format(new Date()))) {
+			if(1==calMon.get(Calendar.DAY_OF_MONTH)) {
 				assetPlanTaskService.monthOutTime();
 			}
 		} catch (Exception e) {
@@ -154,7 +153,7 @@ public class AssetPlanQuartzJobBean extends QuartzJobBean{
 		}
 		
 
-		logger.info("SubmitDept2ManagerQuartzJobBean job end");
+		logger.info("AssetPlanQuartzJobBean job end");
 		
 	}
 	

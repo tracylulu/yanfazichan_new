@@ -773,6 +773,25 @@ public class AssetPlanInfoSearchController {
         return list;   
     } 
     
+    @UserLoginToken
+    @PostMapping("/checkCoa")   
+    @ApiOperation("验证勾选流程coa是否同一个")
+    @ResponseBody
+    public ResponseResult checkCoa(List<Integer> lstId) {
+    	List<DeptInfo> lst= deptInfoService.getCoaByAssetPlanID(lstId);
+    	if(CollectionUtils.isEmpty(lst)) {
+    		lst = deptInfoService.getCoaByAssetPlanID(lstId);
+    	}
+    	
+    	if(CollectionUtils.isEmpty(lst)) {
+    		ResponseResult.success(false,"未查询到coa编码");
+    	}
+    	
+    	if(lst.size()>1) {
+    		return ResponseResult.success(false,"查询到多个coa编码");
+    	}
+    	return ResponseResult.success(true);
+    }
 }
 
 

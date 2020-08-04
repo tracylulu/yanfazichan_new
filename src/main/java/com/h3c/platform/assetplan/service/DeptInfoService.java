@@ -23,4 +23,18 @@ public interface DeptInfoService {
 	DeptInfo getByDeptManagerCode(String deptManagerCode);
 	
 	List<DeptInfo> getAll();
+	
+	/**
+	 * 获取流程部门Coa编码
+	 * @param lst
+	 * @return
+	 */
+	List<DeptInfo> getCoaByAssetPlanID(List<Integer> lst);
+	
+	/**
+	 * 获取流程部门Coa编码（三级未查到查询2级）
+	 * @param lst
+	 * @return
+	 */
+	List<DeptInfo> getTwoLevelCoaByAssetPlanID(List<Integer> lst);
 }

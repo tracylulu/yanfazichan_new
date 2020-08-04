@@ -35,6 +35,8 @@ public interface AssetPlanInfoMapper {
     int updateUseRate(@Param("lst")List<Integer> lst);
     
     int updateBatchAssetPlanInfo(@Param("lst")List<AssetPlanInfo> lst);
+     
+    List<AssetPlanInfo> selectByIDs(@Param("lst")List<String> lst);
     
     
     

@@ -432,4 +432,10 @@
 			where AssetPlanID = #{item.assetplanid,jdbcType=INTEGER}
 		</foreach>
 	</update>
+	<select id="selectByIDs" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include> from AssetPlanInfo   where AssetPlanID in 
+		<foreach collection="lst" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+	</select>
 </mapper>

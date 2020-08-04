@@ -1,5 +1,9 @@
 package com.h3c.platform.assetplan.service;
 
+import java.util.List;
+
+import com.h3c.platform.assetplan.entity.ProjectInfo;
+
 public interface ProjectInfoService {
 	
 	/**
@@ -8,5 +12,5 @@ public interface ProjectInfoService {
 	 */
 	int syncByEosData();
 	
-
+	List<ProjectInfo> getAll() throws Exception;
 }

@@ -155,7 +155,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		java.util.Calendar cale=null;
 		cale = java.util.Calendar.getInstance(); 
 		int year=cale.get(java.util.Calendar.YEAR);
-		int month=cale.get(java.util.Calendar.MONTH)+1;
+		int month=cale.get(java.util.Calendar.MONTH);
 		Map<String, Object> param=new HashMap<String, Object>();
 		param.put("year", year);
 		param.put("month", month);

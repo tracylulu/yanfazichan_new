@@ -3,6 +3,7 @@ package com.h3c.platform.sysmgr.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,35 @@ public class RoleServiceImpl implements RoleService {
 		Map<String,String> headers = new HashMap<String, String>();
 		headers.put("token", token);
 		String params="{\"applicationId\":\""+applicationId+"\",\"userCode\":\""+(UserUtils.getCurrentDominAccount())+"\"}";	
+		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_UserRole, params,headers);
+		
+		JSONObject jsonResult = json.parseObject(result);
+		if(jsonResult.getBoolean("flag")) {
+			JSONArray jsonArray =jsonResult.getJSONArray("data");
+			
+			for(int i=0;i<jsonArray.size();i++) {
+				if("R_000001".equals(ObjToStrUtil.ReplaceNullValue(jsonArray.getString(i)))) {
+					isAdmin=true;
+					break;
+				}
+			}
+		}
+		
+		return isAdmin;
+	}
+	
+	@Override
+	public boolean checkIsAdmin(String userCode) throws Exception{
+		boolean isAdmin=false;
+		JSONObject json = new JSONObject();
+		
+		UserInfo user=userService.getUserByEmpCode(userCode);
+		
+		String token=afspTokenService.getEosToken();
+		
+		Map<String,String> headers = new HashMap<String, String>();
+		headers.put("token", token);
+		String params="{\"applicationId\":\""+applicationId+"\",\"userCode\":\""+(user!=null?user.getDomainAccount():"")+"\"}";	
 		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_UserRole, params,headers);
 		
 		JSONObject jsonResult = json.parseObject(result);

@@ -243,4 +243,10 @@ public interface AssetPlanInfoService {
      
      List<AssetPlanInfoAll> getSearchResultForReview(Map<String, Object> param);
      
+     /**
+      * 根据ID集合获取数据
+      * @param lst
+      * @return
+      */
+     List<AssetPlanInfo> selectByIDs(List<String> lst);
 }

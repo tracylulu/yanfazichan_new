@@ -58,5 +58,21 @@
  	WHERE b.dept_code IS NOT NULL  
   
   </update>
-  
+  <select id="getCoaByAssetPlanID" resultMap="BaseResultMap">
+  	SELECT DISTINCT coa FROM DeptInfo WHERE dept_code IN 
+	(SELECT deptcode FROM AssetPlanInfo WHERE assetplanid in
+		<foreach collection="lst" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+	) 
+  </select>
+  <select id="getTwoLevelCoaByAssetPlanID" resultMap="BaseResultMap">
+  	SELECT * FROM DeptInfo WHERE dept_code IN (
+	 SELECT sup_dept_code FROM DeptInfo WHERE dept_code IN 
+		(SELECT deptcode FROM AssetPlanInfo WHERE assetplanid
+		<foreach collection="lst" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+	)  AND dept_level=3)
+  </select>
 </mapper>

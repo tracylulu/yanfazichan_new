@@ -8,4 +8,5 @@ public interface RoleService {
 	
 	boolean checkIsAdmin() throws Exception;
 
+	boolean checkIsAdmin(String userCode) throws Exception;
 }

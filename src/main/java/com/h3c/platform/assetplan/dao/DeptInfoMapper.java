@@ -41,4 +41,9 @@ public interface DeptInfoMapper {
     int deleteInvalidData();
     
     int updateByEosData();
+    
+    List<DeptInfo> getCoaByAssetPlanID(@Param("lst") List<Integer> lst);
+    
+    List<DeptInfo> getTwoLevelCoaByAssetPlanID(@Param("lst") List<Integer> lst);
+    
 }
