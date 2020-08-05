@@ -80,7 +80,7 @@ public class IBPMController {
 			Map<String, Object> detail = new HashMap<String, Object>();
 			detail.put("assetName", info.getAssetname());
 			detail.put("manufacturerModel", info.getAssetmanufacturer() + info.getAssetmodel());
-			detail.put("requireds", info.getRequireds());
+			detail.put("requireds", info.getRequiredsaudit());
 			detail.put("itemCode", info.getItemcode());
 			Optional<ProjectInfo> tempPro = lstPro.stream().filter(o -> info.getItemcode().equals(o.getProjectNo()))
 					.findAny();
@@ -125,14 +125,11 @@ public class IBPMController {
 			Map<String, Object> detail = new HashMap<String, Object>();
 			detail.put("assetName", info.getAssetname());
 			detail.put("itemCode", info.getItemcode());
-			Optional<ProjectInfo> tempPro = lstPro.stream().filter(o -> info.getItemcode().equals(o.getProjectNo()))
-					.findAny();
-			detail.put("itemName", tempPro.isPresent() ? tempPro.get().getProjectName() : "");
 
 			detail.put("manufacturer", info.getAssetmanufacturer());
 			detail.put("model", info.getAssetmodel());
 			detail.put("price", info.getPprice());
-			detail.put("requireds", info.getRequireds());
+			detail.put("requireds", info.getRequiredsaudit());
 			detail.put("reqArrivalDate", info.getReqarrivaldate());
 			detail.put("startTime", info.getReqarrivaldate());
 			Calendar cal = Calendar.getInstance();
