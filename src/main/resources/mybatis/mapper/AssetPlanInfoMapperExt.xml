@@ -236,7 +236,7 @@
 		update
 		AssetPlanInfo set OutTimePlanEnum=0,ModifiTime=sysdate() WHERE
 		deleteFlag=1
-		AND APStatus in('10','11','20','30','40') AND
+		AND APStage in('1','2','3','4') AND
 		YEAR(PlanMonth)=${param.year} and MONTH(PlanMonth)=${param.month} and
 		OutTimePlanEnum=-1
 	</update>
