@@ -173,7 +173,7 @@ public class IBPMController {
 		}
 		DeptInfo dept = deptService.getByCode(user.getDeptCode());
 
-		if (dept == null) {
+		if (dept == null||StringUtils.isBlank(user.getDeptCode())) {
 			return "";
 		}
 
@@ -198,7 +198,7 @@ public class IBPMController {
 		}
 		DeptInfo dept = deptService.getByCode(user.getDeptCode());
 
-		if (dept == null) {
+		if (dept == null||StringUtils.isBlank(user.getDeptCode())) {
 			return "";
 		}
 		if(StringUtils.isNotBlank(dept.getDeptPlannerCode())) {

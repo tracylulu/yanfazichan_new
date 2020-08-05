@@ -97,7 +97,8 @@ public class ApproverController {
 	private JSONObject getData(JSONObject obj,String name,List<UserInfo> lstUser) {
 		obj.put("dic_code", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))));
 		obj.put("dic_name", name);
-		
+		obj.put("creater", obj.getString("creatername")+" "+obj.getString("createrempcode"));
+		obj.put("last_modifier", obj.getString("modifiername")+" "+obj.getString("modifierempcode"));
 		obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 		obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 		return obj;

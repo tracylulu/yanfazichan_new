@@ -69,6 +69,8 @@ public class AddressController {
 				obj.put("approver", "");
 			}
 			
+			obj.put("creater", obj.getString("creatername")+" "+obj.getString("createrempcode"));
+			obj.put("last_modifier", obj.getString("modifiername")+" "+obj.getString("modifierempcode"));
 			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
