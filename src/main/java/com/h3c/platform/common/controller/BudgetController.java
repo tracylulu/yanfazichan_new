@@ -67,8 +67,8 @@ public class BudgetController {
 			obj.put("zaiTu", dicNameArr[1]);
 			obj.put("budget", dicNameArr[2]);
 
-			obj.put("creater", obj.getString("creatername")+" "+obj.getString("createrempcode"));
-			obj.put("last_modifier", obj.getString("modifiername")+" "+obj.getString("modifierempcode"));
+			obj.put("creater",  ObjToStrUtil.ReplaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("createrempcode")));
+			obj.put("last_modifier", ObjToStrUtil.ReplaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("modifierempcode")));
 			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
