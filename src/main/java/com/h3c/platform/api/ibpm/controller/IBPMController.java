@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +41,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/ibmp")
+@RequestMapping("/api/ibpm")
 @Api(value = "ibmp相关接口", tags = "ibmp相关接口")
 public class IBPMController {
 	@Autowired
@@ -62,13 +63,17 @@ public class IBPMController {
 	@ApiOperation("非软件类")
 	public ResponseResult unSoft(@RequestBody IBPMEntity entity) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
-
+		
 		// 验证管理员
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
 			ResponseResult.fail("当前人员没有权限处理此单据！");
 		}
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
+		List<AssetPlanInfo> lstTemp= lst.stream().filter(o->!"0".equals(o.getApstage())).collect(Collectors.toList());
+		if(CollectionUtils.isNotEmpty(lstTemp)) {
+			ResponseResult.fail("当前勾选单据包含未结束流程！");
+		}
 		
 		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
 		JSONArray lstCategory= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
@@ -117,7 +122,10 @@ public class IBPMController {
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
 		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
-
+		List<AssetPlanInfo> lstTemp= lst.stream().filter(o->!"0".equals(o.getApstage())).collect(Collectors.toList());
+		if(CollectionUtils.isNotEmpty(lstTemp)) {
+			ResponseResult.fail("当前勾选单据包含未结束流程！");
+		}
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
 		List<Map<String, Object>> lstDetails = new ArrayList<Map<String, Object>>();
