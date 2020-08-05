@@ -1,15 +1,24 @@
 package com.h3c.platform.assetplan.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +71,8 @@ public class AssetPlanInfoHomePageController {
 	private UserService userService;
 	@Autowired
 	private SysDicInfoService sysDicInfoService;
-	
+	@Value("${file.path}")
+	private String filePath;
     
     @ApiOperation(value="根据当前登录人的工号获取待处理信息")
 	@GetMapping("/getTodoInfoByApplyCode")
@@ -136,6 +146,33 @@ public class AssetPlanInfoHomePageController {
 		}*/
 	}
     
+    @ApiOperation(value="根据文件名获取系统文件")
+	@PostMapping("/download")
+	@ResponseBody
+	@UserLoginToken
+	public void download( HttpServletResponse response, HttpServletRequest request, @RequestParam @ApiParam(name="fileUrl",value="文件名",required=true)String fileUrl) {
+		try {
+			File file = new File(fileUrl);
+			String filename = file.getName();
+			// 以流的形式下载文件。
+			InputStream fis = new BufferedInputStream(new FileInputStream(filePath + fileUrl));
+			byte[] buffer = new byte[fis.available()];
+			fis.read(buffer);
+			fis.close();
+			// 清空response
+			response.reset();
+
+			response.setContentType("application/octet-stream;charset=UTF-8");
+			String fileName = new String(filename.getBytes("gb2312"), "ISO-8859-1");
+			response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+			OutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(buffer);
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
   
 	//不需要此接口，调用不同的展示列表接口即可
    /* @ApiOperation(value="查看待处理的单条资源信息（返回对应审批阶段环节的页面数据）")
