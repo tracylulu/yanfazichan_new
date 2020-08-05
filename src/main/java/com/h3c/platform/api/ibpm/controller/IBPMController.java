@@ -64,12 +64,13 @@ public class IBPMController {
 
 		// 验证管理员
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
-			throw new Exception("当前登录人没有权限处理此单据！");
+			throw new Exception("当前人员没有权限处理此单据！");
 		}
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
 		
 		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		JSONArray lstCategory= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
 
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
@@ -84,7 +85,7 @@ public class IBPMController {
 					.findAny();
 			detail.put("itemName", tempPro.isPresent() ? tempPro.get().getProjectName() : "");
 			detail.put("requiredUser", info.getRequireduser());
-			detail.put("category", info.getAssetcategory());
+			detail.put("category",  getCategory(lstCategory, info.getAssetcategory()));
 			detail.put("reqArrivalDate", info.getReqarrivaldate());
 			detail.put("receiverPlace", getAddr(lstAddr, info.getReceiverplace()));
 			detail.put("note", info.getAssetnote());
@@ -170,11 +171,14 @@ public class IBPMController {
 			return "";
 		}
 
-		if (StringUtils.isNotBlank(user.getCoaCode())
+		if (StringUtils.isNotBlank(dept.getCoa())
 				&& ("2".equals(dept.getDeptLevel()) || "3".equals(dept.getDeptLevel()))) {
 			coa = dept.getCoa();
-		} else if (StringUtils.isBlank(user.getCoaCode()) && "3".equals(dept.getDeptLevel())) {
+		} else if (StringUtils.isBlank(dept.getCoa()) && "3".equals(dept.getDeptLevel())) {
 			DeptInfo deptPareat = deptService.getByCode(dept.getSupDeptCode());
+			if(deptPareat!=null) {
+				coa= deptPareat.getCoa();
+			}
 		}
 
 		return coa;
@@ -186,6 +190,22 @@ public class IBPMController {
 			JSONObject obj = lstAddr.getJSONObject(i);
 			
 			if(addrCode.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))) ) {
+				String[] addrArr= obj.getString("dic_value").split("_");
+				place=addrArr[1];
+				
+				break;
+			}
+		}
+		
+		return "W10_XZ"+place;
+	}
+	
+	private String getCategory(JSONArray lst,String code) {
+		String place="";
+		for(int i=0;i<lst.size();i++) {
+			JSONObject obj = lst.getJSONObject(i);
+			
+			if(code.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))) ) {
 				String[] addrArr= obj.getString("dic_value").split("_");
 				place=addrArr[2];
 				
