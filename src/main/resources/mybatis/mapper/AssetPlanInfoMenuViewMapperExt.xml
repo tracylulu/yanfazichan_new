@@ -32,7 +32,7 @@
   	(select case when (APStage='2') then '规范审核' else '规范审核' end as APStatusDetail,
     ApplyMonth,case when (APStage='2') then '2' else '2' end as APStage  FROM 
 	AssetPlanInfoMenuView WHERE 
-    (APStage='1' AND APStatus='11') or APStage='2' AND FIND_IN_SET(#{param.ApplyUser}, ReviewPerson))r
+    ((APStage='1' AND APStatus='11') or APStage='2') AND FIND_IN_SET(#{param.ApplyUser}, ReviewPerson))r
     group BY r.APStatusDetail,r.ApplyMonth ,r.APStage
     
 	UNION ALL 
