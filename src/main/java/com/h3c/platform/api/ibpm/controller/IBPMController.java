@@ -30,6 +30,7 @@ import com.h3c.platform.assetplan.service.ProjectInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
+import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.RoleService;
 import com.h3c.platform.sysmgr.service.UserService;
@@ -59,12 +60,12 @@ public class IBPMController {
 
 	@PostMapping("/unSoft")
 	@ApiOperation("非软件类")
-	public Map<String, Object> unSoft(@RequestBody IBPMEntity entity) throws Exception {
+	public ResponseResult unSoft(@RequestBody IBPMEntity entity) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		// 验证管理员
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
-			throw new Exception("当前人员没有权限处理此单据！");
+			ResponseResult.fail("当前人员没有权限处理此单据！");
 		}
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
@@ -97,20 +98,20 @@ public class IBPMController {
 			Map<String, Object> title = new HashMap<String, Object>();
 			title.put("applyUser", lst.get(0).getApplyuser());
 			title.put("deptCode", getCoaCode(entity.getUserCode()));
-			title.put("planner", lst.get(0).getPlanner());
+			title.put("planner",  getPlanner(entity.getUserCode()));
 			result.put("title", title);
 		}
 
 		result.put("detail", lstDetails);
-		return result;
+		return ResponseResult.success(result,"查询成功");
 	}
 
 	@PostMapping("/soft")
 	@ApiOperation("软件类")
-	public Map<String, Object> soft(@RequestBody IBPMEntity entity) throws Exception {
+	public ResponseResult soft(@RequestBody IBPMEntity entity) throws Exception {
 		// 验证管理员
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
-			throw new Exception("当前登录人没有权限处理此单据！");
+			ResponseResult.fail("当前人员没有权限处理此单据！");
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		// 查询数据
@@ -151,12 +152,12 @@ public class IBPMController {
 			Map<String, Object> title = new HashMap<String, Object>();
 			// title.put("applyUser", lst.get(0).getApplyuser());
 			title.put("deptCode", getCoaCode(entity.getUserCode()));
-			title.put("planner", lst.get(0).getPlanner());
+			title.put("planner", getPlanner(entity.getUserCode()));
 			result.put("title", title);
 		}
 
 		result.put("detail", lstDetails);
-		return result;
+		return ResponseResult.success(result,"查询成功");
 	}
 
 	private String getCoaCode(String userCode) throws Exception {
@@ -182,6 +183,39 @@ public class IBPMController {
 		}
 
 		return coa;
+	}
+	
+	private String getPlanner(String userCode) throws Exception {
+		String palnner = "";
+		UserInfo user = userService.getUserByEmpCode(userCode);
+		if (user == null) {
+			throw new Exception("未找到当前人员");
+		}
+		DeptInfo dept = deptService.getByCode(user.getDeptCode());
+
+		if (dept == null) {
+			return "";
+		}
+		if(StringUtils.isNotBlank(dept.getDeptPlannerCode())) {
+			return dept.getDeptPlannerCode(); 
+		}
+		
+		String parentDept=dept.getSupDeptCode();
+		String level=dept.getDeptLevel();
+		while (StringUtils.isNotBlank(palnner)) {			
+			if("1".equals(level)) break;
+			DeptInfo deptPareat = deptService.getByCode(parentDept);
+			if(deptPareat==null) break;
+			
+			parentDept=deptPareat.getSupDeptCode();
+			level = deptPareat.getDeptLevel();
+			if(StringUtils.isNotBlank(deptPareat.getDeptPlannerCode())) {
+				palnner = deptPareat.getDeptPlannerCode(); 
+				break;
+			}
+		}		
+	
+		return palnner;
 	}
 	
 	private String getAddr(JSONArray lstAddr,String addrCode) {
@@ -218,20 +252,10 @@ public class IBPMController {
 
 	@PostMapping("/writeBpmCode")
 	@ApiOperation("写入bpm编码")
-	public Map<String, Object> writeBmpCode(@RequestBody IBPMEntity entity) {
-		boolean isSuccess = false;
-		Map<String, Object> result = new HashMap<String, Object>();
-		try {
-			isSuccess = bpmRelationInfoService.writeBpmCode(entity);
-		} catch (Exception e) {
-			result.put("code", 500);
-			result.put("message", e.getMessage());
-		}
-		if (isSuccess) {
-			result.put("code", 200);
-			result.put("message", "成功");
-		}
-		return result;
+	public ResponseResult writeBmpCode(@RequestBody IBPMEntity entity)throws Exception {		
+		boolean isSuccess = isSuccess = bpmRelationInfoService.writeBpmCode(entity);
+		
+		return ResponseResult.success("写入成功");
 	}
 
 }
