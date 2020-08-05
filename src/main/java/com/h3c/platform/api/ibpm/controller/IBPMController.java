@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.api.ibpm.entity.IBPMEntity;
 import com.h3c.platform.assetplan.entity.AssetPlanInfo;
 import com.h3c.platform.assetplan.entity.DeptInfo;
@@ -25,6 +27,9 @@ import com.h3c.platform.assetplan.service.AssetPlanInfoService;
 import com.h3c.platform.assetplan.service.BPMRelationInfoService;
 import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.assetplan.service.ProjectInfoService;
+import com.h3c.platform.common.commonconst.DicConst;
+import com.h3c.platform.common.service.SysDicInfoService;
+import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.RoleService;
 import com.h3c.platform.sysmgr.service.UserService;
@@ -49,6 +54,8 @@ public class IBPMController {
 	private BPMRelationInfoService bpmRelationInfoService;
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private SysDicInfoService dicServer;
 
 	@PostMapping("/unSoft")
 	@ApiOperation("非软件类")
@@ -61,6 +68,8 @@ public class IBPMController {
 		}
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
+		
+		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
 
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
@@ -77,7 +86,7 @@ public class IBPMController {
 			detail.put("requiredUser", info.getRequireduser());
 			detail.put("category", info.getAssetcategory());
 			detail.put("reqArrivalDate", info.getReqarrivaldate());
-			detail.put("receiverPlace", info.getReceiverplace());
+			detail.put("receiverPlace", getAddr(lstAddr, info.getReceiverplace()));
 			detail.put("note", info.getAssetnote());
 
 			lstDetails.add(detail);
@@ -105,6 +114,7 @@ public class IBPMController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
+		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
 
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
@@ -128,7 +138,7 @@ public class IBPMController {
 			cal.setTime(info.getReqarrivaldate());
 			cal.add(Calendar.YEAR, 1);
 			detail.put("endTime", cal.getTime());
-			detail.put("receiverPlace", info.getReceiverplace());
+			detail.put("receiverPlace", getAddr(lstAddr, info.getReceiverplace()));
 			detail.put("requiredUser", info.getRequireduser());
 			detail.put("purpose", info.getPurpose());
 			detail.put("note", info.getAssetnote());
@@ -168,6 +178,22 @@ public class IBPMController {
 		}
 
 		return coa;
+	}
+	
+	private String getAddr(JSONArray lstAddr,String addrCode) {
+		String place="";
+		for(int i=0;i<lstAddr.size();i++) {
+			JSONObject obj = lstAddr.getJSONObject(i);
+			
+			if(addrCode.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))) ) {
+				String[] addrArr= obj.getString("dic_value").split("_");
+				place=addrArr[2];
+				
+				break;
+			}
+		}
+		
+		return "W10_XZ"+place;
 	}
 
 	@PostMapping("/writeBpmCode")
