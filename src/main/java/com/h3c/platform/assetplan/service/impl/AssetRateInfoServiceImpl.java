@@ -223,6 +223,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	
 	@Override
 	public ResponseResult getList(SearchRateParamEntity search)throws Exception{
+		search.setPageNum(0==search.getPageNum()?1:search.getPageNum());
 		List<AssetRateInfo> lstResultAll=new ArrayList<AssetRateInfo>();
 		DeptInfo deptInfo = deptInfoService.getByCode(search.getDeptCode());
 		if(deptInfo.getDeptCode()==null) {
