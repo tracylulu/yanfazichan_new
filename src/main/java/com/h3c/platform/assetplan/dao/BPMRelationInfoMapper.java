@@ -28,5 +28,5 @@ public interface BPMRelationInfoMapper {
 
     int updateByPrimaryKey(BPMRelationInfo record);
     
-    List<BPMRelationInfo> getByIDList(@Param("lst")List<String> lst);
+    List<BPMRelationInfo> getByIDList(@Param("lst")List<Integer> lst);
 }

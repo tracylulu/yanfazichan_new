@@ -46,6 +46,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoApplyView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView;
+import com.h3c.platform.assetplan.entity.BPMRelationInfo;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
@@ -54,6 +55,7 @@ import com.h3c.platform.assetplan.entity.SysDicCategoryEntity;
 import com.h3c.platform.assetplan.entity.SysDicReceiverPlaceEntity;
 import com.h3c.platform.assetplan.service.AssetPlanInfoSearchService;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
+import com.h3c.platform.assetplan.service.BPMRelationInfoService;
 import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
@@ -105,6 +107,8 @@ public class AssetPlanInfoSearchController {
 	private RoleService roleService;
 	@Autowired
 	private DeptInfoService deptInfoService;
+	@Autowired
+	private BPMRelationInfoService bpmRelationInfoService;
 	
     @PostMapping("/listOfAssetPlanInfo")
     @ApiOperation(value = "获取所有资产查询列表信息")
@@ -777,7 +781,7 @@ public class AssetPlanInfoSearchController {
     @PostMapping("/checkCoa")   
     @ApiOperation("验证勾选流程coa是否同一个")
     @ResponseBody
-    public ResponseResult checkCoa(List<Integer> lstId) {
+    public ResponseResult checkCoa(@RequestParam List<Integer> lstId) throws Exception{
     	List<DeptInfo> lst= deptInfoService.getCoaByAssetPlanID(lstId);
     	if(CollectionUtils.isEmpty(lst)) {
     		lst = deptInfoService.getCoaByAssetPlanID(lstId);
@@ -789,6 +793,18 @@ public class AssetPlanInfoSearchController {
     	
     	if(lst.size()>1) {
     		return ResponseResult.success(false,"查询到多个coa编码");
+    	}
+    	return ResponseResult.success(true);
+    }
+    
+    @UserLoginToken
+    @PostMapping("/checkIsWriteBpmCode")   
+    @ApiOperation("验证勾选流程是否已回写bpm编码")
+    @ResponseBody
+    public ResponseResult checkIsWriteBpmCode(@RequestParam  List<Integer> lstId)throws Exception {
+    	List<BPMRelationInfo> lst = bpmRelationInfoService.getByIDList(lstId);
+    	if(CollectionUtils.isNotEmpty(lst)) {
+    		return ResponseResult.fail(false);
     	}
     	return ResponseResult.success(true);
     }

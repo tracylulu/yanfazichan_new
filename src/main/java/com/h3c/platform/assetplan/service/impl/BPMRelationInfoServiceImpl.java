@@ -19,7 +19,7 @@ public class BPMRelationInfoServiceImpl implements BPMRelationInfoService {
 	@Autowired
 	private BPMRelationInfoMapper bmpRelationInfoMapper;
 	@Override
-	public List<BPMRelationInfo> getByIDList(List<String> lst) throws Exception{		
+	public List<BPMRelationInfo> getByIDList(List<Integer> lst) throws Exception{		
 		
 		return bmpRelationInfoMapper.getByIDList(lst);
 	}

@@ -91,7 +91,11 @@ public class ResponseResult {
 
 
     public static ResponseResult fail(Object data, String message) {
-        return fail(data, message);
+		return fail(data, message, 0);
+    }
+    
+    public static ResponseResult fail(Object data, String message, long size) {
+        return fail(1, message, data, size);
     }
 
     public static ResponseResult fail(int status, String message, Object data,
