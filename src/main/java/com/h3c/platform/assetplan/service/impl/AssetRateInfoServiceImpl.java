@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -138,7 +139,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 			List<AssetRateInfo> lstTemp=mapDetail.get(key);
 			lstTemp.stream().forEach(o->{
 				if(StringUtils.isNotBlank(o.getUsageRate())) {
-					lstDetailRate.add(Double.parseDouble(o.getUsageRate()));					
+					lstDetailRate.add(Double.parseDouble(StringUtils.isBlank(o.getUsageRate())?"0":o.getUsageRate()));								
 				}
 			});
 			double avg = lstDetailRate.stream().collect(Collectors.averagingDouble(Double::doubleValue));
@@ -221,7 +222,8 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	}
 	
 	@Override
-	public ResponseResult getList(SearchRateParamEntity search)throws Exception{		
+	public ResponseResult getList(SearchRateParamEntity search)throws Exception{
+		List<AssetRateInfo> lstResultAll=new ArrayList<AssetRateInfo>();
 		DeptInfo deptInfo = deptInfoService.getByCode(search.getDeptCode());
 		if(deptInfo.getDeptCode()==null) {
 			return ResponseResult.fail("未找到当前部门");
@@ -239,10 +241,52 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		param.put("end", search.getCollectTime());
 		param.put("model", search.getAssetCategory());
 		param.put("deptCode", search.getDeptCode());
-		PageHelper.startPage(search.getPageNum(), search.getPageSize());		
+		//PageHelper.startPage(search.getPageNum(), search.getPageSize());		
 		List<AssetRateInfo> lst=assetRateInfoMapper.selectbyMap(param);
-		PageInfo<AssetRateInfo> pageInfo=new PageInfo<AssetRateInfo>(lst);
+		//PageInfo<AssetRateInfo> pageInfo=new PageInfo<AssetRateInfo>(lst);
 		
-		return ResponseResult.success(0, "查询成功", search.getPageSize(), pageInfo.getTotal(),null,  pageInfo.getList());
+		Map<String,List<AssetRateInfo>> mapDetail= lst.stream().collect(Collectors.groupingBy(AssetRateInfo::getAssertNumber));
+		for(String key:mapDetail.keySet()) {
+			AssetRateInfo info =new AssetRateInfo();
+			List<Double> lstDetailRate=new ArrayList<Double>();
+			List<AssetRateInfo> lstTemp=mapDetail.get(key);
+			lstTemp.stream().forEach(o->{
+				if(StringUtils.isNotBlank(o.getUsageRate())) {
+					lstDetailRate.add(Double.parseDouble(StringUtils.isBlank(o.getUsageRate())?"0":o.getUsageRate()));					
+				}
+			});
+			double avg = lstDetailRate.stream().collect(Collectors.averagingDouble(Double::doubleValue));
+			NumberFormat nf = NumberFormat.getNumberInstance();
+			nf.setMaximumFractionDigits(0);
+			
+			String deptUsageRate=nf.format(avg*100);		
+			lstTemp.get(lstTemp.size()-1).setUsageRate(deptUsageRate+"%");
+			lstResultAll.add(lstTemp.get(lstTemp.size()-1));			
+		}
+
+		Integer count = lstResultAll.size(); // 记录总数	
+        Integer pageCount = 0; // 页数
+        if (count % search.getPageSize() == 0) {
+            pageCount = count / search.getPageSize();
+        } else {
+            pageCount = count / search.getPageSize() + 1;
+        }
+
+        int fromIndex = 0; // 开始索引
+        int toIndex = 0; // 结束索引
+ 
+        if (search.getPageNum() != pageCount) {
+            fromIndex = (search.getPageNum() - 1) * search.getPageSize();
+            toIndex = fromIndex + search.getPageSize();
+        } else {
+            fromIndex = (search.getPageNum() - 1) * search.getPageSize();
+            toIndex = count;
+        }
+        if(fromIndex > count) {
+        	return ResponseResult.success(0, "查询成功", search.getPageNum(), count, null, new ArrayList<>());
+        }
+		List<AssetRateInfo> lstResult= lstResultAll.subList(fromIndex, toIndex);
+		
+		return ResponseResult.success(0, "查询成功", search.getPageNum(), count ,null,  lstResult);
 	}
 }
