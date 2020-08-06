@@ -147,7 +147,7 @@ public class AssetPlanInfoHomePageController {
 	}
     
     @ApiOperation(value="根据文件名获取系统文件")
-	@PostMapping("/download")
+	@GetMapping("/download")
 	@ResponseBody
 	@UserLoginToken
 	public void download( HttpServletResponse response, HttpServletRequest request, @RequestParam @ApiParam(name="fileUrl",value="文件名",required=true)String fileUrl) {
