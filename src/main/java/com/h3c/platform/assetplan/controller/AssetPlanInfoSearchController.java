@@ -784,15 +784,15 @@ public class AssetPlanInfoSearchController {
     public ResponseResult checkCoa(@RequestParam List<Integer> lstId) throws Exception{
     	List<DeptInfo> lst= deptInfoService.getCoaByAssetPlanID(lstId);
     	if(CollectionUtils.isEmpty(lst)) {
-    		lst = deptInfoService.getCoaByAssetPlanID(lstId);
+    		lst = deptInfoService.getTwoLevelCoaByAssetPlanID(lstId);
     	}
     	
     	if(CollectionUtils.isEmpty(lst)) {
-    		ResponseResult.success(false,"未查询到coa编码");
+    		return ResponseResult.fail(false);
     	}
     	
     	if(lst.size()>1) {
-    		return ResponseResult.success(false,"查询到多个coa编码");
+    		return ResponseResult.fail(false);
     	}
     	return ResponseResult.success(true);
     }

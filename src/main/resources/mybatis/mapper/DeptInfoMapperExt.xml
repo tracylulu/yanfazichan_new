@@ -69,7 +69,7 @@
   <select id="getTwoLevelCoaByAssetPlanID" resultMap="BaseResultMap">
   	SELECT * FROM DeptInfo WHERE dept_code IN (
 	 SELECT sup_dept_code FROM DeptInfo WHERE dept_code IN 
-		(SELECT deptcode FROM AssetPlanInfo WHERE assetplanid
+		(SELECT deptcode FROM AssetPlanInfo WHERE assetplanid  in
 		<foreach collection="lst" open="(" close=")" separator="," item="item">
 			#{item}
 		</foreach>
