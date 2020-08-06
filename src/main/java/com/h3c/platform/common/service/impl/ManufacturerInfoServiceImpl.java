@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.catalina.User;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,11 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 	
 	@Override
 	@Transactional
-    public ResponseResult add(ManufacturerInfo info)throws Exception{		
+    public ResponseResult add(ManufacturerInfo info)throws Exception{	
+		ManufacturerInfo mfCheck=getByName(info.getManufacturerName());
+		if(mfCheck!=null) {
+			ResponseResult.fail("厂商名称配置重复！");
+		}
 		info.setCreateTime(new Date());
 		info.setCreator(UserUtils.getCurrentUserId());
 		info.setModifier(UserUtils.getCurrentUserId());
@@ -53,6 +58,11 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 	@Override
 	@Transactional
 	public ResponseResult edit(ManufacturerInfo info) throws Exception{
+		ManufacturerInfo mfCheck=getByName(info.getManufacturerName());
+		if(mfCheck!=null&&!info.getId().equals(mfCheck.getId())) {
+			ResponseResult.fail("厂商名称配置重复！");
+		}
+		
 		info.setModifier(UserUtils.getCurrentUserId());
 		info.setModifiTime(new Date());
 		manufacturerInfoMapper.updateByPrimaryKeySelective(info);
@@ -67,5 +77,16 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 	@Override
 	public ManufacturerInfo getByPrimaryKey(Integer id)throws Exception{
 		return manufacturerInfoMapper.selectByPrimaryKey(id);
+	}
+	
+	private ManufacturerInfo getByName(String name) {
+		ManufacturerInfoExample example = new ManufacturerInfoExample();
+		ManufacturerInfoExample.Criteria cri= example.createCriteria();
+		cri.andManufacturerNameEqualTo(name);
+		List<ManufacturerInfo> lst = manufacturerInfoMapper.selectByExample(example);
+		if(CollectionUtils.isNotEmpty(lst)) {
+			return lst.get(0);
+		}
+		return null;
 	}
 }

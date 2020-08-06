@@ -94,10 +94,17 @@ public class CategoryController {
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
 	public ResponseResult add(@RequestBody CategoryEntity entity) throws Exception {
+		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = lst.getJSONObject(i);
+			if (entity.getCategory().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[2])) {
+				return ResponseResult.fail("物品类别配置重复");
+			}
+		}
 		JSONObject model= new JSONObject();
 		model.put("dicCode", entity.getDicCode());
 		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
-		model.put("dicName", entity.getDicCode());
+		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
 		model.put("creater", UserUtils.getCurrentDominAccount());
@@ -111,11 +118,18 @@ public class CategoryController {
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
 	public ResponseResult edit(@RequestBody CategoryEntity entity) throws Exception {
+		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = lst.getJSONObject(i);
+			if (entity.getCategory().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[2])&&!entity.getId().equals(obj.getInteger("id"))) {
+				return ResponseResult.fail("物品类别配置重复");
+			}
+		}
 		JSONObject model= new JSONObject();		
 		model.put("id",  entity.getId());
 		model.put("dicCode", entity.getDicCode());
 		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
-		model.put("dicName", entity.getDicCode());
+		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());

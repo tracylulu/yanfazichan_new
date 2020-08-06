@@ -258,7 +258,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject jsonResult = json.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
-			throw new Exception(jsonResult.getString("message"));
+			return ResponseResult.fail(jsonResult.getString("message"));
 		}
 		return ResponseResult.success("添加成功！");
 	}
@@ -276,7 +276,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject jsonResult = json.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
-			throw new Exception(jsonResult.getString("message"));
+			return ResponseResult.fail(jsonResult.getString("message"));
 		}
 		return ResponseResult.success("修改成功！");
 	}
@@ -300,7 +300,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject jsonResult = json.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
-			throw new Exception(jsonResult.getString("message"));
+			return ResponseResult.fail(jsonResult.getString("message"));
 		}
 		return ResponseResult.success("删除成功！");
 	}

@@ -106,10 +106,17 @@ public class AddressController {
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
 	public ResponseResult add(@RequestBody AddressEntity entity) throws Exception {	
+		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = lst.getJSONObject(i);
+			if (entity.getPlace().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])) {
+				return ResponseResult.fail("到货地点配置重复");
+			}
+		}
 		JSONObject model=new JSONObject();
 		model.put("dicCode", entity.getDicCode());
 		model.put("dicValue", entity.getConsignee()+"_"+entity.getPlace()+"_"+entity.getDetail()+"_"+entity.getApprover());
-		model.put("dicName", entity.getDicCode());
+		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_ADDRESS);
 		model.put("creater", UserUtils.getCurrentDominAccount());
@@ -122,12 +129,19 @@ public class AddressController {
 	@UserLoginToken(logType=LogType.MODIFY)
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
-	public ResponseResult edit(@RequestBody AddressEntity entity) throws Exception {		
+	public ResponseResult edit(@RequestBody AddressEntity entity) throws Exception {
+		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		for (int i = 0; i < lst.size(); i++) {
+			JSONObject obj = lst.getJSONObject(i);
+			if (entity.getPlace().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])&&!entity.getId().equals(obj.getInteger("id"))) {
+				return ResponseResult.fail("到货地点配置重复");
+			}
+		}
 		JSONObject model=new JSONObject();
 		model.put("id",  entity.getId());
 		model.put("dicCode", entity.getDicCode());
 		model.put("dicValue", entity.getConsignee()+"_"+entity.getPlace()+"_"+entity.getDetail()+"_"+entity.getApprover());
-		model.put("dicName", entity.getDicCode());
+		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_ADDRESS);		
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());

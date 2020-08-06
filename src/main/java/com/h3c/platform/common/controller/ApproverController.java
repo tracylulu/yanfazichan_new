@@ -117,7 +117,7 @@ public class ApproverController {
 		model.put("id",  entity.getId());
 		model.put("dicCode", user.getEmpCode());
 		model.put("dicValue", user.getEmpName());
-		model.put("dicName", user.getEmpCode());
+		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", entity.getDicTypeId());
 		model.put("lastModifier", UserUtils.getCurrentDominAccount());
