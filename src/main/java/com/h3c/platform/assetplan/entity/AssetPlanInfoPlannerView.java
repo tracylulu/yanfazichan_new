@@ -34,6 +34,8 @@ public class AssetPlanInfoPlannerView {
 
     private String deptcode;
 
+    private String dept3name;
+
     private String dept2code;
 
     private String dept2name;
@@ -56,11 +58,35 @@ public class AssetPlanInfoPlannerView {
 
     private String assetcategory;
 
+    private String receiverplace;
+
+    private Integer goodstime;
+
+    private String assetnote;
+
+    private String apstatus;
+
     private String groupflag;
 
     private Date reviewtime;
 
     private String groupflagdetail;
+
+    private String approvalresult;
+
+    private String apstatusdetail;
+
+    private String rate;
+
+    private Integer number;
+
+    private String distribution;
+
+    private String detail;
+
+    private String rdRate;
+
+    private Integer rdNumber;
 
     public String getPlanner() {
         return planner;
@@ -182,6 +208,14 @@ public class AssetPlanInfoPlannerView {
         this.deptcode = deptcode == null ? null : deptcode.trim();
     }
 
+    public String getDept3name() {
+        return dept3name;
+    }
+
+    public void setDept3name(String dept3name) {
+        this.dept3name = dept3name == null ? null : dept3name.trim();
+    }
+
     public String getDept2code() {
         return dept2code;
     }
@@ -270,6 +304,38 @@ public class AssetPlanInfoPlannerView {
         this.assetcategory = assetcategory == null ? null : assetcategory.trim();
     }
 
+    public String getReceiverplace() {
+        return receiverplace;
+    }
+
+    public void setReceiverplace(String receiverplace) {
+        this.receiverplace = receiverplace == null ? null : receiverplace.trim();
+    }
+
+    public Integer getGoodstime() {
+        return goodstime;
+    }
+
+    public void setGoodstime(Integer goodstime) {
+        this.goodstime = goodstime;
+    }
+
+    public String getAssetnote() {
+        return assetnote;
+    }
+
+    public void setAssetnote(String assetnote) {
+        this.assetnote = assetnote == null ? null : assetnote.trim();
+    }
+
+    public String getApstatus() {
+        return apstatus;
+    }
+
+    public void setApstatus(String apstatus) {
+        this.apstatus = apstatus == null ? null : apstatus.trim();
+    }
+
     public String getGroupflag() {
         return groupflag;
     }
@@ -292,5 +358,69 @@ public class AssetPlanInfoPlannerView {
 
     public void setGroupflagdetail(String groupflagdetail) {
         this.groupflagdetail = groupflagdetail == null ? null : groupflagdetail.trim();
+    }
+
+    public String getApprovalresult() {
+        return approvalresult;
+    }
+
+    public void setApprovalresult(String approvalresult) {
+        this.approvalresult = approvalresult == null ? null : approvalresult.trim();
+    }
+
+    public String getApstatusdetail() {
+        return apstatusdetail;
+    }
+
+    public void setApstatusdetail(String apstatusdetail) {
+        this.apstatusdetail = apstatusdetail == null ? null : apstatusdetail.trim();
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate == null ? null : rate.trim();
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public String getDistribution() {
+        return distribution;
+    }
+
+    public void setDistribution(String distribution) {
+        this.distribution = distribution == null ? null : distribution.trim();
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail == null ? null : detail.trim();
+    }
+
+    public String getRdRate() {
+        return rdRate;
+    }
+
+    public void setRdRate(String rdRate) {
+        this.rdRate = rdRate == null ? null : rdRate.trim();
+    }
+
+    public Integer getRdNumber() {
+        return rdNumber;
+    }
+
+    public void setRdNumber(Integer rdNumber) {
+        this.rdNumber = rdNumber;
     }
 }

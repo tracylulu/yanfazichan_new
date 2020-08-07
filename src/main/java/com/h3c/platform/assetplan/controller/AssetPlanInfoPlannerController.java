@@ -55,6 +55,7 @@ import com.h3c.platform.sysmgr.entity.OperationLog;
 import com.h3c.platform.sysmgr.service.OperationLogService;
 import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.ExportExcelWrapper;
+import com.h3c.platform.util.SysDicInfoUtil;
 import com.h3c.platform.util.UserUtils;
 
 import io.swagger.annotations.Api;
@@ -83,6 +84,8 @@ public class AssetPlanInfoPlannerController {
 	private SysDicInfoService sysDicInfoService;
 	@Autowired
 	private  OperationLogService operationLogService;
+	@Autowired
+	private SysDicInfoUtil sysDicInfoUtil;
 	
 	@ApiOperation(value="展示计划员审核列表信息")
    	@PostMapping("/getPlannerInfoList")
@@ -316,11 +319,20 @@ public class AssetPlanInfoPlannerController {
 		
 		String planner = assetInfoPlannerExportEntity.getPlanner();
 		String applymonth = assetInfoPlannerExportEntity.getApplymonth();
-		String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价", "同意金额","申购人", "二级部门",
+		/*String[] header = new String[] { "物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价", "同意金额","申购人", "二级部门",
     									"用途", "使用率（部门/研发总体）", "供应商类别-事实上独家供应","预计总价", "项目编码", "评审意见"};
 		String[] column = new String[] { "Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
 										"Pprice","Actualmoney", "Requiredusername","Dept2name","Purpose", "Usagerate", 
-										"Manufacturertypeenum","Totalmoney","Itemcode","Plannernote"};
+										"Manufacturertypeenum","Totalmoney","Itemcode","Plannernote"};*/
+		String[] header = new String[] { "评审结果","物品名称", "厂家", "型号", "申报数量","同意数量", "预计单价","申购金额", "同意金额",
+				"申购人", "二级部门", "三级部门", "项目编码", "类别", "货期（天）", "用途", "到货地点", "备注", "审批状态","评审意见",
+				"使用率","数量","设备分布","使用率明细","研发总体","研发总体数量"};
+		String[] column = new String[] { "Approvalresult","Assetname", "Assetmanufacturer", "Assetmodel", "Requireds","Requiredsaudit", 
+				"Pprice","Totalmoney", "Actualmoney","Requiredusername","Dept2name","Dept3name", "Itemcode", 
+				"Assetcategory","Goodstime","Purpose","Receiverplace","Assetnote","Apstatusdetail","Plannernote","Rate","Number",
+				"Distribution","Detail","RdRate","RdNumber"};
+		
+		
 		String currentUserId = UserUtils.getCurrentUserId();
 		List<String> lstHeader = Arrays.asList(header);
 		List<String> lsth = new ArrayList<>(lstHeader);
@@ -334,6 +346,15 @@ public class AssetPlanInfoPlannerController {
 		param.put("Planner",planner);
 		param.put("ApplyMonth",applymonth);
 		List<AssetPlanInfoPlannerView> lst = assetPlanInfoService.exportAssetPlanInfoForPlanner(param);
+		//类别，货期，到货地点转换成汉字重新赋值导出
+		for (int i = 0; i < lst.size(); i++) {
+			SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(lst.get(i).getAssetcategory());
+			lst.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
+			lst.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+			SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(lst.get(i).getReceiverplace());
+			lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
+		}
+		
 		ExportExcelWrapper<AssetPlanInfoPlannerView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoPlannerView>();
 
 		StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExportForPlanner", "计划员环节资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");

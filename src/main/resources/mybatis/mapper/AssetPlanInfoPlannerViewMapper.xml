@@ -17,6 +17,7 @@
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
+    <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
     <result column="dept2Code" jdbcType="VARCHAR" property="dept2code" />
     <result column="dept2Name" jdbcType="VARCHAR" property="dept2name" />
     <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
@@ -28,9 +29,21 @@
     <result column="UsageRate" jdbcType="VARCHAR" property="usagerate" />
     <result column="ManufacturerTypeEnum" jdbcType="VARCHAR" property="manufacturertypeenum" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
+    <result column="ReceiverPlace" jdbcType="VARCHAR" property="receiverplace" />
+    <result column="Goodstime" jdbcType="INTEGER" property="goodstime" />
+    <result column="AssetNote" jdbcType="VARCHAR" property="assetnote" />
+    <result column="APStatus" jdbcType="VARCHAR" property="apstatus" />
     <result column="GroupFlag" jdbcType="VARCHAR" property="groupflag" />
     <result column="ReviewTime" jdbcType="TIMESTAMP" property="reviewtime" />
     <result column="GroupflagDetail" jdbcType="VARCHAR" property="groupflagdetail" />
+    <result column="ApprovalResult" jdbcType="VARCHAR" property="approvalresult" />
+    <result column="APStatusDetail" jdbcType="VARCHAR" property="apstatusdetail" />
+    <result column="rate" jdbcType="VARCHAR" property="rate" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="distribution" jdbcType="VARCHAR" property="distribution" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="rd_rate" jdbcType="VARCHAR" property="rdRate" />
+    <result column="rd_number" jdbcType="INTEGER" property="rdNumber" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -93,9 +106,10 @@
   <sql id="Base_Column_List">
     Planner, AssetPlanID, PlanCode, AssetName, ApplyMonth, AssetManufacturer, Requireds, 
     RequiredsAudit, NoPassCount, PPrice, TotalMoney, ActualMoney, RequiredUserName, RequiredUser, 
-    DeptCode, dept2Code, dept2Name, IsCompleteSet, CompleteSetCode, AssetModel, ItemCode, 
-    Purpose, PlannerNote, UsageRate, ManufacturerTypeEnum, AssetCategory, GroupFlag, 
-    ReviewTime, GroupflagDetail
+    DeptCode, Dept3Name, dept2Code, dept2Name, IsCompleteSet, CompleteSetCode, AssetModel, 
+    ItemCode, Purpose, PlannerNote, UsageRate, ManufacturerTypeEnum, AssetCategory, ReceiverPlace, 
+    Goodstime, AssetNote, APStatus, GroupFlag, ReviewTime, GroupflagDetail, ApprovalResult, 
+    APStatusDetail, rate, number, distribution, detail, rd_rate, rd_number
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerViewExample" resultMap="BaseResultMap">
     select
@@ -123,21 +137,31 @@
       Requireds, RequiredsAudit, NoPassCount, 
       PPrice, TotalMoney, ActualMoney, 
       RequiredUserName, RequiredUser, DeptCode, 
-      dept2Code, dept2Name, IsCompleteSet, 
-      CompleteSetCode, AssetModel, ItemCode, 
-      Purpose, PlannerNote, UsageRate, 
-      ManufacturerTypeEnum, AssetCategory, GroupFlag, 
-      ReviewTime, GroupflagDetail)
+      Dept3Name, dept2Code, dept2Name, 
+      IsCompleteSet, CompleteSetCode, AssetModel, 
+      ItemCode, Purpose, PlannerNote, 
+      UsageRate, ManufacturerTypeEnum, AssetCategory, 
+      ReceiverPlace, Goodstime, AssetNote, 
+      APStatus, GroupFlag, ReviewTime, 
+      GroupflagDetail, ApprovalResult, APStatusDetail, 
+      rate, number, distribution, 
+      detail, rd_rate, rd_number
+      )
     values (#{planner,jdbcType=VARCHAR}, #{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, 
       #{assetname,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, 
       #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, #{nopasscount,jdbcType=BIGINT}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
       #{requiredusername,jdbcType=VARCHAR}, #{requireduser,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
-      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{iscompleteset,jdbcType=VARCHAR}, 
-      #{completesetcode,jdbcType=INTEGER}, #{assetmodel,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
-      #{purpose,jdbcType=VARCHAR}, #{plannernote,jdbcType=VARCHAR}, #{usagerate,jdbcType=VARCHAR}, 
-      #{manufacturertypeenum,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{groupflag,jdbcType=VARCHAR}, 
-      #{reviewtime,jdbcType=TIMESTAMP}, #{groupflagdetail,jdbcType=VARCHAR})
+      #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
+      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{assetmodel,jdbcType=VARCHAR}, 
+      #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{plannernote,jdbcType=VARCHAR}, 
+      #{usagerate,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
+      #{receiverplace,jdbcType=VARCHAR}, #{goodstime,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
+      #{apstatus,jdbcType=VARCHAR}, #{groupflag,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, 
+      #{groupflagdetail,jdbcType=VARCHAR}, #{approvalresult,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
+      #{rate,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{distribution,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{rdRate,jdbcType=VARCHAR}, #{rdNumber,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView">
     insert into AssetPlanInfoPlannerView
@@ -187,6 +211,9 @@
       <if test="deptcode != null">
         DeptCode,
       </if>
+      <if test="dept3name != null">
+        Dept3Name,
+      </if>
       <if test="dept2code != null">
         dept2Code,
       </if>
@@ -220,6 +247,18 @@
       <if test="assetcategory != null">
         AssetCategory,
       </if>
+      <if test="receiverplace != null">
+        ReceiverPlace,
+      </if>
+      <if test="goodstime != null">
+        Goodstime,
+      </if>
+      <if test="assetnote != null">
+        AssetNote,
+      </if>
+      <if test="apstatus != null">
+        APStatus,
+      </if>
       <if test="groupflag != null">
         GroupFlag,
       </if>
@@ -228,6 +267,30 @@
       </if>
       <if test="groupflagdetail != null">
         GroupflagDetail,
+      </if>
+      <if test="approvalresult != null">
+        ApprovalResult,
+      </if>
+      <if test="apstatusdetail != null">
+        APStatusDetail,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="distribution != null">
+        distribution,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="rdRate != null">
+        rd_rate,
+      </if>
+      <if test="rdNumber != null">
+        rd_number,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -276,6 +339,9 @@
       <if test="deptcode != null">
         #{deptcode,jdbcType=VARCHAR},
       </if>
+      <if test="dept3name != null">
+        #{dept3name,jdbcType=VARCHAR},
+      </if>
       <if test="dept2code != null">
         #{dept2code,jdbcType=VARCHAR},
       </if>
@@ -309,6 +375,18 @@
       <if test="assetcategory != null">
         #{assetcategory,jdbcType=VARCHAR},
       </if>
+      <if test="receiverplace != null">
+        #{receiverplace,jdbcType=VARCHAR},
+      </if>
+      <if test="goodstime != null">
+        #{goodstime,jdbcType=INTEGER},
+      </if>
+      <if test="assetnote != null">
+        #{assetnote,jdbcType=VARCHAR},
+      </if>
+      <if test="apstatus != null">
+        #{apstatus,jdbcType=VARCHAR},
+      </if>
       <if test="groupflag != null">
         #{groupflag,jdbcType=VARCHAR},
       </if>
@@ -317,6 +395,30 @@
       </if>
       <if test="groupflagdetail != null">
         #{groupflagdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalresult != null">
+        #{approvalresult,jdbcType=VARCHAR},
+      </if>
+      <if test="apstatusdetail != null">
+        #{apstatusdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="distribution != null">
+        #{distribution,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="rdRate != null">
+        #{rdRate,jdbcType=VARCHAR},
+      </if>
+      <if test="rdNumber != null">
+        #{rdNumber,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -374,6 +476,9 @@
       <if test="record.deptcode != null">
         DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       </if>
+      <if test="record.dept3name != null">
+        Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
+      </if>
       <if test="record.dept2code != null">
         dept2Code = #{record.dept2code,jdbcType=VARCHAR},
       </if>
@@ -407,6 +512,18 @@
       <if test="record.assetcategory != null">
         AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
       </if>
+      <if test="record.receiverplace != null">
+        ReceiverPlace = #{record.receiverplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodstime != null">
+        Goodstime = #{record.goodstime,jdbcType=INTEGER},
+      </if>
+      <if test="record.assetnote != null">
+        AssetNote = #{record.assetnote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apstatus != null">
+        APStatus = #{record.apstatus,jdbcType=VARCHAR},
+      </if>
       <if test="record.groupflag != null">
         GroupFlag = #{record.groupflag,jdbcType=VARCHAR},
       </if>
@@ -415,6 +532,30 @@
       </if>
       <if test="record.groupflagdetail != null">
         GroupflagDetail = #{record.groupflagdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalresult != null">
+        ApprovalResult = #{record.approvalresult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apstatusdetail != null">
+        APStatusDetail = #{record.apstatusdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate != null">
+        rate = #{record.rate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.number != null">
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.distribution != null">
+        distribution = #{record.distribution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null">
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rdRate != null">
+        rd_rate = #{record.rdRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rdNumber != null">
+        rd_number = #{record.rdNumber,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -438,6 +579,7 @@
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       dept2Code = #{record.dept2code,jdbcType=VARCHAR},
       dept2Name = #{record.dept2name,jdbcType=VARCHAR},
       IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
@@ -449,9 +591,21 @@
       UsageRate = #{record.usagerate,jdbcType=VARCHAR},
       ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
+      ReceiverPlace = #{record.receiverplace,jdbcType=VARCHAR},
+      Goodstime = #{record.goodstime,jdbcType=INTEGER},
+      AssetNote = #{record.assetnote,jdbcType=VARCHAR},
+      APStatus = #{record.apstatus,jdbcType=VARCHAR},
       GroupFlag = #{record.groupflag,jdbcType=VARCHAR},
       ReviewTime = #{record.reviewtime,jdbcType=TIMESTAMP},
-      GroupflagDetail = #{record.groupflagdetail,jdbcType=VARCHAR}
+      GroupflagDetail = #{record.groupflagdetail,jdbcType=VARCHAR},
+      ApprovalResult = #{record.approvalresult,jdbcType=VARCHAR},
+      APStatusDetail = #{record.apstatusdetail,jdbcType=VARCHAR},
+      rate = #{record.rate,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=INTEGER},
+      distribution = #{record.distribution,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      rd_rate = #{record.rdRate,jdbcType=VARCHAR},
+      rd_number = #{record.rdNumber,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
