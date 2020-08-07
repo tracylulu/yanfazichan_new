@@ -245,19 +245,19 @@ public class IBPMController {
 	}
 	
 	private String getCategory(JSONArray lst,String code) {
-		String place="";
+		String category="";
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			
 			if(code.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))) ) {
 				String[] addrArr= obj.getString("dic_value").split("_");
-				place=addrArr[2];
+				category=addrArr[2];
 				
 				break;
 			}
 		}
 		
-		return "W10_XZ"+place;
+		return category;
 	}
 
 	@PostMapping("/writeBpmCode")
