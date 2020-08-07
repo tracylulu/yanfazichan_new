@@ -1,6 +1,7 @@
 package com.h3c.platform.assetplan.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class AssetPlanInfoDept2View {
     private Integer assetplanid;
@@ -31,6 +32,10 @@ public class AssetPlanInfoDept2View {
 
     private String dept3name;
 
+    private String dept2code;
+
+    private String dept2name;
+
     private String itemcode;
 
     private String purpose;
@@ -54,6 +59,8 @@ public class AssetPlanInfoDept2View {
     private String apstage;
 
     private Integer reviewresult;
+
+    private Date reviewtime;
 
     private String applymonth;
 
@@ -171,6 +178,22 @@ public class AssetPlanInfoDept2View {
         this.dept3name = dept3name == null ? null : dept3name.trim();
     }
 
+    public String getDept2code() {
+        return dept2code;
+    }
+
+    public void setDept2code(String dept2code) {
+        this.dept2code = dept2code == null ? null : dept2code.trim();
+    }
+
+    public String getDept2name() {
+        return dept2name;
+    }
+
+    public void setDept2name(String dept2name) {
+        this.dept2name = dept2name == null ? null : dept2name.trim();
+    }
+
     public String getItemcode() {
         return itemcode;
     }
@@ -265,6 +288,14 @@ public class AssetPlanInfoDept2View {
 
     public void setReviewresult(Integer reviewresult) {
         this.reviewresult = reviewresult;
+    }
+
+    public Date getReviewtime() {
+        return reviewtime;
+    }
+
+    public void setReviewtime(Date reviewtime) {
+        this.reviewtime = reviewtime;
     }
 
     public String getApplymonth() {

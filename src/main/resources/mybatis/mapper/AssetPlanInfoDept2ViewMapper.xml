@@ -16,6 +16,8 @@
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
     <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
+    <result column="Dept2Code" jdbcType="VARCHAR" property="dept2code" />
+    <result column="Dept2Name" jdbcType="VARCHAR" property="dept2name" />
     <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
     <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
     <result column="ApplyUser" jdbcType="VARCHAR" property="applyuser" />
@@ -28,6 +30,7 @@
     <result column="APStatus" jdbcType="VARCHAR" property="apstatus" />
     <result column="APStage" jdbcType="VARCHAR" property="apstage" />
     <result column="ReviewResult" jdbcType="INTEGER" property="reviewresult" />
+    <result column="ReviewTime" jdbcType="TIMESTAMP" property="reviewtime" />
     <result column="ApplyMonth" jdbcType="VARCHAR" property="applymonth" />
     <result column="DeleteFlag" jdbcType="VARCHAR" property="deleteflag" />
   </resultMap>
@@ -92,8 +95,9 @@
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, Requireds, RequiredsAudit, 
     PPrice, TotalMoney, ActualMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, 
-    ItemCode, Purpose, ApplyUser, UsageRate, Dept2Manager, Dept2CheckNote, OutTimePlanEnum, 
-    IsCompleteSet, CompleteSetCode, APStatus, APStage, ReviewResult, ApplyMonth, DeleteFlag
+    Dept2Code, Dept2Name, ItemCode, Purpose, ApplyUser, UsageRate, Dept2Manager, Dept2CheckNote, 
+    OutTimePlanEnum, IsCompleteSet, CompleteSetCode, APStatus, APStage, ReviewResult, 
+    ReviewTime, ApplyMonth, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDept2ViewExample" resultMap="BaseResultMap">
     select
@@ -120,21 +124,23 @@
       AssetManufacturer, AssetModel, Requireds, 
       RequiredsAudit, PPrice, TotalMoney, 
       ActualMoney, RequiredUser, RequiredUserName, 
-      DeptCode, Dept3Name, ItemCode, 
-      Purpose, ApplyUser, UsageRate, 
-      Dept2Manager, Dept2CheckNote, OutTimePlanEnum, 
-      IsCompleteSet, CompleteSetCode, APStatus, 
-      APStage, ReviewResult, ApplyMonth, 
+      DeptCode, Dept3Name, Dept2Code, 
+      Dept2Name, ItemCode, Purpose, 
+      ApplyUser, UsageRate, Dept2Manager, 
+      Dept2CheckNote, OutTimePlanEnum, IsCompleteSet, 
+      CompleteSetCode, APStatus, APStage, 
+      ReviewResult, ReviewTime, ApplyMonth, 
       DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
       #{requiredsaudit,jdbcType=INTEGER}, #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, 
       #{actualmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, 
-      #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
-      #{purpose,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, #{usagerate,jdbcType=VARCHAR}, 
-      #{dept2manager,jdbcType=VARCHAR}, #{dept2checknote,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, 
-      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, 
-      #{apstage,jdbcType=VARCHAR}, #{reviewresult,jdbcType=INTEGER}, #{applymonth,jdbcType=VARCHAR}, 
+      #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, 
+      #{dept2name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{usagerate,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, 
+      #{dept2checknote,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, #{iscompleteset,jdbcType=VARCHAR}, 
+      #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
+      #{reviewresult,jdbcType=INTEGER}, #{reviewtime,jdbcType=TIMESTAMP}, #{applymonth,jdbcType=VARCHAR}, 
       #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDept2View">
@@ -182,6 +188,12 @@
       <if test="dept3name != null">
         Dept3Name,
       </if>
+      <if test="dept2code != null">
+        Dept2Code,
+      </if>
+      <if test="dept2name != null">
+        Dept2Name,
+      </if>
       <if test="itemcode != null">
         ItemCode,
       </if>
@@ -217,6 +229,9 @@
       </if>
       <if test="reviewresult != null">
         ReviewResult,
+      </if>
+      <if test="reviewtime != null">
+        ReviewTime,
       </if>
       <if test="applymonth != null">
         ApplyMonth,
@@ -268,6 +283,12 @@
       <if test="dept3name != null">
         #{dept3name,jdbcType=VARCHAR},
       </if>
+      <if test="dept2code != null">
+        #{dept2code,jdbcType=VARCHAR},
+      </if>
+      <if test="dept2name != null">
+        #{dept2name,jdbcType=VARCHAR},
+      </if>
       <if test="itemcode != null">
         #{itemcode,jdbcType=VARCHAR},
       </if>
@@ -303,6 +324,9 @@
       </if>
       <if test="reviewresult != null">
         #{reviewresult,jdbcType=INTEGER},
+      </if>
+      <if test="reviewtime != null">
+        #{reviewtime,jdbcType=TIMESTAMP},
       </if>
       <if test="applymonth != null">
         #{applymonth,jdbcType=VARCHAR},
@@ -363,6 +387,12 @@
       <if test="record.dept3name != null">
         Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       </if>
+      <if test="record.dept2code != null">
+        Dept2Code = #{record.dept2code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept2name != null">
+        Dept2Name = #{record.dept2name,jdbcType=VARCHAR},
+      </if>
       <if test="record.itemcode != null">
         ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       </if>
@@ -399,6 +429,9 @@
       <if test="record.reviewresult != null">
         ReviewResult = #{record.reviewresult,jdbcType=INTEGER},
       </if>
+      <if test="record.reviewtime != null">
+        ReviewTime = #{record.reviewtime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.applymonth != null">
         ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
       </if>
@@ -426,6 +459,8 @@
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
+      Dept2Code = #{record.dept2code,jdbcType=VARCHAR},
+      Dept2Name = #{record.dept2name,jdbcType=VARCHAR},
       ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       Purpose = #{record.purpose,jdbcType=VARCHAR},
       ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
@@ -438,6 +473,7 @@
       APStatus = #{record.apstatus,jdbcType=VARCHAR},
       APStage = #{record.apstage,jdbcType=VARCHAR},
       ReviewResult = #{record.reviewresult,jdbcType=INTEGER},
+      ReviewTime = #{record.reviewtime,jdbcType=TIMESTAMP},
       ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
       DeleteFlag = #{record.deleteflag,jdbcType=VARCHAR}
     <if test="_parameter != null">
