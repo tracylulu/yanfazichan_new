@@ -1,5 +1,6 @@
 package com.h3c.platform.api.ibpm.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -62,6 +63,7 @@ public class IBPMController {
 	@PostMapping("/unSoft")
 	@ApiOperation("非软件类")
 	public ResponseResult unSoft(@RequestBody IBPMEntity entity) throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		// 验证管理员
@@ -92,7 +94,7 @@ public class IBPMController {
 			detail.put("itemName", tempPro.isPresent() ? tempPro.get().getProjectName() : "");
 			detail.put("requiredUser", info.getRequireduser());
 			detail.put("category",  getCategory(lstCategory, info.getAssetcategory()));
-			detail.put("reqArrivalDate", info.getReqarrivaldate());
+			detail.put("reqArrivalDate", df.format(info.getReqarrivaldate()));
 			detail.put("receiverPlace", getAddr(lstAddr, info.getReceiverplace()));
 			detail.put("note", info.getAssetnote());
 
@@ -114,6 +116,7 @@ public class IBPMController {
 	@PostMapping("/soft")
 	@ApiOperation("软件类")
 	public ResponseResult soft(@RequestBody IBPMEntity entity) throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		// 验证管理员
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
 			ResponseResult.fail("当前人员没有权限处理此单据！");
@@ -133,18 +136,20 @@ public class IBPMController {
 			Map<String, Object> detail = new HashMap<String, Object>();
 			detail.put("assetName", info.getAssetname());
 			detail.put("itemCode", info.getItemcode());
-
+			Optional<ProjectInfo> tempPro = lstPro.stream().filter(o -> info.getItemcode().equals(o.getProjectNo()))
+					.findAny();
+			detail.put("itemName", tempPro.isPresent() ? tempPro.get().getProjectName() : "");
 			detail.put("manufacturer", info.getAssetmanufacturer());
 			detail.put("model", info.getAssetmodel());
 			detail.put("price", info.getPprice());
 			detail.put("requireds", info.getRequiredsaudit());
-			detail.put("reqArrivalDate", info.getReqarrivaldate());
-			detail.put("startTime", info.getReqarrivaldate());
+			detail.put("reqArrivalDate", df.format(info.getReqarrivaldate()));
+			detail.put("startTime", df.format(info.getReqarrivaldate()));
 			Calendar cal = Calendar.getInstance();
 
 			cal.setTime(info.getReqarrivaldate());
 			cal.add(Calendar.YEAR, 1);
-			detail.put("endTime", cal.getTime());
+			detail.put("endTime", df.format(cal.getTime()));
 			detail.put("receiverPlace", getAddr(lstAddr, info.getReceiverplace()));
 			detail.put("requiredUser", info.getRequireduser());
 			detail.put("purpose", info.getPurpose());
