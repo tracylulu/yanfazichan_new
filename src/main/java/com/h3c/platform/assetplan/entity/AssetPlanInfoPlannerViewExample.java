@@ -1996,52 +1996,62 @@ public class AssetPlanInfoPlannerViewExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeEqualTo(Integer value) {
+        public Criteria andGoodstimeEqualTo(String value) {
             addCriterion("Goodstime =", value, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeNotEqualTo(Integer value) {
+        public Criteria andGoodstimeNotEqualTo(String value) {
             addCriterion("Goodstime <>", value, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeGreaterThan(Integer value) {
+        public Criteria andGoodstimeGreaterThan(String value) {
             addCriterion("Goodstime >", value, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andGoodstimeGreaterThanOrEqualTo(String value) {
             addCriterion("Goodstime >=", value, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeLessThan(Integer value) {
+        public Criteria andGoodstimeLessThan(String value) {
             addCriterion("Goodstime <", value, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeLessThanOrEqualTo(Integer value) {
+        public Criteria andGoodstimeLessThanOrEqualTo(String value) {
             addCriterion("Goodstime <=", value, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeIn(List<Integer> values) {
+        public Criteria andGoodstimeLike(String value) {
+            addCriterion("Goodstime like", value, "goodstime");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodstimeNotLike(String value) {
+            addCriterion("Goodstime not like", value, "goodstime");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodstimeIn(List<String> values) {
             addCriterion("Goodstime in", values, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeNotIn(List<Integer> values) {
+        public Criteria andGoodstimeNotIn(List<String> values) {
             addCriterion("Goodstime not in", values, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeBetween(Integer value1, Integer value2) {
+        public Criteria andGoodstimeBetween(String value1, String value2) {
             addCriterion("Goodstime between", value1, value2, "goodstime");
             return (Criteria) this;
         }
 
-        public Criteria andGoodstimeNotBetween(Integer value1, Integer value2) {
+        public Criteria andGoodstimeNotBetween(String value1, String value2) {
             addCriterion("Goodstime not between", value1, value2, "goodstime");
             return (Criteria) this;
         }

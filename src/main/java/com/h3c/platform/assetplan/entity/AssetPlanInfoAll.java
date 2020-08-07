@@ -57,7 +57,7 @@ public class AssetPlanInfoAll {
 
     private String modifitime;
 
-    private Integer goodstime;
+    private String goodstime;
 
     private String reqarrivaldate;
 
@@ -328,11 +328,11 @@ public class AssetPlanInfoAll {
 		this.modifitime = modifitime;
 	}
 
-	public Integer getGoodstime() {
+	public String getGoodstime() {
 		return goodstime;
 	}
 
-	public void setGoodstime(Integer goodstime) {
+	public void setGoodstime(String goodstime) {
 		this.goodstime = goodstime;
 	}
 

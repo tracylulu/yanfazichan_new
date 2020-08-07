@@ -419,7 +419,7 @@ public class AssetPlanInfoSearchController {
 			for (int i = 0; i < lst.size(); i++) {
 					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(lst.get(i).getAssetcategory());
 					lst.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
-					lst.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+					lst.get(i).setGoodstime(sysDicCategory.getGoodstime());
 					SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(lst.get(i).getReceiverplace());
 					lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
 			}

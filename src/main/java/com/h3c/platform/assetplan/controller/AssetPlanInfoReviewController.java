@@ -129,7 +129,7 @@ public class AssetPlanInfoReviewController {
 	   					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewInfoList.get(i).getAssetcategory());
 	   					reviewInfoList.get(i).setAssetcategoryId(sysDicCategory.getAssetCategoryId());
 	   					reviewInfoList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
-	   					reviewInfoList.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+	   					reviewInfoList.get(i).setGoodstime(sysDicCategory.getGoodstime());
 	   					SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewInfoList.get(i).getReceiverplace());
 	   					reviewInfoList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
 	   					reviewInfoList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
@@ -196,7 +196,7 @@ public class AssetPlanInfoReviewController {
 				//评审后总金额
 				ap.setActualmoney(updateEntity.getActualmoney().get(i));
 				
-				ap.setGoodstime(Integer.parseInt(updateEntity.getGoodstime()));
+				ap.setGoodstime(updateEntity.getGoodstime());
 				
 				//规范1  不规范2  未审核3  在审核4 
 				if(updateEntity.getReviewresult()==null){
@@ -465,7 +465,7 @@ public class AssetPlanInfoReviewController {
    					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());
    					reviewResultList.get(i).setAssetcategoryId(sysDicCategory.getAssetCategoryId());
    					reviewResultList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
-   					reviewResultList.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+   					reviewResultList.get(i).setGoodstime(sysDicCategory.getGoodstime());
    					SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewResultList.get(i).getReceiverplace());
    					reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
    					reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
@@ -542,7 +542,7 @@ public class AssetPlanInfoReviewController {
 			SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());
 			reviewResultList.get(i).setAssetcategoryId(sysDicCategory.getAssetCategoryId());
 			reviewResultList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
-			reviewResultList.get(i).setGoodstime(Integer.parseInt(sysDicCategory.getGoodstime()));
+			reviewResultList.get(i).setGoodstime(sysDicCategory.getGoodstime());
 			SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewResultList.get(i).getReceiverplace());
 			reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
 			reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());

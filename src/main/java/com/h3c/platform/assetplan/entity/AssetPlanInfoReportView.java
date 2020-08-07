@@ -20,7 +20,7 @@ public class AssetPlanInfoReportView {
 
     private String assetcategory;
 
-    private Integer goodstime;
+    private String goodstime;
 
     private String purpose;
 
@@ -30,11 +30,11 @@ public class AssetPlanInfoReportView {
 
     private Long nopasscount;
 
-    private String pprice;
+    private BigDecimal pprice;
 
-    private String totalmoney;
+    private BigDecimal totalmoney;
 
-    private String actualmoney;
+    private BigDecimal actualmoney;
 
     private BigDecimal nopassmoney;
 
@@ -172,12 +172,12 @@ public class AssetPlanInfoReportView {
         this.assetcategory = assetcategory == null ? null : assetcategory.trim();
     }
 
-    public Integer getGoodstime() {
+    public String getGoodstime() {
         return goodstime;
     }
 
-    public void setGoodstime(Integer goodstime) {
-        this.goodstime = goodstime;
+    public void setGoodstime(String goodstime) {
+        this.goodstime = goodstime == null ? null : goodstime.trim();
     }
 
     public String getPurpose() {
@@ -212,27 +212,27 @@ public class AssetPlanInfoReportView {
         this.nopasscount = nopasscount;
     }
 
-    public String getPprice() {
+    public BigDecimal getPprice() {
         return pprice;
     }
 
-    public void setPprice(String pprice) {
+    public void setPprice(BigDecimal pprice) {
         this.pprice = pprice;
     }
 
-    public String getTotalmoney() {
+    public BigDecimal getTotalmoney() {
         return totalmoney;
     }
 
-    public void setTotalmoney(String totalmoney) {
+    public void setTotalmoney(BigDecimal totalmoney) {
         this.totalmoney = totalmoney;
     }
 
-    public String getActualmoney() {
+    public BigDecimal getActualmoney() {
         return actualmoney;
     }
 
-    public void setActualmoney(String actualmoney) {
+    public void setActualmoney(BigDecimal actualmoney) {
         this.actualmoney = actualmoney;
     }
 

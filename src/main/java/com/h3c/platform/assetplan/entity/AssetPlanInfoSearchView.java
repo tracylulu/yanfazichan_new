@@ -20,7 +20,7 @@ public class AssetPlanInfoSearchView {
 
     private String assetcategory;
 
-    private Integer goodstime;
+    private String goodstime;
 
     private String purpose;
 
@@ -168,12 +168,12 @@ public class AssetPlanInfoSearchView {
         this.assetcategory = assetcategory == null ? null : assetcategory.trim();
     }
 
-    public Integer getGoodstime() {
+    public String getGoodstime() {
         return goodstime;
     }
 
-    public void setGoodstime(Integer goodstime) {
-        this.goodstime = goodstime;
+    public void setGoodstime(String goodstime) {
+        this.goodstime = goodstime == null ? null : goodstime.trim();
     }
 
     public String getPurpose() {

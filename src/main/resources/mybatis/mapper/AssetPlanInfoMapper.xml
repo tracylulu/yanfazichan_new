@@ -24,7 +24,7 @@
     <result column="ApplyTime" jdbcType="TIMESTAMP" property="applytime" />
     <result column="Modifier" jdbcType="VARCHAR" property="modifier" />
     <result column="ModifiTime" jdbcType="TIMESTAMP" property="modifitime" />
-    <result column="Goodstime" jdbcType="INTEGER" property="goodstime" />
+    <result column="Goodstime" jdbcType="VARCHAR" property="goodstime" />
     <result column="ReqArrivalDate" jdbcType="DATE" property="reqarrivaldate" />
     <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
     <result column="CompleteSetCode" jdbcType="INTEGER" property="completesetcode" />
@@ -188,7 +188,7 @@
       #{purpose,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
       #{requireduser,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, #{assetnote,jdbcType=VARCHAR}, 
       #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
-      #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=INTEGER}, #{reqarrivaldate,jdbcType=DATE}, 
+      #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=VARCHAR}, #{reqarrivaldate,jdbcType=DATE}, 
       #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
       #{purchasereportid,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
       #{manufacturertypeenum,jdbcType=INTEGER}, #{specifymanufacturerid,jdbcType=VARCHAR}, 
@@ -445,7 +445,7 @@
         #{modifitime,jdbcType=TIMESTAMP},
       </if>
       <if test="goodstime != null">
-        #{goodstime,jdbcType=INTEGER},
+        #{goodstime,jdbcType=VARCHAR},
       </if>
       <if test="reqarrivaldate != null">
         #{reqarrivaldate,jdbcType=DATE},
@@ -627,7 +627,7 @@
         ModifiTime = #{record.modifitime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.goodstime != null">
-        Goodstime = #{record.goodstime,jdbcType=INTEGER},
+        Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       </if>
       <if test="record.reqarrivaldate != null">
         ReqArrivalDate = #{record.reqarrivaldate,jdbcType=DATE},
@@ -760,7 +760,7 @@
       ApplyTime = #{record.applytime,jdbcType=TIMESTAMP},
       Modifier = #{record.modifier,jdbcType=VARCHAR},
       ModifiTime = #{record.modifitime,jdbcType=TIMESTAMP},
-      Goodstime = #{record.goodstime,jdbcType=INTEGER},
+      Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       ReqArrivalDate = #{record.reqarrivaldate,jdbcType=DATE},
       IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
       CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
@@ -866,7 +866,7 @@
         ModifiTime = #{modifitime,jdbcType=TIMESTAMP},
       </if>
       <if test="goodstime != null">
-        Goodstime = #{goodstime,jdbcType=INTEGER},
+        Goodstime = #{goodstime,jdbcType=VARCHAR},
       </if>
       <if test="reqarrivaldate != null">
         ReqArrivalDate = #{reqarrivaldate,jdbcType=DATE},
@@ -996,7 +996,7 @@
       ApplyTime = #{applytime,jdbcType=TIMESTAMP},
       Modifier = #{modifier,jdbcType=VARCHAR},
       ModifiTime = #{modifitime,jdbcType=TIMESTAMP},
-      Goodstime = #{goodstime,jdbcType=INTEGER},
+      Goodstime = #{goodstime,jdbcType=VARCHAR},
       ReqArrivalDate = #{reqarrivaldate,jdbcType=DATE},
       IsCompleteSet = #{iscompleteset,jdbcType=VARCHAR},
       CompleteSetCode = #{completesetcode,jdbcType=INTEGER},

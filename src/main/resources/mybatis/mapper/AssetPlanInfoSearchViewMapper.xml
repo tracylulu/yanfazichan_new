@@ -10,7 +10,7 @@
     <result column="AssetManufacturer" jdbcType="VARCHAR" property="assetmanufacturer" />
     <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
-    <result column="Goodstime" jdbcType="INTEGER" property="goodstime" />
+    <result column="Goodstime" jdbcType="VARCHAR" property="goodstime" />
     <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
     <result column="Requireds" jdbcType="INTEGER" property="requireds" />
     <result column="RequiredsAudit" jdbcType="INTEGER" property="requiredsaudit" />
@@ -162,7 +162,7 @@
       )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, 
       #{applymonth,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, 
-      #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{goodstime,jdbcType=INTEGER}, 
+      #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{goodstime,jdbcType=VARCHAR}, 
       #{purpose,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
       #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, 
@@ -359,7 +359,7 @@
         #{assetcategory,jdbcType=VARCHAR},
       </if>
       <if test="goodstime != null">
-        #{goodstime,jdbcType=INTEGER},
+        #{goodstime,jdbcType=VARCHAR},
       </if>
       <if test="purpose != null">
         #{purpose,jdbcType=VARCHAR},
@@ -520,7 +520,7 @@
         AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
       </if>
       <if test="record.goodstime != null">
-        Goodstime = #{record.goodstime,jdbcType=INTEGER},
+        Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       </if>
       <if test="record.purpose != null">
         Purpose = #{record.purpose,jdbcType=VARCHAR},
@@ -660,7 +660,7 @@
       AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
       AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
-      Goodstime = #{record.goodstime,jdbcType=INTEGER},
+      Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       Purpose = #{record.purpose,jdbcType=VARCHAR},
       Requireds = #{record.requireds,jdbcType=INTEGER},
       RequiredsAudit = #{record.requiredsaudit,jdbcType=INTEGER},

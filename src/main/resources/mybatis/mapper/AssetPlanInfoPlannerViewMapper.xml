@@ -30,7 +30,7 @@
     <result column="ManufacturerTypeEnum" jdbcType="VARCHAR" property="manufacturertypeenum" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
     <result column="ReceiverPlace" jdbcType="VARCHAR" property="receiverplace" />
-    <result column="Goodstime" jdbcType="INTEGER" property="goodstime" />
+    <result column="Goodstime" jdbcType="VARCHAR" property="goodstime" />
     <result column="AssetNote" jdbcType="VARCHAR" property="assetnote" />
     <result column="APStatus" jdbcType="VARCHAR" property="apstatus" />
     <result column="GroupFlag" jdbcType="VARCHAR" property="groupflag" />
@@ -156,7 +156,7 @@
       #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{assetmodel,jdbcType=VARCHAR}, 
       #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{plannernote,jdbcType=VARCHAR}, 
       #{usagerate,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
-      #{receiverplace,jdbcType=VARCHAR}, #{goodstime,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
+      #{receiverplace,jdbcType=VARCHAR}, #{goodstime,jdbcType=VARCHAR}, #{assetnote,jdbcType=VARCHAR}, 
       #{apstatus,jdbcType=VARCHAR}, #{groupflag,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, 
       #{groupflagdetail,jdbcType=VARCHAR}, #{approvalresult,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
       #{rate,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{distribution,jdbcType=VARCHAR}, 
@@ -379,7 +379,7 @@
         #{receiverplace,jdbcType=VARCHAR},
       </if>
       <if test="goodstime != null">
-        #{goodstime,jdbcType=INTEGER},
+        #{goodstime,jdbcType=VARCHAR},
       </if>
       <if test="assetnote != null">
         #{assetnote,jdbcType=VARCHAR},
@@ -516,7 +516,7 @@
         ReceiverPlace = #{record.receiverplace,jdbcType=VARCHAR},
       </if>
       <if test="record.goodstime != null">
-        Goodstime = #{record.goodstime,jdbcType=INTEGER},
+        Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       </if>
       <if test="record.assetnote != null">
         AssetNote = #{record.assetnote,jdbcType=VARCHAR},
@@ -592,7 +592,7 @@
       ManufacturerTypeEnum = #{record.manufacturertypeenum,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
       ReceiverPlace = #{record.receiverplace,jdbcType=VARCHAR},
-      Goodstime = #{record.goodstime,jdbcType=INTEGER},
+      Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       AssetNote = #{record.assetnote,jdbcType=VARCHAR},
       APStatus = #{record.apstatus,jdbcType=VARCHAR},
       GroupFlag = #{record.groupflag,jdbcType=VARCHAR},

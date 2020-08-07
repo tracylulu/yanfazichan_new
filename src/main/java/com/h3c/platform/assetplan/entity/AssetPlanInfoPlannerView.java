@@ -60,7 +60,7 @@ public class AssetPlanInfoPlannerView {
 
     private String receiverplace;
 
-    private Integer goodstime;
+    private String goodstime;
 
     private String assetnote;
 
@@ -312,12 +312,12 @@ public class AssetPlanInfoPlannerView {
         this.receiverplace = receiverplace == null ? null : receiverplace.trim();
     }
 
-    public Integer getGoodstime() {
+    public String getGoodstime() {
         return goodstime;
     }
 
-    public void setGoodstime(Integer goodstime) {
-        this.goodstime = goodstime;
+    public void setGoodstime(String goodstime) {
+        this.goodstime = goodstime == null ? null : goodstime.trim();
     }
 
     public String getAssetnote() {

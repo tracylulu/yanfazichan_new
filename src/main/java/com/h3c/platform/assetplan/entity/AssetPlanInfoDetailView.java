@@ -8,7 +8,7 @@ public class AssetPlanInfoDetailView {
 
     private String plancode;
 
-    private String pprice;
+    private BigDecimal pprice;
 
     private BigDecimal totalmoney;
 
@@ -48,7 +48,7 @@ public class AssetPlanInfoDetailView {
 
     private Date modifitime;
 
-    private Integer goodstime;
+    private String goodstime;
 
     private Date reqarrivaldate;
 
@@ -150,11 +150,11 @@ public class AssetPlanInfoDetailView {
         this.plancode = plancode == null ? null : plancode.trim();
     }
 
-    public String getPprice() {
+    public BigDecimal getPprice() {
         return pprice;
     }
 
-    public void setPprice(String pprice) {
+    public void setPprice(BigDecimal pprice) {
         this.pprice = pprice;
     }
 
@@ -310,12 +310,12 @@ public class AssetPlanInfoDetailView {
         this.modifitime = modifitime;
     }
 
-    public Integer getGoodstime() {
+    public String getGoodstime() {
         return goodstime;
     }
 
-    public void setGoodstime(Integer goodstime) {
-        this.goodstime = goodstime;
+    public void setGoodstime(String goodstime) {
+        this.goodstime = goodstime == null ? null : goodstime.trim();
     }
 
     public Date getReqarrivaldate() {
