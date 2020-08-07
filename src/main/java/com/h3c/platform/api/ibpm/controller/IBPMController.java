@@ -42,7 +42,7 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/ibpm")
-@Api(value = "ibmp相关接口", tags = "ibmp相关接口")
+@Api(value = "ibpm相关接口", tags = "ibpm相关接口")
 public class IBPMController {
 	@Autowired
 	private DeptInfoService deptService;
