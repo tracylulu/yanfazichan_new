@@ -141,7 +141,7 @@ public class AssetPlanInfoApplyController {
 				if(StringUtils.isBlank(ap.getReviewer())){
 					return ResponseResult.fail(false, "计划员ID字段必填");
 				} 
-				if(ap.getGoodstime()==null){
+				if(StringUtils.isBlank(ap.getGoodstime())){
 					return ResponseResult.fail(false, "货期字段必填");
 				} 
 				if(StringUtils.isBlank(ap.getReceiverplace())){
@@ -197,7 +197,7 @@ public class AssetPlanInfoApplyController {
 				if(StringUtils.isBlank(ap.getReviewer())){
 					return ResponseResult.fail(false, "计划员ID字段必填");
 				} 
-				if(ap.getGoodstime()==null){
+				if(StringUtils.isBlank(ap.getGoodstime())){
 					return ResponseResult.fail(false, "货期字段必填");
 				} 
 				if(StringUtils.isBlank(ap.getReceiverplace())){
