@@ -529,4 +529,48 @@
 		
 	
 	</select>
+	
+	<insert id="insertBackID" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfo" useGeneratedKeys="true" keyProperty="assetplanid">
+    insert into AssetPlanInfo (AssetPlanID, PlanCode, PPrice, 
+      TotalMoney, ActualMoney, AssetName, 
+      AssetManufacturer, AssetModel, AssetCategory, 
+      PlanMonth, Requireds, RequiredsAudit, 
+      Purpose, DeptCode, ItemCode, 
+      RequiredUser, ReceiverPlace, AssetNote, 
+      ApplyUser, ApplyTime, Modifier, 
+      ModifiTime, Goodstime, ReqArrivalDate, 
+      IsCompleteSet, CompleteSetCode, IsReqPurchaseReport, 
+      PurchaseReportID, ISSpecifyManufacturer, 
+      ManufacturerTypeEnum, SpecifyManufacturerID, 
+      AbnormalPlanEnum, APStatus, APStage, 
+      DeleteFlag, OutTimePlanEnum, UsageRate, 
+      Reviewer, ReviewTime, ReviewResult, 
+      ReviewNote, Dept3Manager, Dept3CheckTime, 
+      Dept3CheckNote, Dept2Manager, Dept2CheckTime, 
+      Dept2CheckNote, Planner, PlannerTime, 
+      PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
+      OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
+      Dept1ReviewNote, ReviewPerson)
+    values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{pprice,jdbcType=DECIMAL}, 
+      #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{assetname,jdbcType=VARCHAR}, 
+      #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
+      #{planmonth,jdbcType=DATE}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
+      #{purpose,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
+      #{requireduser,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, #{assetnote,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=VARCHAR}, #{reqarrivaldate,jdbcType=DATE}, 
+      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
+      #{purchasereportid,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{manufacturertypeenum,jdbcType=INTEGER}, #{specifymanufacturerid,jdbcType=VARCHAR}, 
+      #{abnormalplanenum,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
+      #{deleteflag,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, #{usagerate,jdbcType=VARCHAR}, 
+      #{reviewer,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, #{reviewresult,jdbcType=INTEGER}, 
+      #{reviewnote,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept3checktime,jdbcType=TIMESTAMP}, 
+      #{dept3checknote,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, #{dept2checktime,jdbcType=TIMESTAMP}, 
+      #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
+      #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
+      #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
+      #{dept1reviewnote,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR})
+  </insert>
+  
 </mapper>

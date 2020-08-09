@@ -2,6 +2,7 @@ package com.h3c.platform.common.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -27,19 +28,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.eos.common.constant.StatusCodeEnum;
 import com.eos.common.util.Result;
+import com.h3c.platform.annotation.UserLoginToken;
+import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.entity.FileLog;
 import com.h3c.platform.common.util.IPUtils;
 import com.h3c.platform.response.ResponseResult;
 
 @RequestMapping("/common/file")
-//@Controller
+@RestController
 @Api(value = "文件导入接口",tags = {"文件导入相关接口"})
 @CrossOrigin
 public class FileController {
@@ -53,45 +61,41 @@ public class FileController {
 //    @Autowired
 //    private FileLogService fileLogService;
 
-    @PostConstruct
+   /* @PostConstruct
     public void intiPath(){
         String seperator = File.separator;
         PATH =  filePath+seperator;
-    }
+    }*/
 
 
 
-    @RequestMapping(value="/uploadFile")
-    @ResponseBody
-    @ApiOperation(value = "导入文件", notes = "需要有文件", httpMethod = "POST")
-    public Result uploadFile(MultipartFile file, HttpServletRequest request){
-        try {
-            if(file.isEmpty()){
-            	return new Result(false,StatusCodeEnum.REQ_UPLOAD_FAIL);
-            }
-            String fileName = file.getOriginalFilename();
-            if(fileName.indexOf("\\")>-1){
-                fileName = fileName.substring(fileName.lastIndexOf("\\")+1);
-            }
-            String fileId = UUID.randomUUID().toString();
-            String extName = fileName.substring(fileName.lastIndexOf(".") );
-            System.out.println(PATH+ fileId+extName);
-            File dest = new File(PATH+ fileId+extName);
-            if(!dest.exists()){
-                dest.getParentFile().mkdirs();
-                dest.createNewFile();
-            }
-            file.transferTo(dest);
-            Map<String,Object> fileInfo = new HashMap<>();
-            fileInfo.put("fileName", fileName);
-            fileInfo.put("fileId", fileId+extName);
-//            createLog(fileId, fileName, extName, new Long(file.getSize()).intValue(), IPUtils.getIpAddr(request), "1");
-            //return ResponseResult.success(fileInfo, "上传成功");
-            return new Result(true,StatusCodeEnum.REQ_UPLOAD_SUCCESS,fileInfo);
-        }catch (Exception e){
-            logger.error("文件上传失败", e);
-            return new Result(false,StatusCodeEnum.REQ_UPLOAD_FAIL);
+    @PostMapping(value="/uploadFile")
+    @ApiOperation(value = "导入文件", notes = "需要有文件")
+    @UserLoginToken(logType=LogType.IMPORT)
+    public ResponseResult uploadFile(MultipartFile file, HttpServletRequest request) throws Exception{
+        if(file.isEmpty()){
+        	return ResponseResult.fail(StatusCodeEnum.REQ_UPLOAD_FAIL);
         }
+        String fileName = file.getOriginalFilename();
+        if(fileName.indexOf("\\")>-1){
+            fileName = fileName.substring(fileName.lastIndexOf("\\")+1);
+        }
+        String fileId = UUID.randomUUID().toString();
+        String extName = fileName.substring(fileName.lastIndexOf(".") );
+        System.out.println(PATH+ fileId+extName);
+        File dest = new File(PATH+ fileId+extName);
+        if(!dest.exists()){
+            dest.getParentFile().mkdirs();
+            dest.createNewFile();
+        }
+        file.transferTo(dest);
+        Map<String,Object> fileInfo = new HashMap<>();
+        fileInfo.put("fileName", fileName);
+        fileInfo.put("fileId", fileId+extName);
+//            createLog(fileId, fileName, extName, new Long(file.getSize()).intValue(), IPUtils.getIpAddr(request), "1");
+        return ResponseResult.success(fileInfo, "上传成功");
+        //return ResponseResult.success(StatusCodeEnum.REQ_UPLOAD_SUCCESS);
+ 
     }
     
     /**
@@ -99,28 +103,36 @@ public class FileController {
      * @param request
      * @return
      */
-//    @RequestMapping(value="/uploadFileMulti",produces="text/html;charset=utf-8")
-//    @ResponseBody
-    public Result uploadFileMulti( HttpServletRequest request){
-        try {
+    @PostMapping(value="/uploadFileMulti")
+    @ApiOperation(value = "导入多个文件", notes = "需要有文件")
+    @ResponseBody
+    @UserLoginToken(logType=LogType.IMPORT)
+    public ResponseResult uploadFileMulti(
+    		@RequestParam @ApiParam(name="id",value="id",required=false)String id,
+    		@RequestParam @ApiParam(name="files", value = "files", required = false) MultipartFile[] files,
+            HttpServletRequest request) throws Exception{ 
+    		
         	Map<String,Object> fileInfo = new HashMap<>();
         	List<String> lstFileName=new ArrayList<String>();
         	List<String> lstFileId=new ArrayList<String>();
-        	
-        	 
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            List < MultipartFile > files = multipartRequest.getFiles("file");
-            //Map<String, MultipartFile> fileMap = multipartRequest.getFiles("file");
-            if(files == null || files.size() == 0){
-            	return new Result(false,StatusCodeEnum.REQ_UPLOAD_FAIL);
+        	//id为空说明第一次上传，得先建一个文件夹，以id为名称的。下次都保存在这里面
+        	if(StringUtils.isBlank(id)) {
+            	id = UUID.randomUUID().toString();
+            	PATH=filePath+"\\"+id+"/";
+            }
+      
+            if(files == null || files.length == 0){
+            	return ResponseResult.fail(StatusCodeEnum.REQ_UPLOAD_FAIL);
             }          
 
             for(MultipartFile file:files){
+            	
             	String fileName = file.getOriginalFilename();
                 String fileId = UUID.randomUUID().toString();
                 String extName = fileName.substring(fileName.lastIndexOf(".") );
                 System.out.println(PATH+ fileId+extName);
                 File dest = new File(PATH+ fileId+extName);
+                //File dest = new File(PATH);
                 if(!dest.exists()){
                     dest.getParentFile().mkdirs();
                     dest.createNewFile();
@@ -132,38 +144,38 @@ public class FileController {
             }
             fileInfo.put("fileName", String.join(",", lstFileName));
             fileInfo.put("fileId",String.join(",", lstFileId));
-            return new Result(false,StatusCodeEnum.REQ_UPLOAD_SUCCESS);
-        }catch (Exception e){
-            logger.error("文件上传失败", e);
-            return new Result(false,StatusCodeEnum.REQ_UPLOAD_FAIL);
-        }
+            fileInfo.put("id",id);
+            
+            return ResponseResult.success(fileInfo, "上传成功");
     }
 
-//    @RequestMapping(value="/deleteFile")
-//    @ResponseBody
-    public Result deleteFile(HttpServletRequest request){
-        try {
-
-            String fileId = request.getParameter("fileId");
-            if(StringUtils.isBlank(fileId)) return new Result(false,StatusCodeEnum.REMVOE_FAIl);
-            File file = new File(PATH+fileId);
-            if(file.exists()){
-                if(file.delete()){
-                    return new Result(true,StatusCodeEnum.REMVOE_SUCCESS);
-                }else{
-                    return new Result(false,StatusCodeEnum.REMVOE_FAIl);
-                }
+    @DeleteMapping(value="/deleteFile")
+    @ApiOperation(value = "删除文件")
+    @UserLoginToken(logType=LogType.DELETE)
+    public ResponseResult deleteFile(HttpServletRequest request,
+    		@RequestParam @ApiParam(name="fileId",value="存储的文件名",required=true)String fileId) throws Exception{
+        //String fileId = request.getParameter("fileId");
+        if(StringUtils.isBlank(fileId)) {
+        	return ResponseResult.fail(StatusCodeEnum.REMVOE_FAIl);
+        } 
+        File file = new File(PATH+fileId);
+        if(file.exists()){
+            if(file.delete()){
+                return ResponseResult.success(StatusCodeEnum.REMVOE_SUCCESS);
             }else{
-                return new Result(false,StatusCodeEnum.REMVOE_FAIl);
+            	return ResponseResult.fail(StatusCodeEnum.REMVOE_FAIl);
             }
-        }catch (Exception e){
-            logger.error("删除文件失败", e);
-            return new Result(false,StatusCodeEnum.REMVOE_FAIl);
+        }else{
+        	return ResponseResult.fail(StatusCodeEnum.REMVOE_FAIl);
         }
     }
 
-    @RequestMapping("/downloadFile")
-    public void downloadFile(HttpServletRequest request,HttpServletResponse response,String fileName,String fileId) throws UnsupportedEncodingException {
+    @GetMapping("/downloadFile")
+    @ApiOperation(value = "下载文件")
+    @UserLoginToken(logType=LogType.EXPORT)
+    public void downloadFile(HttpServletRequest request,HttpServletResponse response,
+    		@RequestParam @ApiParam(name="fileName",value="原始的文件名",required=true)String fileName,
+    		@RequestParam @ApiParam(name="fileId",value="存储的文件名",required=true)String fileId) throws Exception {
     	fileName=URLDecoder.decode(fileName,"utf-8");
     	
     	String agent = request.getHeader("User-Agent");

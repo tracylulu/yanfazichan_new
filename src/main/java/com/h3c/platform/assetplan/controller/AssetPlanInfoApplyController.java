@@ -1,5 +1,8 @@
 package com.h3c.platform.assetplan.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,9 +12,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -105,6 +111,18 @@ public class AssetPlanInfoApplyController {
 	private PurchaseReportInfoService purchaseReportInfoService;
 	@Autowired
 	private SpecifyManufacturerInfoService  specifyManufacturerInfoService;
+	@Autowired
+	private PlanTimeWindowsService planTimeWindowsService;
+	@Autowired
+	private PurchaseReportInfoMapper purchaseReportInfoMapper;
+	@Autowired
+	private SpecifyManufacturerInfoMapper specifyManufacturerInfoMapper;
+	
+	@Value("${file.realPath}")
+    private  String realPath ;
+	
+	@Value("${file.path}")
+    private  String path ;
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
 	@PostMapping("/addAssetPlanInfo")
@@ -1008,5 +1026,388 @@ public class AssetPlanInfoApplyController {
 	public ResponseResult getApplyFiledLength() throws Exception {
 		return sysDicInfoService.getDicsByType(DicConst.R_APPLYPAGE);
 	}
+	
+	 @ApiOperation(value="新增页面保存并直接至规范审核")
+	   	@PostMapping("/submitAssetPlanInfoByIdsOnAddPage")
+	   	@ResponseBody
+	   	@UserLoginToken(logType=LogType.MODIFY)
+	   	public ResponseResult submitAssetPlanInfoByIdsOnAddPage(@RequestBody AssetPlanGlobalInfo assetPlanGlobalInfo) throws Exception{
+		 	//保存操作
+		 	List<Integer> lstsubmitID=new ArrayList();
+		 	for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
+				if(StringUtils.isBlank(ap.getAssetmanufacturer())){
+					return ResponseResult.fail(false, "厂家字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getAssetname())){
+					return ResponseResult.fail(false, "物品名称字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getAssetmodel())){
+					return ResponseResult.fail(false, "型号字段必填");
+				} 
+				if(ap.getRequireds()==null){
+					return ResponseResult.fail(false, "数量字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getRequireduser())){
+					return ResponseResult.fail(false, "申购人ID字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getDeptcode())){
+					return ResponseResult.fail(false, "部门编码字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getItemcode())){
+					return ResponseResult.fail(false, "项目编码字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getAssetcategory())){
+					return ResponseResult.fail(false, "物品类别字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getReviewer())){
+					return ResponseResult.fail(false, "计划员ID字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getGoodstime())){
+					return ResponseResult.fail(false, "货期字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getReceiverplace())){
+					return ResponseResult.fail(false, "到货地点字段必填");
+				} 
+				if(StringUtils.isBlank(ap.getPurpose())){
+					return ResponseResult.fail(false, "用途字段必填");
+				}
+				if(ap.getReqarrivaldate()==null){
+					return ResponseResult.fail(false, "要求到货时间字段必填");
+				}
+			}
+		 	String purchasereportID = "",surchasereportid="";
+			if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.purchaseReportInfo)) {
+				//purchasereportID = UUIDUtil.UUID();
+				purchasereportID = assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid();
+				for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
+					info.setDeleteflag("1");
+					info.setCreatetime(new Date());
+					info.setCreator(UserUtils.getCurrentUserId());
+					info.setModifier(UserUtils.getCurrentUserId());
+					info.setModifitime(new Date());
+					info.setPurchasereportid(purchasereportID);
+					priMapper.insertSelective(info);
+				}		
+			}
+			if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.specifyManufacturerInfo)) {
+				//surchasereportid = UUIDUtil.UUID();
+				surchasereportid=assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid();
+				for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
+					info.setDeleteflag("1");
+					info.setCreatetime(new Date());
+					info.setCreator(UserUtils.getCurrentUserId());
+					info.setModifier(UserUtils.getCurrentUserId());
+					info.setModifitime(new Date());
+					info.setSpecifymanufacturerid(surchasereportid);
+					smiMapper.insertSelective(info);
+				}		
+			}
+			//初始化成套设备的code
+			Integer completesetcode = initApplyCode();
+			for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
+				//是否需要申购报告字段为1时才会增加，set主表字段purchasereportid为关联表的id，否则设置默认值为0
+				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
+					ap.setPurchasereportid(purchasereportID);	
+				}else {
+					ap.setPurchasereportid("");
+				}			
+				//是否指定供应商字段为1时才会增加 ，set主表字段specifymanufacturerid为关联表的id，否则设置默认值为0
+				if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
+					ap.setSpecifymanufacturerid(surchasereportid);		
+				}else {
+					ap.setSpecifymanufacturerid("");
+				}
+				//是否成套物品字段为1时说明是成套的设备,set套装编码,否则设置默认值为0
+				if(StringUtils.isNotBlank(ap.getIscompleteset()) && "1".equals(ap.getIscompleteset())) {
+					ap.setCompletesetcode(completesetcode);
+				}else {
+					ap.setCompletesetcode(0);
+				}
+				try {
+					ap.setApplytime(new Date());
+					ap.setModifitime(new Date());
+					
+					//正常计划外的状态 0正常计划，1计划员激活，2管理员激活
+					//时间窗外创建的置为1，时间窗内置为0，得调向楠那边的时间接口
+					boolean flag = planTimeWindowsService.valitSubmitTimeWiondow();
+					//返回true说明在窗口内
+					if(flag) {
+						ap.setAbnormalplanenum(0);
+					}else {
+						ap.setAbnormalplanenum(1);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				//设置默认的值
+				ap.setApstatus("10");
+				ap.setApstage("1");
+				ap.setDeleteflag("1");
+				ap.setOuttimeplanenum(-1);
+				//Applyuser Modifier这两个字段前端传过来了
+				int insertBackID = assetPlanInfoMapper.insertBackID(ap);
+				lstsubmitID.add(ap.getAssetplanid());
+			}
+			//this.assetPlanInfoService.addAssetPlanInfo(assetPlanGlobalInfo);
+			
+			//提交操作
+	   		//不选中的时候提示：请确认是否全部提交，选中提交的时候提示：请确认是否将所选物品及成套设备全部提交 
+			
+			/*for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
+				lstsubmitID.add(ap.getAssetplanid());
+			}*/
+	   			Date planmonth = assetPlanGlobalInfo.getLst().get(0).getPlanmonth();
+	   			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM"); 
+	   			String applymonth = sdf.format(planmonth);
+	   			//String applymonth=planmonth.substring(0,planmonth.lastIndexOf("-"));
+	   			String applyuser = assetPlanGlobalInfo.getLst().get(0).getApplyuser();
+	   			//申请人和申购人id的list,规范审核人code的list(后续邮件使用)
+		   		List<String> newLstApplyRequiredUserID =new ArrayList<>();
+		   		List<String> getsendToList =new ArrayList<>();
+		   		List<Integer> newLstsubmitID =new ArrayList<>();
+	   			if(lstsubmitID.isEmpty()) {
+	   				//传过来的集合为空，说明全部提交
+	   				Map<String, Object> param = new HashMap<>();
+	   	   			param.put("ApplyUser",applyuser);
+	   				param.put("APStage","1");
+	   				param.put("ApplyMonth",applymonth);
+	   				//申请的单子
+	   				List<AssetPlanInfoAll> draftInfoList = assetPlanInfoService.listofDraftDetail(param);
+	   				//打回的单子
+	   				Map<String, Object> param1 = new HashMap<>();
+	   	   			param1.put("RequiredUser",applyuser);
+	   				param1.put("APStage","1");
+	   				param1.put("ApplyMonth",applymonth);
+	   				List<AssetPlanInfoAll> todoList = assetPlanInfoService.listofTodoDetail(param1);
+	   				//当前环节该登录人所有待提交的单子
+	   	   			for (int i = 0; i < draftInfoList.size(); i++) {
+	   	   				newLstsubmitID.add(draftInfoList.get(i).getAssetplanid());
+	   	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getApplyuser());
+		   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
+		   				String[] split = draftInfoList.get(i).getReviewperson().split(",");
+		   				for (int j = 0; j < split.length; j++) {
+		   					getsendToList.add(split[j]);
+						}
+		   				
+	   				}
+	   	   			for (int j = 0; j < todoList.size(); j++) {
+		   				newLstsubmitID.add(todoList.get(j).getAssetplanid());
+		   				newLstApplyRequiredUserID.add(todoList.get(j).getApplyuser());
+		   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
+		   				String[] split = todoList.get(j).getReviewperson().split(",");
+		   				for (int k = 0; k < split.length; k++) {
+		   					getsendToList.add(split[k]);
+						}
+		   				
+					}
+	   			}else {
+	   				//选中的部分提交
+	   	   			for (int i = 0; i < lstsubmitID.size(); i++) {
+	   	   				Integer assetplanid = lstsubmitID.get(i);
+	   	   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanid);
+	   	   				//有成套设备的话吗，得把成套设备的也一并提交
+	   	   				if(StringUtils.isNotBlank(ap.getIscompleteset()) && "1".equals(ap.getIscompleteset())) {
+	   	   					List<AssetPlanInfo> completeSetList = assetPlanInfoService.selectCompleteSet(ap.getPlancode(), ap.getCompletesetcode());
+	   	   					for (int j = 0; j < completeSetList.size(); j++) {
+	   	   						newLstsubmitID.add(completeSetList.get(j).getAssetplanid());
+	   	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getApplyuser());
+	   	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getRequireduser());
+	   	   					    String[] split = completeSetList.get(j).getReviewperson().split(",");
+		   	   					for (int k = 0; k < split.length; k++) {
+		   		   					getsendToList.add(split[k]);
+		   						}
+	   	   					}
+	   	   				//无成套设备	
+	   	   				}else {
+	   	   					newLstsubmitID.add(assetplanid);
+	   	   					newLstApplyRequiredUserID.add(ap.getApplyuser());
+	  						newLstApplyRequiredUserID.add(ap.getRequireduser());
+	  						String[] split = ap.getReviewperson().split(",");
+	  						for (int k = 0; k < split.length; k++) {
+	   		   					getsendToList.add(split[k]);
+	   						}
+	   	   				}
+	   	   			}
+	   	   			newLstsubmitID=removeDuplicate(newLstsubmitID);
+	   			}
+	   			
+	   			List<AssetPlanInfo> lst=new ArrayList<>();
+	   			for (int j = 0; j < newLstsubmitID.size(); j++) {
+	   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
+	   				if("10".equals(ap.getApstatus())) {
+	   					ap.setApstatus("20");
+	   				}else if("11".equals(ap.getApstatus())) {
+	   					ap.setApstatus("21");
+		   			}
+	   				ap.setApstage("2");
+	   				//规范审核标识统一改成未审核
+	   				ap.setReviewresult(3);
+	   				if(StringUtils.isNotBlank(ap.getReviewer())) {
+		   			}else {
+		   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
+		   			}
+	   				ap.setModifier(ap.getApplyuser());
+	   				ap.setModifitime(new Date());
+	   				lst.add(ap);
+				}
+	   			assetPlanInfoService.batchEditAssetPlanInfo(lst);
+	   		
+	   			//提交之前对表RequestsNumApproveRecord创建记录数据，与主表对应
+				for (int k = 0; k < newLstsubmitID.size(); k++) {
+					RequestsNumApproveRecord record = recordMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+					if(record==null) {
+						AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+	   					Integer requiredsaudit = ap.getRequiredsaudit();
+	   					RequestsNumApproveRecord numApproveRecord = new RequestsNumApproveRecord();
+	   					numApproveRecord.setAssetplanid(newLstsubmitID.get(k));
+	   					numApproveRecord.setReviewercount(requiredsaudit);
+	   					recordMapper.insert(numApproveRecord);
+					}
+				}
+	   			
+				//提交资源计划申请后，发送邮件给规范审核环节计划员，抄送申购人和申请人。
+				//这个参数得先写死，到时候我这边写一个接口前台把这个url给我传过来
+				String url="";
+				List<String> ccTo =new ArrayList<>();
+				List<String> sendTo =new ArrayList<>();
+				getsendToList=removeDuplicate(getsendToList);
+				for (int j = 0; j < getsendToList.size(); j++) {
+					if(getsendToList.size()==1) {
+						//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
+						ccTo = removeDuplicate(newLstApplyRequiredUserID);
+						//功能已实现，先注释，以免误发邮件
+						mailInfoService.sendRemindMail(getsendToList.get(j).toString(), ccTo.toString(), "规范审核", url);
+					}else {
+						//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
+						Map<String,Object> param1=new HashMap<>();
+			   			param1.put("id", newLstsubmitID);
+			   			param1.put("Reviewer", getsendToList.get(j));
+						List<AssetPlanInfo> infoListByReviewer = assetPlanInfoService.getInfoListByReviewer(param1);
+						for(int k = 0; k < infoListByReviewer.size(); k++) {
+							ccTo.add(infoListByReviewer.get(k).getApplyuser());
+							ccTo.add(infoListByReviewer.get(k).getRequireduser());
+						}
+						ccTo = removeDuplicate(ccTo);
+						sendTo.add(getsendToList.get(j));
+						//功能已实现，先注释，以免误发邮件
+						mailInfoService.sendRemindMail(getsendToList.get(j).toString(), ccTo.toString(), "规范审核", url);
+						sendTo.clear();
+						ccTo.clear();
+					}
+				}
+				
+				
+				String picId="";
+   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(0));
+   				//有申购报告
+   				if("1".equals(ap.getIsreqpurchasereport())) {
+   					picId=ap.getPurchasereportid();
+   					String purchasereportid = ap.getPurchasereportid();
+   					List<PurchaseReportInfo> list = purchaseReportInfoService.getByID(purchasereportid);
+   					for (int i = 0; i < list.size(); i++) {
+   						if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
+   							String picturepath = list.get(i).getPicturepath();
+   							StringBuffer sb =new StringBuffer();
+   							String[] split = picturepath.split(";");
+   							for (int j = 0; j < split.length; j++) {
+   								String picturepath1=realPath+picId+"/"+split[j]+";";
+   								sb.append(picturepath1);
+							}
+   							sb.substring(0, sb.length()-1);
+   							list.get(i).setPicturepath(sb.toString());
+   							purchaseReportInfoMapper.updateByPrimaryKeySelective(list.get(i));
+   						}
+					}
+   				}
+   				//有指定供应商
+   				if("1".equals(ap.getIsspecifymanufacturer())) {
+   					picId=ap.getSpecifymanufacturerid();
+   					String specifymanufacturerid = ap.getSpecifymanufacturerid();
+   					List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getByID(specifymanufacturerid);
+   					for (int i = 0; i < list.size(); i++) {
+   						if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
+   							String picturepath = list.get(i).getPicturepath();
+   							StringBuffer sb =new StringBuffer();
+   							String[] split = picturepath.split(";");
+   							for (int j = 0; j < split.length; j++) {
+   								String picturepath1=realPath+picId+"/"+split[j]+";";
+   								sb.append(picturepath1);
+							}
+   							sb.substring(0, sb.length()-1);
+   							list.get(i).setPicturepath(sb.toString());
+   							
+   							specifyManufacturerInfoMapper.updateByPrimaryKeySelective(list.get(i));
+   						}
+   					}
+   				}
+   				
+   				//将指定目录(包含内容)复制到另一个目录中，将存储在临时目录下的文件夹复制到真实目录下去
+   				String oldPath=path+picId;
+   				String newPath=realPath+picId;
+   				copyFolder(oldPath, newPath);
+				
+				return ResponseResult.success(true, "提交成功");
+	   		
+	   	}
+	 
+	
+	
+	/** 
+	* 复制整个文件夹内容 
+	* @param oldPath String 原文件路径 如：c:/fqf 
+	* @param newPath String 复制后路径 如：f:/fqf/ff 
+	* @return boolean 
+	*/
+	public static void copyFolder(String oldPath, String newPath) {
+	try { 
+		(new File(newPath)).mkdirs(); //如果文件夹不存在 则建立新文件夹 
+		File a=new File(oldPath); 
+		String[] file=a.list(); 
+		File temp=null; 
+		for (int i = 0; i < file.length; i++) { 
+			if(oldPath.endsWith(File.separator)){ 
+				temp=new File(oldPath+file[i]); 
+			} 
+			else{ 
+				temp=new File(oldPath+File.separator+file[i]); 
+			}
+			if(temp.isFile()){ 
+				FileInputStream input = new FileInputStream(temp); 
+				FileOutputStream output = new FileOutputStream(newPath + "/" + (temp.getName()).toString()); 
+				byte[] b = new byte[1024 * 5]; 
+				int len; 
+				while ( (len = input.read(b)) != -1) { 
+					output.write(b, 0, len); 
+				} 
+				output.flush(); 
+				output.close(); 
+				input.close(); 
+			} 
+			if(temp.isDirectory()){//如果是子文件夹 
+				copyFolder(oldPath+"/"+file[i],newPath+"/"+file[i]); 
+			} 
+		} 
+	} 
+	catch (Exception e) { 
+		System.out.println("复制整个文件夹内容操作出错"); 
+		e.printStackTrace();
+		}
+	}
+
+	
+	@UserLoginToken
+	@ApiOperation(value = "测试")
+	@GetMapping("/test")
+	@ResponseBody
+	public ResponseResult test() throws Exception {
+		String picId="9dfacbd1-df23-4058-9e5a-32b28cd596ff";
+		//将指定目录(包含内容)复制到另一个目录中
+		String oldPath=path+picId;
+		String newPath=realPath+picId;
+		copyFolder(oldPath, newPath);
+		
+		return ResponseResult.success();
+	}
+
 
 }

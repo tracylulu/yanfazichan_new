@@ -38,7 +38,7 @@ public interface AssetPlanInfoMapper {
      
     List<AssetPlanInfo> selectByIDs(@Param("lst")List<String> lst);
     
-    
+    int insertBackID(AssetPlanInfo record);
     
     int deleteByID(@Param("param") Map<String,Object> param); 
     
