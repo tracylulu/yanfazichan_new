@@ -545,10 +545,7 @@ public class AssetPlanInfoDept3Controller {
 		   				json1.put("totalBudgetSY", totalBudgetSY2);
 		   				lstResult.add(json1);
 	   				}
-	   				
 	   				lstResult.addAll(lstChild);
-					
-					//continue;
 				}
 				
 			}
