@@ -76,4 +76,13 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 		
 		return lstResult.stream().sorted(Comparator.comparing(PurchaseReportInfoExt::getOrder)).collect(Collectors.toList());
 	}
+
+	@Override
+	public List<PurchaseReportInfo> getByID(String purchaseReportID) {
+		PurchaseReportInfoExample example=new PurchaseReportInfoExample();
+		PurchaseReportInfoExample.Criteria cri= example.createCriteria();
+		cri.andPurchasereportidEqualTo(purchaseReportID);
+		List<PurchaseReportInfo> lst=purchaseReportInfoMapper.selectByExample(example);
+		return lst;
+	}
 }

@@ -150,9 +150,9 @@
 			<if test="param.DeptCode !=null">
 				and DeptCode = #{param.DeptCode}
 			</if>
-			<if test="param.APStatus !=null">
+			<!-- <if test="param.APStatus !=null">
 				and APStatus = #{param.APStatus}
-			</if>
+			</if> -->
 			<if test="param.APStage !=null">
 				and APStage = #{param.APStage}
 			</if>

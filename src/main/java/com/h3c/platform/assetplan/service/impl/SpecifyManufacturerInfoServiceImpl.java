@@ -76,4 +76,13 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 		
 		return lstResult.stream().sorted(Comparator.comparing(SpecifyManufacturerInfoExt::getOrder)).collect(Collectors.toList());
 	}
+
+	@Override
+	public List<SpecifyManufacturerInfo> getByID(String SpecifyManufacturerID) {
+		SpecifyManufacturerInfoExample example=new SpecifyManufacturerInfoExample();
+		SpecifyManufacturerInfoExample.Criteria cri= example.createCriteria();
+		cri.andSpecifymanufactureridEqualTo(SpecifyManufacturerID);
+		List<SpecifyManufacturerInfo> lst=specifyManufacturerInfoMapper.selectByExample(example);
+		return lst;
+	}
 }
