@@ -45,6 +45,8 @@ public class MailInfoServiceImpl implements MailInfoService {
 	private String defaultCCTo;
 	@Value("${spring.remindEmail.url}")
 	private String defaultUrl;
+	@Value("${spring.endEmail.url}")
+	private String endUrl;
 	@Autowired
 	private MailThreadExecutor executor;
 	
@@ -177,7 +179,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 	@Override
 	public void sendProcessEndMail(String sendTo, String ccTo ,  String url) {
 		JSONObject contentJson = new JSONObject();
-		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
+		contentJson.put("$url", StringUtils.isNotBlank(url)?url:endUrl);
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
