@@ -364,6 +364,8 @@ public class AssetPlanInfoReviewController {
 				}else if("2".equals(deptInfo.getDeptLevel())) {
 					numApproveRecord.setDept2managercount(requiredsaudit);
 				}
+				//设置规范审核处理人
+				numApproveRecord.setReviewerperson(applyuser);
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 			}
 			

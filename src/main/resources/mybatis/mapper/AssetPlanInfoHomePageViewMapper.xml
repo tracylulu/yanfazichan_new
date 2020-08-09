@@ -35,6 +35,8 @@
     <result column="APStage" jdbcType="VARCHAR" property="apstage" />
     <result column="APStatusDetail" jdbcType="VARCHAR" property="apstatusdetail" />
     <result column="ApplyMonth" jdbcType="VARCHAR" property="applymonth" />
+    <result column="ReviewerCount" jdbcType="INTEGER" property="reviewercount" />
+    <result column="ReviewerPerson" jdbcType="VARCHAR" property="reviewerperson" />
     <result column="Dept3ManagerCount" jdbcType="INTEGER" property="dept3managercount" />
     <result column="Dept2ManagerCount" jdbcType="INTEGER" property="dept2managercount" />
     <result column="PlannerCount" jdbcType="INTEGER" property="plannercount" />
@@ -106,8 +108,8 @@
     Dept3Manager, Dept3CheckTime, Dept3CheckNote, Dept2Manager, Dept2CheckTime, Dept2CheckNote, 
     Planner, PlannerTime, PlannerNote, OQDeptReviewer, OQDeptReviewTime, OQDeptReviewNote, 
     Dept1Reviewer, Dept1ReviewTime, Dept1ReviewNote, APStatus, APStage, APStatusDetail, 
-    ApplyMonth, Dept3ManagerCount, Dept2ManagerCount, PlannerCount, OQDeptReviewerCount, 
-    Dept1ReviewerCount, DeleteFlag
+    ApplyMonth, ReviewerCount, ReviewerPerson, Dept3ManagerCount, Dept2ManagerCount, 
+    PlannerCount, OQDeptReviewerCount, Dept1ReviewerCount, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageViewExample" resultMap="BaseResultMap">
     select
@@ -141,9 +143,9 @@
       OQDeptReviewTime, OQDeptReviewNote, Dept1Reviewer, 
       Dept1ReviewTime, Dept1ReviewNote, APStatus, 
       APStage, APStatusDetail, ApplyMonth, 
-      Dept3ManagerCount, Dept2ManagerCount, PlannerCount, 
-      OQDeptReviewerCount, Dept1ReviewerCount, 
-      DeleteFlag)
+      ReviewerCount, ReviewerPerson, Dept3ManagerCount, 
+      Dept2ManagerCount, PlannerCount, OQDeptReviewerCount, 
+      Dept1ReviewerCount, DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
       #{pprice,jdbcType=DECIMAL}, #{planmonth,jdbcType=DATE}, #{applyuser,jdbcType=VARCHAR}, 
@@ -155,9 +157,9 @@
       #{oqdeptreviewtime,jdbcType=TIMESTAMP}, #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, 
       #{dept1reviewtime,jdbcType=TIMESTAMP}, #{dept1reviewnote,jdbcType=VARCHAR}, #{apstatus,jdbcType=VARCHAR}, 
       #{apstage,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, 
-      #{dept3managercount,jdbcType=INTEGER}, #{dept2managercount,jdbcType=INTEGER}, #{plannercount,jdbcType=INTEGER}, 
-      #{oqdeptreviewercount,jdbcType=INTEGER}, #{dept1reviewercount,jdbcType=INTEGER}, 
-      #{deleteflag,jdbcType=VARCHAR})
+      #{reviewercount,jdbcType=INTEGER}, #{reviewerperson,jdbcType=VARCHAR}, #{dept3managercount,jdbcType=INTEGER}, 
+      #{dept2managercount,jdbcType=INTEGER}, #{plannercount,jdbcType=INTEGER}, #{oqdeptreviewercount,jdbcType=INTEGER}, 
+      #{dept1reviewercount,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView">
     insert into AssetPlanInfoHomePageView
@@ -260,6 +262,12 @@
       </if>
       <if test="applymonth != null">
         ApplyMonth,
+      </if>
+      <if test="reviewercount != null">
+        ReviewerCount,
+      </if>
+      <if test="reviewerperson != null">
+        ReviewerPerson,
       </if>
       <if test="dept3managercount != null">
         Dept3ManagerCount,
@@ -379,6 +387,12 @@
       </if>
       <if test="applymonth != null">
         #{applymonth,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewercount != null">
+        #{reviewercount,jdbcType=INTEGER},
+      </if>
+      <if test="reviewerperson != null">
+        #{reviewerperson,jdbcType=VARCHAR},
       </if>
       <if test="dept3managercount != null">
         #{dept3managercount,jdbcType=INTEGER},
@@ -508,6 +522,12 @@
       <if test="record.applymonth != null">
         ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
       </if>
+      <if test="record.reviewercount != null">
+        ReviewerCount = #{record.reviewercount,jdbcType=INTEGER},
+      </if>
+      <if test="record.reviewerperson != null">
+        ReviewerPerson = #{record.reviewerperson,jdbcType=VARCHAR},
+      </if>
       <if test="record.dept3managercount != null">
         Dept3ManagerCount = #{record.dept3managercount,jdbcType=INTEGER},
       </if>
@@ -566,6 +586,8 @@
       APStage = #{record.apstage,jdbcType=VARCHAR},
       APStatusDetail = #{record.apstatusdetail,jdbcType=VARCHAR},
       ApplyMonth = #{record.applymonth,jdbcType=VARCHAR},
+      ReviewerCount = #{record.reviewercount,jdbcType=INTEGER},
+      ReviewerPerson = #{record.reviewerperson,jdbcType=VARCHAR},
       Dept3ManagerCount = #{record.dept3managercount,jdbcType=INTEGER},
       Dept2ManagerCount = #{record.dept2managercount,jdbcType=INTEGER},
       PlannerCount = #{record.plannercount,jdbcType=INTEGER},

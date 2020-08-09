@@ -523,6 +523,76 @@ public class RequestsNumApproveRecordExample {
             addCriterion("Dept1ReviewerCount not between", value1, value2, "dept1reviewercount");
             return (Criteria) this;
         }
+
+        public Criteria andReviewerpersonIsNull() {
+            addCriterion("ReviewerPerson is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonIsNotNull() {
+            addCriterion("ReviewerPerson is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonEqualTo(String value) {
+            addCriterion("ReviewerPerson =", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotEqualTo(String value) {
+            addCriterion("ReviewerPerson <>", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonGreaterThan(String value) {
+            addCriterion("ReviewerPerson >", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonGreaterThanOrEqualTo(String value) {
+            addCriterion("ReviewerPerson >=", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonLessThan(String value) {
+            addCriterion("ReviewerPerson <", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonLessThanOrEqualTo(String value) {
+            addCriterion("ReviewerPerson <=", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonLike(String value) {
+            addCriterion("ReviewerPerson like", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotLike(String value) {
+            addCriterion("ReviewerPerson not like", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonIn(List<String> values) {
+            addCriterion("ReviewerPerson in", values, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotIn(List<String> values) {
+            addCriterion("ReviewerPerson not in", values, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonBetween(String value1, String value2) {
+            addCriterion("ReviewerPerson between", value1, value2, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotBetween(String value1, String value2) {
+            addCriterion("ReviewerPerson not between", value1, value2, "reviewerperson");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
