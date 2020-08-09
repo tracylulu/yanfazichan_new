@@ -159,7 +159,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		}		
 		eosSearchParamEntity.setDicType(type);
 
-		JSONObject json = new JSONObject();
+		JSONObject json = new JSONObject(true);
 
 		String token = afspTokenService.getEosToken();
 
