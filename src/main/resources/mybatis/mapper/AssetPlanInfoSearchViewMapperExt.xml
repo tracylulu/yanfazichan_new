@@ -116,7 +116,9 @@
     		<include refid="condition_sql"></include>
     	</if>
     	order by AssetPlanID desc
-		LIMIT  #{param.pageNum}, #{param.pageSize}
+    	<if test="param.isUnPage==null or param.isUnPage=='' ">
+    		LIMIT  #{param.pageNum}, #{param.pageSize}
+    	</if>		
   
   </select>
   

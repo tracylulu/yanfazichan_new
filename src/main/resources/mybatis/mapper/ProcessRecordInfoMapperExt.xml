@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.h3c.platform.assetplan.dao.ProcessRecordInfoMapper">
+
+	<insert id="batchInsert">
+		insert into ProcessRecordInfo (ID, AssetPlanID, ApStage,
+		CurrentPerson, NewPerson, Creator,
+		CreateTime)
+		values
+		<foreach collection="lst" close=";" separator="," item="item">
+			(#{item.id,jdbcType=INTEGER}, #{item.assetplanid,jdbcType=INTEGER},
+			#{item.apstage,jdbcType=VARCHAR},
+			#{item.currentperson,jdbcType=VARCHAR}, #{item.newperson,jdbcType=VARCHAR}, #{item.creator,jdbcType=VARCHAR},
+			#{item.createtime,jdbcType=TIMESTAMP})
+		</foreach>
+
+	</insert>
+
+</mapper>

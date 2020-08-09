@@ -438,4 +438,95 @@
 			#{item}
 		</foreach>
 	</select>
+	<select id="getToDoListByUser" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include> from AssetPlanInfo 
+		<where>
+			DeleteFlag=1  and OutTimePlanEnum !=0
+			<if test="param.ReviewResult !=null">
+				and ReviewResult = #{param.ReviewResult}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.Reviewer !=null">
+				<!-- and Reviewer = #{param.Reviewer} -->
+				and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
+			</if>
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.Dept2Manager !=null">
+				and Dept2Manager = #{param.Dept2Manager}
+			</if>
+			<if test="param.Planner !=null">
+				and Planner = #{param.Planner}
+			</if>
+			<if test="param.OQDeptReviewer !=null">
+				and OQDeptReviewer = #{param.OQDeptReviewer}
+			</if>
+			<if test="param.Dept1Reviewer !=null">
+				and Dept1Reviewer = #{param.Dept1Reviewer}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and substring_index(PlanCode, '-', 2) = #{param.ApplyMonth}
+			</if>			
+		</where>	
+	</select>
+	<update id="changeHandler" parameterType="map">
+		update  AssetPlanInfo set  ${param.column} = #{param.value},Modifier=#{param.modifier},ModifiTime=NOW() 
+		<where>
+			DeleteFlag=1  and OutTimePlanEnum !=0
+			<if test="param.ReviewResult !=null">
+				and ReviewResult = #{param.ReviewResult}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.Reviewer !=null">
+				<!-- and Reviewer = #{param.Reviewer} -->
+				and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
+			</if>
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.Dept2Manager !=null">
+				and Dept2Manager = #{param.Dept2Manager}
+			</if>
+			<if test="param.Planner !=null">
+				and Planner = #{param.Planner}
+			</if>
+			<if test="param.OQDeptReviewer !=null">
+				and OQDeptReviewer = #{param.OQDeptReviewer}
+			</if>
+			<if test="param.Dept1Reviewer !=null">
+				and Dept1Reviewer = #{param.Dept1Reviewer}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and substring_index(PlanCode, '-', 2) = #{param.ApplyMonth}
+			</if>			
+		</where>
+	</update>
+	<select id="getAdminChangeHandlerList" parameterType="String" resultMap="BaseResultMap">
+		SELECT distinct a.APStatus,a.apstage,CONCAT(b.emp_name,' ',b.emp_code) as  Reviewer FROM (
+			SELECT '规范性审核'APStatus , apstage,Reviewer AS Reviewer FROM AssetPlanInfo WHERE apstage=2 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '三级部门主管审核' APStatus ,apstage,Dept3Manager AS Reviewer FROM AssetPlanInfo WHERE apstage=3 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '二级部门主管审核' APStatus ,apstage,Dept2Manager AS Reviewer FROM AssetPlanInfo WHERE apstage=4 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '计划员审核' APStatus ,apstage,Planner AS Reviewer FROM AssetPlanInfo WHERE apstage=5 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '专家团审核' APStatus ,apstage,OQDeptReviewer AS Reviewer FROM AssetPlanInfo WHERE apstage=6 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '一级部门主管审核' APStatus ,apstage,Dept1Reviewer AS Reviewer FROM AssetPlanInfo WHERE apstage=7 AND DeleteFlag=1  AND OutTimePlanEnum=-1) a 
+		LEFT JOIN UserInfo b ON a.Reviewer=b.emp_code
+		<where>
+			<if test="userCode!=null and userCode!='' ">
+	 			a.Reviewer =#{userCode}
+			</if>
+		</where>
+		order by a.apstage
+		
+	
+	</select>
 </mapper>
