@@ -475,7 +475,7 @@
 	<update id="changeHandler" parameterType="map">
 		update  AssetPlanInfo set  
 			<if test="param.APStage !=null and param.APStage==2 ">
-				${param.column} =concat(#{param.value},Reviewer) 
+				${param.column} =concat(#{param.value},',',Reviewer) 
 			</if>
 			
 			<if test="param.APStage !=null and param.APStage !=2 ">
@@ -516,7 +516,7 @@
 	</update>
 	<select id="getAdminChangeHandlerList" parameterType="String" resultMap="BaseResultMap">
 		SELECT distinct a.APStatus,a.apstage,CONCAT(b.emp_name,' ',b.emp_code) as  Reviewer FROM (
-			SELECT '规范性审核'APStatus , apstage,Reviewer AS Reviewer FROM AssetPlanInfo WHERE apstage=2 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			SELECT '规范性审核'APStatus , apstage,REPLACE(REPLACE(ReviewPerson,Reviewer,''),',','') AS Reviewer FROM AssetPlanInfo WHERE apstage=2 AND DeleteFlag=1  AND OutTimePlanEnum=-1
 			UNION ALL 
 			SELECT '三级部门主管审核' APStatus ,apstage,Dept3Manager AS Reviewer FROM AssetPlanInfo WHERE apstage=3 AND DeleteFlag=1  AND OutTimePlanEnum=-1
 			UNION ALL 
