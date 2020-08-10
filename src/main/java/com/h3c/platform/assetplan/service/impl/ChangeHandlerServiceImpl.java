@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 
 	/**
 	 * 转单  isAdmin：标记是否是管理员转单  true 是
-	 * 规范性审核特殊处理
+	 * 规范性审核特殊chul
 	 */ 
 	@Override
 	@Transactional
@@ -58,8 +59,8 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 		param.put("modifier", UserUtils.getCurrentUserId());
 		switch (apstage) {
 		case "2":
-			param.put("ReviewPerson",handler);	
-			param.put("column","Reviewer");	
+			param.put("Reviewer",handler);	
+			param.put("column","ReviewPerson");	
 			break;
 		case "3":
 			param.put("Dept3Manager",handler);	
@@ -103,7 +104,9 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 		}
 
 		assetPlanInfoMapper.changeHandler(param);
-		processRecordInfoService.saveRecord(lstRecord);
+		if(CollectionUtils.isNotEmpty(lstRecord)) {
+			processRecordInfoService.saveRecord(lstRecord);
+		}		
 		
 		return ResponseResult.success("转单成功！");
 	}

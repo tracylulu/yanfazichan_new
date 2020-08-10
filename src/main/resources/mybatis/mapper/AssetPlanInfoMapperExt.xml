@@ -474,11 +474,11 @@
 	</select>
 	<update id="changeHandler" parameterType="map">
 		update  AssetPlanInfo set  
-			<if test="param.APStage !=null and param.APStage=='2' ">
+			<if test="param.APStage !=null and param.APStage==2 ">
 				${param.column} =concat(#{param.value},Reviewer) 
 			</if>
 			
-			<if test="param.APStage !=null and param.APStage!='2' ">
+			<if test="param.APStage !=null and param.APStage !=2 ">
 				${param.column} = #{param.value}
 			</if>
 			,Modifier=#{param.modifier},ModifiTime=NOW() 
