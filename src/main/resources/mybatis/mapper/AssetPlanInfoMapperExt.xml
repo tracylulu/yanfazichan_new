@@ -516,7 +516,7 @@
 	</update>
 	<select id="getAdminChangeHandlerList" parameterType="String" resultMap="BaseResultMap">
 		SELECT distinct a.APStatus,a.apstage,CONCAT(b.emp_name,' ',b.emp_code) as  Reviewer FROM (
-			SELECT '规范性审核'APStatus , apstage,REPLACE(REPLACE(ReviewPerson,Reviewer,''),',','') AS Reviewer FROM AssetPlanInfo WHERE apstage=2 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			SELECT '规范性审核'APStatus , apstage,case when instr( ReviewPerson,',')>0 then REPLACE(REPLACE(ReviewPerson,Reviewer,''),',','') ELSE ReviewPerson END AS Reviewer FROM AssetPlanInfo WHERE apstage=2 AND DeleteFlag=1  AND OutTimePlanEnum=-1
 			UNION ALL 
 			SELECT '三级部门主管审核' APStatus ,apstage,Dept3Manager AS Reviewer FROM AssetPlanInfo WHERE apstage=3 AND DeleteFlag=1  AND OutTimePlanEnum=-1
 			UNION ALL 

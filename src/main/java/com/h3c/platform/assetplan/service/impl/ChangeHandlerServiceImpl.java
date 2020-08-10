@@ -48,6 +48,12 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 	@Override
 	@Transactional
 	public ResponseResult changeHandler(String handler,String apstage,String applymonth,String newHandler,boolean isAdmin) throws Exception {
+		if(StringUtils.isBlank(newHandler)) {
+			return ResponseResult.fail("转单人人不能为空！");
+		}
+		if(StringUtils.isBlank(handler)) {
+			return ResponseResult.fail("处理人不能为空！");
+		}
 		List<ProcessRecordInfo> lstRecord=new ArrayList<ProcessRecordInfo>();
 		Map<String, Object> param = new HashMap<>();
 		param.put("APStage", apstage);
