@@ -41,15 +41,15 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 	private ProcessRecordInfoService  processRecordInfoService;
 
 	/**
-	 * 转单
-	 */
+	 * 转单  isAdmin：标记是否是管理员转单  true 是
+	 */ 
 	@Override
 	@Transactional
-	public ResponseResult changeHandler(String handler,String apstage,String applymonth,String newHandler) throws Exception {
+	public ResponseResult changeHandler(String handler,String apstage,String applymonth,String newHandler,boolean isAdmin) throws Exception {
 		List<ProcessRecordInfo> lstRecord=new ArrayList<ProcessRecordInfo>();
 		Map<String, Object> param = new HashMap<>();
 		param.put("APStage", apstage);
-		if(StringUtils.isNotBlank(applymonth)) {
+		if(!isAdmin) {
 			param.put("ApplyMonth", applymonth);
 		}
 		

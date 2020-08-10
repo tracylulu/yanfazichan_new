@@ -11,6 +11,7 @@ import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.entity.SearchAssetParamEntity;
 import com.h3c.platform.assetplan.service.ChangeHandlerService;
 import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.sysmgr.service.RoleService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,13 +24,15 @@ public class ChangeHandlerController {
 
 	@Autowired
 	private ChangeHandlerService changeHandlerService;
+	@Autowired 
+	private RoleService roleService;
 	
 	@UserLoginToken
 	@PostMapping("/changeHandler")
 	@ApiOperation("当前处理人转单")
 	public ResponseResult changeHandler(@RequestParam String handler,@RequestParam String apstage,@RequestParam String applymonth,@RequestParam String newHandler)throws Exception {
 		
-		return changeHandlerService.changeHandler(handler, apstage, applymonth, newHandler);
+		return changeHandlerService.changeHandler(handler, apstage, applymonth, newHandler,false);
 	}
 	
 	@UserLoginToken
@@ -43,7 +46,9 @@ public class ChangeHandlerController {
 	@PostMapping("/adminChangeHandler")
 	@ApiOperation("系统管理员转单")
 	public ResponseResult changeHandlerByAdmin(@RequestParam String handler,@RequestParam String apstage,@RequestParam String newHandler)throws Exception{
-		
-		return changeHandlerService.changeHandler(handler, apstage, "", newHandler);
+		if(roleService.checkIsAdmin()) {
+			return ResponseResult.fail("无权限，请联系系统管理员");
+		}
+		return changeHandlerService.changeHandler(handler, apstage, "", newHandler,true);
 	}
 }
