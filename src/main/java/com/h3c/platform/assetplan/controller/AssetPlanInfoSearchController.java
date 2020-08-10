@@ -494,7 +494,7 @@ public class AssetPlanInfoSearchController {
 				if(user2==null) {
 					json.put("reviewer", "");
 				}else {
-					json.put("reviewer", user2.getDisplayName()+" "+record.getReviewer());
+					json.put("reviewer", user2.getDisplayName()+" "+user2.getEmpCode());
 				}
 				json.put("reviewtime", dateformat.format(record.getReviewtime()));
 				arrayData.add(json);
