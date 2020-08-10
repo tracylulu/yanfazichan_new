@@ -56,7 +56,7 @@ public class FileController {
 
     private  String PATH;
 
-    @Value("${file.tmpPath}")
+    @Value("${file.realPath}")
     private  String filePath ;  
 //    @Autowired
 //    private FileLogService fileLogService;
@@ -118,7 +118,7 @@ public class FileController {
         	//id为空说明第一次上传，得先建一个文件夹，以id为名称的。下次都保存在这里面
         	if(StringUtils.isBlank(id)) {
             	id = UUID.randomUUID().toString();
-            	PATH=filePath+"\\"+id+"/";
+            	PATH=filePath+id+"/";
             }
       
             if(files == null || files.length == 0){

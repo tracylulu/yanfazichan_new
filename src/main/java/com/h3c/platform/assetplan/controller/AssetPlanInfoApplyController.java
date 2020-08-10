@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.ops4j.net.Base64Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -128,8 +129,7 @@ public class AssetPlanInfoApplyController {
 	@Value("${file.realPath}")
     private  String realPath ;
 	
-	@Value("${file.tmpPath}")
-    private  String tmpPath ;
+	
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
 	@PostMapping("/addAssetPlanInfo")
@@ -1349,9 +1349,9 @@ public class AssetPlanInfoApplyController {
    				}
    				
    				//将指定目录(包含内容)复制到另一个目录中，将存储在临时目录下的文件夹复制到真实目录下去
-   				String oldPath=tmpPath+picId;
+   				/*String oldPath=tmpPath+picId;
    				String newPath=realPath+picId;
-   				copyFolder(oldPath, newPath);
+   				copyFolder(oldPath, newPath);*/
 				
 				return ResponseResult.success(true, "提交成功");
 	   		
@@ -1402,52 +1402,69 @@ public class AssetPlanInfoApplyController {
 	}
 
 	
-	// 图片转化成base64字符串
-  	public static String GetImageStr(String imgFile) throws Exception {
-  		// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-  		InputStream in = null;
-  		byte[] data = null;
-  		// 读取图片字节数组
-  		ByteArrayOutputStream outputstream = null;
-  		int index = imgFile.lastIndexOf(".");
-  		String args1 = "jpg";
-  		if (index > -1 && index < (imgFile.length() - 1)) {
-  			args1 = imgFile.substring(index + 1);
-  		} else {
-  			throw new Exception("文件后缀有误url=" + imgFile);
-  		}
-  		URL url = new URL(imgFile);
-  		BufferedImage bufferedImage=null;
-  		try {
-  			bufferedImage = ImageIO.read(url);
-  		} catch (Exception e) {
-  			throw new Exception("读取图片url["+imgFile+"]有误！");
-  		}
-  		// 开始对图片进行压缩
-  		outputstream = new ByteArrayOutputStream();
-  		ImageIO.write(bufferedImage, args1, outputstream);
-  		double k = outputstream.size();
-  		int count = 0;
-  		double com = 100 * 1024 * 0.9;// 比对基础大小
-  		BASE64Encoder encoder = new BASE64Encoder();
-  		return encoder.encode(outputstream.toByteArray());
-  	}
-  	
+	 /**
+	 * 根据图片地址转换为base64编码字符串
+	 * @param imgFile 图片文件名称
+	 */
+	public static String getImageStr(String imgFile) throws Exception {
+		InputStream inputStream = null;
+		byte[] data = null;
+			inputStream = new FileInputStream(imgFile);
+			data = new byte[inputStream.available()];
+			inputStream.read(data);
+			inputStream.close();
+		// 加密
+		return new String(Base64Encoder.encode(data));
+	}
+
 	@UserLoginToken
-	@ApiOperation(value = "测试")
-	@GetMapping("/test")
+	@ApiOperation(value = "根据图片路径返回base64字符串")
+	@GetMapping("/getImagePathToBase64")
 	@ResponseBody
-	public ResponseResult test() throws Exception {
-		/*String picId="9dfacbd1-df23-4058-9e5a-32b28cd596ff";
-		//将指定目录(包含内容)复制到另一个目录中
-		String oldPath=path+picId;
-		String newPath=realPath+picId;
-		copyFolder(oldPath, newPath);*/
-		Integer asid=17334;
-		AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(asid);
-		
-		
-		return ResponseResult.success();
+	public ResponseResult getImagePathToBase64(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int k=0;
+		AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanid);
+		//有申购报告
+		if("1".equals(ap.getIsreqpurchasereport())) {
+			String purchasereportid = ap.getPurchasereportid();
+			List<PurchaseReportInfo> list = purchaseReportInfoService.getByID(purchasereportid);
+			for (int i = 0; i < list.size(); i++) {
+				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
+					List<String> picList = new ArrayList();
+					String titlecode = list.get(i).getTitlecode();
+					String picturepath = list.get(i).getPicturepath();
+					String[] split = picturepath.split(";");
+					for (int j = 0; j < split.length; j++) {
+						String base64=this.getImageStr(split[j]);
+						picList.add(base64);
+						k++;
+					}
+					result.put(titlecode, picList);
+				}
+			}
+			
+		}
+		//有指定供应商
+		if("1".equals(ap.getIsspecifymanufacturer())) {
+			String specifymanufacturerid = ap.getSpecifymanufacturerid();
+			List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getByID(specifymanufacturerid);
+			for (int i = 0; i < list.size(); i++) {
+				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
+					List<String> picList = new ArrayList();
+					String titlecode = list.get(i).getTitlecode();
+					String picturepath = list.get(i).getPicturepath();
+					String[] split = picturepath.split(";");
+					for (int j = 0; j < split.length; j++) {
+						String base64=this.getImageStr(split[j]);
+						picList.add(base64);
+						k++;
+					}
+					result.put(titlecode, picList);
+				}
+			}
+		}
+		return ResponseResult.success(result, "查询成功", k);
 	}
 
 
