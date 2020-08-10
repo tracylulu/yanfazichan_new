@@ -56,7 +56,7 @@ public class FileController {
 
     private  String PATH;
 
-    @Value("${file.path}")
+    @Value("${file.tmpPath}")
     private  String filePath ;  
 //    @Autowired
 //    private FileLogService fileLogService;

@@ -1,9 +1,13 @@
 package com.h3c.platform.assetplan.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -78,6 +84,7 @@ import com.h3c.platform.util.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import sun.misc.BASE64Encoder;
 
 @Controller
 @RequestMapping("/assetplan/apply")
@@ -121,8 +128,8 @@ public class AssetPlanInfoApplyController {
 	@Value("${file.realPath}")
     private  String realPath ;
 	
-	@Value("${file.path}")
-    private  String path ;
+	@Value("${file.tmpPath}")
+    private  String tmpPath ;
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
 	@PostMapping("/addAssetPlanInfo")
@@ -1296,7 +1303,7 @@ public class AssetPlanInfoApplyController {
 					}
 				}
 				
-				
+				//把数据库中存储的图片路径换成服务器中的路径
 				String picId="";
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(0));
    				//有申购报告
@@ -1342,7 +1349,7 @@ public class AssetPlanInfoApplyController {
    				}
    				
    				//将指定目录(包含内容)复制到另一个目录中，将存储在临时目录下的文件夹复制到真实目录下去
-   				String oldPath=path+picId;
+   				String oldPath=tmpPath+picId;
    				String newPath=realPath+picId;
    				copyFolder(oldPath, newPath);
 				
@@ -1395,16 +1402,50 @@ public class AssetPlanInfoApplyController {
 	}
 
 	
+	// 图片转化成base64字符串
+  	public static String GetImageStr(String imgFile) throws Exception {
+  		// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+  		InputStream in = null;
+  		byte[] data = null;
+  		// 读取图片字节数组
+  		ByteArrayOutputStream outputstream = null;
+  		int index = imgFile.lastIndexOf(".");
+  		String args1 = "jpg";
+  		if (index > -1 && index < (imgFile.length() - 1)) {
+  			args1 = imgFile.substring(index + 1);
+  		} else {
+  			throw new Exception("文件后缀有误url=" + imgFile);
+  		}
+  		URL url = new URL(imgFile);
+  		BufferedImage bufferedImage=null;
+  		try {
+  			bufferedImage = ImageIO.read(url);
+  		} catch (Exception e) {
+  			throw new Exception("读取图片url["+imgFile+"]有误！");
+  		}
+  		// 开始对图片进行压缩
+  		outputstream = new ByteArrayOutputStream();
+  		ImageIO.write(bufferedImage, args1, outputstream);
+  		double k = outputstream.size();
+  		int count = 0;
+  		double com = 100 * 1024 * 0.9;// 比对基础大小
+  		BASE64Encoder encoder = new BASE64Encoder();
+  		return encoder.encode(outputstream.toByteArray());
+  	}
+  	
 	@UserLoginToken
 	@ApiOperation(value = "测试")
 	@GetMapping("/test")
 	@ResponseBody
 	public ResponseResult test() throws Exception {
-		String picId="9dfacbd1-df23-4058-9e5a-32b28cd596ff";
+		/*String picId="9dfacbd1-df23-4058-9e5a-32b28cd596ff";
 		//将指定目录(包含内容)复制到另一个目录中
 		String oldPath=path+picId;
 		String newPath=realPath+picId;
-		copyFolder(oldPath, newPath);
+		copyFolder(oldPath, newPath);*/
+		Integer asid=17334;
+		AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(asid);
+		
 		
 		return ResponseResult.success();
 	}
