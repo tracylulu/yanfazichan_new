@@ -475,7 +475,7 @@
 	<update id="changeHandler" parameterType="map">
 		update  AssetPlanInfo set  
 			<if test="param.APStage !=null and param.APStage==2 ">
-				${param.column} =concat(#{param.value},',',Reviewer) 
+				${param.column} =case  Reviewer when #{param.value} then #{param.value} else    concat(#{param.value},',',Reviewer) end 
 			</if>
 			
 			<if test="param.APStage !=null and param.APStage !=2 ">
