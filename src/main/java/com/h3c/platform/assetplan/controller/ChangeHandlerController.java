@@ -46,7 +46,7 @@ public class ChangeHandlerController {
 	@PostMapping("/adminChangeHandler")
 	@ApiOperation("系统管理员转单")
 	public ResponseResult changeHandlerByAdmin(@RequestParam String handler,@RequestParam String apstage,@RequestParam String newHandler)throws Exception{
-		if(roleService.checkIsAdmin()) {
+		if(!roleService.checkIsAdmin()) {
 			return ResponseResult.fail("无权限，请联系系统管理员");
 		}
 		return changeHandlerService.changeHandler(handler, apstage, "", newHandler,true);

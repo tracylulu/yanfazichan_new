@@ -42,6 +42,7 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 
 	/**
 	 * 转单  isAdmin：标记是否是管理员转单  true 是
+	 * 规范性审核特殊处理
 	 */ 
 	@Override
 	@Transactional
@@ -57,7 +58,7 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 		param.put("modifier", UserUtils.getCurrentUserId());
 		switch (apstage) {
 		case "2":
-			param.put("Reviewer",handler);	
+			param.put("ReviewPerson",handler);	
 			param.put("column","Reviewer");	
 			break;
 		case "3":

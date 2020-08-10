@@ -473,7 +473,15 @@
 		</where>	
 	</select>
 	<update id="changeHandler" parameterType="map">
-		update  AssetPlanInfo set  ${param.column} = #{param.value},Modifier=#{param.modifier},ModifiTime=NOW() 
+		update  AssetPlanInfo set  
+			<if test="param.APStage !=null and param.APStage=='2' ">
+				${param.column} =concat(#{param.value},Reviewer) 
+			</if>
+			
+			<if test="param.APStage !=null and param.APStage!='2' ">
+				${param.column} = #{param.value}
+			</if>
+			,Modifier=#{param.modifier},ModifiTime=NOW() 
 		<where>
 			DeleteFlag=1  and OutTimePlanEnum !=0
 			<if test="param.ReviewResult !=null">
