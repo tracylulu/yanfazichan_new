@@ -308,7 +308,7 @@ public class AssetPlanInfoDept3Controller {
 		double budgetSum=0;
 		double totalmoneySum=0;
 		
-		java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
+		//java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
 		
 		if("3".equals(apstage)) {
 			Map<String, Object> param33 = new HashMap<>();
@@ -332,7 +332,9 @@ public class AssetPlanInfoDept3Controller {
    	   				String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
    	   				if(StringUtils.isNotBlank(budgetSum1)) {
    	   					budgetSum=Double.parseDouble(assetPlanInfoService.getBudgetSum(param1))/10000;
-   	   					df.format(budgetSum);
+   	   					//df.format(budgetSum);
+   	   					BigDecimal bg = new BigDecimal(budgetSum);    
+   	   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
    	   				}else {
    	   				}
    	   				
@@ -344,7 +346,9 @@ public class AssetPlanInfoDept3Controller {
    	   				String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept3(param);
 	   				if(StringUtils.isNotBlank(totalmoneySum1)) {
 	   					totalmoneySum=Double.parseDouble(assetPlanInfoService.getSumTotalMoneyForDept3(param))/10000;
-	   					df.format(totalmoneySum);
+	   					//df.format(totalmoneySum);
+	   					BigDecimal bg = new BigDecimal(totalmoneySum);    
+	   					totalmoneySum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	   				}else {
 	   				}
    	   				
@@ -403,7 +407,9 @@ public class AssetPlanInfoDept3Controller {
    	   				String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
 	   				if(StringUtils.isNotBlank(budgetSum1)) {
 	   					budgetSum=Double.parseDouble(assetPlanInfoService.getBudgetSum(param1))/10000;
-	   					df.format(budgetSum);
+	   					//df.format(budgetSum);
+	   					BigDecimal bg = new BigDecimal(budgetSum);    
+	   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	   				}else {
 	   				}
    	   				
@@ -415,7 +421,9 @@ public class AssetPlanInfoDept3Controller {
 	   	   			String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept2(param);
 	   				if(StringUtils.isNotBlank(totalmoneySum1)) {	   					
 	   					totalmoneySum=Double.parseDouble(totalmoneySum1)/10000;
-	   					df.format(totalmoneySum);
+	   					//df.format(totalmoneySum);
+	   					BigDecimal bg = new BigDecimal(totalmoneySum);    
+	   					totalmoneySum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 	   				}else {
 	   				}
    	   				//实际到货_在途_预算 万元   1_12_123
@@ -470,7 +478,9 @@ public class AssetPlanInfoDept3Controller {
 		   	   			String totalmoneySum11 = assetPlanInfoService.getSumMoneyWithThirdDept(param_2);
 		   				if(StringUtils.isNotBlank(totalmoneySum11)) {
 		   					totalmoneySum=Double.parseDouble(totalmoneySum11)/10000;
-		   					df.format(totalmoneySum);
+		   					//df.format(totalmoneySum);
+		   					BigDecimal bg = new BigDecimal(totalmoneySum);    
+		   					totalmoneySum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 		   				}else {
 		   				}
 	   				
@@ -484,7 +494,9 @@ public class AssetPlanInfoDept3Controller {
 	   					String budgetSum11 = assetPlanInfoService.getBudgetSum(param_3);
 		   				if(StringUtils.isNotBlank(budgetSum11)) {
 		   					budgetSum=Double.parseDouble(assetPlanInfoService.getBudgetSum(param_3))/10000;
-		   					df.format(budgetSum);
+		   					//df.format(budgetSum);
+		   					BigDecimal bg = new BigDecimal(budgetSum);    
+		   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 		   				}else {
 		   				}
 	   					
@@ -529,7 +541,16 @@ public class AssetPlanInfoDept3Controller {
 		   				zaiTu2+=zaiTu;
 		   				total2+=total;
 		   				totalBudget2+=totalBudget;
-		   				totalBudgetSY2+=totalBudgetSY;	   					   				
+		   				totalBudgetSY2+=totalBudgetSY;
+		   				
+		   				BigDecimal bg1 = new BigDecimal(totalmoneySum2);    
+		   				totalmoneySum2= bg1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+   	   	   				
+   	   	   				BigDecimal bg2 = new BigDecimal(budgetSum2);    
+   	   	   				budgetSum2= bg2.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+   	   	   				
+		   				BigDecimal bg3 = new BigDecimal(totalBudgetSY2);    
+		   				totalBudgetSY2= bg3.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 	   				}
 	   				if(CollectionUtils.isNotEmpty(lstChild)) {
 	   					JSONObject json1=new JSONObject();
