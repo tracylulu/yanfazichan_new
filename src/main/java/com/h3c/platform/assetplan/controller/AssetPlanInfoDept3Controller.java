@@ -324,7 +324,7 @@ public class AssetPlanInfoDept3Controller {
 	   			String dicName3=ObjToStrUtil.ReplaceNullValue(jsonObject1.getString("dic_value"));
 	   			if(StringUtils.isNotBlank(dicName3)) {
 	   				Map<String, Object> param1 = new HashMap<>();
-   	   				param1.put("DeptCode",newlist.get(i));
+   	   				param1.put("Dept3Code",newlist.get(i));
    	   				param1.put("Dept2Code",null);
    	   				//param1.put("APStatus","0");
    	   				param1.put("APStage","0");
@@ -399,7 +399,7 @@ public class AssetPlanInfoDept3Controller {
 				String dicName2=ObjToStrUtil.ReplaceNullValue(jsonObject2.getString("dic_value"));
 				if(StringUtils.isNotBlank(dicName2)) {
 					Map<String, Object> param1 = new HashMap<>();
-   	   				param1.put("DeptCode",null);
+   	   				param1.put("Dept3Code",null);
    	   				param1.put("Dept2Code",newlist.get(k));
    	   				//param1.put("APStatus","0");
    	   				param1.put("APStage","0");
@@ -486,7 +486,7 @@ public class AssetPlanInfoDept3Controller {
 	   				
 	   					//本月评审已通过（万元）（入参：当前部门，当前月份，审批已结束的状态）
 	   					Map<String, Object> param_3 = new HashMap<>();
-	   					param_3.put("DeptCode",allChildDept.get(i).getDeptCode());
+	   					param_3.put("Dept3Code",allChildDept.get(i).getDeptCode());
 	   					param_3.put("Dept2Code",null);
 	   					//param_3.put("APStatus","0");
 	   					param_3.put("APStage","0");

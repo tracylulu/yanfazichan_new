@@ -27,6 +27,7 @@
     <result column="OQDeptReviewer" jdbcType="VARCHAR" property="oqdeptreviewer" />
     <result column="Dept1Reviewer" jdbcType="VARCHAR" property="dept1reviewer" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
+    <result column="Dept3Code" jdbcType="VARCHAR" property="dept3code" />
     <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
     <result column="Dept2Code" jdbcType="VARCHAR" property="dept2code" />
     <result column="Dept2Name" jdbcType="VARCHAR" property="dept2name" />
@@ -115,11 +116,11 @@
     AssetPlanID, PlanCode, PlanMonth, ApplyMonth, AssetName, AssetManufacturer, AssetModel, 
     AssetCategory, Goodstime, Purpose, Requireds, RequiredsAudit, PPrice, TotalMoney, 
     ActualMoney, RequiredUser, RequiredUserName, ReviewPerson, Reviewer, Dept3Manager, 
-    Dept2Manager, Planner, OQDeptReviewer, Dept1Reviewer, DeptCode, Dept3Name, Dept2Code, 
-    Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, 
-    AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, APStatus, APStatusDetail, 
-    APStage, ApprovalPerson, ApprovalNote, ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
-    ManufacturerTypeEnum, ReviewResult, DeleteFlag
+    Dept2Manager, Planner, OQDeptReviewer, Dept1Reviewer, DeptCode, Dept3Code, Dept3Name, 
+    Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, 
+    OutTimePlanEnum, AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, 
+    APStatus, APStatusDetail, APStage, ApprovalPerson, ApprovalNote, ApprovalResult, 
+    IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, ReviewResult, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultMap="BaseResultMap">
     select
@@ -150,14 +151,14 @@
       RequiredUser, RequiredUserName, ReviewPerson, 
       Reviewer, Dept3Manager, Dept2Manager, 
       Planner, OQDeptReviewer, Dept1Reviewer, 
-      DeptCode, Dept3Name, Dept2Code, 
-      Dept2Name, Dept1Code, Dept1Name, 
-      ItemCode, ReceiverPlace, AbnormalPlanEnum, 
-      OutTimePlanEnum, AssetNote, ApplyUser, 
-      ApplyTime, IsCompleteSet, CompleteSetCode, 
-      APStatus, APStatusDetail, APStage, 
-      ApprovalPerson, ApprovalNote, ApprovalResult, 
-      IsReqPurchaseReport, ISSpecifyManufacturer, 
+      DeptCode, Dept3Code, Dept3Name, 
+      Dept2Code, Dept2Name, Dept1Code, 
+      Dept1Name, ItemCode, ReceiverPlace, 
+      AbnormalPlanEnum, OutTimePlanEnum, AssetNote, 
+      ApplyUser, ApplyTime, IsCompleteSet, 
+      CompleteSetCode, APStatus, APStatusDetail, 
+      APStage, ApprovalPerson, ApprovalNote, 
+      ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
       ManufacturerTypeEnum, ReviewResult, DeleteFlag
       )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, 
@@ -168,14 +169,14 @@
       #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, 
       #{reviewer,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, 
       #{planner,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, 
-      #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, 
-      #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, 
-      #{itemcode,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, #{abnormalplanenum,jdbcType=INTEGER}, 
-      #{outtimeplanenum,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, 
-      #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, 
-      #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
-      #{approvalperson,jdbcType=VARCHAR}, #{approvalnote,jdbcType=VARCHAR}, #{approvalresult,jdbcType=VARCHAR}, 
-      #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{deptcode,jdbcType=VARCHAR}, #{dept3code,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
+      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, 
+      #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, 
+      #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, 
+      #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
+      #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, #{approvalnote,jdbcType=VARCHAR}, 
+      #{approvalresult,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
       #{manufacturertypeenum,jdbcType=INTEGER}, #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR}
       )
   </insert>
@@ -256,6 +257,9 @@
       </if>
       <if test="deptcode != null">
         DeptCode,
+      </if>
+      <if test="dept3code != null">
+        Dept3Code,
       </if>
       <if test="dept3name != null">
         Dept3Name,
@@ -408,6 +412,9 @@
       </if>
       <if test="deptcode != null">
         #{deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dept3code != null">
+        #{dept3code,jdbcType=VARCHAR},
       </if>
       <if test="dept3name != null">
         #{dept3name,jdbcType=VARCHAR},
@@ -570,6 +577,9 @@
       <if test="record.deptcode != null">
         DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       </if>
+      <if test="record.dept3code != null">
+        Dept3Code = #{record.dept3code,jdbcType=VARCHAR},
+      </if>
       <if test="record.dept3name != null">
         Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       </if>
@@ -677,6 +687,7 @@
       OQDeptReviewer = #{record.oqdeptreviewer,jdbcType=VARCHAR},
       Dept1Reviewer = #{record.dept1reviewer,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      Dept3Code = #{record.dept3code,jdbcType=VARCHAR},
       Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       Dept2Code = #{record.dept2code,jdbcType=VARCHAR},
       Dept2Name = #{record.dept2name,jdbcType=VARCHAR},

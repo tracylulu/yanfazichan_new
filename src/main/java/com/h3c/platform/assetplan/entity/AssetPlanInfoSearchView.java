@@ -54,6 +54,8 @@ public class AssetPlanInfoSearchView {
 
     private String deptcode;
 
+    private String dept3code;
+
     private String dept3name;
 
     private String dept2code;
@@ -302,6 +304,14 @@ public class AssetPlanInfoSearchView {
 
     public void setDeptcode(String deptcode) {
         this.deptcode = deptcode == null ? null : deptcode.trim();
+    }
+
+    public String getDept3code() {
+        return dept3code;
+    }
+
+    public void setDept3code(String dept3code) {
+        this.dept3code = dept3code == null ? null : dept3code.trim();
     }
 
     public String getDept3name() {
