@@ -161,7 +161,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 		
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$node", process);
-		//contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
+		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
