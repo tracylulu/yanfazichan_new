@@ -141,7 +141,7 @@
   
   
   <select id="getBudgetSum" parameterType="map" resultType="java.lang.String">
-  	select SUM(ActualMoney) as m from AssetPlanInfoSearchView
+  	select  ifnull(SUM(ActualMoney),0) as m from AssetPlanInfoSearchView
   		where 
   		DeleteFlag=1 and ReviewResult=1
 			<if test="param.Dept2Code !=null">

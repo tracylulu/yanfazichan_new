@@ -1299,7 +1299,7 @@ public class AssetPlanInfoApplyController {
 					lstsubmitID.add(assetPlanGlobalInfo.getLst().get(0).getAssetplanid());
 				}else {
 					//获得最终的主表id集合
-					List<AssetPlanInfo> list = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
+					List<AssetPlanInfo> list = assetPlanInfoService.selectCompleteSet(plancode, assetPlanGlobalInfo.getLst().get(0).getCompletesetcode());
 		   			for (int i = 0; i < list.size(); i++) {
 		   				if("1".equals(list.get(i).getDeleteflag())) {
 		   					lstsubmitID.add(list.get(i).getAssetplanid());
@@ -1621,16 +1621,20 @@ public class AssetPlanInfoApplyController {
 			List<PurchaseReportInfo> list = purchaseReportInfoService.getByID(purchasereportid);
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
+					Map<String, Object> detail = new HashMap<String, Object>();
 					List<String> picList = new ArrayList();
 					String titlecode = list.get(i).getTitlecode();
 					String picturepath = list.get(i).getPicturepath();
 					String[] split = picturepath.split(";");
 					for (int j = 0; j < split.length; j++) {
+						String picpath = split[j];
+						String substringPic = picpath.substring(picpath.lastIndexOf("/")+1);
 						String base64=this.getImageStr(split[j]);
-						picList.add(base64);
+						//picList.add(base64);
+						detail.put(substringPic, base64);
 						k++;
 					}
-					result.put(titlecode, picList);
+					result.put(titlecode, detail);
 				}
 			}
 			
@@ -1641,16 +1645,20 @@ public class AssetPlanInfoApplyController {
 			List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getByID(specifymanufacturerid);
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
+					Map<String, Object> detail = new HashMap<String, Object>();
 					List<String> picList = new ArrayList();
 					String titlecode = list.get(i).getTitlecode();
 					String picturepath = list.get(i).getPicturepath();
 					String[] split = picturepath.split(";");
 					for (int j = 0; j < split.length; j++) {
+						String picpath = split[j];
+						String substringPic = picpath.substring(picpath.lastIndexOf("/")+1);
 						String base64=this.getImageStr(split[j]);
-						picList.add(base64);
+						//picList.add(base64);
+						detail.put(substringPic, base64);
 						k++;
 					}
-					result.put(titlecode, picList);
+					result.put(titlecode, detail);
 				}
 			}
 		}
