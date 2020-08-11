@@ -56,7 +56,7 @@ public class FileController {
 
     private  String PATH;
 
-    @Value("${file.realPath}")
+    @Value("${file.tmpPath}")
     private  String filePath ;  
 //    @Autowired
 //    private FileLogService fileLogService;
@@ -108,18 +108,14 @@ public class FileController {
     @ResponseBody
     @UserLoginToken(logType=LogType.IMPORT)
     public ResponseResult uploadFileMulti(
-    		@RequestParam @ApiParam(name="id",value="id",required=false)String id,
     		@RequestParam @ApiParam(name="files", value = "files", required = false) MultipartFile[] files,
             HttpServletRequest request) throws Exception{ 
     		
+    		PATH =  filePath;
+    			
         	Map<String,Object> fileInfo = new HashMap<>();
         	List<String> lstFileName=new ArrayList<String>();
         	List<String> lstFileId=new ArrayList<String>();
-        	//id为空说明第一次上传，得先建一个文件夹，以id为名称的。下次都保存在这里面
-        	if(StringUtils.isBlank(id)) {
-            	id = UUID.randomUUID().toString();
-            	PATH=filePath+id+"/";
-            }
       
             if(files == null || files.length == 0){
             	return ResponseResult.fail(StatusCodeEnum.REQ_UPLOAD_FAIL);
@@ -144,7 +140,6 @@ public class FileController {
             }
             fileInfo.put("fileName", String.join(",", lstFileName));
             fileInfo.put("fileId",String.join(",", lstFileId));
-            fileInfo.put("id",id);
             
             return ResponseResult.success(fileInfo, "上传成功");
     }
