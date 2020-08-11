@@ -44,7 +44,7 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
     public ResponseResult add(ManufacturerInfo info)throws Exception{	
 		ManufacturerInfo mfCheck=getByName(info.getManufacturerName());
 		if(mfCheck!=null) {
-			ResponseResult.fail("厂商名称配置重复！");
+			return ResponseResult.fail("厂商名称配置重复！");
 		}
 		info.setCreateTime(new Date());
 		info.setCreator(UserUtils.getCurrentUserId());
@@ -60,7 +60,7 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 	public ResponseResult edit(ManufacturerInfo info) throws Exception{
 		ManufacturerInfo mfCheck=getByName(info.getManufacturerName());
 		if(mfCheck!=null&&!info.getId().equals(mfCheck.getId())) {
-			ResponseResult.fail("厂商名称配置重复！");
+			return ResponseResult.fail("厂商名称配置重复！");
 		}
 		
 		info.setModifier(UserUtils.getCurrentUserId());

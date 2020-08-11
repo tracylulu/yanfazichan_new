@@ -70,6 +70,10 @@ public class AssetPlanInfoHomePageView {
 
     private String applymonth;
 
+    private Integer reviewercount;
+
+    private String reviewerperson;
+
     private Integer dept3managercount;
 
     private Integer dept2managercount;
@@ -344,6 +348,22 @@ public class AssetPlanInfoHomePageView {
 
     public void setApplymonth(String applymonth) {
         this.applymonth = applymonth == null ? null : applymonth.trim();
+    }
+
+    public Integer getReviewercount() {
+        return reviewercount;
+    }
+
+    public void setReviewercount(Integer reviewercount) {
+        this.reviewercount = reviewercount;
+    }
+
+    public String getReviewerperson() {
+        return reviewerperson;
+    }
+
+    public void setReviewerperson(String reviewerperson) {
+        this.reviewerperson = reviewerperson == null ? null : reviewerperson.trim();
     }
 
     public Integer getDept3managercount() {

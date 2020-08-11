@@ -438,4 +438,147 @@
 			#{item}
 		</foreach>
 	</select>
+	<select id="getToDoListByUser" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"></include> from AssetPlanInfo 
+		<where>
+			DeleteFlag=1  and OutTimePlanEnum !=0
+			<if test="param.ReviewResult !=null">
+				and ReviewResult = #{param.ReviewResult}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.Reviewer !=null">
+				<!-- and Reviewer = #{param.Reviewer} -->
+				and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
+			</if>
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.Dept2Manager !=null">
+				and Dept2Manager = #{param.Dept2Manager}
+			</if>
+			<if test="param.Planner !=null">
+				and Planner = #{param.Planner}
+			</if>
+			<if test="param.OQDeptReviewer !=null">
+				and OQDeptReviewer = #{param.OQDeptReviewer}
+			</if>
+			<if test="param.Dept1Reviewer !=null">
+				and Dept1Reviewer = #{param.Dept1Reviewer}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and substring_index(PlanCode, '-', 2) = #{param.ApplyMonth}
+			</if>			
+		</where>	
+	</select>
+	<update id="changeHandler" parameterType="map">
+		update  AssetPlanInfo set  
+			<if test="param.APStage !=null and param.APStage==2 ">
+				${param.column} =case  Reviewer when #{param.value} then #{param.value} else    concat(#{param.value},',',Reviewer) end 
+			</if>
+			
+			<if test="param.APStage !=null and param.APStage !=2 ">
+				${param.column} = #{param.value}
+			</if>
+			,Modifier=#{param.modifier},ModifiTime=NOW() 
+		<where>
+			DeleteFlag=1  and OutTimePlanEnum !=0
+			<if test="param.ReviewResult !=null">
+				and ReviewResult = #{param.ReviewResult}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.Reviewer !=null">
+				<!-- and Reviewer = #{param.Reviewer} -->
+				and FIND_IN_SET(#{param.Reviewer}, ReviewPerson)
+			</if>
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.Dept2Manager !=null">
+				and Dept2Manager = #{param.Dept2Manager}
+			</if>
+			<if test="param.Planner !=null">
+				and Planner = #{param.Planner}
+			</if>
+			<if test="param.OQDeptReviewer !=null">
+				and OQDeptReviewer = #{param.OQDeptReviewer}
+			</if>
+			<if test="param.Dept1Reviewer !=null">
+				and Dept1Reviewer = #{param.Dept1Reviewer}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and substring_index(PlanCode, '-', 2) = #{param.ApplyMonth}
+			</if>			
+		</where>
+	</update>
+	<select id="getAdminChangeHandlerList" parameterType="String" resultMap="BaseResultMap">
+		SELECT distinct a.APStatus,a.apstage,CONCAT(b.emp_name,' ',b.emp_code) as  Reviewer FROM (
+			SELECT '规范性审核'APStatus , apstage,case when instr( ReviewPerson,',')>0 then REPLACE(REPLACE(ReviewPerson,Reviewer,''),',','') ELSE ReviewPerson END AS Reviewer FROM AssetPlanInfo WHERE apstage=2 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '三级部门主管审核' APStatus ,apstage,Dept3Manager AS Reviewer FROM AssetPlanInfo WHERE apstage=3 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '二级部门主管审核' APStatus ,apstage,Dept2Manager AS Reviewer FROM AssetPlanInfo WHERE apstage=4 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '计划员审核' APStatus ,apstage,Planner AS Reviewer FROM AssetPlanInfo WHERE apstage=5 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '专家团审核' APStatus ,apstage,OQDeptReviewer AS Reviewer FROM AssetPlanInfo WHERE apstage=6 AND DeleteFlag=1  AND OutTimePlanEnum=-1
+			UNION ALL 
+			SELECT '一级部门主管审核' APStatus ,apstage,Dept1Reviewer AS Reviewer FROM AssetPlanInfo WHERE apstage=7 AND DeleteFlag=1  AND OutTimePlanEnum=-1) a 
+		LEFT JOIN UserInfo b ON a.Reviewer=b.emp_code
+		<where>
+			<if test="userCode!=null and userCode!='' ">
+	 			a.Reviewer =#{userCode}
+			</if>
+		</where>
+		order by a.apstage
+		
+	
+	</select>
+	
+	<insert id="insertBackID" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfo" useGeneratedKeys="true" keyProperty="assetplanid">
+    insert into AssetPlanInfo (AssetPlanID, PlanCode, PPrice, 
+      TotalMoney, ActualMoney, AssetName, 
+      AssetManufacturer, AssetModel, AssetCategory, 
+      PlanMonth, Requireds, RequiredsAudit, 
+      Purpose, DeptCode, ItemCode, 
+      RequiredUser, ReceiverPlace, AssetNote, 
+      ApplyUser, ApplyTime, Modifier, 
+      ModifiTime, Goodstime, ReqArrivalDate, 
+      IsCompleteSet, CompleteSetCode, IsReqPurchaseReport, 
+      PurchaseReportID, ISSpecifyManufacturer, 
+      ManufacturerTypeEnum, SpecifyManufacturerID, 
+      AbnormalPlanEnum, APStatus, APStage, 
+      DeleteFlag, OutTimePlanEnum, UsageRate, 
+      Reviewer, ReviewTime, ReviewResult, 
+      ReviewNote, Dept3Manager, Dept3CheckTime, 
+      Dept3CheckNote, Dept2Manager, Dept2CheckTime, 
+      Dept2CheckNote, Planner, PlannerTime, 
+      PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
+      OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
+      Dept1ReviewNote, ReviewPerson)
+    values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{pprice,jdbcType=DECIMAL}, 
+      #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{assetname,jdbcType=VARCHAR}, 
+      #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
+      #{planmonth,jdbcType=DATE}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
+      #{purpose,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
+      #{requireduser,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, #{assetnote,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=VARCHAR}, #{reqarrivaldate,jdbcType=DATE}, 
+      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
+      #{purchasereportid,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{manufacturertypeenum,jdbcType=INTEGER}, #{specifymanufacturerid,jdbcType=VARCHAR}, 
+      #{abnormalplanenum,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
+      #{deleteflag,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, #{usagerate,jdbcType=VARCHAR}, 
+      #{reviewer,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, #{reviewresult,jdbcType=INTEGER}, 
+      #{reviewnote,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept3checktime,jdbcType=TIMESTAMP}, 
+      #{dept3checknote,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, #{dept2checktime,jdbcType=TIMESTAMP}, 
+      #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
+      #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
+      #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
+      #{dept1reviewnote,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR})
+  </insert>
+  
 </mapper>

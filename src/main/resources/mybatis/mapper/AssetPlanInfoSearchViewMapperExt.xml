@@ -116,7 +116,9 @@
     		<include refid="condition_sql"></include>
     	</if>
     	order by AssetPlanID desc
-		LIMIT  #{param.pageNum}, #{param.pageSize}
+    	<if test="param.isUnPage==null or param.isUnPage=='' ">
+    		LIMIT  #{param.pageNum}, #{param.pageSize}
+    	</if>		
   
   </select>
   
@@ -145,12 +147,12 @@
 			<if test="param.Dept2Code !=null">
 				and Dept2Code = #{param.Dept2Code}
 			</if>
-			<if test="param.DeptCode !=null">
-				and DeptCode = #{param.DeptCode}
+			<if test="param.Dept3Code !=null">
+				and Dept3Code = #{param.Dept3Code}
 			</if>
-			<if test="param.APStatus !=null">
+			<!-- <if test="param.APStatus !=null">
 				and APStatus = #{param.APStatus}
-			</if>
+			</if> -->
 			<if test="param.APStage !=null">
 				and APStage = #{param.APStage}
 			</if>

@@ -153,7 +153,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 				++lessSixty;
 			}
 			//60-100
-			if(Double.compare(avg, 0.6)!=-1 &&Double.compare(avg, 1)==-1) {
+			if((Double.compare(avg, 0.6)!=-1 &&Double.compare(avg, 1)==-1 )||Double.compare(avg, 1)==0) {
 				++lessHundred;
 			}
 		}

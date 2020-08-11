@@ -471,7 +471,7 @@ public class AssetPlanInfoSearchController {
 				JSONObject json=new JSONObject();
 				json.put("apstage",  "2");
 				json.put("apstatusdetail",  "规范审核");
-				json.put("assetmanufacturer", record.getAssetmanufacturer());
+				/*json.put("assetmanufacturer", record.getAssetmanufacturer());
 				json.put("assetmodel", record.getAssetmodel());
 				SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(record.getAssetcategory());
 				json.put("assetcategory", sysDicCategory.getAssetCategory());
@@ -487,13 +487,14 @@ public class AssetPlanInfoSearchController {
 					json.put("reviewresult", "再审核");
 				}else {
 					json.put("reviewresult", "状态错误");
-				}
+				}*/
+				json.put("reviewercount", record.getReviewercount());
 				json.put("reviewnote", record.getReviewnote());
-				UserInfo user2 = userService.getUserByEmpCode(record.getReviewer());
+				UserInfo user2 = userService.getUserByEmpCode(record.getReviewerperson());
 				if(user2==null) {
 					json.put("reviewer", "");
 				}else {
-					json.put("reviewer", user2.getDisplayName()+" "+record.getReviewer());
+					json.put("reviewer", user2.getDisplayName()+" "+user2.getEmpCode());
 				}
 				json.put("reviewtime", dateformat.format(record.getReviewtime()));
 				arrayData.add(json);

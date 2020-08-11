@@ -15,6 +15,8 @@ public class RequestsNumApproveRecord {
 
     private Integer dept1reviewercount;
 
+    private String reviewerperson;
+
     public Integer getAssetplanid() {
         return assetplanid;
     }
@@ -69,5 +71,13 @@ public class RequestsNumApproveRecord {
 
     public void setDept1reviewercount(Integer dept1reviewercount) {
         this.dept1reviewercount = dept1reviewercount;
+    }
+
+    public String getReviewerperson() {
+        return reviewerperson;
+    }
+
+    public void setReviewerperson(String reviewerperson) {
+        this.reviewerperson = reviewerperson == null ? null : reviewerperson.trim();
     }
 }

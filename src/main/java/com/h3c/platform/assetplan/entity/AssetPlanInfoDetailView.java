@@ -8,7 +8,7 @@ public class AssetPlanInfoDetailView {
 
     private String plancode;
 
-    private BigDecimal pprice;
+    private String pprice;
 
     private BigDecimal totalmoney;
 
@@ -150,11 +150,11 @@ public class AssetPlanInfoDetailView {
         this.plancode = plancode == null ? null : plancode.trim();
     }
 
-    public BigDecimal getPprice() {
+    public String getPprice() {
         return pprice;
     }
 
-    public void setPprice(BigDecimal pprice) {
+    public void setPprice(String pprice) {
         this.pprice = pprice;
     }
 

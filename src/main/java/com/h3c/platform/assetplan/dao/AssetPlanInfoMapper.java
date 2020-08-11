@@ -38,7 +38,7 @@ public interface AssetPlanInfoMapper {
      
     List<AssetPlanInfo> selectByIDs(@Param("lst")List<String> lst);
     
-    
+    int insertBackID(AssetPlanInfo record);
     
     int deleteByID(@Param("param") Map<String,Object> param); 
     
@@ -77,4 +77,10 @@ public interface AssetPlanInfoMapper {
     int eidtMonthOutTimeStatus(@Param("param") Map<String, Object> param); 
     
     int updateReviewResult(@Param("param") Map<String, Object> param);
+    
+    List<AssetPlanInfo> getToDoListByUser(@Param("param") Map<String, Object> param);
+    
+    int changeHandler(@Param("param") Map<String, Object> param);
+    
+    List<AssetPlanInfo> getAdminChangeHandlerList(@Param("userCode")String userCode);
 }

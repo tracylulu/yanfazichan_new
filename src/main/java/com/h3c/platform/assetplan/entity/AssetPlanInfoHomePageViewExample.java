@@ -2333,6 +2333,136 @@ public class AssetPlanInfoHomePageViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andReviewercountIsNull() {
+            addCriterion("ReviewerCount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountIsNotNull() {
+            addCriterion("ReviewerCount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountEqualTo(Integer value) {
+            addCriterion("ReviewerCount =", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountNotEqualTo(Integer value) {
+            addCriterion("ReviewerCount <>", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountGreaterThan(Integer value) {
+            addCriterion("ReviewerCount >", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ReviewerCount >=", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountLessThan(Integer value) {
+            addCriterion("ReviewerCount <", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountLessThanOrEqualTo(Integer value) {
+            addCriterion("ReviewerCount <=", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountIn(List<Integer> values) {
+            addCriterion("ReviewerCount in", values, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountNotIn(List<Integer> values) {
+            addCriterion("ReviewerCount not in", values, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountBetween(Integer value1, Integer value2) {
+            addCriterion("ReviewerCount between", value1, value2, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountNotBetween(Integer value1, Integer value2) {
+            addCriterion("ReviewerCount not between", value1, value2, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonIsNull() {
+            addCriterion("ReviewerPerson is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonIsNotNull() {
+            addCriterion("ReviewerPerson is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonEqualTo(String value) {
+            addCriterion("ReviewerPerson =", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotEqualTo(String value) {
+            addCriterion("ReviewerPerson <>", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonGreaterThan(String value) {
+            addCriterion("ReviewerPerson >", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonGreaterThanOrEqualTo(String value) {
+            addCriterion("ReviewerPerson >=", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonLessThan(String value) {
+            addCriterion("ReviewerPerson <", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonLessThanOrEqualTo(String value) {
+            addCriterion("ReviewerPerson <=", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonLike(String value) {
+            addCriterion("ReviewerPerson like", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotLike(String value) {
+            addCriterion("ReviewerPerson not like", value, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonIn(List<String> values) {
+            addCriterion("ReviewerPerson in", values, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotIn(List<String> values) {
+            addCriterion("ReviewerPerson not in", values, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonBetween(String value1, String value2) {
+            addCriterion("ReviewerPerson between", value1, value2, "reviewerperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewerpersonNotBetween(String value1, String value2) {
+            addCriterion("ReviewerPerson not between", value1, value2, "reviewerperson");
+            return (Criteria) this;
+        }
+
         public Criteria andDept3managercountIsNull() {
             addCriterion("Dept3ManagerCount is null");
             return (Criteria) this;
