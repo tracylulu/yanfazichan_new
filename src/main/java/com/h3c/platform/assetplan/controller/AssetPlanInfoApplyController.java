@@ -128,7 +128,8 @@ public class AssetPlanInfoApplyController {
 	
 	@Value("${file.realPath}")
     private  String realPath ;
-	
+	@Value("${file.tmpPath}")
+    private  String tmpPath ;
 	
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
@@ -1039,8 +1040,9 @@ public class AssetPlanInfoApplyController {
 	   	@ResponseBody
 	   	@UserLoginToken(logType=LogType.MODIFY)
 	   	public ResponseResult submitAssetPlanInfoByIdsOnAddPage(@RequestBody AssetPlanGlobalInfo assetPlanGlobalInfo) throws Exception{
-		 	//保存操作
-		 	List<Integer> lstsubmitID=new ArrayList();
+		 List<Integer> lstsubmitID=new ArrayList();
+		 if(assetPlanGlobalInfo.getLst().get(0).getAssetplanid().intValue()==0) {
+			 //保存操作
 		 	for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
 				if(StringUtils.isBlank(ap.getAssetmanufacturer())){
 					return ResponseResult.fail(false, "厂家字段必填");
@@ -1084,8 +1086,8 @@ public class AssetPlanInfoApplyController {
 			}
 		 	String purchasereportID = "",surchasereportid="";
 			if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.purchaseReportInfo)) {
-				//purchasereportID = UUIDUtil.UUID();
-				purchasereportID = assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid();
+				purchasereportID = UUIDUtil.UUID();
+				//purchasereportID = assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid();
 				for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
 					info.setDeleteflag("1");
 					info.setCreatetime(new Date());
@@ -1097,8 +1099,8 @@ public class AssetPlanInfoApplyController {
 				}		
 			}
 			if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.specifyManufacturerInfo)) {
-				//surchasereportid = UUIDUtil.UUID();
-				surchasereportid=assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid();
+				surchasereportid = UUIDUtil.UUID();
+				//surchasereportid=assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid();
 				for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
 					info.setDeleteflag("1");
 					info.setCreatetime(new Date());
@@ -1155,6 +1157,156 @@ public class AssetPlanInfoApplyController {
 				int insertBackID = assetPlanInfoMapper.insertBackID(ap);
 				lstsubmitID.add(ap.getAssetplanid());
 			}
+			
+		 }else {
+			 //修改操作
+			 List<AssetPlanInfo> lst = assetPlanGlobalInfo.getLst();
+				//是否成套物品 默认否,1是0否
+				String iscompleteset = lst.get(0).getIscompleteset();
+				//成套ID
+				Integer completesetcode = lst.get(0).getCompletesetcode();
+				//申购序号 格式YYYY-00001，年月－工号
+				String plancode = lst.get(0).getPlancode();
+				//是否需要申购报告 是否需要申购报告,1需要0不需要
+				String isreqpurchasereport = lst.get(0).getIsreqpurchasereport();
+				//申购报告 ID
+				String purchasereportid = lst.get(0).getPurchasereportid();
+				//是否指定供应商,1是0否
+				String isspecifymanufacturer = lst.get(0).getIsspecifymanufacturer();
+				//供应商 ID
+				String specifymanufacturerid = lst.get(0).getSpecifymanufacturerid();
+				
+				//数据库中原来的成套id集合
+				List<Integer> oldLstsubmitID =new ArrayList<>();
+				List<AssetPlanInfo> oldCompleteSetList = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
+	   			for (int i = 0; i < oldCompleteSetList.size(); i++) {
+	   				oldLstsubmitID.add(oldCompleteSetList.get(i).getAssetplanid());
+	   			}
+				
+	   			//初始化成套设备的code--只初始化一次
+				Integer completesetcodeNew = this.initApplyCode();
+				
+				for (int i = 0; i < lst.size(); i++) {
+					//申购报告
+					//现在没有，断关系
+					if("0".equals(isreqpurchasereport)) {
+						lst.get(i).setIsreqpurchasereport("0");
+					//从无到有
+					}else if("1".equals(isreqpurchasereport) && StringUtils.isBlank(purchasereportid) ) {
+						Optional<PurchaseReportInfo> temp=assetPlanGlobalInfo.getPurchaseReportInfo().stream()
+								.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
+						if(!temp.isPresent()) {
+							String purchasereportID = UUIDUtil.UUID();
+							String currentUserId = UserUtils.getCurrentUserId();
+							//新生成申购报告，并建立与主表的关系
+							for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
+								info.setDeleteflag("1");
+								info.setCreatetime(new Date());
+								info.setCreator(UserUtils.getCurrentUserId());
+								info.setModifier(UserUtils.getCurrentUserId());
+								info.setModifitime(new Date());
+								info.setPurchasereportid(purchasereportID);
+								priMapper.insertSelective(info);
+							}
+							lst.get(i).setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid());	
+						}else {
+							lst.get(i).setPurchasereportid(assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid());	
+						}
+						
+					//从有到有，不做处理，直接update
+					}else if("1".equals(isreqpurchasereport) && StringUtils.isNotBlank(purchasereportid)) {
+						
+					}
+					
+					//供应商
+					//现在没有，断关系
+					if("0".equals(isspecifymanufacturer)) {
+						lst.get(i).setIsspecifymanufacturer("0");
+					//从无到有
+					}else if("1".equals(isspecifymanufacturer) &&StringUtils.isBlank(specifymanufacturerid)) {
+						Optional<SpecifyManufacturerInfo> temp=assetPlanGlobalInfo.getSpecifyManufacturerInfo().stream()
+								.filter(o->StringUtils.isNotBlank(o.getSpecifymanufacturerid())).findAny();
+						if(!temp.isPresent()) {
+							//新生成供应商，并建立与主表的关系
+							String surchasereportid = UUIDUtil.UUID();
+							for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
+								info.setDeleteflag("1");
+								info.setCreatetime(new Date());
+								info.setCreator(UserUtils.getCurrentUserId());
+								info.setModifier(UserUtils.getCurrentUserId());
+								info.setModifitime(new Date());
+								info.setSpecifymanufacturerid(surchasereportid);
+								smiMapper.insertSelective(info);
+							}							
+							lst.get(i).setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid());		
+						}else {
+							lst.get(i).setSpecifymanufacturerid(assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid());	
+						}
+						
+					//从有到有，不做处理，直接update
+					}else if("1".equals(isspecifymanufacturer) && StringUtils.isNotBlank(specifymanufacturerid)) {
+					}
+					
+					//是否成套
+					//现在非成套0，历史成套id为0  非到非，不做处理，直接update
+					if("0".equals(iscompleteset) && completesetcode==0) {
+					
+					//现在非成套0，历史成套id不为0  成到非，把缺少的那条软删除
+					}else if("0".equals(iscompleteset) && completesetcode!=0) {
+						List<AssetPlanInfo> completeSetList = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
+						for (int j = 0; j < completeSetList.size(); j++) {
+							if(completeSetList.get(j).getAssetplanid().equals(lst.get(i).getAssetplanid())) {
+								//改成非成套的把以前的成套编码去掉
+								lst.get(i).setCompletesetcode(0);	
+							}else {
+								List<Integer> lstDelID=new ArrayList<>();
+								lstDelID.add(completeSetList.get(j).getAssetplanid());
+								assetPlanInfoService.delAssetPlanInfo(lstDelID);
+							}
+						}
+					//现在是成套，历史成套id为0  非到成，先生成成套id
+					}else if("1".equals(iscompleteset) && completesetcode==0) {
+						AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
+						//去数据库中查询有没有这条记录，判断是原来有的还是新增的
+						if(assetPlanInfo==null) {
+							lst.get(i).setCompletesetcode(completesetcodeNew);
+							assetPlanInfoMapper.insert(lst.get(i));
+						}else {
+							lst.get(i).setCompletesetcode(completesetcodeNew);
+						}
+					//成套到成套
+					}else if("1".equals(iscompleteset) && completesetcode!=0) {
+						AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
+						if(assetPlanInfo==null) {
+							assetPlanInfoMapper.insert(lst.get(i));
+						}else {
+							oldLstsubmitID.remove(lst.get(i).getAssetplanid());
+						}
+					}
+				}
+				
+				//成到成，软删除，把数据库中有的，传过来没有的进行软删除
+				if("1".equals(iscompleteset) && completesetcode!=0) {
+					if(oldLstsubmitID.size()>0) {
+						assetPlanInfoService.delAssetPlanInfo(oldLstsubmitID);
+					}
+				}
+				
+				this.assetPlanInfoService.editAssetPlanInfo(assetPlanGlobalInfo);
+				
+				//获得最终的主表id集合
+				List<AssetPlanInfo> list = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
+	   			for (int i = 0; i < list.size(); i++) {
+	   				if("1".equals(list.get(i).getDeleteflag())) {
+	   					lstsubmitID.add(list.get(i).getAssetplanid());
+	   				}
+	   			}
+	   			
+		 }
+			
+		
+		 
+		 
 			//this.assetPlanInfoService.addAssetPlanInfo(assetPlanGlobalInfo);
 			
 			//提交操作
@@ -1306,6 +1458,7 @@ public class AssetPlanInfoApplyController {
 				//把数据库中存储的图片路径换成服务器中的路径
 				String picId="";
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(0));
+   				List<String> picName= new ArrayList<>();
    				//有申购报告
    				if("1".equals(ap.getIsreqpurchasereport())) {
    					picId=ap.getPurchasereportid();
@@ -1314,6 +1467,7 @@ public class AssetPlanInfoApplyController {
    					for (int i = 0; i < list.size(); i++) {
    						if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
    							String picturepath = list.get(i).getPicturepath();
+   							picName.add(picturepath);
    							StringBuffer sb =new StringBuffer();
    							String[] split = picturepath.split(";");
    							for (int j = 0; j < split.length; j++) {
@@ -1334,6 +1488,7 @@ public class AssetPlanInfoApplyController {
    					for (int i = 0; i < list.size(); i++) {
    						if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
    							String picturepath = list.get(i).getPicturepath();
+   							picName.add(picturepath);
    							StringBuffer sb =new StringBuffer();
    							String[] split = picturepath.split(";");
    							for (int j = 0; j < split.length; j++) {
@@ -1347,11 +1502,14 @@ public class AssetPlanInfoApplyController {
    						}
    					}
    				}
-   				
+   				//没有图片，则不执行
+   				if(CollectionUtils.isNotEmpty(picName)) {
    				//将指定目录(包含内容)复制到另一个目录中，将存储在临时目录下的文件夹复制到真实目录下去
-   				/*String oldPath=tmpPath+picId;
-   				String newPath=realPath+picId;
-   				copyFolder(oldPath, newPath);*/
+   	   				String oldPath=tmpPath;
+   	   				String newPath=realPath+picId;
+   	   				copyFolder(oldPath, newPath,picName);
+   				}
+   				
 				
 				return ResponseResult.success(true, "提交成功");
 	   		
@@ -1363,15 +1521,25 @@ public class AssetPlanInfoApplyController {
 	* 复制整个文件夹内容 
 	* @param oldPath String 原文件路径 如：c:/fqf 
 	* @param newPath String 复制后路径 如：f:/fqf/ff 
+	 * @param picName 
 	* @return boolean 
 	*/
-	public static void copyFolder(String oldPath, String newPath) {
+	public static void copyFolder(String oldPath, String newPath, List<String> picName) {
 	try { 
+		List<String> allPic = new ArrayList<>();
+ 		for (int i = 0; i < picName.size(); i++) {
+			String[] split = picName.get(i).split(";");
+			for (int j = 0; j < split.length; j++) {
+				allPic.add(split[j]);
+			}
+		}
+		
 		(new File(newPath)).mkdirs(); //如果文件夹不存在 则建立新文件夹 
 		File a=new File(oldPath); 
 		String[] file=a.list(); 
 		File temp=null; 
-		for (int i = 0; i < file.length; i++) { 
+		for (int i = 0; i < file.length; i++) {
+			if(allPic.contains(file[i])) {
 			if(oldPath.endsWith(File.separator)){ 
 				temp=new File(oldPath+file[i]); 
 			} 
@@ -1391,9 +1559,10 @@ public class AssetPlanInfoApplyController {
 				input.close(); 
 			} 
 			if(temp.isDirectory()){//如果是子文件夹 
-				copyFolder(oldPath+"/"+file[i],newPath+"/"+file[i]); 
+				//copyFolder(oldPath+"/"+file[i],newPath+"/"+file[i]); 
 			} 
 		} 
+		}
 	} 
 	catch (Exception e) { 
 		System.out.println("复制整个文件夹内容操作出错"); 
@@ -1402,6 +1571,21 @@ public class AssetPlanInfoApplyController {
 	}
 
 	
+	@UserLoginToken
+	@ApiOperation(value = "测试")
+	@GetMapping("/test")
+	@ResponseBody
+	public ResponseResult test() throws Exception {
+		String oldPath="D:\\pic\\iamplan\\c8011f2e-1765-4bf5-8486-c6dd0c63a379";
+		String newPath="C:\\upload";
+		List<String> picName=new ArrayList<>();
+		picName.add("5b89bcb7-5230-40a2-9a0d-f8af8c3b8457.png");
+		picName.add("720b1dbe-6307-4093-aa16-397e59d91378.png");
+		this.copyFolder(oldPath, newPath, picName);
+		
+		return ResponseResult.success(true, "提交成功");
+		
+	}	
 	 /**
 	 * 根据图片地址转换为base64编码字符串
 	 * @param imgFile 图片文件名称
