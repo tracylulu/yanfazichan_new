@@ -1294,13 +1294,19 @@ public class AssetPlanInfoApplyController {
 				
 				this.assetPlanInfoService.editAssetPlanInfo(assetPlanGlobalInfo);
 				
-				//获得最终的主表id集合
-				List<AssetPlanInfo> list = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
-	   			for (int i = 0; i < list.size(); i++) {
-	   				if("1".equals(list.get(i).getDeleteflag())) {
-	   					lstsubmitID.add(list.get(i).getAssetplanid());
-	   				}
-	   			}
+				//非成套
+				if(assetPlanGlobalInfo.getLst().size()==1) {
+					lstsubmitID.add(assetPlanGlobalInfo.getLst().get(0).getAssetplanid());
+				}else {
+					//获得最终的主表id集合
+					List<AssetPlanInfo> list = assetPlanInfoService.selectCompleteSet(plancode, completesetcode);
+		   			for (int i = 0; i < list.size(); i++) {
+		   				if("1".equals(list.get(i).getDeleteflag())) {
+		   					lstsubmitID.add(list.get(i).getAssetplanid());
+		   				}
+		   			}	
+				}
+				
 	   			
 		 }
 			
