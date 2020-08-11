@@ -338,7 +338,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 			}		
 		}
 		//初始化成套设备的code
-		Integer completesetcode = initApplyCode();
+		Integer completesetcode = initApplyCodeByPlanCode(assetPlanGlobalInfo.getLst().get(0).getPlancode());
 		for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
 			//是否需要申购报告字段为1时才会增加，set主表字段purchasereportid为关联表的id，否则设置默认值为0
 			if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
@@ -421,10 +421,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}
 	
 	@Transactional(readOnly = true)
-	private synchronized Integer initApplyCode() {
-		String partCode=new SimpleDateFormat("yyyy-MM").format(new Date()).toString()+"-"+ UserUtils.getCurrentUserId();
+	private synchronized Integer initApplyCodeByPlanCode(String plancode) {
+		//String partCode=new SimpleDateFormat("yyyy-MM").format(new Date()).toString()+"-"+ UserUtils.getCurrentUserId();
 		Integer newCode;
-		Integer maxCode = assetPlanInfoMapper.getMaxCompleteSetCode(partCode);
+		Integer maxCode = assetPlanInfoMapper.getMaxCompleteSetCode(plancode);
 		if (maxCode==null ||maxCode==0) {
 			newCode = 1;
 		}else {

@@ -260,7 +260,7 @@ public class AssetPlanInfoApplyController {
    			}
 			
    			//初始化成套设备的code--只初始化一次
-			Integer completesetcodeNew = this.initApplyCode();
+			Integer completesetcodeNew = this.initApplyCodeByPlanCode(plancode);
 			
 			for (int i = 0; i < lst.size(); i++) {
 				//申购报告
@@ -954,11 +954,24 @@ public class AssetPlanInfoApplyController {
         return list;   
     } 
     
-    @Transactional(readOnly = true)
+    /*@Transactional(readOnly = true)
 	private synchronized Integer initApplyCode() {
 		String partCode=new SimpleDateFormat("yyyy-MM").format(new Date()).toString()+"-"+ UserUtils.getCurrentUserId();
 		Integer newCode;
 		Integer maxCode = assetPlanInfoMapper.getMaxCompleteSetCode(partCode);
+		if (maxCode==null ||maxCode==0) {
+			newCode = 1;
+		}else {
+			newCode =maxCode+1;
+		}
+		return newCode;
+	}*/
+    
+    @Transactional(readOnly = true)
+	private synchronized Integer initApplyCodeByPlanCode(String plancode) {
+		//String partCode=new SimpleDateFormat("yyyy-MM").format(new Date()).toString()+"-"+ UserUtils.getCurrentUserId();
+		Integer newCode;
+		Integer maxCode = assetPlanInfoMapper.getMaxCompleteSetCode(plancode);
 		if (maxCode==null ||maxCode==0) {
 			newCode = 1;
 		}else {
@@ -1112,7 +1125,7 @@ public class AssetPlanInfoApplyController {
 				}		
 			}
 			//初始化成套设备的code
-			Integer completesetcode = initApplyCode();
+			Integer completesetcode = initApplyCodeByPlanCode(assetPlanGlobalInfo.getLst().get(0).getPlancode());
 			for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
 				//是否需要申购报告字段为1时才会增加，set主表字段purchasereportid为关联表的id，否则设置默认值为0
 				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
@@ -1184,7 +1197,7 @@ public class AssetPlanInfoApplyController {
 	   			}
 				
 	   			//初始化成套设备的code--只初始化一次
-				Integer completesetcodeNew = this.initApplyCode();
+				Integer completesetcodeNew = this.initApplyCodeByPlanCode(plancode);
 				
 				for (int i = 0; i < lst.size(); i++) {
 					//申购报告
