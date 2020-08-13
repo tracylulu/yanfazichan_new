@@ -185,6 +185,7 @@ public class AssetPlanInfoDept2Controller {
    				
    				//计划外单子审批完就发邮件提醒下一环节审批，计划内的走定时邮件就行了
    				if(ap.getAbnormalplanenum()==0) {
+   					sendToPlannerForJHW.add(planner);
    				//计划外
    				}else {
    					sendToPlannerForJHW.add(planner);
