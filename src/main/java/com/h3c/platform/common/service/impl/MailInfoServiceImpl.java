@@ -277,9 +277,10 @@ public class MailInfoServiceImpl implements MailInfoService {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$url", defaultUrl);
+		contentJson.put("$node", process);
 		if(isAbnormalPlan) {
 			
-			contentJson.put("$endDate", getEndDate( df, link)+" 24:00:00</br>");
+			contentJson.put("$endDate", df.format(getEndDate( df, link))+" 24:00:00</br>");
 		}else {
 			Calendar cal=Calendar.getInstance();
 			int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -293,7 +294,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
 		
-		sendMailAndRecord(MailTempConst.NONSTANDARD, sendTo,  ccTo,  contentJson, templeteArr ,null);	
+		sendMailAndRecord(MailTempConst.DEPTAPPROVALDATA, sendTo,  ccTo,  contentJson, templeteArr ,null);	
 	}
 	
 	private Date getEndDate(SimpleDateFormat df,int link) throws Exception{
