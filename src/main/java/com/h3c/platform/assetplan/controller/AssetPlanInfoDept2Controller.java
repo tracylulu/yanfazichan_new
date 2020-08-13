@@ -184,7 +184,7 @@ public class AssetPlanInfoDept2Controller {
    					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
    				}
    				
-   				//计划外单子审批完就发邮件提醒下一环节审批，计划内的走定时邮件就行了。
+   				//计划外单子审批完就发邮件提醒下一环节审批，计划内的走定时邮件就行了。。
    				if(ap.getAbnormalplanenum()==0) {
    					//数量改为0的不要给下一环节审批人发邮件了
    					if(ap.getRequiredsaudit()==0) {
