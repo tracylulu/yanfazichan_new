@@ -135,6 +135,7 @@ public class AssetPlanInfoDept2Controller {
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
+   			List<String> sendToPlannerForJHN =new ArrayList<>();
    			List<String> sendToPlannerForJHW =new ArrayList<>();
    			List<Integer> newLstsubmitID =new ArrayList<>();
    			Map<String,Object> param=new HashMap<>();
@@ -185,10 +186,18 @@ public class AssetPlanInfoDept2Controller {
    				
    				//计划外单子审批完就发邮件提醒下一环节审批，计划内的走定时邮件就行了
    				if(ap.getAbnormalplanenum()==0) {
-   					sendToPlannerForJHW.add(planner);
+   					//数量改为0的不要给下一环节审批人发邮件了
+   					if(ap.getRequiredsaudit()==0) {
+   					}else {
+   						sendToPlannerForJHN.add(planner);
+   					}
    				//计划外
    				}else {
-   					sendToPlannerForJHW.add(planner);
+   					//数量改为0的不要给下一环节审批人发邮件了
+   					if(ap.getRequiredsaudit()==0) {
+   					}else {
+   						sendToPlannerForJHW.add(planner);
+   					}
    				}
    				
    				ap.setDept2checktime(new Date());
@@ -210,7 +219,12 @@ public class AssetPlanInfoDept2Controller {
 			//去重后的计划员code
 			sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
 			for (int j = 0; j < sendToPlannerForJHW.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", url);
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", false,4);
+			}
+			//计划员内的单子，邮件通知计划员审核
+			sendToPlannerForJHN = removeDuplicate(sendToPlannerForJHN);
+			for (int j = 0; j < sendToPlannerForJHN.size(); j++) {
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHN.get(j)), "", "计划员审核", true,4);
 			}
    			
    			

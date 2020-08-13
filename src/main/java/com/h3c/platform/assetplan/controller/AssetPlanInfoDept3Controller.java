@@ -238,7 +238,7 @@ public class AssetPlanInfoDept3Controller {
 			//去重后的二级部门code
 			sendToDept2ForJHW = removeDuplicate(sendToDept2ForJHW);
 			for (int j = 0; j < sendToDept2ForJHW.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendToDept2ForJHW.get(j)), "", "二级部门审核", url);
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToDept2ForJHW.get(j)), "", "二级部门审核", false,3);
 			}
 				
    			if(flag) {
