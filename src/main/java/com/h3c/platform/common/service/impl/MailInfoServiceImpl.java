@@ -20,13 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.MailTempConst;
 import com.h3c.platform.common.dao.MailInfoMapper;
 import com.h3c.platform.common.entity.MailInfo;
 import com.h3c.platform.common.executor.MailThreadExecutor;
 import com.h3c.platform.common.service.AfspTokenService;
+import com.h3c.platform.common.service.CalendarService;
 import com.h3c.platform.common.service.MailInfoService;
+import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.HttpClientUtil;
+import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.util.UserUtils;
 
 @Service
@@ -58,9 +62,13 @@ public class MailInfoServiceImpl implements MailInfoService {
 	private String  applicationId;
 	@Autowired
 	private AfspTokenService afspTokenService;
-	@Override
+	@Autowired
+	private CalendarService calendarService;
+	@Autowired
+	private SysDicInfoService sysDicInfoService;
+	
 	@Transactional
-	public void create(MailInfo mailInfo) {
+	private void create(MailInfo mailInfo) {
 		mailInfo.setCreator(UserUtils.getCurrentUserId());
 		mailInfo.setCreatetime(new Date());
 		mailInfoMapper.insert(mailInfo);
@@ -197,9 +205,17 @@ public class MailInfoServiceImpl implements MailInfoService {
 	@Override
 	public void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url) {
 	
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calMon = Calendar.getInstance();
+		calMon.setTime(endDate);
+		int maxDay = calMon.getActualMaximum(Calendar.DAY_OF_MONTH);
+		calMon.set(Calendar.DAY_OF_MONTH, maxDay);	
+		
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
-		contentJson.put("$endDate", endDate);
+		contentJson.put("$endDate",df.format(endDate)+" 24:00:00</br>");
+		contentJson.put("$monthEndDate",df.format(calMon.getTime())+" 24:00:00</br>");
+
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
@@ -254,5 +270,104 @@ public class MailInfoServiceImpl implements MailInfoService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public  void sendDeptMgnMail(String sendTo, String ccTo, String process,  boolean isAbnormalPlan, int link)throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", defaultUrl);
+		contentJson.put("$node", process);
+		if(isAbnormalPlan) {
+			
+			contentJson.put("$endDate", df.format(getEndDate( df, link))+" 24:00:00</br>");
+		}else {
+			Calendar cal=Calendar.getInstance();
+			int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+			cal.set(Calendar.DAY_OF_MONTH, maxDay);	
+			
+			contentJson.put("$endDate", df.format(cal.getTime())+" 24:00:00</br>");
+		}
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
+		
+		sendMailAndRecord(MailTempConst.DEPTAPPROVALDATA, sendTo,  ccTo,  contentJson, templeteArr ,null);	
+	}
+	
+	private Date getEndDate(SimpleDateFormat df,int link) throws Exception{
+		Calendar cal = null;
+		cal = Calendar.getInstance();
+		Integer month = cal.get(Calendar.MONTH) + 1;
+		int startDay = 0, firstLen=0,secondLen=0,thirdLen=0,fourthLen=0;
+
+		JSONArray approveDate = sysDicInfoService.getJSONArrayDicsByType(DicConst.R_APPROVEDATE,"1");
+		JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());
+		startDay = objStartDay.getIntValue("dic_value");
+		Calendar startCal = null;
+		startCal = Calendar.getInstance();
+		startCal.set(Calendar.DAY_OF_MONTH, startDay);
+
+		Date workDate = calendarService.getStartDay(startCal.getTime());
+
+		if (workDate == null) {
+			throw new Exception("未查询到启动工作日");
+		}
+		if (new Date().after(df.parse(df.format(workDate)))) {
+			for (int i = 0; i < approveDate.size(); i++) {
+				JSONObject obj = approveDate.getJSONObject(i);
+				if ("1".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+					firstLen = obj.getInteger("dic_value");
+				}
+
+				if ("2".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+					secondLen = obj.getInteger("dic_value");
+				}
+
+				if ("3".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+					thirdLen = obj.getInteger("dic_value");
+				}
+
+				if ("4".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+					fourthLen = obj.getInteger("dic_value");
+				}
+			}
+		}
+
+		// 第一环节截止时间
+		Date workEndFirst=calendarService.getEndNextDay(workDate,firstLen);
+		if(workEndFirst==null) {
+			throw new Exception("未查询到结束工作日");
+		}
+		
+		// 第二环节 规范性审核截止时间
+		Date workEndSecond=calendarService.getEndNextDay(workEndFirst,secondLen);
+		if(workEndSecond==null) {
+			throw new Exception("未查询到结束工作日");
+		}
+
+		//第三环节 三级部门截止时间
+		Date workEndThird=calendarService.getEndNextDay(workEndSecond,thirdLen);
+		if(workEndThird==null) {
+			throw new Exception("未查询到结束工作日");
+		}
+		Date thirdEmailDate=calendarService.getEndDay(workEndSecond,thirdLen);
+		if(thirdEmailDate==null) {
+			throw new Exception("未查询到结束工作日");
+		}
+		
+		if(link==3) {
+			return thirdEmailDate;
+		}else {
+			//第四环节 二级部门截止时间
+			Date fourthEmailDate=calendarService.getEndDay(workEndThird,fourthLen);
+			if(fourthEmailDate==null) {
+				throw new Exception("未查询到结束工作日");
+			}
+			
+			return fourthEmailDate;
+		}		
 	}
 }

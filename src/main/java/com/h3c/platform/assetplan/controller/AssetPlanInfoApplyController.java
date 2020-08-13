@@ -658,7 +658,7 @@ public class AssetPlanInfoApplyController {
 					//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 					ccTo = removeDuplicate(newLstApplyRequiredUserID);
 					//功能已实现，先注释，以免误发邮件
-					mailInfoService.sendRemindMail(getsendToList.get(j).toString(), ccTo.toString(), "规范审核", url);
+					mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
 				}else {
 					//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
 					Map<String,Object> param1=new HashMap<>();
@@ -672,7 +672,7 @@ public class AssetPlanInfoApplyController {
 					ccTo = removeDuplicate(ccTo);
 					sendTo.add(getsendToList.get(j));
 					//功能已实现，先注释，以免误发邮件
-					mailInfoService.sendRemindMail(getsendToList.get(j).toString(), ccTo.toString(), "规范审核", url);
+					mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
 					sendTo.clear();
 					ccTo.clear();
 				}
@@ -1454,7 +1454,7 @@ public class AssetPlanInfoApplyController {
 						//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 						ccTo = removeDuplicate(newLstApplyRequiredUserID);
 						//功能已实现，先注释，以免误发邮件
-						mailInfoService.sendRemindMail(getsendToList.get(j).toString(), ccTo.toString(), "规范审核", url);
+						mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
 					}else {
 						//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
 						Map<String,Object> param1=new HashMap<>();
@@ -1468,7 +1468,7 @@ public class AssetPlanInfoApplyController {
 						ccTo = removeDuplicate(ccTo);
 						sendTo.add(getsendToList.get(j));
 						//功能已实现，先注释，以免误发邮件
-						mailInfoService.sendRemindMail(getsendToList.get(j).toString(), ccTo.toString(), "规范审核", url);
+						mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
 						sendTo.clear();
 						ccTo.clear();
 					}

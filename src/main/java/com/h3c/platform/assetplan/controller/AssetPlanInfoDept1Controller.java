@@ -173,7 +173,7 @@ public class AssetPlanInfoDept1Controller {
 				sendToEnd.add(ap.getApplyuser());
 				ccToEnd.add(ap.getRequireduser());
 				//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
-				mailInfoService.sendProcessEndMail(sendToEnd.toString(), ccToEnd.toString(), "");
+				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
 				
    			}
    			return ResponseResult.success(true, "提交成功");
@@ -232,7 +232,7 @@ public class AssetPlanInfoDept1Controller {
 				sendToEnd.add(ap.getRequireduser());
 				ccToEnd.add(ap.getApplyuser());
 				//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
-				mailInfoService.sendProcessEndMail(sendToEnd.toString(), ccToEnd.toString(), "");
+				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
    			}
    			return ResponseResult.success(true, "提交成功");
    		/*} catch (Exception e) {

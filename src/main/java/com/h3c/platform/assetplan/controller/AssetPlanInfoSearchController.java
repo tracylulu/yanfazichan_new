@@ -269,12 +269,16 @@ public class AssetPlanInfoSearchController {
    				if(sendToDept2.size()>0) {
    					String url="";
    					sendToDept2=removeDuplicate(sendToDept2);
-   					mailInfoService.sendRemindMail(sendToDept2.toString(), "", "激活三级主管审批超时的单子", url);
+   					for (int j = 0; j < sendToDept2.size(); j++) {
+   						mailInfoService.sendRemindMail(String.join(",", sendToDept2.get(j)), "", "激活三级主管审批超时的单子", url);
+   					}
    				}
    				if(sendToPlanner.size()>0) {
    					String url="";
    					sendToPlanner=removeDuplicate(sendToPlanner);
-   					mailInfoService.sendRemindMail(sendToPlanner.toString(), "", "激活二级主管审批超时的单子", url);
+   					for (int j = 0; j < sendToPlanner.size(); j++) {
+   						mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "激活二级主管审批超时的单子", url);
+   					}
    				}
    				
    				if(newLstActivateID.size()<newLstsubmitID.size()) {

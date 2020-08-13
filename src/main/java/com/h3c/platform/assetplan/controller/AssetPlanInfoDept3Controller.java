@@ -185,7 +185,7 @@ public class AssetPlanInfoDept3Controller {
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "三级部门主管审核", url);
-   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
+   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
    				}else {
    				//获得下一步审批人	
 				DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
@@ -238,7 +238,7 @@ public class AssetPlanInfoDept3Controller {
 			//去重后的二级部门code
 			sendToDept2ForJHW = removeDuplicate(sendToDept2ForJHW);
 			for (int j = 0; j < sendToDept2ForJHW.size(); j++) {
-				mailInfoService.sendRemindMail(sendToDept2ForJHW.toString(), "", "二级部门审核", url);
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToDept2ForJHW.get(j)), "", "二级部门审核", false,3);
 			}
 				
    			if(flag) {

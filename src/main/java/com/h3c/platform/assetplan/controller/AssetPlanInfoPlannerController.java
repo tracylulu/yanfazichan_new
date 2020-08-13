@@ -205,7 +205,7 @@ public class AssetPlanInfoPlannerController {
 		   					sendTo.add(ap.getApplyuser());
 		   					ccTo.add(ap.getRequireduser());
 		   					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "计划员审核", url);
-		   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
+		   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
 		   				}else {
 		   					ap.setApstatus("60");
 		   					ap.setApstage("6");
@@ -235,7 +235,7 @@ public class AssetPlanInfoPlannerController {
 	   				//去重后的专家团code
 	   				sendToOQ = removeDuplicate(sendToOQ);
 	   				for (int j = 0; j < sendToOQ.size(); j++) {
-	   					mailInfoService.sendRemindMail(sendToOQ.toString(), "", "专家团审核", url);
+	   					mailInfoService.sendRemindMail(String.join(",", sendToOQ.get(j)), "", "专家团审核", url);
 	   				}
    				}
    				//结束归档
@@ -263,7 +263,7 @@ public class AssetPlanInfoPlannerController {
 	   					sendToEnd.add(ap.getApplyuser());
 	   					ccToEnd.add(ap.getRequireduser());
 	   					//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "计划员审核环节归档", "");
-	   					mailInfoService.sendProcessEndMail(sendToEnd.toString(), ccToEnd.toString(), "");
+	   					mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
 	   				}
    				}
    				return ResponseResult.success(true, "提交成功");

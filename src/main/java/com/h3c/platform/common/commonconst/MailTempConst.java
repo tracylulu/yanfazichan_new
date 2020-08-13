@@ -12,5 +12,7 @@ public class MailTempConst {
 			//不规范模板
 			NONSTANDARD="Nonstandard",
 			// 系统公用模板
-			SYSTEM = "$system";
+			SYSTEM = "$system",
+			//二三级主管审核模板
+			DEPTAPPROVALDATA="DeptApproveData";
 }

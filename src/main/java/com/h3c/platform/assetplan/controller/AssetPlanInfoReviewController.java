@@ -302,7 +302,7 @@ public class AssetPlanInfoReviewController {
 	   					sendTo0.add(ap.getApplyuser());
 	   					ccTo0.add(ap.getRequireduser());
 	   					//mailInfoService.sendRemindMail(sendTo0.toString(), ccTo0.toString(), "规范审核结束", url);
-	   					mailInfoService.sendProcessEndMail(sendTo0.toString(), ccTo0.toString(), url);
+	   					mailInfoService.sendProcessEndMail(String.join(",", sendTo0), String.join(",", ccTo0), url);
    	   				}else {
 	   					if("1".equals(deptInfo.getDeptLevel())) {
 	   						ap.setApstatus("50");
@@ -374,16 +374,16 @@ public class AssetPlanInfoReviewController {
 			//去重后的三级部门主管code
 			sendTo3Dept = removeDuplicate(sendTo3Dept);
 			for (int j = 0; j < sendTo3Dept.size(); j++) {
-				mailInfoService.sendRemindMail(sendTo3Dept.toString(), "", "三级部门主管审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendTo3Dept.get(j)), "", "三级部门主管审核", url);
 			}
 			//12级主管提单的特殊流程，发给对应的待审核人
 			sendTo2Dept = removeDuplicate(sendTo2Dept);
 			for (int j = 0; j < sendTo2Dept.size(); j++) {
-				mailInfoService.sendRemindMail(sendTo2Dept.toString(), "", "二级部门主管审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendTo2Dept.get(j)), "", "二级部门主管审核", url);
 			}
 			sendToPlanner = removeDuplicate(sendToPlanner);
 			for (int j = 0; j < sendToPlanner.size(); j++) {
-				mailInfoService.sendRemindMail(sendToPlanner.toString(), "", "计划员审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "计划员审核", url);
 			}
 			
 			return ResponseResult.success(true, "提交成功");
@@ -426,7 +426,7 @@ public class AssetPlanInfoReviewController {
 					sendTo.add(requiredUser);
 				}
 				//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "规范审核", "");
-				mailInfoService.sendNonstandardMail(sendTo.toString(), ccTo.toString(), "规范审核");
+				mailInfoService.sendNonstandardMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核");
 				sendTo.clear();
 				ccTo.clear();
 			}
