@@ -416,7 +416,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public int delAssetPlanInfo(List<Integer> lstDelID){
 		Map<String,Object> param=new HashMap<>();
 		param.put("id", lstDelID);
-		param.put("Modifier", "delete");
+		param.put("Modifier", UserUtils.getCurrentUserId());
 		return  assetPlanInfoMapper.deleteByID(param);
 	}
 	
