@@ -172,7 +172,7 @@ public class AssetPlanInfoOQDeptController {
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "专家团审核", url);
-   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
+   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
    				}else {
    					ap.setApstatus("70");
    					ap.setApstage("7");
@@ -200,7 +200,7 @@ public class AssetPlanInfoOQDeptController {
 			//去重后的一级部门主管code
 			sendToDept1 = removeDuplicate(sendToDept1);
 			for (int j = 0; j < sendToDept1.size(); j++) {
-				mailInfoService.sendRemindMail(sendToDept1.toString(), "", "一级部门审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendToDept1.get(j)), "", "一级部门审核", url);
 			}
 				
    			return ResponseResult.success(true, "提交成功");

@@ -168,7 +168,7 @@ public class AssetPlanInfoDept2Controller {
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "二级部门主管审核", url);
-   					mailInfoService.sendProcessEndMail(sendTo.toString(), ccTo.toString(), url);
+   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
    				}else {
    					ap.setApstatus("50");
    					ap.setApstage("5");
@@ -209,7 +209,7 @@ public class AssetPlanInfoDept2Controller {
 			//去重后的计划员code
 			sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
 			for (int j = 0; j < sendToPlannerForJHW.size(); j++) {
-				mailInfoService.sendRemindMail(sendToPlannerForJHW.toString(), "", "计划员审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", url);
 			}
    			
    			
