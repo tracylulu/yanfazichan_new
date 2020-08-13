@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.entity.MailInfo;
 
 public interface MailInfoService {
-    void create(MailInfo mailInfo);
+  
 
     /**
      * 发送邮件并记录
@@ -73,4 +73,14 @@ public interface MailInfoService {
     
     
     void sendMailByTemplete(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr);
+    
+    /**
+     * 二级，三级部门主管邮件提醒
+     * @param sendTo 发送人
+     * @param ccTo 抄送人
+     * @param process 流程节点
+     * @param isAbnormalPlan 计划内 true, 计划外 false
+     * @param link  环节  3或4 
+     */
+    void sendDeptMgnMail(String sendTo, String ccTo, String process,  boolean isAbnormalPlan, int link) throws Exception;
 }
