@@ -107,6 +107,12 @@ public class AssetPlanInfoDept3Controller {
 			param.put("APStage",apstage);
 			param.put("ApplyMonth",applymonth);
 			
+			Map<String, Object> param1 = new HashMap<>();
+			param1.put("Dept3Manager",dept3Manager);
+			param1.put("DeptCode",null);
+			param1.put("APStage",apstage);
+			param1.put("ApplyMonth",applymonth);
+			
 			if(StringUtils.isNotBlank(dept3Manager)){
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("3")) {
 				PageHelper.startPage(pageNum, pageSize);
@@ -115,7 +121,7 @@ public class AssetPlanInfoDept3Controller {
    				if(dept3InfoList.size()>0) {
    					
 	   				//申购金额合计  totalmoneySum
-	   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept3(param);
+	   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept3(param1);
 	   				//同意申购金额合计  ActualMoneySum
 	   				String actualMoneySum = assetPlanInfoService.getSumActualMoneySumForDept3(param);
 	   				json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
@@ -340,6 +346,7 @@ public class AssetPlanInfoDept3Controller {
    	   				
    	   				Map<String, Object> param = new HashMap<>();
    	   				param.put("Dept3Manager",applyuser);
+   	   				param.put("DeptCode",newlist.get(i));
    	   				param.put("APStage","3");
    	   				param.put("ApplyMonth",applymonth);
    	   				//计划新增金额（万元），修改，得区分部门的
@@ -415,6 +422,7 @@ public class AssetPlanInfoDept3Controller {
    	   				
    	   				Map<String, Object> param = new HashMap<>();
    	   				param.put("Dept2Manager",applyuser);
+   	   				param.put("Dept2Code",newlist.get(k));
    	   				param.put("APStage","4");
    	   				param.put("ApplyMonth",applymonth);
    	   				//计划新增金额（万元）

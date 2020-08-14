@@ -16,11 +16,29 @@
 			</if>
 		</where>
 	</sql>
+	
+	<sql id="condition_sql_1">
+		<where>
+			DeleteFlag=1 and ReviewResult=1 and OutTimePlanEnum !=0
+			<if test="param.Dept3Manager !=null">
+				and Dept3Manager = #{param.Dept3Manager}
+			</if>
+			<if test="param.DeptCode !=null">
+				and DeptCode = #{param.DeptCode}
+			</if>
+			<if test="param.APStage !=null">
+				and APStage = #{param.APStage}
+			</if>
+			<if test="param.ApplyMonth !=null">
+				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+		</where>
+	</sql>
 
   <select id="getSumTotalMoneyForDept3" parameterType="map" resultType="java.lang.String">
   	select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoDept3View
   		<if test="_parameter != null">
-    		<include refid="condition_sql"></include>
+    		<include refid="condition_sql_1"></include>
     	</if>
   
   </select>

@@ -92,6 +92,12 @@ public class AssetPlanInfoDept2Controller {
 		param.put("APStage",apstage);
 		param.put("ApplyMonth",applymonth);
 		
+		Map<String, Object> param1 = new HashMap<>();
+		param1.put("Dept2Manager",dept2Manager);
+		param1.put("Dept2Code",null);
+		param1.put("APStage",apstage);
+		param1.put("ApplyMonth",applymonth);
+		
 		if(StringUtils.isNotBlank(dept2Manager)){
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("4")) {
 				PageHelper.startPage(pageNum, pageSize);
@@ -99,7 +105,7 @@ public class AssetPlanInfoDept2Controller {
 				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(dept2InfoList);
 				if(dept2InfoList.size()>0) {
 					//申购金额合计  totalmoneySum
-					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param);
+					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param1);
    					//同意申购金额合计  ActualMoneySum
    					String actualMoneySum = assetPlanInfoService.getSumActualMoneySumForDept2(param);
    					json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
