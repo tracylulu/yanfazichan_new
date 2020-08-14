@@ -84,8 +84,8 @@ public class AssetPlanInfoDept3Controller {
 	private DeptInfoService deptInfoService;
 	@Autowired
 	private MailInfoService  mailInfoService;
-	@Value("${defaultStatus40}")
-	private String defaultStatus40;
+	@Value("${batchToDept2}")
+	private String batchToDept2;
 	@Value("${spring.remindEmailForDept2.url}")
     private  String remindEmailForDept2 ;
 	
@@ -208,7 +208,7 @@ public class AssetPlanInfoDept3Controller {
    				//在配置文件增加了开关，open为直接提交到40状态
    				//计划外单子，三级主管提交至二级，应立即到达二级主管。为0是计划内的
    				if(ap.getAbnormalplanenum()==0) {
-   					if("open".equals(defaultStatus40)) {
+   					if("close".equals(batchToDept2)) {
    	   					ap.setApstatus("40");
    	   				}else {
    	   					ap.setApstatus("41");

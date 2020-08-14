@@ -39,8 +39,8 @@ public class MailInfoServiceImpl implements MailInfoService {
 
 	@Value("${spring.main.url}")
 	private String siteMainUrl;
-	@Value("${defaultMail}")
-	private String defaultMail;
+	@Value("${mailToRealUser}")
+	private String mailToRealUser;
 	@Value("${defaultMailSendTo}")
 	private String defaultSendTo;
 	@Value("${defaultMailCCTo}")
@@ -123,7 +123,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 		List<String> sendList = new ArrayList<>();
 		List<String> ccList = new ArrayList<>();
 		// 测试邮件开关开启，重置测试人员，发送测试邮件
-		if ("open".equals(defaultMail)) {
+		if ("close".equals(mailToRealUser)) {
 			sendTo = Arrays.asList(defaultSendTo.split(","));
 			ccTo = Arrays.asList(defaultCCTo.split(","));
 		}

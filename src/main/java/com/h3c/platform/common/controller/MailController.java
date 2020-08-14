@@ -19,15 +19,15 @@ import io.swagger.annotations.Api;
 @Api(value = "邮件测试接口",tags = {"邮件测试接口"})
 public class MailController {
 	
-	@Value("${defaultMail}")
-	private String defaultMail;
+	@Value("${mailToRealUser}")
+	private String mailToRealUser;
 	@Autowired
 	private MailInfoService  mailInfoService;
 	
 	@PostMapping("/sendDefaultMail")
 	@UserLoginToken	
 	public String sendDefaultMail() {
-		if("open".equals(defaultMail)) {
+		if("close".equals(mailToRealUser)) {
 			return "测试邮件开关没开";
 		}
 		//mailInfoService.sendMailAndRecord("", "", "this is  test", "this is test");

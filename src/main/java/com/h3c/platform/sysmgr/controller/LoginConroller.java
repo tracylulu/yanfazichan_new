@@ -51,8 +51,8 @@ public class LoginConroller {
 	private String siteId;
 	@Value("${sso.main.url}")
 	private String siteMainUrl;
-	@Value("${simpleLogin}")
-    private String simpleLogin;
+	@Value("${onlySsoLogin}")
+    private String onlySsoLogin;
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginConroller.class);
 	
@@ -75,7 +75,7 @@ public class LoginConroller {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "userCode", value = "用户域账号") })
 	@ResponseBody
 	public ResponseResult Login(String userCode, HttpServletRequest request) {
-		if(!"open".equals(simpleLogin)) throw new RuntimeException("非法请求");
+		if(!"close".equals(onlySsoLogin)) throw new RuntimeException("非法请求");
 		if (StringUtils.isNotBlank(userCode)) {
 			ResponseTicket repTicket = null;
 			try {
