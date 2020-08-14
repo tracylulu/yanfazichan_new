@@ -289,7 +289,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
             fromIndex = (search.getPageNum() - 1) * search.getPageSize();
             toIndex = count;
         }
-        if(fromIndex > count || count==0) {
+        if(fromIndex >= count || count==0) {
         	return ResponseResult.success(0, "查询成功", search.getPageNum(), count, null, new ArrayList<>());
         }
 		List<AssetRateInfo> lstResult= lstResultAll.subList(fromIndex, toIndex);

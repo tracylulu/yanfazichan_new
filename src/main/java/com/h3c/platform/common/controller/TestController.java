@@ -35,7 +35,7 @@ public class TestController {
 //		mailInfoService.sendProcessEndMail(sendTo, ccTo, "");
 //		mailInfoService.sendRemindMail(sendTo, ccTo, "三级部门主管审核", "");
 //		mailInfoService.sendRemindMailWithEndTime(sendTo, ccTo, "三级部门主管审核", new Date(), true, "");
-		mailInfoService.sendDeptMgnMail(sendTo, ccTo, "三级部门主管审核," ,true, 3);
+//		mailInfoService.sendDeptMgnMail(sendTo, ccTo, "三级部门主管审核," ,true, 3);
 //		mailInfoService.sendDeptMgnMail(sendTo, ccTo, "三级部门主管审核," ,true, 4);
 //		mailInfoService.sendDeptMgnMail(sendTo, ccTo, "三级部门主管审核", false, 3);
 		return "ok";
