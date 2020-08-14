@@ -130,7 +130,8 @@ public class AssetPlanInfoApplyController {
     private  String realPath ;
 	@Value("${file.tmpPath}")
     private  String tmpPath ;
-	
+	@Value("${spring.remindEmailForReview.url}")
+    private  String remindEmailForReview ;
 	
     @ApiOperation(value="新增资源信息（点击新增按钮）")
 	@PostMapping("/addAssetPlanInfo")
@@ -648,8 +649,8 @@ public class AssetPlanInfoApplyController {
 			}
    			
 			//提交资源计划申请后，发送邮件给规范审核环节计划员，抄送申购人和申请人。
-			//这个参数得先写死，到时候我这边写一个接口前台把这个url给我传过来
-			String url="";
+			//下一环节的提醒邮件地址，定位到了详细列表页面
+			String url=remindEmailForReview+applymonth;
 			List<String> ccTo =new ArrayList<>();
 			List<String> sendTo =new ArrayList<>();
 			getsendToList=removeDuplicate(getsendToList);
@@ -1444,8 +1445,8 @@ public class AssetPlanInfoApplyController {
 				}
 	   			
 				//提交资源计划申请后，发送邮件给规范审核环节计划员，抄送申购人和申请人。
-				//这个参数得先写死，到时候我这边写一个接口前台把这个url给我传过来
-				String url="";
+				//下一环节的提醒邮件地址，定位到了详细列表页面
+				String url=remindEmailForReview+applymonth;
 				List<String> ccTo =new ArrayList<>();
 				List<String> sendTo =new ArrayList<>();
 				getsendToList=removeDuplicate(getsendToList);

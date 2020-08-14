@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -97,6 +98,18 @@ public class AssetPlanInfoReviewController {
 	private PurchaseReportInfoMapper priMapper;
 	@Autowired
 	private SpecifyManufacturerInfoMapper smiMapper;
+	
+	@Value("${spring.remindEmailForNotReview.url}")
+    private  String remindEmailForNotReview ;
+	
+	@Value("${spring.remindEmailForDept3.url}")
+    private  String remindEmailForDept3 ;
+	
+	@Value("${spring.remindEmailForDept2.url}")
+    private  String remindEmailForDept2 ;
+	
+	@Value("${spring.remindEmailForPlanner.url}")
+    private  String remindEmailForPlanner ;
 	
 	@ApiOperation(value="查看规范审核列表信息")
    	@GetMapping("/getReviewInfoList")
@@ -370,20 +383,22 @@ public class AssetPlanInfoReviewController {
 			}
 			
 			//计划员提交三级主管后，邮件通知三级主管审核，告知截止时间（标准时间/本月末）。
-			String url="";
+			String urlForDept3=remindEmailForDept3+applymonth;
+			String urlForDept2=remindEmailForDept2+applymonth;
+			String urlForPlanner=remindEmailForPlanner+applymonth;
 			//去重后的三级部门主管code
 			sendTo3Dept = removeDuplicate(sendTo3Dept);
 			for (int j = 0; j < sendTo3Dept.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendTo3Dept.get(j)), "", "三级部门主管审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendTo3Dept.get(j)), "", "三级部门主管审核", urlForDept3);
 			}
 			//12级主管提单的特殊流程，发给对应的待审核人
 			sendTo2Dept = removeDuplicate(sendTo2Dept);
 			for (int j = 0; j < sendTo2Dept.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendTo2Dept.get(j)), "", "二级部门主管审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendTo2Dept.get(j)), "", "二级部门主管审核", urlForDept2);
 			}
 			sendToPlanner = removeDuplicate(sendToPlanner);
 			for (int j = 0; j < sendToPlanner.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "计划员审核", url);
+				mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "计划员审核", urlForPlanner);
 			}
 			
 			return ResponseResult.success(true, "提交成功");
@@ -399,6 +414,7 @@ public class AssetPlanInfoReviewController {
    			//modify by chenlulu on 20200630 现在的不规范的驳回给申购人，所以现在邮件得主送申购人，抄送申请人。调换一下
    			List<String> ccTo =new ArrayList<>();
 			List<String> sendTo =new ArrayList<>();
+			String url=remindEmailForNotReview+applymonth;
    			//String subject="您提交的资产申购物品信息里有不规范填写数据，请登录系统进行修改!";
    			//规范审核环节所有不规范的list
    			Map<String,Object> param=new HashMap<>();
@@ -425,8 +441,9 @@ public class AssetPlanInfoReviewController {
 				}else {
 					sendTo.add(requiredUser);
 				}
+				
 				//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "规范审核", "");
-				mailInfoService.sendNonstandardMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核");
+				mailInfoService.sendNonstandardMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核",url);
 				sendTo.clear();
 				ccTo.clear();
 			}

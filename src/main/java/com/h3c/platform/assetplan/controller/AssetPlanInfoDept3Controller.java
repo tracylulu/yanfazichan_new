@@ -86,6 +86,8 @@ public class AssetPlanInfoDept3Controller {
 	private MailInfoService  mailInfoService;
 	@Value("${defaultStatus40}")
 	private String defaultStatus40;
+	@Value("${spring.remindEmailForDept2.url}")
+    private  String remindEmailForDept2 ;
 	
 	@ApiOperation(value="展示三级主管审核列表信息")
    	@GetMapping("/getDept3InfoList")
@@ -240,11 +242,11 @@ public class AssetPlanInfoDept3Controller {
 				}
    			
 			//计划员外的单子，邮件通知二级部门主管审核
-			String url="";
+			String url=remindEmailForDept2+applymonth;
 			//去重后的二级部门code
 			sendToDept2ForJHW = removeDuplicate(sendToDept2ForJHW);
 			for (int j = 0; j < sendToDept2ForJHW.size(); j++) {
-				mailInfoService.sendDeptMgnMail(String.join(",", sendToDept2ForJHW.get(j)), "", "二级部门审核", false,3);
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToDept2ForJHW.get(j)), "", "二级部门审核", false,3,url);
 			}
 				
    			if(flag) {

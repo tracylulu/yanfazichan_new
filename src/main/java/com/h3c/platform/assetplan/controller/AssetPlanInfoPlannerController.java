@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,6 +87,9 @@ public class AssetPlanInfoPlannerController {
 	private  OperationLogService operationLogService;
 	@Autowired
 	private SysDicInfoUtil sysDicInfoUtil;
+	
+	@Value("${spring.remindEmailForOQ.url}")
+    private  String remindEmailForOQ ;
 	
 	@ApiOperation(value="展示计划员审核列表信息")
    	@PostMapping("/getPlannerInfoList")
@@ -231,7 +235,7 @@ public class AssetPlanInfoPlannerController {
 	   				}
 	   				
 	   				//计划员提交后，邮件通知专家团审核，告知截止时间（标准时间/本月末）。
-	   				String url="";
+	   				String url=remindEmailForOQ+applymonth;
 	   				//去重后的专家团code
 	   				sendToOQ = removeDuplicate(sendToOQ);
 	   				for (int j = 0; j < sendToOQ.size(); j++) {

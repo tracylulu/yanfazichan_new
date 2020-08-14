@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,6 +71,9 @@ public class AssetPlanInfoOQDeptController {
 	private SysDicInfoService sysDicInfoService;
 	@Autowired
 	private DeptInfoMapper deptInfoMapper;
+	
+	@Value("${spring.remindEmailForDept1.url}")
+    private  String remindEmailForDept1 ;
 	
 	@ApiOperation(value="展示专家团审核列表信息")
    	@PostMapping("/getOQDeptInfoList")
@@ -196,7 +200,7 @@ public class AssetPlanInfoOQDeptController {
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 			}
 			//专家团提交后，邮件通知一级部门审核，告知截止时间（标准时间/本月末）。
-			String url="";
+			String url=remindEmailForDept1+applymonth;
 			//去重后的一级部门主管code
 			sendToDept1 = removeDuplicate(sendToDept1);
 			for (int j = 0; j < sendToDept1.size(); j++) {

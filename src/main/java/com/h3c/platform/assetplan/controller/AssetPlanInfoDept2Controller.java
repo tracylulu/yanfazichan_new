@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +72,9 @@ public class AssetPlanInfoDept2Controller {
 	private UserService userService;
 	@Autowired
 	private SysDicInfoService sysDicInfoService;
+	
+	@Value("${spring.remindEmailForPlanner.url}")
+    private  String remindEmailForPlanner ;
 	
 	@ApiOperation(value="展示二级主管审核列表信息")
    	@GetMapping("/getDept2InfoList")
@@ -221,16 +225,16 @@ public class AssetPlanInfoDept2Controller {
 			}
 
 			//计划员外的单子，邮件通知计划员审核
-			String url="";
+			String url=remindEmailForPlanner+applymonth;
 			//去重后的计划员code
 			sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
 			for (int j = 0; j < sendToPlannerForJHW.size(); j++) {
-				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", false,4);
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", false,4,url);
 			}
 			//计划员内的单子，邮件通知计划员审核
 			sendToPlannerForJHN = removeDuplicate(sendToPlannerForJHN);
 			for (int j = 0; j < sendToPlannerForJHN.size(); j++) {
-				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHN.get(j)), "", "计划员审核", true,4);
+				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHN.get(j)), "", "计划员审核", true,4,url);
 			}
    			
    			
