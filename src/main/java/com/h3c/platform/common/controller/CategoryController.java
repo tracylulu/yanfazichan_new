@@ -83,7 +83,7 @@ public class CategoryController {
             fromIndex = (param.getNum() - 1) * param.getSize();
             toIndex = count;
         }
-        if(fromIndex > count) {
+        if(fromIndex > count || count==0) {
         	return ResponseResult.success(0, "查询成功", param.getNum(), count, null, new ArrayList<>());
         }
 		List<JSONObject> lstResult= lstResultAll.subList(fromIndex, toIndex);
