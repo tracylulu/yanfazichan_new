@@ -342,7 +342,7 @@ public class AssetPlanInfoDept3Controller {
    	   				param.put("Dept3Manager",applyuser);
    	   				param.put("APStage","3");
    	   				param.put("ApplyMonth",applymonth);
-   	   				//计划新增金额（万元）
+   	   				//计划新增金额（万元），修改，得区分部门的
    	   				String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept3(param);
 	   				if(StringUtils.isNotBlank(totalmoneySum1)) {
 	   					totalmoneySum=Double.parseDouble(assetPlanInfoService.getSumTotalMoneyForDept3(param))/10000;
