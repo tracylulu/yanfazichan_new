@@ -69,7 +69,7 @@ public interface MailInfoService {
      * @param process 流程环节名称
      * @param url 流程链接  ,为空不加超链接 
      */
-    void sendNonstandardMail(String sendTo, String ccTo, String process);
+    void sendNonstandardMail(String sendTo, String ccTo, String process,String url);
     
     
     void sendMailByTemplete(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr);
@@ -82,5 +82,5 @@ public interface MailInfoService {
      * @param isAbnormalPlan 计划内 true, 计划外 false
      * @param link  环节  3或4 
      */
-    void sendDeptMgnMail(String sendTo, String ccTo, String process,  boolean isAbnormalPlan, int link) throws Exception;
+    void sendDeptMgnMail(String sendTo, String ccTo, String process,  boolean isAbnormalPlan, int link ,String url) throws Exception;
 }

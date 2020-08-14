@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,20 +51,20 @@ public class MailInfoServiceImpl implements MailInfoService {
 	private String endUrl;
 	@Autowired
 	private MailThreadExecutor executor;
-	
+
 	@Value("${afsp.dic.url}")
 	private String afspUrl;
 	@Value("${afsp.mail.sendMailInfoByTemplete}")
 	private String mailTempleteUrl;
 	@Value("${afsp.applicationId}")
-	private String  applicationId;
+	private String applicationId;
 	@Autowired
 	private AfspTokenService afspTokenService;
 	@Autowired
 	private CalendarService calendarService;
 	@Autowired
 	private SysDicInfoService sysDicInfoService;
-	
+
 	@Transactional
 	private void create(MailInfo mailInfo) {
 		mailInfo.setCreator(UserUtils.getCurrentUserId());
@@ -84,21 +82,22 @@ public class MailInfoServiceImpl implements MailInfoService {
 	 * @param processId
 	 */
 	@Override
-	public void sendMailAndRecord(String mailTemp,String sendTo, String ccTo, JSONObject content,  JSONArray templeteArr, JSONArray titleArr ) {
-		MailInfo mailInfo = new MailInfo();		
+	public void sendMailAndRecord(String mailTemp, String sendTo, String ccTo, JSONObject content,
+			JSONArray templeteArr, JSONArray titleArr) {
+		MailInfo mailInfo = new MailInfo();
 		mailInfo.setSendto(sendTo);
 		mailInfo.setCcto(ccTo);
 		mailInfo.setSubject("mailTemp");
-		mailInfo.setContent(content.toString());	
+		mailInfo.setContent(content.toString());
 		create(mailInfo);
 
 		String[] sendArr = sendTo.split(",");
 		if (ccTo != null) {
 			String[] ccArr = ccTo.split(",");
 
-			sendMail(mailTemp ,Arrays.asList(sendArr), Arrays.asList(ccArr), content, templeteArr, titleArr);
+			sendMail(mailTemp, Arrays.asList(sendArr), Arrays.asList(ccArr), content, templeteArr, titleArr);
 		} else {
-			sendMail(mailTemp ,Arrays.asList(sendArr), null, content, templeteArr, titleArr);
+			sendMail(mailTemp, Arrays.asList(sendArr), null, content, templeteArr, titleArr);
 		}
 
 	}
@@ -112,21 +111,23 @@ public class MailInfoServiceImpl implements MailInfoService {
 	 * @param processId
 	 */
 	@Override
-	public void sendMailAndRecord(String mailTemp,String sendTo, JSONObject content,  JSONArray templeteArr, JSONArray titleArr ) {
-		sendMailAndRecord( mailTemp, sendTo, null,  content,   templeteArr,  titleArr );
+	public void sendMailAndRecord(String mailTemp, String sendTo, JSONObject content, JSONArray templeteArr,
+			JSONArray titleArr) {
+		sendMailAndRecord(mailTemp, sendTo, null, content, templeteArr, titleArr);
 	}
 
 	@Override
-	public void sendMail(String mailTemp,List<String> sendTo, List<String> ccTo,  JSONObject content,  JSONArray templeteArr, JSONArray titleArr) {
-		
+	public void sendMail(String mailTemp, List<String> sendTo, List<String> ccTo, JSONObject content,
+			JSONArray templeteArr, JSONArray titleArr) {
+
 		List<String> sendList = new ArrayList<>();
 		List<String> ccList = new ArrayList<>();
-		//测试邮件开关开启，重置测试人员，发送测试邮件
-		if("open".equals(defaultMail)) {
-			sendTo = Arrays.asList(defaultSendTo.split(",")) ;
-			ccTo = Arrays.asList(defaultCCTo.split(",")) ;
+		// 测试邮件开关开启，重置测试人员，发送测试邮件
+		if ("open".equals(defaultMail)) {
+			sendTo = Arrays.asList(defaultSendTo.split(","));
+			ccTo = Arrays.asList(defaultCCTo.split(","));
 		}
-		
+
 		if (!CollectionUtils.isEmpty(sendTo)) {
 			for (String item : sendTo) {
 				sendList.add(item);
@@ -138,15 +139,16 @@ public class MailInfoServiceImpl implements MailInfoService {
 			}
 		}
 		if (ccTo == null) {
-			send(mailTemp, null, new ArrayList<>(),sendList, content,1, templeteArr,titleArr);
+			send(mailTemp, null, new ArrayList<>(), sendList, content, 1, templeteArr, titleArr);
 		} else {
-			send(mailTemp, null, ccList, sendList,  content,1, templeteArr,titleArr);
+			send(mailTemp, null, ccList, sendList, content, 1, templeteArr, titleArr);
 		}
 
 	}
 
-	public void send(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
-		executor.send( templeteCode,  bccTo,  ccTo,  sendTo,  content,   priority,  templeteArr,  titleArr);
+	public void send(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo,
+			JSONObject content, int priority, JSONArray templeteArr, JSONArray titleArr) {
+		executor.send(templeteCode, bccTo, ccTo, sendTo, content, priority, templeteArr, titleArr);
 	}
 
 //	@Override
@@ -163,97 +165,99 @@ public class MailInfoServiceImpl implements MailInfoService {
 //			send(sendList, ccList, subject, content);
 //		}
 //	}
-	
+
 	@Override
-	public void sendRemindMail(String sendTo, String ccTo , String process, String url) {
-		
+	public void sendRemindMail(String sendTo, String ccTo, String process, String url) {
+
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$node", process);
-		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
 		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
-		
+
 //		JSONArray titleArr = new JSONArray();
 //		JSONObject titleJson = new JSONObject();
 //		titleJson.put("code", "$title1");
 //		titleArr.add(titleJson);		
-		
-		sendMailAndRecord(MailTempConst.APPROVALDATA, sendTo,  ccTo,  contentJson, templeteArr ,null);		
+
+		sendMailAndRecord(MailTempConst.APPROVALDATA, sendTo, ccTo, contentJson, templeteArr, null);
 	}
-	
+
 	@Override
-	public void sendProcessEndMail(String sendTo, String ccTo ,  String url) {
+	public void sendProcessEndMail(String sendTo, String ccTo, String url) {
 		JSONObject contentJson = new JSONObject();
-		contentJson.put("$url", StringUtils.isNotBlank(url)?url:endUrl);
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : endUrl);
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
 		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
-		
+
 //		JSONArray titleArr = new JSONArray();
 //		JSONObject titleJson = new JSONObject();
 //		titleJson.put("code", "$title1");
 //		titleArr.add(titleJson);
 
-		sendMailAndRecord(MailTempConst.APPROVALEND, sendTo,  ccTo,  contentJson, templeteArr ,null);			
+		sendMailAndRecord(MailTempConst.APPROVALEND, sendTo, ccTo, contentJson, templeteArr, null);
 	}
-	
+
 	@Override
-	public void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url) {
-	
+	public void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate,
+			boolean isAbnormalPlan, String url) {
+
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calMon = Calendar.getInstance();
 		calMon.setTime(endDate);
 		int maxDay = calMon.getActualMaximum(Calendar.DAY_OF_MONTH);
-		calMon.set(Calendar.DAY_OF_MONTH, maxDay);	
-		
-		JSONObject contentJson = new JSONObject();
-		contentJson.put("$url", StringUtils.isNotBlank(url)?url:defaultUrl);
-		contentJson.put("$endDate",df.format(endDate)+" 24:00:00</br>");
-		contentJson.put("$monthEndDate",df.format(calMon.getTime())+" 24:00:00</br>");
+		calMon.set(Calendar.DAY_OF_MONTH, maxDay);
 
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
+		contentJson.put("$endDate", df.format(endDate) + " 24:00:00</br>");
+		contentJson.put("$monthEndDate", df.format(calMon.getTime()) + " 24:00:00</br>");
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
 		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
-		
-		sendMailAndRecord(MailTempConst.REGULARMAIL, sendTo,  ccTo,  contentJson, templeteArr ,null);	
+
+		sendMailAndRecord(MailTempConst.REGULARMAIL, sendTo, ccTo, contentJson, templeteArr, null);
 	}
-	
+
 	/**
-     * 不规范邮件
-     * @param sendTo
-     * @param ccTo
-     * @param subject 邮件主题
-     * @param process 流程环节名称
-     * @param url 流程链接  ,为空不加超链接 
-     */
+	 * 不规范邮件
+	 * 
+	 * @param sendTo
+	 * @param ccTo
+	 * @param subject 邮件主题
+	 * @param process 流程环节名称
+	 * @param url     流程链接 ,为空不加超链接
+	 */
 
 	@Override
-	public void  sendNonstandardMail(String sendTo, String ccTo, String process) {
+	public void sendNonstandardMail(String sendTo, String ccTo, String process, String url) {
 		JSONObject contentJson = new JSONObject();
-		contentJson.put("$url", defaultUrl);
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
 		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
-		
-		sendMailAndRecord(MailTempConst.NONSTANDARD, sendTo,  ccTo,  contentJson, templeteArr ,null);	
+
+		sendMailAndRecord(MailTempConst.NONSTANDARD, sendTo, ccTo, contentJson, templeteArr, null);
 	}
 
 	@Override
-	public void sendMailByTemplete(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo, JSONObject content,  int priority, JSONArray templeteArr, JSONArray titleArr) {
+	public void sendMailByTemplete(String templeteCode, List<String> bccTo, List<String> ccTo, List<String> sendTo,
+			JSONObject content, int priority, JSONArray templeteArr, JSONArray titleArr) {
 		try {
-			String  token = afspTokenService.getEosToken();
-			Map<String,String> headers = new HashMap<String, String>();
+			String token = afspTokenService.getEosToken();
+			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("token", token);
-			
+
 			JSONObject paramJson = new JSONObject();
 			paramJson.put("applicationId", applicationId);
 			paramJson.put("sendTo", sendTo);
@@ -263,47 +267,48 @@ public class MailInfoServiceImpl implements MailInfoService {
 			paramJson.put("templeteArr", templeteArr);
 			paramJson.put("content", content);
 			paramJson.put("titleArr", titleArr);
-			
-			
-		String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailTempleteUrl , paramJson.toString(),headers);
-		System.out.println(result);
+
+			String result = HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailTempleteUrl, paramJson.toString(),
+					headers);
+			System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
-	public  void sendDeptMgnMail(String sendTo, String ccTo, String process,  boolean isAbnormalPlan, int link)throws Exception {
+	public void sendDeptMgnMail(String sendTo, String ccTo, String process, boolean isAbnormalPlan, int link,
+			String url) throws Exception {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		JSONObject contentJson = new JSONObject();
-		contentJson.put("$url", defaultUrl);
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
 		contentJson.put("$node", process);
-		if(isAbnormalPlan) {
-			
-			contentJson.put("$endDate", df.format(getEndDate( df, link))+" 24:00:00</br>");
-		}else {
-			Calendar cal=Calendar.getInstance();
+		if (isAbnormalPlan) {
+
+			contentJson.put("$endDate", df.format(getEndDate(df, link)) + " 24:00:00</br>");
+		} else {
+			Calendar cal = Calendar.getInstance();
 			int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-			cal.set(Calendar.DAY_OF_MONTH, maxDay);	
-			
-			contentJson.put("$endDate", df.format(cal.getTime())+" 24:00:00</br>");
+			cal.set(Calendar.DAY_OF_MONTH, maxDay);
+
+			contentJson.put("$endDate", df.format(cal.getTime()) + " 24:00:00</br>");
 		}
 
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
 		tempTempleteJson.put("code", "$system");
 		templeteArr.add(tempTempleteJson);
-		
-		sendMailAndRecord(MailTempConst.DEPTAPPROVALDATA, sendTo,  ccTo,  contentJson, templeteArr ,null);	
+
+		sendMailAndRecord(MailTempConst.DEPTAPPROVALDATA, sendTo, ccTo, contentJson, templeteArr, null);
 	}
-	
-	private Date getEndDate(SimpleDateFormat df,int link) throws Exception{
+
+	private Date getEndDate(SimpleDateFormat df, int link) throws Exception {
 		Calendar cal = null;
 		cal = Calendar.getInstance();
 		Integer month = cal.get(Calendar.MONTH) + 1;
-		int startDay = 0, firstLen=0,secondLen=0,thirdLen=0,fourthLen=0;
+		int startDay = 0, firstLen = 0, secondLen = 0, thirdLen = 0, fourthLen = 0;
 
-		JSONArray approveDate = sysDicInfoService.getJSONArrayDicsByType(DicConst.R_APPROVEDATE,"1");
+		JSONArray approveDate = sysDicInfoService.getJSONArrayDicsByType(DicConst.R_APPROVEDATE, "1");
 		JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());
 		startDay = objStartDay.getIntValue("dic_value");
 		Calendar startCal = null;
@@ -337,37 +342,37 @@ public class MailInfoServiceImpl implements MailInfoService {
 		}
 
 		// 第一环节截止时间
-		Date workEndFirst=calendarService.getEndNextDay(workDate,firstLen);
-		if(workEndFirst==null) {
-			throw new Exception("未查询到结束工作日");
-		}
-		
-		// 第二环节 规范性审核截止时间
-		Date workEndSecond=calendarService.getEndNextDay(workEndFirst,secondLen);
-		if(workEndSecond==null) {
+		Date workEndFirst = calendarService.getEndNextDay(workDate, firstLen);
+		if (workEndFirst == null) {
 			throw new Exception("未查询到结束工作日");
 		}
 
-		//第三环节 三级部门截止时间
-		Date workEndThird=calendarService.getEndNextDay(workEndSecond,thirdLen);
-		if(workEndThird==null) {
+		// 第二环节 规范性审核截止时间
+		Date workEndSecond = calendarService.getEndNextDay(workEndFirst, secondLen);
+		if (workEndSecond == null) {
 			throw new Exception("未查询到结束工作日");
 		}
-		Date thirdEmailDate=calendarService.getEndDay(workEndSecond,thirdLen);
-		if(thirdEmailDate==null) {
+
+		// 第三环节 三级部门截止时间
+		Date workEndThird = calendarService.getEndNextDay(workEndSecond, thirdLen);
+		if (workEndThird == null) {
 			throw new Exception("未查询到结束工作日");
 		}
-		
-		if(link==3) {
+		Date thirdEmailDate = calendarService.getEndDay(workEndSecond, thirdLen);
+		if (thirdEmailDate == null) {
+			throw new Exception("未查询到结束工作日");
+		}
+
+		if (link == 3) {
 			return thirdEmailDate;
-		}else {
-			//第四环节 二级部门截止时间
-			Date fourthEmailDate=calendarService.getEndDay(workEndThird,fourthLen);
-			if(fourthEmailDate==null) {
+		} else {
+			// 第四环节 二级部门截止时间
+			Date fourthEmailDate = calendarService.getEndDay(workEndThird, fourthLen);
+			if (fourthEmailDate == null) {
 				throw new Exception("未查询到结束工作日");
 			}
-			
+
 			return fourthEmailDate;
-		}		
+		}
 	}
 }
