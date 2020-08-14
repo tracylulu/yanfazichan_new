@@ -95,7 +95,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		String deptUsageRate=getRateAvg(lst);	
 
 		if(CollectionUtils.isEmpty(lst)) {
-			rateTotal.setRate("");
+			rateTotal.setRate("无");
 		}else {
 			rateTotal.setRate(deptUsageRate+"%");
 		}
@@ -105,7 +105,13 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		rateTotal.setDetail(getRateDetail(lst));
 
 		mapRD=getRDRate( model, deptCode,date,lstRD);
-		rateTotal.setRdRate((String)mapRD.get("rate"));
+		
+		if(mapRD.isEmpty()) {
+			rateTotal.setRdRate("无");
+		}else {
+			rateTotal.setRdRate((String)mapRD.get("rate"));
+		}
+		
 		rateTotal.setRdNumber((Integer)mapRD.get("number"));
 		rateTotal.setRatedetail(rateTotal.getRate()+"/"+rateTotal.getRdRate());
 		
