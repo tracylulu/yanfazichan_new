@@ -66,13 +66,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject();
 
-		String token = afspTokenService.getEosToken();
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("token", token);
-
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_ByType,
-				json.toJSONString(eosSearchParamEntity), headers);
+		String result = sendHttp(eosUrl + url_ByType, json.toJSONString(eosSearchParamEntity));
 
 		JSONObject jsonResult = json.parseObject(result);
 		JSONArray jsonArray = jsonResult.getJSONArray("data");
@@ -89,13 +83,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject();
 
-		String token = afspTokenService.getEosToken();
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("token", token);
-
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_ByType,
-				json.toJSONString(eosSearchParamEntity), headers);
+		String result = sendHttp(eosUrl + url_ByType, json.toJSONString(eosSearchParamEntity));
 
 		JSONObject jsonResult = json.parseObject(result);
 		JSONArray jsonArray = jsonResult.getJSONArray("data");
@@ -147,28 +135,22 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
 
 	/**
-	 * 根据类型获取字典，
-	 * isDelete (0:失效，1：有效，空：所有)
+	 * 根据类型获取字典， isDelete (0:失效，1：有效，空：所有)
+	 * 
 	 * @return JSONArray
 	 */
 	@Override
 	public JSONArray getJSONArrayDicsByType(String type, String isDelete) throws Exception {
 		EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
-		if(StringUtils.isNotBlank(isDelete)) {
+		if (StringUtils.isNotBlank(isDelete)) {
 			eosSearchParamEntity.setSearchParam(isDelete);
-		}		
+		}
 		eosSearchParamEntity.setDicType(type);
 
 		JSONObject json = new JSONObject(true);
 
-		String token = afspTokenService.getEosToken();
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("token", token);
-
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_ByType,
-				json.toJSONString(eosSearchParamEntity), headers);
+		String result = sendHttp(eosUrl + url_ByType, json.toJSONString(eosSearchParamEntity));
 
 		JSONObject jsonResult = json.parseObject(result);
 		JSONArray jsonArray = jsonResult.getJSONArray("data");
@@ -180,7 +162,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 * 获取厂家型号
 	 */
 	@Override
-	public List<JSONObject> getManuAndModel(String name) throws Exception{
+	public List<JSONObject> getManuAndModel(String name) throws Exception {
 		List<JSONObject> lst = new ArrayList<JSONObject>();
 
 		List<ManufacturerInfo> lstmf = manufacturerInfoService.getManufacturerInfoByName(name);
@@ -247,7 +229,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
 
 	@Override
-	public ResponseResult add(JSONObject model) throws Exception {		
+	public ResponseResult add(JSONObject model) throws Exception {
 		JSONObject json = new JSONObject();
 
 		String token = afspTokenService.getEosToken();
@@ -265,15 +247,10 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
 
 	@Override
-	public ResponseResult edit(JSONObject model) throws Exception {		
+	public ResponseResult edit(JSONObject model) throws Exception {
 		JSONObject json = new JSONObject();
 
-		String token = afspTokenService.getEosToken();
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("token", token);
-
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_edit, json.toJSONString(model), headers);
+		String result = sendHttp(eosUrl + url_edit, json.toJSONString(model));
 
 		JSONObject jsonResult = json.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
@@ -291,13 +268,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject();
 
-		String token = afspTokenService.getEosToken();
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("token", token);
-
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_del,
-				json.toJSONString(eosSearchParamEntity), headers);
+		String result = sendHttp(eosUrl + url_del, json.toJSONString(eosSearchParamEntity));
 
 		JSONObject jsonResult = json.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
@@ -313,13 +284,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		obj.put("id", id);
 		JSONObject json = new JSONObject();
 
-		String token = afspTokenService.getEosToken();
-
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("token", token);
-
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_getById, json.toJSONString(obj),
-				headers);
+		String result = sendHttp(eosUrl + url_getById, json.toJSONString(obj));
 
 		JSONObject jsonResult = json.parseObject(result);
 		JSONArray resultArr = jsonResult.getJSONArray("data");
@@ -328,6 +293,55 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		}
 		String errMsg = jsonResult.getString("message");
 		throw new Exception(jsonResult.getBoolean("flag") ? "未查询到数据" : errMsg);
+	}
+
+	/**
+	 * 批量新增
+	 */
+	@Override
+	public void batchInsert(List<JSONObject> lst) throws Exception {
+		JSONObject json = new JSONObject();
+
+		String result = sendHttp(eosUrl + "", json.toJSONString(lst));
+		JSONObject jsonResult = json.parseObject(result);
+		JSONArray resultArr = jsonResult.getJSONArray("data");
+		if (!jsonResult.getBoolean("flag") ) {
+			String errMsg = jsonResult.getString("message");
+			throw new Exception( errMsg);
+		}
+	}
+
+	/**
+	 * 批量修改
+	 */	
+	@Override
+	public void batchEdit(List<JSONObject> lst) throws Exception {
+		JSONObject json = new JSONObject();
+
+		String result = sendHttp(eosUrl + "", json.toJSONString(lst));
+		JSONObject jsonResult = json.parseObject(result);
+		JSONArray resultArr = jsonResult.getJSONArray("data");
+		if (!jsonResult.getBoolean("flag") ) {
+			String errMsg = jsonResult.getString("message");
+			throw new Exception( errMsg);
+		}
+	}
+
+	/**
+	 * 发送http请求至afsp
+	 * @param url url
+	 * @param param 参数
+	 * @return
+	 * @throws Exception
+	 */
+	private String sendHttp(String url, String param) throws Exception {
+		String token = afspTokenService.getEosToken();
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("token", token);
+
+		String result = HttpClientUtil.sendHttpPostJsonWithHeader(url, param, headers);
+
+		return result;
 	}
 
 }

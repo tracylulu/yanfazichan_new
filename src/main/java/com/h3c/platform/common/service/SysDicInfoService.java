@@ -57,4 +57,8 @@ public interface SysDicInfoService {
 	ResponseResult del(String ids) throws Exception;
 	
 	JSONObject getByID(Integer id) throws Exception;
+	
+	void batchInsert(List<JSONObject> lst) throws Exception;
+	
+	void batchEdit(List<JSONObject> lst) throws Exception;
 }

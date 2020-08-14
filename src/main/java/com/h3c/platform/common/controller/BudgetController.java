@@ -1,10 +1,14 @@
 package com.h3c.platform.common.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,10 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.h3c.platform.util.AbstractExcelReader;
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.service.DeptInfoService;
@@ -23,6 +30,7 @@ import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.entity.BudgetEntity;
 import com.h3c.platform.common.entity.SearchParamEntity;
+import com.h3c.platform.common.entity.SysDicInfo;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.ObjToStrUtil;
 import com.h3c.platform.response.ResponseResult;
@@ -140,7 +148,8 @@ public class BudgetController {
 		JSONArray lst = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getDeptCode().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])&&!entity.getId().equals(obj.getInteger("id"))) {
+			if (entity.getDeptCode().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])
+					&& !entity.getId().equals(obj.getInteger("id"))) {
 				return ResponseResult.fail("此部门信息已配置");
 			}
 		}
@@ -186,5 +195,101 @@ public class BudgetController {
 				StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime"))) ? ""
 						: model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
+	}
+
+	@UserLoginToken
+	@PostMapping("/import")
+	@ApiOperation(value = "导入预算")
+	public ResponseResult importBudget(@RequestParam("file") MultipartFile file) throws IOException, Exception {
+		StringBuffer errMsg = new StringBuffer();
+		int rowIndex = 1;
+		String regex = "^\\d+$";
+		List<JSONObject> lstAdd = new ArrayList<>();
+		List<JSONObject> lstEdit = new ArrayList<>();
+		String fileName = file.getOriginalFilename();
+		if (fileName.indexOf("\\") > -1) {
+			fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
+		}
+		AbstractExcelReader excelReader = new AbstractExcelReader(file.getInputStream(), fileName);
+
+		Row rowTitle = excelReader.firstRow();
+		String deptTitle = excelReader.readCellValue(rowTitle.getCell(0));
+		if (!"部门编码".equals(deptTitle)) {
+			return ResponseResult.fail("导入模板不正确！");
+		}
+
+		JSONArray lstAll = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
+		List<DeptInfo> lstDept = deptService.getAll();
+
+		while (excelReader.hasNextRow()) {
+			JSONObject dic = new JSONObject();
+			Row row = excelReader.nextRow();
+			String deptCode = excelReader.readCellValue(row.getCell(0));
+			if (StringUtils.isEmpty(deptCode)) {
+				errMsg.append("第" + rowIndex + "行，部门编码不能为空！\n");
+				rowIndex++;
+				continue;
+			}
+
+			Optional<DeptInfo> temp = lstDept.stream().filter(o -> deptCode.equals(String.valueOf(o.getDeptCode())))
+					.findAny();
+			if (!temp.isPresent()) {
+				errMsg.append("第" + rowIndex + "行，部门编码不存在！\n");
+				rowIndex++;
+				continue;
+			}
+			
+			String daohuo = excelReader.readCellValue(row.getCell(1));
+			String ziatu = excelReader.readCellValue(row.getCell(2));
+			String budget = excelReader.readCellValue(row.getCell(3));
+
+			if (!daohuo.matches(regex)) {
+				errMsg.append("第" + rowIndex + "行，到货请填写数字！\n");
+			}
+			if (!ziatu.matches(regex)) {
+				errMsg.append("第" + rowIndex + "行，在途请填写数字！\n");
+			}
+			if (!budget.matches(regex)) {
+				errMsg.append("第" + rowIndex + "行，预算请填写数字！\n");
+			}
+
+			for (int i = 0; i < lstAll.size(); i++) {
+				JSONObject obj = lstAll.getJSONObject(i);
+				if (deptCode.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+					dic = obj;
+					break;
+				}
+			}
+
+			String dicValue = daohuo + "_" + ziatu + "_" + budget;
+			
+			dic.put("dicValue", dicValue);
+			dic.put("dicName", deptCode);			
+			dic.put("applicationId", applicationId);
+			dic.put("dicTypeId", DicConst.R_BUDGET);
+			dic.put("lastModifier", UserUtils.getCurrentDominAccount());						
+			dic.put("isAble", 1);
+			if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(dic.get("id")))) {
+				lstEdit.add(dic);				
+			}else {
+				dic.put("creater", UserUtils.getCurrentDominAccount());
+				lstAdd.add(dic);
+			}
+		}
+
+		if (StringUtils.isNotBlank(errMsg.toString())) {
+			return ResponseResult.fail(errMsg.toString());
+		}
+		
+//		//保存
+//		if(CollectionUtils.isNotEmpty(lstAdd)) {
+//			dicServer.batchInsert(lstAdd);
+//		}
+//		//修改
+//		if(CollectionUtils.isNotEmpty(lstEdit)) {
+//			dicServer.batchEdit(lstEdit);
+//		}
+
+		return ResponseResult.success("导入成功！");
 	}
 }
