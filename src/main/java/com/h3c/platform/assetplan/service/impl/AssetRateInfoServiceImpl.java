@@ -282,7 +282,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
         int fromIndex = 0; // 开始索引
         int toIndex = 0; // 结束索引
  
-        if (search.getPageNum() != pageCount) {
+        if (!search.getPageNum().equals(pageCount)) {
             fromIndex = (search.getPageNum() - 1) * search.getPageSize();
             toIndex = fromIndex + search.getPageSize();
         } else {

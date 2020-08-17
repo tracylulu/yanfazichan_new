@@ -87,7 +87,7 @@ public class AddressController {
         int fromIndex = 0; // 开始索引
         int toIndex = 0; // 结束索引
  
-        if (param.getNum() != pageCount) {
+        if (!param.getNum().equals(pageCount)) {
             fromIndex = (param.getNum() - 1) * param.getSize();
             toIndex = fromIndex + param.getSize();
         } else {
