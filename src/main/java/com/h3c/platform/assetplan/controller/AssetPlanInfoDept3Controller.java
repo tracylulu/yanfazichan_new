@@ -481,7 +481,7 @@ public class AssetPlanInfoDept3Controller {
 	   				for (int i = 0; i < allChildDept.size(); i++) {
 	   					//标示是否为空  true 空
 	   	   				boolean isEmpty = false;
-	   					JSONObject json33=new JSONObject();
+	   					//JSONObject json33=new JSONObject();
 	   					Map<String, Object> param_2 = new HashMap<>();
 	   					param_2.put("DeptCode",allChildDept.get(i).getDeptCode());
 	   					param_2.put("APStage","4");

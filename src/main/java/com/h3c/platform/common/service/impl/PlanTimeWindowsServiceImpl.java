@@ -24,7 +24,7 @@ public class PlanTimeWindowsServiceImpl implements  PlanTimeWindowsService{
 	
 	@Override
 	public boolean valitSubmitTimeWiondow()  throws Exception{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		int interval=0;
 		Date now=new Date();
 		Calendar cal= null;

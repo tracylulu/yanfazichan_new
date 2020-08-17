@@ -263,7 +263,7 @@ public class IBPMController {
 	@PostMapping("/writeBpmCode")
 	@ApiOperation("写入bpm编码")
 	public ResponseResult writeBmpCode(@RequestBody IBPMEntity entity)throws Exception {		
-		boolean isSuccess = isSuccess = bpmRelationInfoService.writeBpmCode(entity);
+		boolean isSuccess = bpmRelationInfoService.writeBpmCode(entity);
 		
 		return ResponseResult.success("写入成功");
 	}

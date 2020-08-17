@@ -36,7 +36,7 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public ResponseResult getCurrentResourceTree() throws Exception{
 		UserInfo user= userService.getUserByEmpCode(UserUtils.getCurrentUserId());
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 		
 		String token=afspTokenService.getEosToken();
 		

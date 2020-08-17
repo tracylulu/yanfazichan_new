@@ -773,7 +773,7 @@ public class AssetPlanInfoApplyController {
 			if(user==null) {
 				return ResponseResult.fail(false, "查询失败，该用户不存在");
 			}else {
-				String deptCode = user.getDeptCode();
+				//String deptCode = user.getDeptCode();
 				String dept1Code = user.getDept1Code();
 				String dept2Code = user.getDept2Code();
 				String dept3Code = user.getDept3Code();
@@ -1170,7 +1170,7 @@ public class AssetPlanInfoApplyController {
 				ap.setDeleteflag("1");
 				ap.setOuttimeplanenum(-1);
 				//Applyuser Modifier这两个字段前端传过来了
-				int insertBackID = assetPlanInfoMapper.insertBackID(ap);
+				assetPlanInfoMapper.insertBackID(ap);
 				lstsubmitID.add(ap.getAssetplanid());
 			}
 			

@@ -24,7 +24,7 @@ public class AfspTokenServiceImpl implements AfspTokenService{
     	String params="{\"account\":\""+applicationId+"\",\"password\":\""+password+"\"}";			
 		String result= HttpClientUtil.sendHttpPostJson(eosUrl+url_Token, params);
 		
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 		JSONObject jsonResult = JSON.parseObject(result);
 		if(!jsonResult.getBoolean("flag")) {
 			throw new Exception(jsonResult.getString("message"));

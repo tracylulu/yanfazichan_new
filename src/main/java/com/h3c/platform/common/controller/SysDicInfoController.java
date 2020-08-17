@@ -117,7 +117,7 @@ public class SysDicInfoController {
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
 	public ResponseResult add(@RequestBody SysDicInfo model) throws Exception {		
-		JSONObject json=new JSONObject();
+		//JSONObject json=new JSONObject();
 		model.setApplicationId(applicationId);
 		model.setCreater(UserUtils.getCurrentDominAccount());
 		model.setLastModifier(UserUtils.getCurrentDominAccount());
@@ -129,7 +129,7 @@ public class SysDicInfoController {
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
 	public ResponseResult edit(@RequestBody SysDicInfo model) throws Exception {
-		JSONObject json=new JSONObject();
+		//JSONObject json=new JSONObject();
 		model.setApplicationId(applicationId);
 		model.setLastModifier(UserUtils.getCurrentDominAccount());
 		return sysDicInfoService.edit(JSON.parseObject(JSON.toJSONString(model)));

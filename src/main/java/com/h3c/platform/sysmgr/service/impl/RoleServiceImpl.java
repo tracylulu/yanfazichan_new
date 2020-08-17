@@ -37,7 +37,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public ResponseResult getRoleByUser(String userId) throws Exception{
 		UserInfo user= userService.getUserByEmpCode(userId);
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 		
 		String token=afspTokenService.getEosToken();
 		
@@ -55,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public boolean checkIsAdmin() throws Exception{
 		boolean isAdmin=false;
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 		
 		String token=afspTokenService.getEosToken();
 		
@@ -82,7 +82,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public boolean checkIsAdmin(String userCode) throws Exception{
 		boolean isAdmin=false;
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 		
 		UserInfo user=userService.getUserByEmpCode(userCode);
 		

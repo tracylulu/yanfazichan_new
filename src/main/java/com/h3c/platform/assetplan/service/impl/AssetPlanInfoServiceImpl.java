@@ -380,7 +380,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 			ap.setDeleteflag("1");
 			ap.setOuttimeplanenum(-1);
 			//Applyuser Modifier这两个字段前端传过来了
-			int insert = assetPlanInfoMapper.insert(ap);
+			assetPlanInfoMapper.insert(ap);
 		}
 	}
 	

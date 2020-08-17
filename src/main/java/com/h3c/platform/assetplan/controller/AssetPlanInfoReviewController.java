@@ -679,7 +679,7 @@ public class AssetPlanInfoReviewController {
 			}
 			List<AssetPlanInfo> lst = assetPlanGlobalInfo.getLst();
 			//是否成套物品 默认否,1是0否
-			String iscompleteset = assetPlanGlobalInfo.getLst().get(0).getIscompleteset();
+			//String iscompleteset = assetPlanGlobalInfo.getLst().get(0).getIscompleteset();
 			//成套ID
 			Integer completesetcode = assetPlanGlobalInfo.getLst().get(0).getCompletesetcode();
 			//申购序号 格式YYYY-00001，年月－工号

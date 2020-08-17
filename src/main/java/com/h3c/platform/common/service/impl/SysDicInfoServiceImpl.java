@@ -69,7 +69,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		eosSearchParamEntity.setSearchParam("1");
 		eosSearchParamEntity.setDicType(type);
 
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_ByType, JSON.toJSONString(eosSearchParamEntity));
 
@@ -86,7 +86,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		eosSearchParamEntity.setSearchParam("1");
 		eosSearchParamEntity.setDicType(code);
 
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_ByType, JSON.toJSONString(eosSearchParamEntity));
 
@@ -153,7 +153,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		}
 		eosSearchParamEntity.setDicType(type);
 
-		JSONObject json = new JSONObject(true);
+		//JSONObject json = new JSONObject(true);
 
 		String result = sendHttp(eosUrl + url_ByType, JSON.toJSONString(eosSearchParamEntity));
 
@@ -235,7 +235,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 	@Override
 	public ResponseResult add(JSONObject model) throws Exception {
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String token = afspTokenService.getEosToken();
 
@@ -253,7 +253,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 	@Override
 	public ResponseResult edit(JSONObject model) throws Exception {
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_edit, JSON.toJSONString(model));
 
@@ -271,7 +271,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		eosSearchParamEntity.setSearchParam(ids);
 		eosSearchParamEntity.setLastModifier(UserUtils.getCurrentDominAccount());
 
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_del, JSON.toJSONString(eosSearchParamEntity));
 
@@ -287,7 +287,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		JSONObject obj = new JSONObject();
 		obj.put("applicationId", applicationId);
 		obj.put("id", id);
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_getById, JSON.toJSONString(obj));
 
@@ -305,11 +305,11 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 */
 	@Override
 	public void batchInsert(List<JSONObject> lst) throws Exception {
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_BatchAdd, JSON.toJSONString(lst));
 		JSONObject jsonResult = JSON.parseObject(result);
-		JSONArray resultArr = jsonResult.getJSONArray("data");
+		//JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (!jsonResult.getBoolean("flag") ) {
 			StringBuffer errMsg= new StringBuffer();
 			JSONArray data= jsonResult.getJSONArray("data");
@@ -328,11 +328,11 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 */	
 	@Override
 	public void batchEdit(List<JSONObject> lst) throws Exception {
-		JSONObject json = new JSONObject();
+		//JSONObject json = new JSONObject();
 
 		String result = sendHttp(eosUrl + url_BatchEdit, JSON.toJSONString(lst));
 		JSONObject jsonResult = JSON.parseObject(result);
-		JSONArray resultArr = jsonResult.getJSONArray("data");
+		//JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (!jsonResult.getBoolean("flag") ) {
 			StringBuffer errMsg= new StringBuffer();
 			JSONArray data= jsonResult.getJSONArray("data");

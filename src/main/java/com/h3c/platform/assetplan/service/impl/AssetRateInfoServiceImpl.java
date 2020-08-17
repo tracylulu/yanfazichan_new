@@ -74,7 +74,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		Map<String,Object> mapRD= new HashMap<>();		
 		
 		//存储使用路分布
-		List<String> lstDis=new ArrayList<String>();
+		//List<String> lstDis=new ArrayList<String>();
 		DeptInfo deptInfo = deptInfoService.getByCode(deptCode);
 		if(deptInfo.getDeptCode()==null) {
 			throw new Exception("未找到当前部门");
@@ -254,7 +254,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		
 		Map<String,List<AssetRateInfo>> mapDetail= lst.stream().collect(Collectors.groupingBy(AssetRateInfo::getAssertNumber));
 		for(String key:mapDetail.keySet()) {
-			AssetRateInfo info =new AssetRateInfo();
+			//AssetRateInfo info =new AssetRateInfo();
 			List<Double> lstDetailRate=new ArrayList<Double>();
 			List<AssetRateInfo> lstTemp=mapDetail.get(key);
 			lstTemp.stream().forEach(o->{
