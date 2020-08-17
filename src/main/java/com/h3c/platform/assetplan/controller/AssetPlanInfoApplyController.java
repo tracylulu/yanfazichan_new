@@ -921,7 +921,8 @@ public class AssetPlanInfoApplyController {
 				
    			if(StringUtils.isNotBlank(applyUser)){
 				if(StringUtils.isNotBlank(apstage) && apstage.contains("1")) {
-					PageHelper.startPage(pageNum, pageSize);
+					//PageHelper.startPage(pageNum,pageSize);
+					com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 					List<AssetPlanInfoAll> todoInfoList = assetPlanInfoService.listofTodoDetail(param);
 					PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(todoInfoList);
 					if(todoInfoList.size()>0) {
@@ -1004,7 +1005,8 @@ public class AssetPlanInfoApplyController {
 				
    			if(StringUtils.isNotBlank(applyUser)){
 				if(StringUtils.isNotBlank(apstage) && apstage.contains("1")) {
-					PageHelper.startPage(pageNum, pageSize);
+					//PageHelper.startPage(pageNum,pageSize);
+					com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 					List<AssetPlanInfoAll> draftInfoList = assetPlanInfoService.listofDraftDetail(param);
 					PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(draftInfoList);
 					if(draftInfoList.size()>0) {

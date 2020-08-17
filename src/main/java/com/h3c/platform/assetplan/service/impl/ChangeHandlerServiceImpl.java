@@ -149,7 +149,8 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 	 * 获取分页数据
 	 */
 	public ResponseResult list(String userCode,int pageSize,int pageNum)throws Exception {
-		PageHelper.startPage(pageNum,pageSize);
+		//PageHelper.startPage(pageNum,pageSize);
+		com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 		List<AssetPlanInfo>lst =assetPlanInfoMapper.getAdminChangeHandlerList(userCode);
 		
 		PageInfo<AssetPlanInfo> pageInfo=new PageInfo<AssetPlanInfo>(lst);

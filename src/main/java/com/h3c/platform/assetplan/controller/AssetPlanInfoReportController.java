@@ -53,7 +53,8 @@ public class AssetPlanInfoReportController {
     		Map<String, Object> param = new HashMap<>();
     		//封装返回数据的表头信息
 			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOSEARCHVIEW);
-   			PageHelper.startPage(pageNum, pageSize);
+			//PageHelper.startPage(pageNum,pageSize);
+			com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 			List<AssetPlanInfoReportView> planInfoReportList = assetPlanInfoReportService.listofAssetPlanInfoForReport(param);
 			PageInfo<AssetPlanInfoReportView> pageInfo = new PageInfo<AssetPlanInfoReportView>(planInfoReportList);
    			

@@ -117,7 +117,9 @@ public class AssetPlanInfoDept3Controller {
 			
 			if(StringUtils.isNotBlank(dept3Manager)){
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("3")) {
-				PageHelper.startPage(pageNum, pageSize);
+				//解决sonar扫描列出来的错误
+				//PageHelper.startPage(pageNum, pageSize);
+				com.github.pagehelper.page.PageMethod.startPage(pageNum, pageSize);
    				List<AssetPlanInfoAll> dept3InfoList = assetPlanInfoService.listofDept3Detail(param);
    				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(dept3InfoList);
    				if(dept3InfoList.size()>0) {

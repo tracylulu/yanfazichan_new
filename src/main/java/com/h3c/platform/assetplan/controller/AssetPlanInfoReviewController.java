@@ -134,7 +134,8 @@ public class AssetPlanInfoReviewController {
 			param.put("ReviewResult","0");
    			if(StringUtils.isNotBlank(reviewer)){
 				if(StringUtils.isNotBlank(apstage) && apstage.contains("2")) {
-					PageHelper.startPage(pageNum, pageSize);
+					//PageHelper.startPage(pageNum,pageSize);
+					com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 					
 	   				List<AssetPlanInfoAll> reviewInfoList = assetPlanInfoService.listofReviewDetail(param);
 	   				
@@ -478,7 +479,8 @@ public class AssetPlanInfoReviewController {
    				param.put("ApplyMonth",applymonth);
    				//全选0  规范1  不规范2  未审核3  在审核4 
    				param.put("ReviewResult",reviewResult);
-   				PageHelper.startPage(pageNum, pageSize);
+   				//PageHelper.startPage(pageNum,pageSize);
+   				com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
    				List<AssetPlanInfoAll> reviewResultList = assetPlanInfoService.getReviewResult(param);
    				for (int i = 0; i < reviewResultList.size(); i++) {
    					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());
@@ -555,7 +557,8 @@ public class AssetPlanInfoReviewController {
 		
 		JSONArray arrayData = new JSONArray();
 		JSONObject json=new JSONObject();
-		PageHelper.startPage(pageNum, pageSize);
+		//PageHelper.startPage(pageNum,pageSize);
+		com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 		List<AssetPlanInfoAll> reviewResultList = assetPlanInfoService.getSearchResultForReview(param);
 		for (int i = 0; i < reviewResultList.size(); i++) {
 			SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());

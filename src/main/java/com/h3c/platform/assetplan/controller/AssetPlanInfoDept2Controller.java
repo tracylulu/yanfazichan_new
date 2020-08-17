@@ -104,7 +104,8 @@ public class AssetPlanInfoDept2Controller {
 		
 		if(StringUtils.isNotBlank(dept2Manager)){
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("4")) {
-				PageHelper.startPage(pageNum, pageSize);
+				//PageHelper.startPage(pageNum,pageSize);
+				com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 				List<AssetPlanInfoAll> dept2InfoList = assetPlanInfoService.listofDept2Detail(param);
 				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(dept2InfoList);
 				if(dept2InfoList.size()>0) {
