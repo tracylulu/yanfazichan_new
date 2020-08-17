@@ -237,6 +237,10 @@ public class BudgetController {
 				errMsg.append("第" + rowIndex + "行，部门编码不存在！\n");
 				rowIndex++;
 				continue;
+			}else if(!"研发".equals(temp.get().getDeptType())) {
+				errMsg.append("第" + rowIndex + "行，部门为非研发部门！\n");
+				rowIndex++;
+				continue;
 			}
 			
 			String daohuo = excelReader.readCellValue(row.getCell(1));
