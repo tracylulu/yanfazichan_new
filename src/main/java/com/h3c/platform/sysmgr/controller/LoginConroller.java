@@ -77,7 +77,7 @@ public class LoginConroller {
 	public ResponseResult Login(String userCode, HttpServletRequest request) {
 		if(!"close".equals(onlySsoLogin)) throw new RuntimeException("非法请求");
 		if (StringUtils.isNotBlank(userCode)) {
-			ResponseTicket repTicket = null;
+			//ResponseTicket repTicket = null;
 			try {
 
 				//校验系统用户存不存在
@@ -102,7 +102,7 @@ public class LoginConroller {
 			}
 
 		} else {
-			String requestTicket = null;
+			//String requestTicket = null;
 			try {
 				String loginUrl = ssoMainLogin ;
 

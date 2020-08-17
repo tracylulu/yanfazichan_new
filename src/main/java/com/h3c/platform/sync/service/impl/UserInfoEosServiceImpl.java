@@ -31,7 +31,7 @@ public class UserInfoEosServiceImpl implements UserInfoEosService {
 	
 	@Transactional
 	private void insertDeptEos(List<Map<String, Object>> lst) {
-		List<Map> addList=new ArrayList<>();
+		//List<Map> addList=new ArrayList<>();
 		for(Map<String, Object> map :lst) {
 			UserInfo_EOS user= new UserInfo_EOS();
 			user.setNotesId(ObjToStrUtil.ReplaceNullValue(map.get("notesId")));

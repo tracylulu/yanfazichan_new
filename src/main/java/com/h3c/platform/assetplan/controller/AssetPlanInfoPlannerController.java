@@ -337,7 +337,7 @@ public class AssetPlanInfoPlannerController {
 				"Distribution","Detail","RdRate","RdNumber"};
 		
 		
-		String currentUserId = UserUtils.getCurrentUserId();
+		//String currentUserId = UserUtils.getCurrentUserId();
 		List<String> lstHeader = Arrays.asList(header);
 		List<String> lsth = new ArrayList<>(lstHeader);
 		header = (String[]) lsth.toArray(new String[lsth.size()]);

@@ -118,8 +118,8 @@ public class ExportExcelUtil<T> {
 		Iterator<T> it = dataset.iterator();
 		int index = 0;
 		T t;
-		Field[] fields;
-		Field field;
+		//Field[] fields;
+		//Field field;
 		// HSSFRichTextString richString;
 		Pattern p = Pattern.compile("^//d+(//.//d+)?$");
 		Matcher matcher;

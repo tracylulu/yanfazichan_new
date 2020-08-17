@@ -681,7 +681,7 @@ public class AssetPlanInfoReviewController {
 			//是否成套物品 默认否,1是0否
 			//String iscompleteset = assetPlanGlobalInfo.getLst().get(0).getIscompleteset();
 			//成套ID
-			Integer completesetcode = assetPlanGlobalInfo.getLst().get(0).getCompletesetcode();
+			//Integer completesetcode = assetPlanGlobalInfo.getLst().get(0).getCompletesetcode();
 			//申购序号 格式YYYY-00001，年月－工号
 			//String plancode = assetPlanGlobalInfo.getLst().get(0).getPlancode();
 			//是否需要申购报告 是否需要申购报告,1需要0不需要
@@ -705,7 +705,7 @@ public class AssetPlanInfoReviewController {
 							.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
 					if(!temp.isPresent()) {
 						String purchasereportID = UUIDUtil.UUID();
-						String currentUserId = UserUtils.getCurrentUserId();
+						//String currentUserId = UserUtils.getCurrentUserId();
 						//新生成申购报告，并建立与主表的关系
 						for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
 							info.setDeleteflag("1");

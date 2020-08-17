@@ -22,7 +22,7 @@ public class MailSendToAndCcToUtils {
 	private AssetPlanInfoMapper assetPlanInfoMapper;
 	
 	//获取发送人id的list
-    public List getsendToList(List<Integer> lstsubmitID,String apstage) {
+    public List getsendToList(List<Integer> lstsubmitID) {
     	List<String> sendTo=new ArrayList<>();
     	//规范审核人id的list
 		List<String> newLstReviewerID =new ArrayList<>();

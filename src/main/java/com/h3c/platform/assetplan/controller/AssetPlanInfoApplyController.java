@@ -274,7 +274,7 @@ public class AssetPlanInfoApplyController {
 							.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
 					if(!temp.isPresent()) {
 						String purchasereportID = UUIDUtil.UUID();
-						String currentUserId = UserUtils.getCurrentUserId();
+						//String currentUserId = UserUtils.getCurrentUserId();
 						//新生成申购报告，并建立与主表的关系
 						for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
 							info.setDeleteflag("1");
@@ -1213,7 +1213,7 @@ public class AssetPlanInfoApplyController {
 								.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
 						if(!temp.isPresent()) {
 							String purchasereportID = UUIDUtil.UUID();
-							String currentUserId = UserUtils.getCurrentUserId();
+							//String currentUserId = UserUtils.getCurrentUserId();
 							//新生成申购报告，并建立与主表的关系
 							for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
 								info.setDeleteflag("1");

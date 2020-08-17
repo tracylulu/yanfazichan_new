@@ -109,7 +109,7 @@ public class AssetPlanInfoReportController {
     			continue;
     		}else {
     			JSONObject json =new JSONObject();
-        		String applymonth = dataForLineChart.get(i).getApplymonth();
+        		//String applymonth = dataForLineChart.get(i).getApplymonth();
         		json.put("x", dataForLineChart.get(i).getApplymonth());
         		json.put("y", dataForLineChart.get(i).getLineChartMoney());
         		arrayData.add(json);

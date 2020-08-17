@@ -42,7 +42,7 @@ import com.h3c.sso.entity.RequestTicket;
 @Controller
 public class GlobalExceptionHandler implements ErrorController {
 
-	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	//private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@Value("${sso.main.auth.key}")
 	private String key;

@@ -38,7 +38,7 @@ public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 	private void insertDeptEos(List<Map<String, Object>> lst) {
 		SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd"); 
 		try {
-			List<Map> addList=new ArrayList<>();
+			//List<Map> addList=new ArrayList<>();
 			for(Map<String, Object> map :lst) {
 				ProjectInfo_EOS pro = new ProjectInfo_EOS();
 				pro.setTypeId(ObjToStrUtil.ReplaceNullValue(map.get("type_id")));

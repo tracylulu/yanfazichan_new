@@ -27,7 +27,7 @@ import com.h3c.platform.util.TokenUtil;
 
 @Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
-	private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
+	//private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 	@Value("${checkToken}")
 	private String checkToken;
 	

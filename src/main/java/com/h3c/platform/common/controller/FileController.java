@@ -52,7 +52,7 @@ import com.h3c.platform.response.ResponseResult;
 @CrossOrigin
 public class FileController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     private  String PATH;
 

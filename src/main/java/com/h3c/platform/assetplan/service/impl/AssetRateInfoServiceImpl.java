@@ -203,7 +203,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		Map<String,Object> mapRD= new HashMap<>();
 		mapRD.put("deptName", "研发总体");
 		mapRD.put("type", model);
-		double rates=0 ,usageRate=0;
+		//double rates=0 ,usageRate=0;
 		
 		//List<AssetRateInfo> lst = getRDRateInfo(model,date);
 

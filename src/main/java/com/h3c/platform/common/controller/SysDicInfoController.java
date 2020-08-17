@@ -40,7 +40,7 @@ import com.h3c.platform.util.UserUtils;
 @Api(value = "数据字典相关接口", tags = { "数据字典相关接口" })
 public class SysDicInfoController {
 
-	private static final Logger logger = LoggerFactory.getLogger(SysDicInfoController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(SysDicInfoController.class);
 
 	@Value("${afsp.applicationId}") 
 	private String  applicationId;

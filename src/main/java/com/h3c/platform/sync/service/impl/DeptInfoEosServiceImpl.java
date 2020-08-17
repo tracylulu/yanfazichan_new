@@ -31,7 +31,7 @@ public class DeptInfoEosServiceImpl implements DeptInfoEosService{
 	
 	@Transactional
 	private void insertDeptEos(List<Map<String, Object>> lst) {
-		List<Map> addList=new ArrayList<>();
+		//List<Map> addList=new ArrayList<>();
 		for(Map<String, Object> map :lst) {
 			DeptInfo_EOS dept= new DeptInfo_EOS();
 			dept.setDeptCode(Integer.parseInt(map.get("dept_code").toString()));

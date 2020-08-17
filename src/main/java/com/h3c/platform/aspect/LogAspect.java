@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @Component
 public class LogAspect {
 	
-	private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
+	//private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 	
 	@Autowired
 	private  OperationLogService operationLogService;
