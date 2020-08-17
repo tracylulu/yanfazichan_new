@@ -683,7 +683,7 @@ public class AssetPlanInfoReviewController {
 			//成套ID
 			Integer completesetcode = assetPlanGlobalInfo.getLst().get(0).getCompletesetcode();
 			//申购序号 格式YYYY-00001，年月－工号
-			String plancode = assetPlanGlobalInfo.getLst().get(0).getPlancode();
+			//String plancode = assetPlanGlobalInfo.getLst().get(0).getPlancode();
 			//是否需要申购报告 是否需要申购报告,1需要0不需要
 			String isreqpurchasereport = assetPlanGlobalInfo.getLst().get(0).getIsreqpurchasereport();
 			//申购报告 ID

@@ -30,8 +30,8 @@ public class TestController {
 	
 	@PostMapping("/sentEmail")
 	public String sentEmail() throws Exception{
-		String sendTo = "lkf7579";
-		String ccTo = "";
+		//String sendTo = "lkf7579";
+		//String ccTo = "";
 //		mailInfoService.sendProcessEndMail(sendTo, ccTo, "");
 //		mailInfoService.sendRemindMail(sendTo, ccTo, "三级部门主管审核", "");
 //		mailInfoService.sendRemindMailWithEndTime(sendTo, ccTo, "三级部门主管审核", new Date(), true, "");

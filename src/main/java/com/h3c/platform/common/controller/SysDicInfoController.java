@@ -76,7 +76,7 @@ public class SysDicInfoController {
 		List<JSONObject> lstResultAll=new ArrayList<>();
 		JSONArray lst= sysDicInfoService.getJSONArrayDicsByType(param.getSearchParam(),"");
 		
-		List<UserInfo> lstUser=userService.getAll();
+		//List<UserInfo> lstUser=userService.getAll();
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 

@@ -1638,7 +1638,7 @@ public class AssetPlanInfoApplyController {
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
 					Map<String, Object> detail = new HashMap<String, Object>();
-					List<String> picList = new ArrayList();
+					//List<String> picList = new ArrayList();
 					String titlecode = list.get(i).getTitlecode();
 					String picturepath = list.get(i).getPicturepath();
 					String[] split = picturepath.split(";");
@@ -1662,7 +1662,7 @@ public class AssetPlanInfoApplyController {
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
 					Map<String, Object> detail = new HashMap<String, Object>();
-					List<String> picList = new ArrayList();
+					//List<String> picList = new ArrayList();
 					String titlecode = list.get(i).getTitlecode();
 					String picturepath = list.get(i).getPicturepath();
 					String[] split = picturepath.split(";");

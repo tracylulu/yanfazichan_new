@@ -79,9 +79,9 @@ public class GlobalExceptionHandler implements ErrorController {
 	// @ExceptionHandler(JWTVerificationException.class)
 	public ResponseResult error(HttpServletRequest request, WebRequest webRequest) {
 		
-		RequestAttributes requestAttributes = new ServletRequestAttributes(request);
+		//RequestAttributes requestAttributes = new ServletRequestAttributes(request);
 		Map<String, Object> body = this.errorAttributes.getErrorAttributes(webRequest, true);
-		int status = getStatus(request);
+		//int status = getStatus(request);
 		String errMsg = ObjToStrUtil.ReplaceNullValue(body.get("message"));
 		if (StringUtils.isNotBlank(errMsg) && errMsg.contains("登录")) {
 			String requestTicket = null;
