@@ -263,12 +263,14 @@ public class BudgetController {
 
 			String dicValue = daohuo + "_" + ziatu + "_" + budget;
 			
+			dic.put("dicCode", deptCode);
 			dic.put("dicValue", dicValue);
 			dic.put("dicName", deptCode);			
 			dic.put("applicationId", applicationId);
 			dic.put("dicTypeId", DicConst.R_BUDGET);
 			dic.put("lastModifier", UserUtils.getCurrentDominAccount());						
 			dic.put("isAble", 1);
+			dic.put("isDeleted", 0);
 			if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(dic.get("id")))) {
 				lstEdit.add(dic);				
 			}else {
@@ -281,14 +283,14 @@ public class BudgetController {
 			return ResponseResult.fail(errMsg.toString());
 		}
 		
-//		//保存
-//		if(CollectionUtils.isNotEmpty(lstAdd)) {
-//			dicServer.batchInsert(lstAdd);
-//		}
-//		//修改
-//		if(CollectionUtils.isNotEmpty(lstEdit)) {
-//			dicServer.batchEdit(lstEdit);
-//		}
+		//保存
+		if(CollectionUtils.isNotEmpty(lstAdd)) {
+			dicServer.batchInsert(lstAdd);
+		}
+		//修改
+		if(CollectionUtils.isNotEmpty(lstEdit)) {
+			dicServer.batchEdit(lstEdit);
+		}
 
 		return ResponseResult.success("导入成功！");
 	}

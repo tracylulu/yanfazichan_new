@@ -46,6 +46,10 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	private String url_del;
 	@Value("${afsp.dic.url.getById}")
 	private String url_getById;
+	@Value("${afsp.dic.url.batchAdd}")
+	private String url_BatchAdd;
+	@Value("${afsp.dic.url.batchEdit}")
+	private String url_BatchEdit;
 
 	@Autowired
 	private AfspTokenService afspTokenService;
@@ -302,12 +306,19 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	public void batchInsert(List<JSONObject> lst) throws Exception {
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + "", json.toJSONString(lst));
+		String result = sendHttp(eosUrl + url_BatchAdd, json.toJSONString(lst));
 		JSONObject jsonResult = json.parseObject(result);
 		JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (!jsonResult.getBoolean("flag") ) {
-			String errMsg = jsonResult.getString("message");
-			throw new Exception( errMsg);
+			StringBuffer errMsg= new StringBuffer();
+			JSONArray data= jsonResult.getJSONArray("data");
+			for(int i=0;i<data.size();i++) {
+				JSONObject obj= data.getJSONObject(i);
+				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg")))) {
+					errMsg.append("部门编码【"+ObjToStrUtil.ReplaceNullValue(obj.get("dicCode"))+"】"+ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg"))+" \n");
+				}				
+			}
+			throw new Exception( StringUtils.isNotBlank(errMsg.toString())?errMsg.toString():jsonResult.getString("message"));
 		}
 	}
 
@@ -318,12 +329,19 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	public void batchEdit(List<JSONObject> lst) throws Exception {
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + "", json.toJSONString(lst));
+		String result = sendHttp(eosUrl + url_BatchEdit, json.toJSONString(lst));
 		JSONObject jsonResult = json.parseObject(result);
 		JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (!jsonResult.getBoolean("flag") ) {
-			String errMsg = jsonResult.getString("message");
-			throw new Exception( errMsg);
+			StringBuffer errMsg= new StringBuffer();
+			JSONArray data= jsonResult.getJSONArray("data");
+			for(int i=0;i<data.size();i++) {
+				JSONObject obj= data.getJSONObject(i);
+				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg")))) {
+					errMsg.append("部门编码【"+ObjToStrUtil.ReplaceNullValue(obj.get("dicCode"))+"】"+ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg"))+" \n");
+				}				
+			}
+			throw new Exception( StringUtils.isNotBlank(errMsg.toString())?errMsg.toString():jsonResult.getString("message"));
 		}
 	}
 
