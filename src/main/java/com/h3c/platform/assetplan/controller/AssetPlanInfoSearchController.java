@@ -784,7 +784,7 @@ public class AssetPlanInfoSearchController {
     
     @UserLoginToken
     @PostMapping("/checkCoa")   
-    @ApiOperation("验证勾选流程coa是否同一个")
+    @ApiOperation("验证勾选流程coa是否同一个 true:同一个coa,false：不为同一个或没有")
     @ResponseBody
     public ResponseResult checkCoa(@RequestParam List<Integer> lstId) throws Exception{
     	List<DeptInfo> lst= deptInfoService.getCoaByAssetPlanID(lstId);
@@ -793,23 +793,23 @@ public class AssetPlanInfoSearchController {
     	}
     	
     	if(CollectionUtils.isEmpty(lst)) {
-    		return ResponseResult.fail(false);
+    		return ResponseResult.success(false);
     	}
     	
     	if(lst.size()>1) {
-    		return ResponseResult.fail(false);
+    		return ResponseResult.success(false);
     	}
     	return ResponseResult.success(true);
     }
     
     @UserLoginToken
     @PostMapping("/checkIsWriteBpmCode")   
-    @ApiOperation("验证勾选流程是否已回写bpm编码")
+    @ApiOperation("验证勾选流程是否已回写bpm编码  true:没有回写，false已回写")
     @ResponseBody
     public ResponseResult checkIsWriteBpmCode(@RequestParam  List<Integer> lstId)throws Exception {
     	List<BPMRelationInfo> lst = bpmRelationInfoService.getByIDList(lstId);
     	if(CollectionUtils.isNotEmpty(lst)) {
-    		return ResponseResult.fail(false);
+    		return ResponseResult.success(false);
     	}
     	return ResponseResult.success(true);
     }
