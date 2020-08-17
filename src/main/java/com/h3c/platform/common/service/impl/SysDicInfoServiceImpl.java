@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.commonconst.DicConst;
@@ -70,9 +71,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_ByType, json.toJSONString(eosSearchParamEntity));
+		String result = sendHttp(eosUrl + url_ByType, JSON.toJSONString(eosSearchParamEntity));
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray jsonArray = jsonResult.getJSONArray("data");
 
 		return ResponseResult.success(jsonArray);
@@ -87,9 +88,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_ByType, json.toJSONString(eosSearchParamEntity));
+		String result = sendHttp(eosUrl + url_ByType, JSON.toJSONString(eosSearchParamEntity));
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray jsonArray = jsonResult.getJSONArray("data");
 
 		return ResponseResult.success(jsonArray);
@@ -154,9 +155,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject(true);
 
-		String result = sendHttp(eosUrl + url_ByType, json.toJSONString(eosSearchParamEntity));
+		String result = sendHttp(eosUrl + url_ByType, JSON.toJSONString(eosSearchParamEntity));
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray jsonArray = jsonResult.getJSONArray("data");
 
 		return jsonArray;
@@ -241,9 +242,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("token", token);
 
-		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_Add, json.toJSONString(model), headers);
+		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_Add, JSON.toJSONString(model), headers);
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
 			return ResponseResult.fail(jsonResult.getString("message"));
 		}
@@ -254,9 +255,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	public ResponseResult edit(JSONObject model) throws Exception {
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_edit, json.toJSONString(model));
+		String result = sendHttp(eosUrl + url_edit, JSON.toJSONString(model));
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
 			return ResponseResult.fail(jsonResult.getString("message"));
 		}
@@ -272,9 +273,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_del, json.toJSONString(eosSearchParamEntity));
+		String result = sendHttp(eosUrl + url_del, JSON.toJSONString(eosSearchParamEntity));
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		if (!jsonResult.getBoolean("flag")) {
 			return ResponseResult.fail(jsonResult.getString("message"));
 		}
@@ -288,9 +289,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		obj.put("id", id);
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_getById, json.toJSONString(obj));
+		String result = sendHttp(eosUrl + url_getById, JSON.toJSONString(obj));
 
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (jsonResult.getBoolean("flag") && resultArr.size() > 0) {
 			return resultArr.getJSONObject(0);
@@ -306,8 +307,8 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	public void batchInsert(List<JSONObject> lst) throws Exception {
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_BatchAdd, json.toJSONString(lst));
-		JSONObject jsonResult = json.parseObject(result);
+		String result = sendHttp(eosUrl + url_BatchAdd, JSON.toJSONString(lst));
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (!jsonResult.getBoolean("flag") ) {
 			StringBuffer errMsg= new StringBuffer();
@@ -329,8 +330,8 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	public void batchEdit(List<JSONObject> lst) throws Exception {
 		JSONObject json = new JSONObject();
 
-		String result = sendHttp(eosUrl + url_BatchEdit, json.toJSONString(lst));
-		JSONObject jsonResult = json.parseObject(result);
+		String result = sendHttp(eosUrl + url_BatchEdit, JSON.toJSONString(lst));
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray resultArr = jsonResult.getJSONArray("data");
 		if (!jsonResult.getBoolean("flag") ) {
 			StringBuffer errMsg= new StringBuffer();

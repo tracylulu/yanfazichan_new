@@ -36,6 +36,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 public class HttpClientUtil {
@@ -497,7 +498,7 @@ public class HttpClientUtil {
 	public static String getData(String loginUrl,String account,String password,String method,String httpUrl) throws Exception {
 		String result=null;
 		result=sendHttpPostJson(loginUrl, "{\"account\":\""+account+"\",\"password\":\""+password+"\"} ");
-		JSONObject obj = JSONObject.parseObject(result);
+		JSONObject obj = JSON.parseObject(result);
 		
 		int code = Integer.parseInt(obj.get("code").toString()) ;
 		if(code != 20220) {

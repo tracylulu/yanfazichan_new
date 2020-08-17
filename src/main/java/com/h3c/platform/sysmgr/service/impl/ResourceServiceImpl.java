@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.service.AfspTokenService;
@@ -44,7 +45,7 @@ public class ResourceServiceImpl implements ResourceService {
 		String params="{\"applicationId\":\""+applicationId+"\",\"userId\":\""+(user!=null?user.getDomainAccount():"")+"\"}";	
 		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_Resource, params,headers);
 		
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		JSONArray jsonArray =jsonResult.getJSONArray("data");
 		
     	return ResponseResult.success(jsonArray);

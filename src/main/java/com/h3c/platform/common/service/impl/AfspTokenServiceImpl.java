@@ -3,6 +3,7 @@ package com.h3c.platform.common.service.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.common.service.AfspTokenService;
 import com.h3c.platform.common.util.HttpClientUtil;
@@ -24,7 +25,7 @@ public class AfspTokenServiceImpl implements AfspTokenService{
 		String result= HttpClientUtil.sendHttpPostJson(eosUrl+url_Token, params);
 		
 		JSONObject json = new JSONObject();
-		JSONObject jsonResult = json.parseObject(result);
+		JSONObject jsonResult = JSON.parseObject(result);
 		if(!jsonResult.getBoolean("flag")) {
 			throw new Exception(jsonResult.getString("message"));
 		}		
