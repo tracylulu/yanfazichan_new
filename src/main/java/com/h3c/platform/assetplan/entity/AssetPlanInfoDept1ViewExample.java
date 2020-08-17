@@ -13,7 +13,7 @@ public class AssetPlanInfoDept1ViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoDept1ViewExample() {
-        oredCriteria = new ArrayList<Criteria>();
+        oredCriteria = new ArrayList<>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -70,7 +70,7 @@ public class AssetPlanInfoDept1ViewExample {
 
         protected GeneratedCriteria() {
             super();
-            criteria = new ArrayList<Criterion>();
+            criteria = new ArrayList<>();
         }
 
         public boolean isValid() {

@@ -37,7 +37,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		int year=cale.get(java.util.Calendar.YEAR);
 		int month=cale.get(java.util.Calendar.MONTH)+1;
 		
-		Map<String, Object> param=new HashMap<String, Object>();
+		Map<String, Object> param=new HashMap<>();
 		param.put("year", year);
 		param.put("month", month);
 		
@@ -76,7 +76,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		cale = java.util.Calendar.getInstance(); 
 		int year=cale.get(java.util.Calendar.YEAR);
 		int month=cale.get(java.util.Calendar.MONTH)+1;
-		Map<String, Object> param=new HashMap<String, Object>();
+		Map<String, Object> param=new HashMap<>();
 		param.put("year", year);
 		param.put("month", month);
 		param.put("outTimeStatus", "1");
@@ -96,7 +96,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		cale = java.util.Calendar.getInstance(); 
 		int year=cale.get(java.util.Calendar.YEAR);
 		int month=cale.get(java.util.Calendar.MONTH)+1;
-		Map<String, Object> param=new HashMap<String, Object>();
+		Map<String, Object> param=new HashMap<>();
 		param.put("year", year);
 		param.put("month", month);
 		param.put("outTimeStatus", "2");
@@ -116,7 +116,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		cale = java.util.Calendar.getInstance(); 
 		int year=cale.get(java.util.Calendar.YEAR);
 		int month=cale.get(java.util.Calendar.MONTH)+1;
-		Map<String, Object> param=new HashMap<String, Object>();
+		Map<String, Object> param=new HashMap<>();
 		param.put("year", year);
 		param.put("month", month);
 		param.put("outTimeStatus", "3");
@@ -136,7 +136,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		cale = java.util.Calendar.getInstance(); 
 		int year=cale.get(java.util.Calendar.YEAR);
 		int month=cale.get(java.util.Calendar.MONTH)+1;
-		Map<String, Object> param=new HashMap<String, Object>();
+		Map<String, Object> param=new HashMap<>();
 		param.put("year", year);
 		param.put("month", month);
 		param.put("outTimeStatus", "4");
@@ -156,7 +156,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		cale = java.util.Calendar.getInstance(); 
 		int year=cale.get(java.util.Calendar.YEAR);
 		int month=cale.get(java.util.Calendar.MONTH);
-		Map<String, Object> param=new HashMap<String, Object>();
+		Map<String, Object> param=new HashMap<>();
 		param.put("year", year);
 		param.put("month", month);
 		assetPlanInfoMapper.eidtMonthOutTimeStatus(param);

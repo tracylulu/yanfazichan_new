@@ -924,7 +924,7 @@ public class AssetPlanInfoApplyController {
 					//PageHelper.startPage(pageNum,pageSize);
 					com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 					List<AssetPlanInfoAll> todoInfoList = assetPlanInfoService.listofTodoDetail(param);
-					PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(todoInfoList);
+					PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(todoInfoList);
 					if(todoInfoList.size()>0) {
 		   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForTodo(param);
 		   				//申购金额合计  totalmoneySum
@@ -1008,7 +1008,7 @@ public class AssetPlanInfoApplyController {
 					//PageHelper.startPage(pageNum,pageSize);
 					com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 					List<AssetPlanInfoAll> draftInfoList = assetPlanInfoService.listofDraftDetail(param);
-					PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(draftInfoList);
+					PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(draftInfoList);
 					if(draftInfoList.size()>0) {
 		   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDraft(param);
 		   				//申购金额合计  totalmoneySum
@@ -1628,7 +1628,7 @@ public class AssetPlanInfoApplyController {
 	@GetMapping("/getImagePathToBase64")
 	@ResponseBody
 	public ResponseResult getImagePathToBase64(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception {
-		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<>();
 		int k=0;
 		AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanid);
 		//有申购报告
@@ -1637,7 +1637,7 @@ public class AssetPlanInfoApplyController {
 			List<PurchaseReportInfo> list = purchaseReportInfoService.getByID(purchasereportid);
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
-					Map<String, Object> detail = new HashMap<String, Object>();
+					Map<String, Object> detail = new HashMap<>();
 					//List<String> picList = new ArrayList();
 					String titlecode = list.get(i).getTitlecode();
 					String picturepath = list.get(i).getPicturepath();
@@ -1661,7 +1661,7 @@ public class AssetPlanInfoApplyController {
 			List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getByID(specifymanufacturerid);
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
-					Map<String, Object> detail = new HashMap<String, Object>();
+					Map<String, Object> detail = new HashMap<>();
 					//List<String> picList = new ArrayList();
 					String titlecode = list.get(i).getTitlecode();
 					String picturepath = list.get(i).getPicturepath();

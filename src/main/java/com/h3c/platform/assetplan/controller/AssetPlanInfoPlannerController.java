@@ -359,7 +359,7 @@ public class AssetPlanInfoPlannerController {
 			lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
 		}
 		
-		ExportExcelWrapper<AssetPlanInfoPlannerView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoPlannerView>();
+		ExportExcelWrapper<AssetPlanInfoPlannerView> excelWrapper = new ExportExcelWrapper<>();
 
 		StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExportForPlanner", "计划员环节资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");
 		OperationLog log=new OperationLog();

@@ -233,7 +233,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 			public void run() {
 				// 批量同步数据
 				try {
-					List<RateTotalInfo> lstTotal = new ArrayList<RateTotalInfo>();
+					List<RateTotalInfo> lstTotal = new ArrayList<>();
 					Long startForTime = System.currentTimeMillis();
 					int i = 0;
 					for (AssetPlanInfo info : lst) {
@@ -284,8 +284,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public void syncUsageRateTask() throws Exception {
 		List<AssetPlanInfo> lst= getUnWriteUseRate();		
 		
-		List<RateTotalInfo> lstTotal = new ArrayList<RateTotalInfo>();
-		List<Integer> lstID=new ArrayList<Integer>();
+		List<RateTotalInfo> lstTotal = new ArrayList<>();
+		List<Integer> lstID=new ArrayList<>();
 		for (AssetPlanInfo info : lst) {
 			RateTotalInfo rateTotalInfo  = assetRateInfoService.getRate(info.getAssetmodel(),
 					info.getDeptcode(), info.getReviewtime());						
@@ -826,7 +826,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Override
 	@Transactional
 	public ResponseResult updateReviewResult(List<Integer> ids,Integer result,String reviewNote) throws Exception {
-		Map<String,Object> param =new HashMap<String, Object>();
+		Map<String,Object> param =new HashMap<>();
 		param.put("result", result);
 		param.put("reviewNote", reviewNote);
 		param.put("modifier", UserUtils.getCurrentUserId());

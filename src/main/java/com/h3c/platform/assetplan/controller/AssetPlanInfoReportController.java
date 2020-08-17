@@ -56,7 +56,7 @@ public class AssetPlanInfoReportController {
 			//PageHelper.startPage(pageNum,pageSize);
 			com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 			List<AssetPlanInfoReportView> planInfoReportList = assetPlanInfoReportService.listofAssetPlanInfoForReport(param);
-			PageInfo<AssetPlanInfoReportView> pageInfo = new PageInfo<AssetPlanInfoReportView>(planInfoReportList);
+			PageInfo<AssetPlanInfoReportView> pageInfo = new PageInfo<>(planInfoReportList);
    			
    			return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(),columnList, pageInfo.getList());
     }

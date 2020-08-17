@@ -148,7 +148,7 @@ public class AssetPlanInfoReviewController {
 	   					reviewInfoList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
 	   					reviewInfoList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
 	   				}	   				
-	   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(reviewInfoList);
+	   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(reviewInfoList);
 	   				if(reviewInfoList.size()>0) {
 		   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForReview(param);
 		   				//申购金额合计  totalmoneySum
@@ -491,7 +491,7 @@ public class AssetPlanInfoReviewController {
    					reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
    					reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
    				}
-   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(reviewResultList);
+   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(reviewResultList);
    				if(reviewResultList.size()>0) {
 	   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForReview(param);
 	   				//审核状态
@@ -569,7 +569,7 @@ public class AssetPlanInfoReviewController {
 			reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
 			reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
 		}
-		PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(reviewResultList);
+		PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(reviewResultList);
 		if(reviewResultList.size()>0) {
 			String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForReview(param);
 			//审核状态

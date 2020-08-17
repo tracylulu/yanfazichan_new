@@ -121,7 +121,7 @@ public class AssetPlanInfoDept3Controller {
 				//PageHelper.startPage(pageNum, pageSize);
 				com.github.pagehelper.page.PageMethod.startPage(pageNum, pageSize);
    				List<AssetPlanInfoAll> dept3InfoList = assetPlanInfoService.listofDept3Detail(param);
-   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(dept3InfoList);
+   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(dept3InfoList);
    				if(dept3InfoList.size()>0) {
    					
 	   				//申购金额合计  totalmoneySum
@@ -307,8 +307,8 @@ public class AssetPlanInfoDept3Controller {
 			@RequestParam @ApiParam(name="apstage",value="物品所处的审核阶段",required=true)String apstage,
 			@RequestParam @ApiParam(name="applymonth",value="申请月份",required=true)String applymonth) throws Exception{
 		
-		List<JSONObject> lstResult=new ArrayList<JSONObject>();
-		List<JSONObject> lstChild=new ArrayList<JSONObject>();
+		List<JSONObject> lstResult=new ArrayList<>();
+		List<JSONObject> lstChild=new ArrayList<>();
 		//实际到货_在途_预算
 		int daoHuo = 0;
 		int zaiTu = 0;

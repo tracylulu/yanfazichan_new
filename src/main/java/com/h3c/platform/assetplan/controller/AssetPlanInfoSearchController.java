@@ -428,7 +428,7 @@ public class AssetPlanInfoSearchController {
 					lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
 			}
 			System.out.println("222-----"+new Date());
-			ExportExcelWrapper<AssetPlanInfoSearchExportView> excelWrapper = new ExportExcelWrapper<AssetPlanInfoSearchExportView>();
+			ExportExcelWrapper<AssetPlanInfoSearchExportView> excelWrapper = new ExportExcelWrapper<>();
 
 			StringBuffer buffer=excelWrapper.exportExcel("AssetInfoExport", "资产数据导出", header, column, lst, response, "2007",true, "Assetplanid");
 			System.out.println("333-----"+new Date());

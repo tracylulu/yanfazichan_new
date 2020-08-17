@@ -107,7 +107,7 @@ public class AssetPlanInfoDept2Controller {
 				//PageHelper.startPage(pageNum,pageSize);
 				com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 				List<AssetPlanInfoAll> dept2InfoList = assetPlanInfoService.listofDept2Detail(param);
-				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<AssetPlanInfoAll>(dept2InfoList);
+				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(dept2InfoList);
 				if(dept2InfoList.size()>0) {
 					//申购金额合计  totalmoneySum
 					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param1);
