@@ -228,7 +228,7 @@ public class IBPMController {
 		return palnner;
 	}
 	
-	private String getAddr(JSONArray lstAddr,String addrCode) {
+	private static String getAddr(JSONArray lstAddr,String addrCode) {
 		String place="";
 		for(int i=0;i<lstAddr.size();i++) {
 			JSONObject obj = lstAddr.getJSONObject(i);
@@ -244,7 +244,7 @@ public class IBPMController {
 		return "W10_XZ"+place;
 	}
 	
-	private String getCategory(JSONArray lst,String code) {
+	private static String getCategory(JSONArray lst,String code) {
 		String category="";
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj = lst.getJSONObject(i);

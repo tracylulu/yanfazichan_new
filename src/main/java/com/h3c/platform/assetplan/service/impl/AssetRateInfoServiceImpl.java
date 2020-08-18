@@ -123,7 +123,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 * @param lst
 	 * @return
 	 */
-	private String getDistribution(List<AssetRateInfo> lst) {
+	private static String getDistribution(List<AssetRateInfo> lst) {
 		List<String> lstDis= new ArrayList<>();
 		Map<String,List<AssetRateInfo>> mapDis= lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.groupingBy(AssetRateInfo::getArea));
 		for(String key:mapDis.keySet()) {
@@ -137,7 +137,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 * @param lst
 	 * @return
 	 */
-	private String getRateDetail(List<AssetRateInfo> lst) {
+	private static String getRateDetail(List<AssetRateInfo> lst) {
 		int lessThirty=0,lessSixty=0,lessHundred=0;
 		Map<String,List<AssetRateInfo>> mapDetail= lst.stream().collect(Collectors.groupingBy(AssetRateInfo::getAssertNumber));
 		for(String key:mapDetail.keySet()) {
@@ -171,7 +171,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 * @param lst
 	 * @return
 	 */
-	private String getRateAvg(List<AssetRateInfo> lst) {
+	private static String getRateAvg(List<AssetRateInfo> lst) {
 		double rates=0 ,usageRate=0;
 		for(AssetRateInfo rateInfo : lst) {
 			if(StringUtils.isNotBlank(rateInfo.getUsageRate())) {

@@ -94,7 +94,7 @@ public class ApproverController {
 		return ResponseResult.success(0, "查询成功", param.getNum(), count, null, lstResult);
 	}
 	
-	private JSONObject getData(JSONObject obj,String name,List<UserInfo> lstUser) {
+	private static JSONObject getData(JSONObject obj,String name,List<UserInfo> lstUser) {
 		obj.put("dic_code", UserUtils.getAccountByCode(lstUser,ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))));
 		obj.put("dic_name", name);
 		obj.put("creater",  ObjToStrUtil.ReplaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("createrempcode")));

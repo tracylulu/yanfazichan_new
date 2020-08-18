@@ -143,7 +143,7 @@ public class EncryptUtil {
         return null;
     }
 
-    private String base64(byte[] res) {
+    private static String base64(byte[] res) {
         return Base64.encode(res);
     }
 

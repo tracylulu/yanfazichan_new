@@ -117,7 +117,7 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 		return ResponseResult.success("转单成功！");
 	}
 	
-	private String getHandler(String apstage,AssetPlanInfo info) {
+	private static String getHandler(String apstage,AssetPlanInfo info) {
 		String handler="";
 		switch (apstage) {
 		case "2":
