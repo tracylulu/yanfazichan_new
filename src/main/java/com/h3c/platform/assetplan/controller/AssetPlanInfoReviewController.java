@@ -36,7 +36,6 @@ import com.h3c.platform.assetplan.entity.SearchAssetParamEntity;
 import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo;
 import com.h3c.platform.assetplan.entity.SysDicCategoryEntity;
 import com.h3c.platform.assetplan.entity.SysDicReceiverPlaceEntity;
-import com.eos.common.constant.AssetTableHeaderEnum;
 import com.eos.common.constant.StatusCodeEnum;
 import com.eos.common.util.Result;
 import com.github.pagehelper.PageHelper;

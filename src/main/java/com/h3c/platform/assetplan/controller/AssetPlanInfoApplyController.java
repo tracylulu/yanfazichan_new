@@ -52,7 +52,6 @@ import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfo;
 import com.h3c.platform.assetplan.entity.SpecifyManufacturerInfoExt;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eos.common.constant.AssetTableHeaderEnum;
 import com.eos.common.constant.StatusCodeEnum;
 import com.eos.common.util.Result;
 import com.github.pagehelper.PageHelper;

@@ -38,7 +38,6 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoMenuView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
-import com.eos.common.constant.AssetTableHeaderEnum;
 import com.eos.common.constant.StatusCodeEnum;
 import com.eos.common.util.Result;
 import com.h3c.platform.annotation.UserLoginToken;

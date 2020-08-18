@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eos.common.constant.AssetTableHeaderEnum;
 import com.h3c.platform.annotation.UserLoginToken;
 import com.h3c.platform.assetplan.dao.AssetPlanInfoMapper;
 import com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper;

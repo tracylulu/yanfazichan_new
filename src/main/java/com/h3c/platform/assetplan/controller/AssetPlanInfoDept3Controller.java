@@ -32,7 +32,6 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoReviewView;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
-import com.eos.common.constant.AssetTableHeaderEnum;
 import com.eos.common.constant.StatusCodeEnum;
 import com.eos.common.util.Result;
 import com.github.pagehelper.PageHelper;
