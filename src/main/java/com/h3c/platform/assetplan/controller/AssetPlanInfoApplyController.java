@@ -388,7 +388,7 @@ public class AssetPlanInfoApplyController {
 			List<AssetPlanInfoDetailView> lst =new ArrayList<>();
 			assetPlanGlobalInfoAll.setLst(lst);
 		
-			AssetPlanInfoDetailView ap = assetPlanInfoService.getByAssetID(assetplanid);
+			AssetPlanInfoDetailView ap = assetPlanInfoService.getByAssetId(assetplanid);
 		
 			if(StringUtils.isNotBlank(ap.getDeleteflag()) && !"0".equals(ap.getDeleteflag()) ) {
 				//有成套设备
@@ -453,7 +453,7 @@ public class AssetPlanInfoApplyController {
    			AssetPlanGlobalInfoAll assetPlanGlobalInfoAll = new AssetPlanGlobalInfoAll();
    			List<AssetPlanInfoDetailView> lst =new ArrayList<>();
    			assetPlanGlobalInfoAll.setLst(lst);
-   			AssetPlanInfoDetailView ap = assetPlanInfoService.getByAssetID(assetplanid);
+   			AssetPlanInfoDetailView ap = assetPlanInfoService.getByAssetId(assetplanid);
    			if(StringUtils.isNotBlank(ap.getDeleteflag()) && !"0".equals(ap.getDeleteflag()) ) {
    				//有成套设备
    				if(StringUtils.isNotBlank(ap.getIscompleteset()) && "1".equals(ap.getIscompleteset())) {
@@ -1169,7 +1169,7 @@ public class AssetPlanInfoApplyController {
 				ap.setDeleteflag("1");
 				ap.setOuttimeplanenum(-1);
 				//Applyuser Modifier这两个字段前端传过来了
-				assetPlanInfoMapper.insertBackID(ap);
+				assetPlanInfoMapper.insertBackId(ap);
 				lstsubmitID.add(ap.getAssetplanid());
 			}
 			

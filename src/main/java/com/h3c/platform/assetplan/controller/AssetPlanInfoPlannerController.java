@@ -249,7 +249,7 @@ public class AssetPlanInfoPlannerController {
    	   				param.put("APStatus", "05");
    	   				param.put("APStage", "0");
    	   				param.put("OQDeptReviewer", "");
-   	   				this.assetPlanInfoService.submitInfoFromPlannerToOQDept(param);
+   	   				this.assetPlanInfoService.submitInfoFromPlannerToOqDept(param);
    	   				//结束归档的单子也记录下
 	   	   			for (int k = 0; k < newLstEndID.size(); k++) {
 	   					AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstEndID.get(k));

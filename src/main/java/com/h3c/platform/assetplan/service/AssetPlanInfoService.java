@@ -80,7 +80,7 @@ public interface AssetPlanInfoService {
 	 */
 	//int editQuantity(AssetPlanInfo assetPlanlInfo);
 	
-	AssetPlanInfoDetailView getByAssetID(Integer assetplanid);
+	AssetPlanInfoDetailView getByAssetId(Integer assetplanid);
 	
 	
 	//查询成套设备
@@ -123,9 +123,9 @@ public interface AssetPlanInfoService {
   	
   	int submitInfoFromDept2ToPlanner(Map<String, Object> param);
   	
-  	int submitInfoFromPlannerToOQDept(Map<String, Object> param); 
+  	int submitInfoFromPlannerToOqDept(Map<String, Object> param); 
   	
-  	int submitInfoFromOQDeptToDept1(Map<String, Object> param); 
+  	int submitInfoFromOqDeptToDept1(Map<String, Object> param); 
   	
   	int submitInfoFromDept1ToEnd(Map<String, Object> param); 
   	
@@ -139,7 +139,7 @@ public interface AssetPlanInfoService {
     
   	//String getSumMoneyAfterForPlanner(Map<String, Object> param); 
   	
-  	List<AssetPlanInfoAll> listofOQDeptDetail(Map<String, Object> param);
+  	List<AssetPlanInfoAll> listofOqDeptDetail(Map<String, Object> param);
   	
   	//String getSumCountBeforeForOQDept(Map<String, Object> param); 
     
@@ -248,5 +248,5 @@ public interface AssetPlanInfoService {
       * @param lst
       * @return
       */
-     List<AssetPlanInfo> selectByIDs(List<String> lst);
+     List<AssetPlanInfo> selectByIds(List<String> lst);
 }

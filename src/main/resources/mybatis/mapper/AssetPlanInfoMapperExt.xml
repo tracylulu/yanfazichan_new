@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.h3c.platform.assetplan.dao.AssetPlanInfoMapper">
-	<update id="deleteByID" parameterType="map">
+	<update id="deleteById" parameterType="map">
 		update AssetPlanInfo set
 		DeleteFlag=0,Modifier=#{param.Modifier},ModifiTime=SYSDATE() where
 		AssetPlanID in
@@ -97,7 +97,7 @@
 		</foreach>
 	</update>
 
-	<update id="submitInfoFromPlannerToOQDept" parameterType="map">
+	<update id="submitInfoFromPlannerToOqDept" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -113,7 +113,7 @@
 	</update>
 
 
-	<update id="submitInfoFromOQDeptToDept1" parameterType="map">
+	<update id="submitInfoFromOqDeptToDept1" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -432,7 +432,7 @@
 			where AssetPlanID = #{item.assetplanid,jdbcType=INTEGER}
 		</foreach>
 	</update>
-	<select id="selectByIDs" resultMap="BaseResultMap">
+	<select id="selectByIds" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List"></include> from AssetPlanInfo   where AssetPlanID in 
 		<foreach collection="lst" open="(" close=")" separator="," item="item">
 			#{item}
@@ -538,7 +538,7 @@
 	
 	</select>
 	
-	<insert id="insertBackID" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfo" useGeneratedKeys="true" keyProperty="assetplanid">
+	<insert id="insertBackId" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfo" useGeneratedKeys="true" keyProperty="assetplanid">
     insert into AssetPlanInfo (AssetPlanID, PlanCode, PPrice, 
       TotalMoney, ActualMoney, AssetName, 
       AssetManufacturer, AssetModel, AssetCategory, 

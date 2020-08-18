@@ -95,7 +95,7 @@ public class AssetPlanInfoOQDeptController {
 	   				for (int i = 0; i < flag.size(); i++) {
 	   					JSONObject json=new JSONObject();
 	   					param.put("GroupFlag",flag.get(i));
-	   					List<AssetPlanInfoAll> listofOQDeptDetail = assetPlanInfoService.listofOQDeptDetail(param);
+	   					List<AssetPlanInfoAll> listofOQDeptDetail = assetPlanInfoService.listofOqDeptDetail(param);
 	   					if(!listofOQDeptDetail.isEmpty()) {
 	   						String groupflagdetail = listofOQDeptDetail.get(0).getGroupflagdetail();
 	   						Map<String,Object> groupMess = assetPlanInfoService.getOQDeptGroupMess(param);
@@ -147,7 +147,7 @@ public class AssetPlanInfoOQDeptController {
    			param.put("GroupFlag",null);
 			param.put("OQDeptReviewer",applyuser);
 			param.put("ApplyMonth",applymonth);
-			List<AssetPlanInfoAll> listofOQDeptDetail = assetPlanInfoService.listofOQDeptDetail(param);
+			List<AssetPlanInfoAll> listofOQDeptDetail = assetPlanInfoService.listofOqDeptDetail(param);
    			//当前环节该登录人所有待提交的单子
    			for (int i = 0; i < listofOQDeptDetail.size(); i++) {
    				newLstsubmitID.add(listofOQDeptDetail.get(i).getAssetplanid());

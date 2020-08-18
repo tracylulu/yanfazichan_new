@@ -23,7 +23,7 @@ public interface AssetPlanInfoOQDeptViewMapper {
 
     int updateByExample(@Param("record") AssetPlanInfoOQDeptView record, @Param("example") AssetPlanInfoOQDeptViewExample example);
 
-    List<AssetPlanInfoAll> listofOQDeptDetail(@Param("param") Map<String, Object> param);
+    List<AssetPlanInfoAll> listofOqDeptDetail(@Param("param") Map<String, Object> param);
     
     //List<AssetPlanInfoAll> listofOQDeptDetailAfter(@Param("param") Map<String, Object> param);
   	

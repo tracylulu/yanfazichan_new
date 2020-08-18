@@ -36,11 +36,11 @@ public interface AssetPlanInfoMapper {
     
     int updateBatchAssetPlanInfo(@Param("lst")List<AssetPlanInfo> lst);
      
-    List<AssetPlanInfo> selectByIDs(@Param("lst")List<String> lst);
+    List<AssetPlanInfo> selectByIds(@Param("lst")List<String> lst);
     
-    int insertBackID(AssetPlanInfo record);
+    int insertBackId(AssetPlanInfo record);
     
-    int deleteByID(@Param("param") Map<String,Object> param); 
+    int deleteById(@Param("param") Map<String,Object> param); 
     
     int submitAssetPlanInfoByIds(@Param("param") Map<String,Object> param);    
     
@@ -56,9 +56,9 @@ public interface AssetPlanInfoMapper {
     
     int submitInfoFromDept2ToPlanner(@Param("param") Map<String,Object> param);   
     
-    int submitInfoFromPlannerToOQDept(@Param("param") Map<String,Object> param); 
+    int submitInfoFromPlannerToOqDept(@Param("param") Map<String,Object> param); 
     
-    int submitInfoFromOQDeptToDept1(@Param("param") Map<String,Object> param);
+    int submitInfoFromOqDeptToDept1(@Param("param") Map<String,Object> param);
     
     int submitInfoFromDept1ToEnd(@Param("param") Map<String,Object> param);
     

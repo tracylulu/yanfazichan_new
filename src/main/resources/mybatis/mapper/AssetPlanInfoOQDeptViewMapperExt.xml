@@ -16,7 +16,7 @@
 		</where>
 	</sql>
   <!-- AssetPlanInfoOQDeptView -->
-  <select id="listofOQDeptDetail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
+  <select id="listofOqDeptDetail" parameterType="map" resultType="com.h3c.platform.assetplan.entity.AssetPlanInfoAll">
   	select * from AssetPlanInfoOQDeptView
   		<if test="_parameter != null">
     		<include refid="condition_sql"></include>

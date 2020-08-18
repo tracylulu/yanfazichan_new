@@ -105,7 +105,7 @@ public class LogAspect {
 	 * @param IPs
 	 * @param type 类型 
 	 */
-	private void saveLog(String modelCode,String modelName,String url,String content,String IPs, Integer type) {
+	private void saveLog(String modelCode,String modelName,String url,String content,String ips, Integer type) {
 		OperationLog log=new OperationLog();
 		log.setModelcode(modelCode);
 		log.setModelname(modelName);
@@ -114,7 +114,7 @@ public class LogAspect {
 		log.setUserid(UserUtils.getCurrentUserId());
 		log.setLogtype(type);
 		try {
-			log.setIp("IP:"+IPs+";service:"+InetAddress.getLocalHost().getHostAddress());
+			log.setIp("IP:"+ips+";service:"+InetAddress.getLocalHost().getHostAddress());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

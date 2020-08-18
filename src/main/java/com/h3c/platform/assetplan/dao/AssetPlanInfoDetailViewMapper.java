@@ -20,6 +20,6 @@ public interface AssetPlanInfoDetailViewMapper {
 
     int updateByExample(@Param("record") AssetPlanInfoDetailView record, @Param("example") AssetPlanInfoDetailViewExample example);
 
-    AssetPlanInfoDetailView getByAssetID(Integer assetplanid);
+    AssetPlanInfoDetailView getByAssetId(Integer assetplanid);
 
 }

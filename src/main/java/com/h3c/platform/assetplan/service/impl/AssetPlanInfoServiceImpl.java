@@ -417,7 +417,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		Map<String,Object> param=new HashMap<>();
 		param.put("id", lstDelID);
 		param.put("Modifier", UserUtils.getCurrentUserId());
-		return  assetPlanInfoMapper.deleteByID(param);
+		return  assetPlanInfoMapper.deleteById(param);
 	}
 	
 	@Transactional(readOnly = true)
@@ -550,13 +550,13 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}
 
 	@Override
-	public int submitInfoFromPlannerToOQDept(Map<String, Object> param) {
-		return  assetPlanInfoMapper.submitInfoFromPlannerToOQDept(param);
+	public int submitInfoFromPlannerToOqDept(Map<String, Object> param) {
+		return  assetPlanInfoMapper.submitInfoFromPlannerToOqDept(param);
 	}
 	
 	@Override
-	public int submitInfoFromOQDeptToDept1(Map<String, Object> param) {
-		return  assetPlanInfoMapper.submitInfoFromOQDeptToDept1(param);
+	public int submitInfoFromOqDeptToDept1(Map<String, Object> param) {
+		return  assetPlanInfoMapper.submitInfoFromOqDeptToDept1(param);
 	}
 	
 	@Override
@@ -605,8 +605,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}
 
 	@Override
-	public List<AssetPlanInfoAll> listofOQDeptDetail(Map<String, Object> param) {
-		return oqDeptViewMapper.listofOQDeptDetail(param);
+	public List<AssetPlanInfoAll> listofOqDeptDetail(Map<String, Object> param) {
+		return oqDeptViewMapper.listofOqDeptDetail(param);
 	}
     
 	/*@Override
@@ -779,8 +779,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}
 
 	@Override
-	public AssetPlanInfoDetailView getByAssetID(Integer assetplanid) {
-		return detailassetPlanInfoMapper.getByAssetID(assetplanid);
+	public AssetPlanInfoDetailView getByAssetId(Integer assetplanid) {
+		return detailassetPlanInfoMapper.getByAssetId(assetplanid);
 	}
 
 	@Override
@@ -913,8 +913,8 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}
 	
 	@Override
-	public  List<AssetPlanInfo> selectByIDs(List<String> lst){
-		return assetPlanInfoMapper.selectByIDs(lst);
+	public  List<AssetPlanInfo> selectByIds(List<String> lst){
+		return assetPlanInfoMapper.selectByIds(lst);
 	}
 }
 
