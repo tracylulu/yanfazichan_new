@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AssetInfoSubmitEntity   {	
 	
-	public List<Integer> lstsubmitID;
+	public List<Integer> lstsubmitId;
 
     public  String apStatus;
 
@@ -19,12 +19,13 @@ public class AssetInfoSubmitEntity   {
     //
     public String applyuser;
 
-	public List<Integer> getLstsubmitID() {
-		return lstsubmitID;
+
+	public List<Integer> getLstsubmitId() {
+		return lstsubmitId;
 	}
 
-	public void setLstsubmitID(List<Integer> lstsubmitID) {
-		this.lstsubmitID = lstsubmitID;
+	public void setLstsubmitId(List<Integer> lstsubmitId) {
+		this.lstsubmitId = lstsubmitId;
 	}
 
 	public String getApStatus() {

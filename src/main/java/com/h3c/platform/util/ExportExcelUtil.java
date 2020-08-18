@@ -27,7 +27,7 @@ import com.h3c.platform.sysmgr.entity.OperationLog;
 public class ExportExcelUtil<T> {
 
 	// 2007 版本以上 最大支持1048576行
-	public final static String EXCEl_FILE_2007 = "2007";
+	public final static String EXCEL_FILE_2007 = "2007";
 	// 2003 版本 最大支持65536 行
 	public final static String EXCEL_FILE_2003 = "2003";
 

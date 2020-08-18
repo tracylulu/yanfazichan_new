@@ -33,16 +33,16 @@ import net.sf.json.JSONObject;
 public class ProjectInfoQuartzJobBean extends QuartzJobBean{
 	
 	@Value("${eos.url.login}")
-	private String eosAPI_loginUrl;
+	private String eosApiLoginUrl;
 	
 	@Value("${eos.url.project}")
-	private String projectAPI_httpUrl;
+	private String projectApiHttpUrl;
 	
 	@Value("${eos.account}")
-	private String eosAPI_account;
+	private String eosApiAccount;
 	
 	@Value("${eos.password}")
-	private String eosAPI_password;
+	private String eosApiPassword;
 	
 	private Logger logger = LoggerFactory.getLogger(ProjectInfoQuartzJobBean.class);
 	

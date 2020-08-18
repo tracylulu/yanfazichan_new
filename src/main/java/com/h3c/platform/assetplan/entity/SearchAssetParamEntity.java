@@ -18,22 +18,22 @@ public class SearchAssetParamEntity {
     
 	//物品所处的审批阶段【可以理解的流程节点】
     @ApiModelProperty(value="申请阶段")
-    private String APStage;
+    private String apStage;
     
     //申请单号
-    private String PlanCode;
+    private String planCode;
     
     //物品名称
-    private String AssetName;
+    private String assetName;
      
     //申请人ID----换成申购人ID
-    private String RequiredUser;
+    private String requiredUser;
     
     //超时记录,只展示三级二级两种情况
-    private String OutTimePlanEnum;
+    private String outTimePlanEnum;
     
     //申请时间
-    private List<String> ApplyTime;
+    private List<String> applyTime;
     
     //申请开始时间
     //private String StartApplyTime;
@@ -42,34 +42,34 @@ public class SearchAssetParamEntity {
     //private String EndApplyTime;
     
     //物品型号
-    private String AssetModel;
+    private String assetModel;
     
     //申请部门
-    private String DeptCode;
+    private String deptCode;
     
     //申请部门编码
     //private String DeptCode;
     
     //厂家
-    private String AssetManufacturer;
+    private String assetManufacturer;
     
     //到货地点
-    private String ReceiverPlace;
+    private String receiverPlace;
     
     //申请类别(计划内，计划外)（正常计划外的状态 0正常计划，1计划员激活，2管理员激活）
-    private String AbnormalPlanEnum;
+    private String abnormalPlanEnum;
     
     //项目编码
-    private String ItemCode;
+    private String itemCode;
     
     //是否含有申购报告   是否含有申购报告：  PurchaseReportID  只需判断这个值是否为-1，指定供应商  SpecifyManufacturerID -1
     //初始默认为0，表示不含申购报告，含有为1？
     //这个标识前端根据业务逻辑，判断值是1是0，后面的申购报告ID，根据该值，业务逻辑实现是否更新
-    private String IsReqPurchaseReport;
+    private String isReqPurchaseReport;
     
     //是否指定供应商
     ////初始默认为0，表示不指定供应商，指定为1？
-    private String ISSpecifyManufacturer;
+    private String isSpecifyManufacturer;
     
     //需求数
     //private int Requireds;
@@ -81,10 +81,10 @@ public class SearchAssetParamEntity {
     //private int RequiredsAudit;
 
     //审批结果(1:全部通过，2部分通过，3：未通过)
-    private String ApplyResult;
+    private String applyResult;
     
     //选择导出的条目
-    private List<String> lstexportID;
+    private List<String> lstexportId;
 	
 
 	public Integer getPageNum() {
@@ -103,171 +103,135 @@ public class SearchAssetParamEntity {
 		this.pageSize = pageSize;
 	}
 
-	
-
-	public String getAPStage() {
-		return APStage;
+	public String getApStage() {
+		return apStage;
 	}
 
-	public void setAPStage(String aPStage) {
-		APStage = aPStage;
+	public void setApStage(String apStage) {
+		this.apStage = apStage;
 	}
 
 	public String getPlanCode() {
-		return PlanCode;
+		return planCode;
 	}
 
 	public void setPlanCode(String planCode) {
-		PlanCode = planCode;
+		this.planCode = planCode;
 	}
 
 	public String getAssetName() {
-		return AssetName;
+		return assetName;
 	}
 
 	public void setAssetName(String assetName) {
-		AssetName = assetName;
-	}
- 
-	
-
-	/*public Date getApplyTime() {
-		return ApplyTime;
-	}
-
-	public void setApplyTime(Date applyTime) {
-		ApplyTime = applyTime;
-	}*/
-
-	public String getOutTimePlanEnum() {
-		return OutTimePlanEnum;
-	}
-
-	public void setOutTimePlanEnum(String outTimePlanEnum) {
-		OutTimePlanEnum = outTimePlanEnum;
+		this.assetName = assetName;
 	}
 
 	public String getRequiredUser() {
-		return RequiredUser;
+		return requiredUser;
 	}
 
 	public void setRequiredUser(String requiredUser) {
-		RequiredUser = requiredUser;
+		this.requiredUser = requiredUser;
 	}
 
-	public String getAssetModel() {
-		return AssetModel;
+	public String getOutTimePlanEnum() {
+		return outTimePlanEnum;
 	}
 
-	public void setAssetModel(String assetModel) {
-		AssetModel = assetModel;
+	public void setOutTimePlanEnum(String outTimePlanEnum) {
+		this.outTimePlanEnum = outTimePlanEnum;
 	}
-
-	public String getDeptCode() {
-		return DeptCode;
-	}
-
-	public void setDeptCode(String deptCode) {
-		DeptCode = deptCode;
-	}
-
-	public String getAssetManufacturer() {
-		return AssetManufacturer;
-	}
-
-	public void setAssetManufacturer(String assetManufacturer) {
-		AssetManufacturer = assetManufacturer;
-	}
-
-	public String getReceiverPlace() {
-		return ReceiverPlace;
-	}
-
-	public void setReceiverPlace(String receiverPlace) {
-		ReceiverPlace = receiverPlace;
-	}
-
-
-
-	
-
-	public String getItemCode() {
-		return ItemCode;
-	}
-
-	public void setItemCode(String itemCode) {
-		ItemCode = itemCode;
-	}
-
-
-
-	/*public String getStartApplyTime() {
-		return StartApplyTime;
-	}
-
-	public void setStartApplyTime(String startApplyTime) {
-		StartApplyTime = startApplyTime;
-	}
-
-	public String getEndApplyTime() {
-		return EndApplyTime;
-	}
-
-	public void setEndApplyTime(String endApplyTime) {
-		EndApplyTime = endApplyTime;
-	}*/
-
-	public String getAbnormalPlanEnum() {
-		return AbnormalPlanEnum;
-	}
-
-	
 
 	public List<String> getApplyTime() {
-		return ApplyTime;
+		return applyTime;
 	}
 
 	public void setApplyTime(List<String> applyTime) {
-		ApplyTime = applyTime;
+		this.applyTime = applyTime;
+	}
+
+	public String getAssetModel() {
+		return assetModel;
+	}
+
+	public void setAssetModel(String assetModel) {
+		this.assetModel = assetModel;
+	}
+
+	public String getDeptCode() {
+		return deptCode;
+	}
+
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+
+	public String getAssetManufacturer() {
+		return assetManufacturer;
+	}
+
+	public void setAssetManufacturer(String assetManufacturer) {
+		this.assetManufacturer = assetManufacturer;
+	}
+
+	public String getReceiverPlace() {
+		return receiverPlace;
+	}
+
+	public void setReceiverPlace(String receiverPlace) {
+		this.receiverPlace = receiverPlace;
+	}
+
+	public String getAbnormalPlanEnum() {
+		return abnormalPlanEnum;
 	}
 
 	public void setAbnormalPlanEnum(String abnormalPlanEnum) {
-		AbnormalPlanEnum = abnormalPlanEnum;
+		this.abnormalPlanEnum = abnormalPlanEnum;
 	}
 
-	
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
 
 	public String getIsReqPurchaseReport() {
-		return IsReqPurchaseReport;
+		return isReqPurchaseReport;
 	}
 
 	public void setIsReqPurchaseReport(String isReqPurchaseReport) {
-		IsReqPurchaseReport = isReqPurchaseReport;
+		this.isReqPurchaseReport = isReqPurchaseReport;
 	}
 
-	public String getISSpecifyManufacturer() {
-		return ISSpecifyManufacturer;
+	public String getIsSpecifyManufacturer() {
+		return isSpecifyManufacturer;
 	}
 
-	public void setISSpecifyManufacturer(String iSSpecifyManufacturer) {
-		ISSpecifyManufacturer = iSSpecifyManufacturer;
+	public void setIsSpecifyManufacturer(String isSpecifyManufacturer) {
+		this.isSpecifyManufacturer = isSpecifyManufacturer;
 	}
 
 	public String getApplyResult() {
-		return ApplyResult;
+		return applyResult;
 	}
 
 	public void setApplyResult(String applyResult) {
-		ApplyResult = applyResult;
+		this.applyResult = applyResult;
 	}
 
-	public List<String> getLstexportID() {
-		return lstexportID;
+	public List<String> getLstexportId() {
+		return lstexportId;
 	}
 
-	public void setLstexportID(List<String> lstexportID) {
-		this.lstexportID = lstexportID;
+	public void setLstexportId(List<String> lstexportId) {
+		this.lstexportId = lstexportId;
 	}
+
+	
 
 
 

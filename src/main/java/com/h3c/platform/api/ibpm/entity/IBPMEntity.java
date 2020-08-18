@@ -1,19 +1,20 @@
 package com.h3c.platform.api.ibpm.entity;
 
 public class IBPMEntity {
-	private String iamplanId;
+	private String iamplanID;
 
 	private String userCode;
 	
 	private String bmpCode;
 
 	
-	public String getIamplanId() {
-		return iamplanId;
+
+	public String getIamplanID() {
+		return iamplanID;
 	}
 
-	public void setIamplanId(String iamplanId) {
-		this.iamplanId = iamplanId;
+	public void setIamplanID(String iamplanID) {
+		this.iamplanID = iamplanID;
 	}
 
 	public String getUserCode() {

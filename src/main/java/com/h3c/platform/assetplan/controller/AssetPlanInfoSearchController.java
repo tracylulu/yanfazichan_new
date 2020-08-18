@@ -118,7 +118,7 @@ public class AssetPlanInfoSearchController {
     	//try {
     	    String currentUserId = UserUtils.getCurrentUserId();
     		Map<String, Object> param = new HashMap<>();
-            param.put("APStage", searchAssetParamEntity.getAPStage());
+            param.put("APStage", searchAssetParamEntity.getApStage());
             param.put("PlanCode", searchAssetParamEntity.getPlanCode());
             param.put("AssetName", searchAssetParamEntity.getAssetName());
             param.put("RequiredUser", searchAssetParamEntity.getRequiredUser());
@@ -156,7 +156,7 @@ public class AssetPlanInfoSearchController {
             param.put("OutTimePlanEnum", searchAssetParamEntity.getOutTimePlanEnum());
             param.put("ItemCode", searchAssetParamEntity.getItemCode());
             param.put("IsReqPurchaseReport", searchAssetParamEntity.getIsReqPurchaseReport());
-            param.put("ISSpecifyManufacturer", searchAssetParamEntity.getISSpecifyManufacturer());
+            param.put("ISSpecifyManufacturer", searchAssetParamEntity.getIsSpecifyManufacturer());
             param.put("ApplyResult", searchAssetParamEntity.getApplyResult());
             //int requireds = searchAssertParamEntity.getRequireds();
             //int requiredsAudit = searchAssertParamEntity.getRequiredsAudit();
@@ -342,8 +342,8 @@ public class AssetPlanInfoSearchController {
 		//try {
 		
 			Map<String, Object> param = new HashMap<>();
-			param.put("id", searchAssetParamEntity.getLstexportID());
-			param.put("APStage", searchAssetParamEntity.getAPStage());
+			param.put("id", searchAssetParamEntity.getLstexportId());
+			param.put("APStage", searchAssetParamEntity.getApStage());
             param.put("PlanCode", searchAssetParamEntity.getPlanCode());
             param.put("AssetName", searchAssetParamEntity.getAssetName());
             param.put("RequiredUser", searchAssetParamEntity.getRequiredUser());
@@ -381,7 +381,7 @@ public class AssetPlanInfoSearchController {
             param.put("OutTimePlanEnum", searchAssetParamEntity.getOutTimePlanEnum());
             param.put("ItemCode", searchAssetParamEntity.getItemCode());
             param.put("IsReqPurchaseReport", searchAssetParamEntity.getIsReqPurchaseReport());
-            param.put("ISSpecifyManufacturer", searchAssetParamEntity.getISSpecifyManufacturer());
+            param.put("ISSpecifyManufacturer", searchAssetParamEntity.getIsSpecifyManufacturer());
             param.put("ApplyResult", searchAssetParamEntity.getApplyResult());
             //int requireds = searchAssertParamEntity.getRequireds();
             //int requiredsAudit = searchAssertParamEntity.getRequiredsAudit();

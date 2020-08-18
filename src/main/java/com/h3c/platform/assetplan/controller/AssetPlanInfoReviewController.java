@@ -252,7 +252,7 @@ public class AssetPlanInfoReviewController {
 	public ResponseResult submitInfoFromReviewToDept3(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
    			
 		//提交至三级主管按钮，支持选中提交和全部提交两种方法。两种方法均提交所选或全部的规范条目信息。
-			List<Integer> lstsubmitID = submitEntity.getLstsubmitID();
+			List<Integer> lstsubmitID = submitEntity.getLstsubmitId();
 			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			List<Integer> allReviewListID = new ArrayList<>();

@@ -14,17 +14,17 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 public class EncryptUtil {
     public static final String MD5 = "MD5";
     public static final String SHA1 = "SHA1";
-    public static final String HmacMD5 = "HmacMD5";
-    public static final String HmacSHA1 = "HmacSHA1";
+    public static final String HMACMD5 = "HmacMD5";
+    public static final String HMACSHA1 = "HmacSHA1";
     public static final String DES = "DES";
     public static final String AES = "AES";
 
     /** 编码格式；默认使用uft-8 */
     public String charset = "utf-8";
     /** DES */
-    public int keysizeDES = 0;
+    public int keysizeDes = 0;
     /** AES */
-    public int keysizeAES = 128;
+    public int keysizeAes = 128;
 
     public static EncryptUtil me;
 
@@ -181,7 +181,7 @@ public class EncryptUtil {
      *            需要加密的原文
      * @return
      */
-    public String MD5(String res) {
+    public String md5(String res) {
         return messageDigest(res, MD5);
     }
 
@@ -194,8 +194,8 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String MD5(String res, String key) {
-        return keyGeneratorMac(res, HmacMD5, key);
+    public String md5(String res, String key) {
+        return keyGeneratorMac(res, HMACMD5, key);
     }
 
     /**
@@ -205,7 +205,7 @@ public class EncryptUtil {
      *            需要加密的原文
      * @return
      */
-    public String SHA1(String res) {
+    public String sha1(String res) {
         return messageDigest(res, SHA1);
     }
 
@@ -218,8 +218,8 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String SHA1(String res, String key) {
-        return keyGeneratorMac(res, HmacSHA1, key);
+    public String sha1(String res, String key) {
+        return keyGeneratorMac(res, HMACSHA1, key);
     }
 
     /**
@@ -231,8 +231,8 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String DESencode(String res, String key) {
-        return keyGeneratorES(res, DES, key, keysizeDES, true);
+    public String desEncode(String res, String key) {
+        return keyGeneratorES(res, DES, key, keysizeDes, true);
     }
 
     /**
@@ -244,8 +244,8 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String DESdecode(String res, String key) {
-        return keyGeneratorES(res, DES, key, keysizeDES, false);
+    public String desDecode(String res, String key) {
+        return keyGeneratorES(res, DES, key, keysizeDes, false);
     }
 
     /**
@@ -257,8 +257,8 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String AESencode(String res, String key) {
-        return keyGeneratorES(res, AES, key, keysizeAES, true);
+    public String aesEncode(String res, String key) {
+        return keyGeneratorES(res, AES, key, keysizeAes, true);
     }
 
     /**
@@ -270,8 +270,8 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String AESdecode(String res, String key) {
-        return keyGeneratorES(res, AES, key, keysizeAES, false);
+    public String aesDecode(String res, String key) {
+        return keyGeneratorES(res, AES, key, keysizeAes, false);
     }
 
     /**
@@ -283,7 +283,7 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String XORencode(String res, String key) {
+    public String xorEncode(String res, String key) {
         byte[] bs = res.getBytes();
         for (int i = 0; i < bs.length; i++) {
             bs[i] = (byte) ((bs[i]) ^ key.hashCode());
@@ -300,7 +300,7 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public String XORdecode(String res, String key) {
+    public String xorDecode(String res, String key) {
         byte[] bs = parseHexStr2Byte(res);
         for (int i = 0; i < bs.length; i++) {
             bs[i] = (byte) ((bs[i]) ^ key.hashCode());
@@ -317,7 +317,7 @@ public class EncryptUtil {
      *            秘钥
      * @return
      */
-    public int XOR(int res, String key) {
+    public int xor(int res, String key) {
         return res ^ key.hashCode();
     }
 
@@ -328,12 +328,12 @@ public class EncryptUtil {
      *            密文
      * @return
      */
-    public static String Base64Encode(String res) {
+    public static String base64Encode(String res) {
         return Base64.encode(res.getBytes());
     }
 
     
-    public static String Base64Encode(byte[] res){
+    public static String base64Encode(byte[] res){
         return Base64.encode(res);
     }
     /**
@@ -342,11 +342,11 @@ public class EncryptUtil {
      * @param res
      * @return
      */
-    public static String Base64Decode(String res) {
+    public static String base64Decode(String res) {
         return new String(Base64.decode(res));
     }
     
-    public static byte[] Base64Decode(byte[] res){
+    public static byte[] base64Decode(byte[] res){
         return Base64.decode(new String(res));
     }
 }

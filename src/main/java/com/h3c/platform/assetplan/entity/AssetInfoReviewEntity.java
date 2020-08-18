@@ -27,7 +27,7 @@ public class AssetInfoReviewEntity {
     private String applymonth;
      
     //申请部门
-    private String DeptCode;
+    private String deptCode;
     
     //金额范围
     private String startPrice;
@@ -86,13 +86,16 @@ public class AssetInfoReviewEntity {
 	}
 
 
+	
+
+
 	public String getDeptCode() {
-		return DeptCode;
+		return deptCode;
 	}
 
 
 	public void setDeptCode(String deptCode) {
-		DeptCode = deptCode;
+		this.deptCode = deptCode;
 	}
 
 

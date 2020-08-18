@@ -540,7 +540,7 @@ public class AssetPlanInfoApplyController {
    	public ResponseResult submitAssetPlanInfoByIds(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
    		//try {
    			//不选中的时候提示：请确认是否全部提交，选中提交的时候提示：请确认是否将所选物品及成套设备全部提交 
-   			List<Integer> lstsubmitID = submitEntity.getLstsubmitID();
+   			List<Integer> lstsubmitID = submitEntity.getLstsubmitId();
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			//申请人和申购人id的list,规范审核人code的list(后续邮件使用)
