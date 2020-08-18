@@ -1603,7 +1603,7 @@ public class AssetPlanInfoApplyController {
 		List<String> picName=new ArrayList<>();
 		picName.add("5b89bcb7-5230-40a2-9a0d-f8af8c3b8457.png");
 		picName.add("720b1dbe-6307-4093-aa16-397e59d91378.png");
-		this.copyFolder(oldPath, newPath, picName);
+		AssetPlanInfoApplyController.copyFolder(oldPath, newPath, picName);
 		
 		return ResponseResult.success(true, "提交成功");
 		
@@ -1645,7 +1645,7 @@ public class AssetPlanInfoApplyController {
 					for (int j = 0; j < split.length; j++) {
 						String picpath = split[j];
 						String substringPic = picpath.substring(picpath.lastIndexOf("/")+1);
-						String base64=this.getImageStr(split[j]);
+						String base64=AssetPlanInfoApplyController.getImageStr(split[j]);
 						//picList.add(base64);
 						detail.put(substringPic, base64);
 						k++;
@@ -1669,7 +1669,7 @@ public class AssetPlanInfoApplyController {
 					for (int j = 0; j < split.length; j++) {
 						String picpath = split[j];
 						String substringPic = picpath.substring(picpath.lastIndexOf("/")+1);
-						String base64=this.getImageStr(split[j]);
+						String base64=AssetPlanInfoApplyController.getImageStr(split[j]);
 						//picList.add(base64);
 						detail.put(substringPic, base64);
 						k++;

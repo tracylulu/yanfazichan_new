@@ -55,7 +55,8 @@ public class ProjectInfoQuartzJobBean extends QuartzJobBean{
 		logger.info("ProjectInfoEosService job start");
 		String data =null;
 		try {
-			data = new HttpClientUtil().getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccountPdt(),apiUrl.getPasswordpdt(), apiUrl.getProjectUrl());
+			new HttpClientUtil();
+			data = HttpClientUtil.getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccountPdt(),apiUrl.getPasswordpdt(), apiUrl.getProjectUrl());
 			if(data!=null && data.length()!=0) {
 				JSONObject result=JSONObject.fromObject(data);
 				int code = Integer.parseInt(result.get("code").toString());

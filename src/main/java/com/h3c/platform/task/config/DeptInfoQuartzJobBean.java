@@ -52,7 +52,8 @@ public class DeptInfoQuartzJobBean  extends QuartzJobBean{
 		logger.info("DeptQuartzJobBean job start");
 		String deptData =null;
 		try {
-			deptData = new HttpClientUtil().getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccount(),apiUrl.getPassword(), apiUrl.getDeptUrl());
+			new HttpClientUtil();
+			deptData = HttpClientUtil.getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccount(),apiUrl.getPassword(), apiUrl.getDeptUrl());
 			if(deptData!=null && deptData.length()!=0) {
 				JSONObject result=JSONObject.fromObject(deptData);
 				int code = Integer.parseInt(result.get("code").toString());
