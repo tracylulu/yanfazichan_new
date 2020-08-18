@@ -100,7 +100,7 @@ public class ResponseResult {
 
     public static ResponseResult fail(int status, String message, Object data,
             long size) {
-        return new ResponseResult(status, message, data);
+        return new ResponseResult(status, message, data,size);
     }
 
     public static ResponseResult fail(String message) {

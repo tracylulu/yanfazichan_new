@@ -48,7 +48,7 @@ public class MailThreadExecutor {
 			paramJson.put("content", content);
 			paramJson.put("titleArr", titleArr);
 			
-			String result= HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailTempleteUrl , paramJson.toString(),headers);
+			HttpClientUtil.sendHttpPostJsonWithHeader(afspUrl + mailTempleteUrl , paramJson.toString(),headers);
 			//String result= HttpClientUtil.sendHttpPostJsonWithHeader("http://10.90.14.41:8080" + mailTempleteUrl , paramJson.toString(),headers);
 			
 		} catch (Exception e) {

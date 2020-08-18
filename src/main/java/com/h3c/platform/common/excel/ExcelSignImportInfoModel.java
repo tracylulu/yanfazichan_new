@@ -11,7 +11,7 @@ public class ExcelSignImportInfoModel extends BaseRowModel implements Serializab
     /**
      * 
      */
-    private static final long serialVersionUID = -3828775488885930120L;
+	private static final long serialVersionUID = -3828775488885930120L;
     @ExcelProperty(value = "版本号" ,index = 0)
     private String version;
     @ExcelProperty(value = "签名算法" ,index = 1)

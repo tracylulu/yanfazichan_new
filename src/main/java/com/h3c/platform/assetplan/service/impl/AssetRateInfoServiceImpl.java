@@ -71,7 +71,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	@Override
 	public RateTotalInfo getRate(String model,String deptCode ,Date date)throws Exception  {
 		RateTotalInfo rateTotal=new RateTotalInfo();	
-		Map<String,Object> mapRD= new HashMap<>();		
+		//Map<String,Object> mapRD= new HashMap<>();		
 		
 		//存储使用路分布
 		//List<String> lstDis=new ArrayList<String>();
@@ -104,7 +104,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		rateTotal.setDistribution(getDistribution(lstRepeat));
 		rateTotal.setDetail(getRateDetail(lst));
 
-		mapRD=getRDRate( model, deptCode,date,lstRD);
+		Map<String,Object> mapRD=getRDRate( model, deptCode,date,lstRD);
 		//modify on 20200814
 		if(mapRD.isEmpty()) {
 			rateTotal.setRdRate("无");

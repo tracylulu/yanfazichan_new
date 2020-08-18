@@ -44,7 +44,7 @@ public class MailUtils {
 		return sendMail(tos, subject, content);
 	}
 
-	public static boolean sendMailByCloud(String eosAPILoginUrl, String eosAPIAccount, String eosAPIPassword, List<String> tos, List<String> ccs, String subject, String content){
+	public static boolean sendMailByCloud(String eosAPIAccount, String eosAPIPassword, List<String> tos, List<String> ccs, String subject, String content){
 		
 		try{
 			//1先认证

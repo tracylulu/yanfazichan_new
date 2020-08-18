@@ -115,14 +115,14 @@ public class GlobalExceptionHandler implements ErrorController {
 
 	}
 
-	private static int getStatus(HttpServletRequest request) {
+	/*private static int getStatus(HttpServletRequest request) {
 		Integer status = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		if (status != null) {
 			return status;
 		}
 
 		return 500;
-	}
+	}*/
 
 //	/**
 //	 * 拦截Exception类的异常

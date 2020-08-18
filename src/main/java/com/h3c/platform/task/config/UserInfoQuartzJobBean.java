@@ -44,7 +44,6 @@ public class UserInfoQuartzJobBean extends QuartzJobBean{
 		logger.info("UserInfoQuartzJobBean job start");
 		String data =null;
 		try {
-			new HttpClientUtil();
 			data = HttpClientUtil.getDataPost(apiUrl.getLoginUrl(),apiUrl.getAccount(),apiUrl.getPassword(), apiUrl.getUserUrl());
 			if(data!=null && data.length()!=0) {
 				JSONObject result=JSONObject.fromObject(data);

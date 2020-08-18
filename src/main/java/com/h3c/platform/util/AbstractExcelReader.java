@@ -205,7 +205,7 @@ public  class AbstractExcelReader implements ExcelReader{
             case NUMERIC:
                 // cellValue = String.valueOf(cell.getNumericCellValue());
                 // 当Cell为日期类型(如2018-11-19)时，需要做特殊处理，否则解析出来的将会是一个距离1900年1月1日的天数(此时为43423)
-                if (HSSFDateUtil.isCellDateFormatted(cell)) {// 日期类型
+                if (DateUtil.isCellDateFormatted(cell)) {// 日期类型
                     Date date = cell.getDateCellValue();
                     DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
                     cellValue = formater.format(date);
