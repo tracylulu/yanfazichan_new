@@ -232,7 +232,7 @@ public class AssetPlanInfoSearchController {
    			for (int j = 0; j < newLstsubmitID.size(); j++) {
    				AssetPlanInfo assetPlanInfo = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
    				//激活在三级部门审批那超时的单子
-   				if("3".equals(assetPlanInfo.getOuttimeplanenum())) {
+   				if(assetPlanInfo.getOuttimeplanenum()==3) {
    					newLstActivateID.add(newLstsubmitID.get(j));
    					//根据申购人获取待提交的二级部门主管
    		   			UserInfo user = userService.getUserByEmpCode(assetPlanInfo.getRequireduser());
@@ -244,7 +244,7 @@ public class AssetPlanInfoSearchController {
 		   			}
    				}
    				//激活在二级部门审批那超时的单子
-   				if("4".equals(assetPlanInfo.getOuttimeplanenum())) {
+   				if(assetPlanInfo.getOuttimeplanenum()==4) {
    					newLstActivateID.add(newLstsubmitID.get(j));
    					//提交到配置的计划员
    					//下一环节审批人
