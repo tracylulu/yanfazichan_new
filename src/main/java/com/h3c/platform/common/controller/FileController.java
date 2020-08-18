@@ -114,8 +114,8 @@ public class FileController {
     		PATH =  filePath;
     			
         	Map<String,Object> fileInfo = new HashMap<>();
-        	List<String> lstFileName=new ArrayList<String>();
-        	List<String> lstFileId=new ArrayList<String>();
+        	List<String> lstFileName=new ArrayList<>();
+        	List<String> lstFileId=new ArrayList<>();
       
             if(files == null || files.length == 0){
             	return ResponseResult.fail(StatusCodeEnum.REQ_UPLOAD_FAIL);

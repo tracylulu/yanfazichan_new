@@ -11,7 +11,7 @@ public class PDMAN_DB_VERSIONExample {
     protected List<Criteria> oredCriteria;
 
     public PDMAN_DB_VERSIONExample() {
-        oredCriteria = new ArrayList<Criteria>();
+        oredCriteria = new ArrayList<>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -68,7 +68,7 @@ public class PDMAN_DB_VERSIONExample {
 
         protected GeneratedCriteria() {
             super();
-            criteria = new ArrayList<Criterion>();
+            criteria = new ArrayList<>();
         }
 
         public boolean isValid() {

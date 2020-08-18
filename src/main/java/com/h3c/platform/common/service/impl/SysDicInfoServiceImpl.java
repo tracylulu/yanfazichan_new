@@ -101,14 +101,14 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 */
 	@Override
 	public List<Map<String, Object>> getColumn(String viewName) throws Exception {
-		List<Map<String, Object>> lstColumns = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> lstColumns = new ArrayList<>();
 		JSONArray arrName = getJSONArrayDicsByType("R_" + viewName + "_CNName", "1");
 		JSONArray arrLength = getJSONArrayDicsByType("R_" + viewName + "_Length", "1");
 		JSONArray arrisEdit = getJSONArrayDicsByType("R_" + viewName + "_isEdit", "1");
 
 		if (arrName != null && arrName.size() > 0) {
 			for (int i = 0; i < arrName.size(); i++) {
-				Map<String, Object> column = new HashMap<String, Object>();
+				Map<String, Object> column = new HashMap<>();
 
 				JSONObject obj = arrName.getJSONObject(i);
 
@@ -168,14 +168,14 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 */
 	@Override
 	public List<JSONObject> getManuAndModel(String name) throws Exception {
-		List<JSONObject> lst = new ArrayList<JSONObject>();
+		List<JSONObject> lst = new ArrayList<>();
 
 		List<ManufacturerInfo> lstmf = manufacturerInfoService.getManufacturerInfoByName(name);
 		List<ModelInfo> lstmi = modelInfoService.getAll();
 
 		for (ManufacturerInfo mfInfo : lstmf) {
 			JSONObject obj = new JSONObject();
-			List<String> lstModelName = new ArrayList<String>();
+			List<String> lstModelName = new ArrayList<>();
 			lstmi.stream().filter(o -> mfInfo.getId().equals(o.getManufacturerId())).forEach(a -> {
 				lstModelName.add(a.getName());
 			});
@@ -239,7 +239,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		String token = afspTokenService.getEosToken();
 
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 		headers.put("token", token);
 
 		String result = HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl + url_Add, JSON.toJSONString(model), headers);
@@ -355,7 +355,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 */
 	private String sendHttp(String url, String param) throws Exception {
 		String token = afspTokenService.getEosToken();
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 		headers.put("token", token);
 
 		String result = HttpClientUtil.sendHttpPostJsonWithHeader(url, param, headers);

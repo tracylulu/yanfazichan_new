@@ -139,7 +139,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			Map<String, Object> param = new HashMap<>();
 			List<AssetPlanInfo> lst = assetPlanTaskService.getAssetPlanEmailByMap(param);
 
-			List<String> lstApplyCode = new ArrayList<String>();
+			List<String> lstApplyCode = new ArrayList<>();
 			lst.stream().filter(o -> "1".equals(o.getApstage())).forEach(o -> {
 
 				if (!lstApplyCode.contains(o.getApplyuser())&&StringUtils.isNotBlank(o.getApplyuser())) {
@@ -152,7 +152,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 
 			}
 
-			List<String> lstReviewCode = new ArrayList<String>();
+			List<String> lstReviewCode = new ArrayList<>();
 			lst.stream().filter(
 					o -> "2".equals(o.getApstage()))
 					.forEach(o -> {
@@ -166,7 +166,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			}
 
 			
-			List<String> lstDeptTCode = new ArrayList<String>();
+			List<String> lstDeptTCode = new ArrayList<>();
 			lst.stream().filter(o -> "3".equals(o.getApstage())).forEach(o -> {
 			
 				if (!lstDeptTCode.contains(o.getDept3manager())&&StringUtils.isNotBlank(o.getDept3manager())) {
@@ -178,7 +178,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			}
 
 			
-			List<String> lstDeptSCode = new ArrayList<String>();
+			List<String> lstDeptSCode = new ArrayList<>();
 			lst.stream().filter(o -> "4".equals(o.getApstage())).forEach(o -> {
 			
 				if (!lstDeptSCode.contains(o.getDept2manager())&&StringUtils.isNotBlank(o.getDept2manager())) {
@@ -190,7 +190,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				mailInfoService.sendRemindMailWithEndTime(user, "", "二级部门主管审核", fourthEmailDate, isAbnormalPlan[0],"");
 			}
 
-			List<String> lstPlannerCode = new ArrayList<String>();
+			List<String> lstPlannerCode = new ArrayList<>();
 			lst.stream().filter(o -> "5".equals(o.getApstage())).forEach(o -> {
 
 				if (!lstPlannerCode.contains(o.getPlanner())&&StringUtils.isNotBlank(o.getPlanner())) {
@@ -202,7 +202,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				mailInfoService.sendRemindMail(user, "", "计划员审核", "");
 			}
 
-			List<String> lstOQCode = new ArrayList<String>();
+			List<String> lstOQCode = new ArrayList<>();
 			lst.stream().filter(o -> "6".equals(o.getApstage())).forEach(o -> {
 
 				if (!lstOQCode.contains(o.getOqdeptreviewer())&&StringUtils.isNotBlank(o.getOqdeptreviewer())) {
@@ -213,7 +213,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				mailInfoService.sendRemindMail(user, "", "专家团审核", "");
 			}
 
-			List<String> lstDeptFCode = new ArrayList<String>();
+			List<String> lstDeptFCode = new ArrayList<>();
 			lst.stream().filter(o -> "7".equals(o.getApstage())).forEach(o -> {
 
 				if (!lstDeptFCode.contains(o.getDept1reviewer())&&StringUtils.isNotBlank(o.getDept1reviewer())) {

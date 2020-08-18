@@ -95,7 +95,7 @@ public class SSOLoginController {
 				}
 
 				logger.info(TokenUtil.createToken(userCode)); 
-				Map<String,String> map= new HashMap<String, String>();
+				Map<String,String> map= new HashMap<>();
 				map.put("token", TokenUtil.createToken(userCode));
 				map.put("code", user.getEmpCode());
 				map.put("domainAccount", user.getDomainAccount());

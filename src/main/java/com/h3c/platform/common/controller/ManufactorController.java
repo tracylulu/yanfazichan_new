@@ -42,12 +42,12 @@ public class ManufactorController {
 	@PostMapping("/list")
 	@ApiOperation(value="获取列表")
 	public ResponseResult list() throws Exception {
-		List<Map<String,Object>> lst=new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> lst=new ArrayList<>();
 		List<ManufacturerInfo> lstmf = manufacturerInfoService.getAll();
 		List<ModelInfo> lstmi = modelInfoService.getAll();
 
 		for (ManufacturerInfo mfInfo : lstmf) {
-			Map<String,Object> obj=new HashMap<String, Object>();
+			Map<String,Object> obj=new HashMap<>();
 			List<ModelInfo> lstChild=lstmi.stream().filter(o -> mfInfo.getId().equals(o.getManufacturerId())).collect(Collectors.toList());
 			obj.put("assetmanufacturer", mfInfo);
 			obj.put("assetmodel", lstChild);

@@ -54,7 +54,7 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 		if(StringUtils.isBlank(handler)) {
 			return ResponseResult.fail("处理人不能为空！");
 		}
-		List<ProcessRecordInfo> lstRecord=new ArrayList<ProcessRecordInfo>();
+		List<ProcessRecordInfo> lstRecord=new ArrayList<>();
 		Map<String, Object> param = new HashMap<>();
 		param.put("APStage", apstage);
 		if(!isAdmin) {
@@ -153,7 +153,7 @@ public class ChangeHandlerServiceImpl implements ChangeHandlerService {
 		com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 		List<AssetPlanInfo>lst =assetPlanInfoMapper.getAdminChangeHandlerList(userCode);
 		
-		PageInfo<AssetPlanInfo> pageInfo=new PageInfo<AssetPlanInfo>(lst);
+		PageInfo<AssetPlanInfo> pageInfo=new PageInfo<>(lst);
 		
 		return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), null, pageInfo.getList());
 	}

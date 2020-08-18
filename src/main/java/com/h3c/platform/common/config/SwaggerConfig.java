@@ -65,7 +65,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
     	ParameterBuilder ticketPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<Parameter>();  
+        List<Parameter> pars = new ArrayList<>();  
     	ticketPar.name("Authorization").description("token")
     	.modelRef(new ModelRef("string")).parameterType("header") 
     	.required(false).build(); //header中的ticket参数非必填，传空也可以

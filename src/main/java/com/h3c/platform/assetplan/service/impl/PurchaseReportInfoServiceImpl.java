@@ -31,7 +31,7 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 	
 	@Override
 	public List<PurchaseReportInfoExt> getByPurchaseReportID(String purchaseReportID) throws Exception{
-		List<PurchaseReportInfoExt> lstResult= new ArrayList<PurchaseReportInfoExt>();
+		List<PurchaseReportInfoExt> lstResult= new ArrayList<>();
 		PurchaseReportInfoExample example=new PurchaseReportInfoExample();
 		PurchaseReportInfoExample.Criteria cri= example.createCriteria();
 		cri.andPurchasereportidEqualTo(purchaseReportID);
@@ -62,7 +62,7 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 	 */
 	@Override
 	public List<PurchaseReportInfoExt> getEmptyFiled() throws Exception{
-		List<PurchaseReportInfoExt> lstResult= new ArrayList<PurchaseReportInfoExt>();
+		List<PurchaseReportInfoExt> lstResult= new ArrayList<>();
 		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.REQPURCHOASEREPORT,"1");
 		for(int i =0;i<arr.size();i++) {
 			PurchaseReportInfoExt infoExt = new PurchaseReportInfoExt();

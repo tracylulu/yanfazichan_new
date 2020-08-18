@@ -42,7 +42,7 @@ public class FileUtil {
     }
     
     public static List<String> readFileLineToList(MultipartFile multipartFile){
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         Reader reader = null;
         BufferedReader br = null;
         try {

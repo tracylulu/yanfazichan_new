@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
 		
 		String token=afspTokenService.getEosToken();
 		
-		Map<String,String> headers = new HashMap<String, String>();
+		Map<String,String> headers = new HashMap<>();
 		headers.put("token", token);
 		String params="{\"applicationId\":\""+applicationId+"\",\"userCode\":\""+(user!=null?user.getDomainAccount():"")+"\"}";	
 		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_UserRole, params,headers);
@@ -59,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
 		
 		String token=afspTokenService.getEosToken();
 		
-		Map<String,String> headers = new HashMap<String, String>();
+		Map<String,String> headers = new HashMap<>();
 		headers.put("token", token);
 		String params="{\"applicationId\":\""+applicationId+"\",\"userCode\":\""+(UserUtils.getCurrentDominAccount())+"\"}";	
 		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_UserRole, params,headers);
@@ -88,7 +88,7 @@ public class RoleServiceImpl implements RoleService {
 		
 		String token=afspTokenService.getEosToken();
 		
-		Map<String,String> headers = new HashMap<String, String>();
+		Map<String,String> headers = new HashMap<>();
 		headers.put("token", token);
 		String params="{\"applicationId\":\""+applicationId+"\",\"userCode\":\""+(user!=null?user.getDomainAccount():"")+"\"}";	
 		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_UserRole, params,headers);

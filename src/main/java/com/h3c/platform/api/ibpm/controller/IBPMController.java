@@ -64,7 +64,7 @@ public class IBPMController {
 	@ApiOperation("非软件类")
 	public ResponseResult unSoft(@RequestBody IBPMEntity entity) throws Exception {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<>();
 		
 		// 验证管理员
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
@@ -82,9 +82,9 @@ public class IBPMController {
 
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
-		List<Map<String, Object>> lstDetails = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> lstDetails = new ArrayList<>();
 		for (AssetPlanInfo info : lst) {
-			Map<String, Object> detail = new HashMap<String, Object>();
+			Map<String, Object> detail = new HashMap<>();
 			detail.put("assetName", info.getAssetname());
 			detail.put("manufacturerModel", info.getAssetmanufacturer() + info.getAssetmodel());
 			detail.put("requireds", info.getRequiredsaudit());
@@ -102,7 +102,7 @@ public class IBPMController {
 		}
 
 		if (CollectionUtils.isNotEmpty(lst)) {
-			Map<String, Object> title = new HashMap<String, Object>();
+			Map<String, Object> title = new HashMap<>();
 			title.put("applyUser", lst.get(0).getApplyuser());
 			title.put("deptCode", getCoaCode(entity.getUserCode()));
 			title.put("planner",  getPlanner(entity.getUserCode()));
@@ -121,7 +121,7 @@ public class IBPMController {
 		if (!roleService.checkIsAdmin(entity.getUserCode())) {
 			ResponseResult.fail("当前人员没有权限处理此单据！");
 		}
-		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<>();
 		// 查询数据
 		List<AssetPlanInfo> lst = assetPlanService.selectByIDs(Arrays.asList(entity.getIamplanID().split(",")));
 		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
@@ -131,9 +131,9 @@ public class IBPMController {
 		}
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
-		List<Map<String, Object>> lstDetails = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> lstDetails = new ArrayList<>();
 		for (AssetPlanInfo info : lst) {
-			Map<String, Object> detail = new HashMap<String, Object>();
+			Map<String, Object> detail = new HashMap<>();
 			detail.put("assetName", info.getAssetname());
 			detail.put("itemCode", info.getItemcode());
 			Optional<ProjectInfo> tempPro = lstPro.stream().filter(o -> info.getItemcode().equals(o.getProjectNo()))
@@ -159,7 +159,7 @@ public class IBPMController {
 		}
 
 		if (CollectionUtils.isNotEmpty(lst)) {
-			Map<String, Object> title = new HashMap<String, Object>();
+			Map<String, Object> title = new HashMap<>();
 			// title.put("applyUser", lst.get(0).getApplyuser());
 			title.put("deptCode", getCoaCode(entity.getUserCode()));
 			title.put("planner", getPlanner(entity.getUserCode()));

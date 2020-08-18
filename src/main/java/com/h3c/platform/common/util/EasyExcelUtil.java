@@ -87,7 +87,7 @@ public class EasyExcelUtil {
      * 模型解析监听器 -- 每解析一行会回调invoke()方法，整个excel解析结束会执行doAfterAllAnalysed()方法
      */
     private static class ProjectCodeModelExcelListener<E> extends AnalysisEventListener<E> {
-        private List<E> dataList = new ArrayList<E>();
+        private List<E> dataList = new ArrayList<>();
         
         @Override
         public void invoke(E object, AnalysisContext context) {
@@ -119,7 +119,7 @@ public class EasyExcelUtil {
      */
     public static <E> List<E> readExcelWithModel(InputStream inputStream, Class<? extends BaseRowModel> clazz, ExcelTypeEnum excelTypeEnum) {
         // 解析每行结果在listener中处理
-    	ProjectCodeModelExcelListener<E> listener = new ProjectCodeModelExcelListener<E>();
+    	ProjectCodeModelExcelListener<E> listener = new ProjectCodeModelExcelListener<>();
         ExcelReader excelReader = new ExcelReader(inputStream, excelTypeEnum, null, listener);
 //        ExcelReader excelReader = new ExcelReader(inputStream,  null, listener);
         //默认只有一列表头

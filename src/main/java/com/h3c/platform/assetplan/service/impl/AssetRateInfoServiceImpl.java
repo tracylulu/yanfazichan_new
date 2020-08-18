@@ -53,7 +53,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(date);
 		calendar.add(Calendar.DAY_OF_MONTH,-60);
-		Map<String,Object> param=new HashMap<String, Object>();
+		Map<String,Object> param=new HashMap<>();
 		param.put("begin", calendar.getTime());
 		param.put("end", date);
 		param.put("model", model);
@@ -124,7 +124,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 * @return
 	 */
 	private String getDistribution(List<AssetRateInfo> lst) {
-		List<String> lstDis= new ArrayList<String>();
+		List<String> lstDis= new ArrayList<>();
 		Map<String,List<AssetRateInfo>> mapDis= lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.groupingBy(AssetRateInfo::getArea));
 		for(String key:mapDis.keySet()) {
 			lstDis.add(key+"："+(mapDis.get(key)).size()+"pcs");
@@ -141,7 +141,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		int lessThirty=0,lessSixty=0,lessHundred=0;
 		Map<String,List<AssetRateInfo>> mapDetail= lst.stream().collect(Collectors.groupingBy(AssetRateInfo::getAssertNumber));
 		for(String key:mapDetail.keySet()) {
-			List<Double> lstDetailRate=new ArrayList<Double>();
+			List<Double> lstDetailRate=new ArrayList<>();
 			List<AssetRateInfo> lstTemp=mapDetail.get(key);
 			lstTemp.stream().forEach(o->{
 				if(StringUtils.isNotBlank(o.getUsageRate())) {
@@ -230,7 +230,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	@Override
 	public ResponseResult getList(SearchRateParamEntity search)throws Exception{
 		search.setPageNum(0==search.getPageNum()?1:search.getPageNum());
-		List<AssetRateInfo> lstResultAll=new ArrayList<AssetRateInfo>();
+		List<AssetRateInfo> lstResultAll=new ArrayList<>();
 		DeptInfo deptInfo = deptInfoService.getByCode(search.getDeptCode());
 		if(deptInfo.getDeptCode()==null) {
 			return ResponseResult.fail("未找到当前部门");
@@ -243,7 +243,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		Calendar calendar=Calendar.getInstance();  
 		calendar.setTime(search.getCollectTime());
 		calendar.add(Calendar.DAY_OF_MONTH,-60);
-		Map<String,Object> param=new HashMap<String, Object>();
+		Map<String,Object> param=new HashMap<>();
 		param.put("begin", calendar.getTime());
 		param.put("end", search.getCollectTime());
 		param.put("model", search.getAssetCategory());
@@ -255,7 +255,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		Map<String,List<AssetRateInfo>> mapDetail= lst.stream().collect(Collectors.groupingBy(AssetRateInfo::getAssertNumber));
 		for(String key:mapDetail.keySet()) {
 			//AssetRateInfo info =new AssetRateInfo();
-			List<Double> lstDetailRate=new ArrayList<Double>();
+			List<Double> lstDetailRate=new ArrayList<>();
 			List<AssetRateInfo> lstTemp=mapDetail.get(key);
 			lstTemp.stream().forEach(o->{
 				if(StringUtils.isNotBlank(o.getUsageRate())) {

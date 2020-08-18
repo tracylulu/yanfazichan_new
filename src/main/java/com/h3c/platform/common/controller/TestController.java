@@ -43,9 +43,9 @@ public class TestController {
 	
 	@PostMapping("/sendMailByTemplete")
 	public String sendMailByTemplete(){
-		List<String> sendTo = new ArrayList<String>();
+		List<String> sendTo = new ArrayList<>();
 		sendTo.add("lkf7579");
-		List<String> ccTo = new ArrayList<String>();
+		List<String> ccTo = new ArrayList<>();
 		ccTo.add("lkf7579");
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$url", "李晟");

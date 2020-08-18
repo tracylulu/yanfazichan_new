@@ -255,7 +255,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 			JSONObject content, int priority, JSONArray templeteArr, JSONArray titleArr) {
 		try {
 			String token = afspTokenService.getEosToken();
-			Map<String, String> headers = new HashMap<String, String>();
+			Map<String, String> headers = new HashMap<>();
 			headers.put("token", token);
 
 			JSONObject paramJson = new JSONObject();

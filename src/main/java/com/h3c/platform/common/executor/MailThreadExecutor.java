@@ -35,7 +35,7 @@ public class MailThreadExecutor {
 //        MailUtils.sendMailByCloud(eosAPILoginUrl, eosAPIAccount, eosAPIPassword, sendTo,ccTo, subject, content);
     	try {
 			String token = afspTokenService.getEosToken();
-			Map<String,String> headers = new HashMap<String, String>();
+			Map<String,String> headers = new HashMap<>();
 			headers.put("token", token);
 			
 			JSONObject paramJson = new JSONObject();

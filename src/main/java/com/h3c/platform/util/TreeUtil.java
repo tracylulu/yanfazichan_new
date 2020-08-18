@@ -8,7 +8,7 @@ import com.h3c.platform.common.config.UserCache;
 
 public class TreeUtil {
 	public static List<DeptTreeInfo> RecursiveAddress(List<DeptTreeInfo> treeNodes){
-		List<DeptTreeInfo> trees = new ArrayList<DeptTreeInfo>();  
+		List<DeptTreeInfo> trees = new ArrayList<>();  
 		        for (DeptTreeInfo treeNode : treeNodes) {  
 		            //if ("".equals(treeNode.getSupDeptDode()) || null==treeNode.getSupDeptDode() ) {  
 		        	if ("1".equals(treeNode.getDeptLevel()) ) {

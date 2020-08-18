@@ -40,7 +40,7 @@ public class ResourceServiceImpl implements ResourceService {
 		
 		String token=afspTokenService.getEosToken();
 		
-		Map<String,String> headers = new HashMap<String, String>();
+		Map<String,String> headers = new HashMap<>();
 		headers.put("token", token);
 		String params="{\"applicationId\":\""+applicationId+"\",\"userId\":\""+(user!=null?user.getDomainAccount():"")+"\"}";	
 		String result= HttpClientUtil.sendHttpPostJsonWithHeader(eosUrl+url_Resource, params,headers);

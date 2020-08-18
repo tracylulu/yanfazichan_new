@@ -30,7 +30,7 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 
 	@Override
 	public List<SpecifyManufacturerInfoExt> getBySpecifyManufacturerID(String SpecifyManufacturerID) throws Exception{
-		List<SpecifyManufacturerInfoExt> lstResult= new ArrayList<SpecifyManufacturerInfoExt>();
+		List<SpecifyManufacturerInfoExt> lstResult= new ArrayList<>();
 		SpecifyManufacturerInfoExample example=new SpecifyManufacturerInfoExample();
 		SpecifyManufacturerInfoExample.Criteria cri= example.createCriteria();
 		cri.andSpecifymanufactureridEqualTo(SpecifyManufacturerID);
@@ -61,7 +61,7 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 	 */
 	@Override
 	public List<SpecifyManufacturerInfoExt> getEmptyFiled() throws Exception{
-		List<SpecifyManufacturerInfoExt> lstResult= new ArrayList<SpecifyManufacturerInfoExt>();
+		List<SpecifyManufacturerInfoExt> lstResult= new ArrayList<>();
 		
 		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.SPECIFYMAUFACTURER,"1");
 		for(int i =0;i<arr.size();i++) {
