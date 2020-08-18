@@ -199,7 +199,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 	 * @param end
 	 * @return
 	 */
-	private Map<String,Object> getRDRate(String model,String deptCode,Date date,List<AssetRateInfo> lst) {
+	private static Map<String,Object> getRDRate(String model,String deptCode,Date date,List<AssetRateInfo> lst) {
 		Map<String,Object> mapRD= new HashMap<>();
 		mapRD.put("deptName", "研发总体");
 		mapRD.put("type", model);
