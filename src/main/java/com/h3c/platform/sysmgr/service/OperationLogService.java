@@ -4,6 +4,6 @@ import com.h3c.platform.sysmgr.entity.OperationLog;
 
 public interface OperationLogService {
 	
-	void SaveLog(OperationLog operationLog);
+	void saveLog(OperationLog operationLog);
 	
 }

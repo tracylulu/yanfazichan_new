@@ -81,10 +81,10 @@ public class SysDicInfoController {
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 
-			obj.put("creater",  ObjToStrUtil.ReplaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("createrempcode")));
-			obj.put("last_modifier", ObjToStrUtil.ReplaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("modifierempcode")));
-			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
-			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
+			obj.put("creater",  ObjToStrUtil.replaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("createrempcode")));
+			obj.put("last_modifier", ObjToStrUtil.replaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("modifierempcode")));
+			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
+			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
 		}
 		
@@ -147,8 +147,8 @@ public class SysDicInfoController {
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=sysDicInfoService.getByID(id);	
-		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
+		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
 }

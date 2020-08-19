@@ -370,7 +370,7 @@ public class AssetPlanInfoPlannerController {
 		log.setLogtype(LogType.EXPORT);		
 		log.setIp("IP:"+IPUtils.getIpAddr(request)+";service:"+InetAddress.getLocalHost().getHostAddress());			
 			
-		operationLogService.SaveLog(log);
+		operationLogService.saveLog(log);
     }
 	
 	//通过HashSet踢除重复元素

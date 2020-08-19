@@ -43,9 +43,9 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 			BeanUtils.copyProperties(infoExt, info);
 			for(int i =0;i<arr.size();i++) {
 				JSONObject obj=arr.getJSONObject(i);
-				if(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")).equals(info.getTitlecode())) {
-					infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")));
-					String order=ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"));
+				if(ObjToStrUtil.replaceNullValue(obj.get("dic_code")).equals(info.getTitlecode())) {
+					infoExt.setName(ObjToStrUtil.replaceNullValue(obj.get("dic_value")));
+					String order=ObjToStrUtil.replaceNullValue(obj.get("sort_order"));
 					infoExt.setOrder(Integer.parseInt(StringUtils.isBlank(order)?"0":order));					
 				}
 			}
@@ -67,9 +67,9 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 		for(int i =0;i<arr.size();i++) {
 			JSONObject obj=arr.getJSONObject(i);
 			SpecifyManufacturerInfoExt infoExt = new SpecifyManufacturerInfoExt();
-			infoExt.setTitlecode(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));
-			infoExt.setName(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")));
-			String order=ObjToStrUtil.ReplaceNullValue(obj.get("sort_order"));
+			infoExt.setTitlecode(ObjToStrUtil.replaceNullValue(obj.get("dic_code")));
+			infoExt.setName(ObjToStrUtil.replaceNullValue(obj.get("dic_value")));
+			String order=ObjToStrUtil.replaceNullValue(obj.get("sort_order"));
 			infoExt.setOrder(Integer.parseInt(StringUtils.isBlank(order)?"0":order));
 			lstResult.add(infoExt);
 		}

@@ -53,7 +53,7 @@ public class PlanTimeWindowsServiceImpl implements  PlanTimeWindowsService{
 		
 		for(int i=0;i<approveDate.size();i++) {
 			JSONObject obj=approveDate.getJSONObject(i);
-			if("1".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))){
+			if("1".equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))){
 				interval=obj.getInteger("dic_value");				
 			}		
 		}	

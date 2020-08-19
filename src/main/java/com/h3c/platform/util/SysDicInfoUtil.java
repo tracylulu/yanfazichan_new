@@ -27,7 +27,7 @@ public class SysDicInfoUtil {
 		JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
 			for (int i = 0; i < objDic.size(); i++) {
 				JSONObject obj= objDic.getJSONObject(i);
-				String dicCode = ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"));
+				String dicCode = ObjToStrUtil.replaceNullValue(obj.get("dic_code"));
 				if(dicCode.equals(assetCategoryId)) {
 					String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
 					String[] arrvalue =value.split("_");
@@ -45,7 +45,7 @@ public class SysDicInfoUtil {
 		JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_ADDRESS,"1");
 			for (int i = 0; i < objDic.size(); i++) {
 				JSONObject obj= objDic.getJSONObject(i);
-				String dicCode = ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"));
+				String dicCode = ObjToStrUtil.replaceNullValue(obj.get("dic_code"));
 				if(dicCode.equals(receiverPlaceId)) {
 					String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
 					String[] arrvalue =value.split("_");

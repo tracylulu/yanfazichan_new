@@ -41,28 +41,28 @@ public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 			//List<Map> addList=new ArrayList<>();
 			for(Map<String, Object> map :lst) {
 				ProjectInfo_EOS pro = new ProjectInfo_EOS();
-				pro.setTypeId(ObjToStrUtil.ReplaceNullValue(map.get("type_id")));
-				pro.setTypeName(ObjToStrUtil.ReplaceNullValue(map.get("type_name")));
-				pro.setProjectNo(ObjToStrUtil.ReplaceNullValue(map.get("project_no")));
-				pro.setProjectName(ObjToStrUtil.ReplaceNullValue(map.get("project_name")));
-				pro.setProjectCode(ObjToStrUtil.ReplaceNullValue(map.get("project_code")));				
-//				pro.setReleaseNo(ObjToStrUtil.ReplaceNullValue(map.get("release_no")));
-//				pro.setBuildNo(ObjToStrUtil.ReplaceNullValue(map.get("build_no")));
-//				pro.setTelecomPercent(ObjToStrUtil.ReplaceNullValue(map.get("telecom_percent")));
-//				pro.setNonTelecomPercent(ObjToStrUtil.ReplaceNullValue(map.get("non_telecom_percent")));
-				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("effective_date")))) {
+				pro.setTypeId(ObjToStrUtil.replaceNullValue(map.get("type_id")));
+				pro.setTypeName(ObjToStrUtil.replaceNullValue(map.get("type_name")));
+				pro.setProjectNo(ObjToStrUtil.replaceNullValue(map.get("project_no")));
+				pro.setProjectName(ObjToStrUtil.replaceNullValue(map.get("project_name")));
+				pro.setProjectCode(ObjToStrUtil.replaceNullValue(map.get("project_code")));				
+//				pro.setReleaseNo(ObjToStrUtil.replaceNullValue(map.get("release_no")));
+//				pro.setBuildNo(ObjToStrUtil.replaceNullValue(map.get("build_no")));
+//				pro.setTelecomPercent(ObjToStrUtil.replaceNullValue(map.get("telecom_percent")));
+//				pro.setNonTelecomPercent(ObjToStrUtil.replaceNullValue(map.get("non_telecom_percent")));
+				if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(map.get("effective_date")))) {
 					pro.setEffectiveDate(sdf.parse(map.get("effective_date").toString()));
 				}
-				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("project_start_date")))) {
+				if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(map.get("project_start_date")))) {
 					pro.setProjectStartDate(sdf.parse(map.get("project_start_date").toString()));
 				}			
-//				pro.setAssignPointDesc(ObjToStrUtil.ReplaceNullValue(map.get("assign_point_desc")));
-				pro.setStatus(ObjToStrUtil.ReplaceNullValue(map.get("status")));
-				pro.setMark(ObjToStrUtil.ReplaceNullValue(map.get("mark")));
-				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("create_date")))) {
+//				pro.setAssignPointDesc(ObjToStrUtil.replaceNullValue(map.get("assign_point_desc")));
+				pro.setStatus(ObjToStrUtil.replaceNullValue(map.get("status")));
+				pro.setMark(ObjToStrUtil.replaceNullValue(map.get("mark")));
+				if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(map.get("create_date")))) {
 					pro.setCreateDate(sdf.parse(map.get("create_date").toString()));
 				}
-				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(map.get("loaded_time")))) {
+				if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(map.get("loaded_time")))) {
 					pro.setLoadedTime(sdf.parse(map.get("loaded_time").toString()));
 				}
 				

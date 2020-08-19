@@ -199,7 +199,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 
 		for (int i = 0; i < arr.size(); i++) {
 			JSONObject obj = arr.getJSONObject(i);
-			if (code.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+			if (code.equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 				result = obj;
 				break;
 			}
@@ -230,7 +230,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		}
 		JSONObject obj = jsonArray.getJSONObject(0);
 
-		return ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"));
+		return ObjToStrUtil.replaceNullValue(obj.get("dic_code"));
 	}
 
 	@Override
@@ -315,8 +315,8 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 			JSONArray data= jsonResult.getJSONArray("data");
 			for(int i=0;i<data.size();i++) {
 				JSONObject obj= data.getJSONObject(i);
-				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg")))) {
-					errMsg.append("部门编码【"+ObjToStrUtil.ReplaceNullValue(obj.get("dicCode"))+"】"+ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg"))+" \n");
+				if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(obj.get("errorMsg")))) {
+					errMsg.append("部门编码【"+ObjToStrUtil.replaceNullValue(obj.get("dicCode"))+"】"+ObjToStrUtil.replaceNullValue(obj.get("errorMsg"))+" \n");
 				}				
 			}
 			throw new Exception( StringUtils.isNotBlank(errMsg.toString())?errMsg.toString():jsonResult.getString("message"));
@@ -338,8 +338,8 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 			JSONArray data= jsonResult.getJSONArray("data");
 			for(int i=0;i<data.size();i++) {
 				JSONObject obj= data.getJSONObject(i);
-				if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg")))) {
-					errMsg.append("部门编码【"+ObjToStrUtil.ReplaceNullValue(obj.get("dicCode"))+"】"+ObjToStrUtil.ReplaceNullValue(obj.get("errorMsg"))+" \n");
+				if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(obj.get("errorMsg")))) {
+					errMsg.append("部门编码【"+ObjToStrUtil.replaceNullValue(obj.get("dicCode"))+"】"+ObjToStrUtil.replaceNullValue(obj.get("errorMsg"))+" \n");
 				}				
 			}
 			throw new Exception( StringUtils.isNotBlank(errMsg.toString())?errMsg.toString():jsonResult.getString("message"));

@@ -338,19 +338,19 @@ public class MailInfoServiceImpl implements MailInfoService {
 		if (new Date().after(df.parse(df.format(workDate)))) {
 			for (int i = 0; i < approveDate.size(); i++) {
 				JSONObject obj = approveDate.getJSONObject(i);
-				if ("1".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+				if ("1".equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 					firstLen = obj.getInteger("dic_value");
 				}
 
-				if ("2".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+				if ("2".equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 					secondLen = obj.getInteger("dic_value");
 				}
 
-				if ("3".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+				if ("3".equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 					thirdLen = obj.getInteger("dic_value");
 				}
 
-				if ("4".equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+				if ("4".equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 					fourthLen = obj.getInteger("dic_value");
 				}
 			}

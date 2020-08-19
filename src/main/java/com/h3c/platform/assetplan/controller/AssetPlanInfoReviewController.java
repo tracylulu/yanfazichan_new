@@ -703,7 +703,7 @@ public class AssetPlanInfoReviewController {
 					Optional<PurchaseReportInfo> temp=assetPlanGlobalInfo.getPurchaseReportInfo().stream()
 							.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
 					if(!temp.isPresent()) {
-						String purchasereportID = UUIDUtil.UUID();
+						String purchasereportID = UUIDUtil.uuid();
 						//String currentUserId = UserUtils.getCurrentUserId();
 						//新生成申购报告，并建立与主表的关系
 						for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
@@ -734,7 +734,7 @@ public class AssetPlanInfoReviewController {
 							.filter(o->StringUtils.isNotBlank(o.getSpecifymanufacturerid())).findAny();
 					if(!temp.isPresent()) {
 						//新生成供应商，并建立与主表的关系
-						String surchasereportid = UUIDUtil.UUID();
+						String surchasereportid = UUIDUtil.uuid();
 						for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
 							info.setDeleteflag("1");
 							info.setCreatetime(new Date());

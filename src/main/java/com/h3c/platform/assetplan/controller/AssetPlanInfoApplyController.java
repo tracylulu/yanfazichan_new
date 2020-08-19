@@ -272,7 +272,7 @@ public class AssetPlanInfoApplyController {
 					Optional<PurchaseReportInfo> temp=assetPlanGlobalInfo.getPurchaseReportInfo().stream()
 							.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
 					if(!temp.isPresent()) {
-						String purchasereportID = UUIDUtil.UUID();
+						String purchasereportID = UUIDUtil.uuid();
 						//String currentUserId = UserUtils.getCurrentUserId();
 						//新生成申购报告，并建立与主表的关系
 						for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
@@ -304,7 +304,7 @@ public class AssetPlanInfoApplyController {
 							.filter(o->StringUtils.isNotBlank(o.getSpecifymanufacturerid())).findAny();
 					if(!temp.isPresent()) {
 						//新生成供应商，并建立与主表的关系
-						String surchasereportid = UUIDUtil.UUID();
+						String surchasereportid = UUIDUtil.uuid();
 						for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
 							info.setDeleteflag("1");
 							info.setCreatetime(new Date());
@@ -1101,7 +1101,7 @@ public class AssetPlanInfoApplyController {
 			}
 		 	String purchasereportID = "",surchasereportid="";
 			if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.purchaseReportInfo)) {
-				purchasereportID = UUIDUtil.UUID();
+				purchasereportID = UUIDUtil.uuid();
 				//purchasereportID = assetPlanGlobalInfo.purchaseReportInfo.get(0).getPurchasereportid();
 				for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
 					info.setDeleteflag("1");
@@ -1114,7 +1114,7 @@ public class AssetPlanInfoApplyController {
 				}		
 			}
 			if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.specifyManufacturerInfo)) {
-				surchasereportid = UUIDUtil.UUID();
+				surchasereportid = UUIDUtil.uuid();
 				//surchasereportid=assetPlanGlobalInfo.specifyManufacturerInfo.get(0).getSpecifymanufacturerid();
 				for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
 					info.setDeleteflag("1");
@@ -1211,7 +1211,7 @@ public class AssetPlanInfoApplyController {
 						Optional<PurchaseReportInfo> temp=assetPlanGlobalInfo.getPurchaseReportInfo().stream()
 								.filter(o->StringUtils.isNotBlank(o.getPurchasereportid())).findAny();
 						if(!temp.isPresent()) {
-							String purchasereportID = UUIDUtil.UUID();
+							String purchasereportID = UUIDUtil.uuid();
 							//String currentUserId = UserUtils.getCurrentUserId();
 							//新生成申购报告，并建立与主表的关系
 							for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
@@ -1243,7 +1243,7 @@ public class AssetPlanInfoApplyController {
 								.filter(o->StringUtils.isNotBlank(o.getSpecifymanufacturerid())).findAny();
 						if(!temp.isPresent()) {
 							//新生成供应商，并建立与主表的关系
-							String surchasereportid = UUIDUtil.UUID();
+							String surchasereportid = UUIDUtil.uuid();
 							for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
 								info.setDeleteflag("1");
 								info.setCreatetime(new Date());

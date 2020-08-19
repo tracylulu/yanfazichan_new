@@ -31,7 +31,7 @@ public interface ManufacturerInfoMapper {
 
     int updateByPrimaryKey(ManufacturerInfo record);
     
-    List<ManufacturerInfo> getManufacturerInfoByName(@Param("name")String Name);
+    List<ManufacturerInfo> getManufacturerInfoByName(@Param("name")String name);
     
     List<ManufacturerInfo> getAll();
     

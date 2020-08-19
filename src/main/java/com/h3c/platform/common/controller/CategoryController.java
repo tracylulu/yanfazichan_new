@@ -52,16 +52,16 @@ public class CategoryController {
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 		
-			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_");
+			String[] dicNameArr=ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_");
 			obj.put("certifier", dicNameArr[0]);
 			obj.put("name", dicNameArr[1]);
 			obj.put("category", dicNameArr[2]);
 			obj.put("deliveryTime", dicNameArr[3]);
 
-			obj.put("creater",  ObjToStrUtil.ReplaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("createrempcode")));
-			obj.put("last_modifier", ObjToStrUtil.ReplaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("modifierempcode")));
-			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
-			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
+			obj.put("creater",  ObjToStrUtil.replaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("createrempcode")));
+			obj.put("last_modifier", ObjToStrUtil.replaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("modifierempcode")));
+			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
+			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
 		}
 		
@@ -97,7 +97,7 @@ public class CategoryController {
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getCategory().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[2])) {
+			if (entity.getCategory().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[2])) {
 				return ResponseResult.fail("物品类别配置重复");
 			}
 		}
@@ -121,7 +121,7 @@ public class CategoryController {
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getCategory().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[2])&&!entity.getId().equals(obj.getInteger("id"))) {
+			if (entity.getCategory().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[2])&&!entity.getId().equals(obj.getInteger("id"))) {
 				return ResponseResult.fail("物品类别配置重复");
 			}
 		}
@@ -149,14 +149,14 @@ public class CategoryController {
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=dicServer.getByID(id);
-		model.put("deptCode", ObjToStrUtil.ReplaceNullValue(model.get("dicCode")));
-		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicValue")).split("_");
+		model.put("deptCode", ObjToStrUtil.replaceNullValue(model.get("dicCode")));
+		String[] dicNameArr=ObjToStrUtil.replaceNullValue(model.get("dicValue")).split("_");
 		model.put("certifier", dicNameArr[0]);
 		model.put("name", dicNameArr[1]);
 		model.put("category", dicNameArr[2]);
 		model.put("deliveryTime", dicNameArr[3]);
-		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
+		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
 }

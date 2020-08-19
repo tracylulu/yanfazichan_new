@@ -32,7 +32,7 @@ public class ModelInfoServiceImpl implements ModelInfoService{
 	@Override
 	@Transactional
 	public ResponseResult add(ModelInfo info) throws Exception{
-		ModelInfo miCheck=getByNameAndManufacturerID(info.getName(), info.getManufacturerId());
+		ModelInfo miCheck=getByNameAndManufacturerId(info.getName(), info.getManufacturerId());
 		if(miCheck!=null) {
 			return ResponseResult.fail("当前厂商下【"+info.getName()+"】配置重复");
 		}
@@ -48,7 +48,7 @@ public class ModelInfoServiceImpl implements ModelInfoService{
 	@Override
 	@Transactional
 	public ResponseResult edit(ModelInfo info) throws Exception{
-		ModelInfo miCheck=getByNameAndManufacturerID(info.getName(), info.getManufacturerId());
+		ModelInfo miCheck=getByNameAndManufacturerId(info.getName(), info.getManufacturerId());
 		if(miCheck!=null&&! info.getId().equals(miCheck.getId())) {
 			return ResponseResult.fail("当前厂商下【"+info.getName()+"】配置重复");
 		}
@@ -66,15 +66,15 @@ public class ModelInfoServiceImpl implements ModelInfoService{
 	
 	@Override
 	@Transactional
-	public void DelByManufacturerID(Integer id) {
+	public void delByManufacturerId(Integer id) {
 		modelInfoMapper.delByManufacturerId(id);
 	}
 	
-	private ModelInfo getByNameAndManufacturerID(String name, Integer ManufacturerID) {
+	private ModelInfo getByNameAndManufacturerId(String name, Integer manufacturerId) {
 		ModelInfoExample example= new ModelInfoExample();
 		ModelInfoExample.Criteria cri= example.createCriteria();
 		cri.andNameEqualTo(name);
-		cri.andManufacturerIdEqualTo(ManufacturerID);
+		cri.andManufacturerIdEqualTo(manufacturerId);
 		List<ModelInfo> lst= modelInfoMapper.selectByExample(example);
 		if(CollectionUtils.isNotEmpty(lst)) {
 			return lst.get(0);

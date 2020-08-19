@@ -91,7 +91,7 @@ public class ProjectInfoQuartzJobBean extends QuartzJobBean{
 				ex.printStackTrace();
 			}
 				
-			operationLogService.SaveLog(log);
+			operationLogService.saveLog(log);
 			e.printStackTrace();
 		}
 

@@ -6,7 +6,7 @@ public class UUIDUtil {
         
     }
 
-    public static String UUID() {
+    public static String uuid() {
         return java.util.UUID.randomUUID().toString();
     }
 }

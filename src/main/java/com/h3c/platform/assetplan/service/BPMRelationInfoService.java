@@ -7,7 +7,7 @@ import com.h3c.platform.assetplan.entity.BPMRelationInfo;
 
 public interface BPMRelationInfoService {
 	
-	List<BPMRelationInfo> getByIDList(List<Integer> lst)throws Exception;
+	List<BPMRelationInfo> getByIdList(List<Integer> lst)throws Exception;
 	
 	boolean writeBpmCode(IBPMEntity entity) throws Exception;
 }

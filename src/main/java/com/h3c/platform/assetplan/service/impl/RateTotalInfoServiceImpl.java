@@ -40,12 +40,12 @@ public class RateTotalInfoServiceImpl implements RateTotalInfoService{
 	
 	@Override
 	@Transactional
-	public int deleteByID(List<Integer> lst) {
-		return rateTotalInfoMapper.deleteByID(lst);
+	public int deleteById(List<Integer> lst) {
+		return rateTotalInfoMapper.deleteById(lst);
 	}
 	
 	@Override
-	public RateTotalInfo getRateTotalInfoByID(Integer id) {
+	public RateTotalInfo getRateTotalInfoById(Integer id) {
 		return rateTotalInfoMapper.selectByPrimaryKey(id);
 	}
 }

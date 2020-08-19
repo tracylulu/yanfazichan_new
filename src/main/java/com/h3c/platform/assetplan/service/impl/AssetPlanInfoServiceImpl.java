@@ -250,7 +250,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 					Long startinsertRateTime = System.currentTimeMillis();
 					// 存储 使用率统计信息
 					if (CollectionUtils.isNotEmpty(lstID)) {
-						rateTotalInfoService.deleteByID(lstID);
+						rateTotalInfoService.deleteById(lstID);
 					}
 					if (CollectionUtils.isNotEmpty(lstTotal)) {
 						rateTotalInfoService.insertBatch(lstTotal);
@@ -296,7 +296,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		}
 		// 存储 使用率统计信息
 		if (CollectionUtils.isNotEmpty(lstID)) {
-			rateTotalInfoService.deleteByID(lstID);
+			rateTotalInfoService.deleteById(lstID);
 		}
 		if (CollectionUtils.isNotEmpty(lstTotal)) {
 			rateTotalInfoService.insertBatch(lstTotal);
@@ -314,7 +314,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public void addAssetPlanInfo(AssetPlanGlobalInfo assetPlanGlobalInfo) {
 		String purchasereportID = "",surchasereportid="";
 		if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.purchaseReportInfo)) {
-			purchasereportID = UUIDUtil.UUID();
+			purchasereportID = UUIDUtil.uuid();
 			for(PurchaseReportInfo info : assetPlanGlobalInfo.getPurchaseReportInfo()) {
 				info.setDeleteflag("1");
 				info.setCreatetime(new Date());
@@ -326,7 +326,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 			}		
 		}
 		if(CollectionUtils.isNotEmpty(assetPlanGlobalInfo.specifyManufacturerInfo)) {
-			surchasereportid = UUIDUtil.UUID();
+			surchasereportid = UUIDUtil.uuid();
 			for(SpecifyManufacturerInfo info : assetPlanGlobalInfo.getSpecifyManufacturerInfo()) {
 				info.setDeleteflag("1");
 				info.setCreatetime(new Date());

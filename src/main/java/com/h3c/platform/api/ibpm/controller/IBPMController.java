@@ -233,7 +233,7 @@ public class IBPMController {
 		for(int i=0;i<lstAddr.size();i++) {
 			JSONObject obj = lstAddr.getJSONObject(i);
 			
-			if(addrCode.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))) ) {
+			if(addrCode.equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code"))) ) {
 				String[] addrArr= obj.getString("dic_value").split("_");
 				place=addrArr[1];
 				
@@ -249,7 +249,7 @@ public class IBPMController {
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			
-			if(code.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code"))) ) {
+			if(code.equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code"))) ) {
 				String[] addrArr= obj.getString("dic_value").split("_");
 				category=addrArr[2];
 				

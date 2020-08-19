@@ -441,7 +441,7 @@ public class AssetPlanInfoSearchController {
 			log.setLogtype(LogType.EXPORT);		
 			log.setIp("IP:"+IPUtils.getIpAddr(request)+";service:"+InetAddress.getLocalHost().getHostAddress());			
 				
-			operationLogService.SaveLog(log);
+			operationLogService.saveLog(log);
 			System.out.println("444-----"+new Date());
     }
     
@@ -787,9 +787,9 @@ public class AssetPlanInfoSearchController {
     @ApiOperation("验证勾选流程coa是否同一个 true:同一个coa,false：不为同一个或没有")
     @ResponseBody
     public ResponseResult checkCoa(@RequestParam List<Integer> lstId) throws Exception{
-    	List<DeptInfo> lst= deptInfoService.getCoaByAssetPlanID(lstId);
+    	List<DeptInfo> lst= deptInfoService.getCoaByAssetPlanId(lstId);
     	if(CollectionUtils.isEmpty(lst)) {
-    		lst = deptInfoService.getTwoLevelCoaByAssetPlanID(lstId);
+    		lst = deptInfoService.getTwoLevelCoaByAssetPlanId(lstId);
     	}
     	
     	if(CollectionUtils.isEmpty(lst)) {
@@ -807,7 +807,7 @@ public class AssetPlanInfoSearchController {
     @ApiOperation("验证勾选流程是否已回写bpm编码  true:没有回写，false已回写")
     @ResponseBody
     public ResponseResult checkIsWriteBpmCode(@RequestParam  List<Integer> lstId)throws Exception {
-    	List<BPMRelationInfo> lst = bpmRelationInfoService.getByIDList(lstId);
+    	List<BPMRelationInfo> lst = bpmRelationInfoService.getByIdList(lstId);
     	if(CollectionUtils.isNotEmpty(lst)) {
     		return ResponseResult.success(false);
     	}

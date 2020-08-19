@@ -83,12 +83,12 @@ public class DeptInfoServiceImpl implements DeptInfoService {
 	}
 	
 	@Override
-	public List<DeptInfo> getCoaByAssetPlanID(List<Integer> lst){
-		return deptInfoMapper.getCoaByAssetPlanID(lst);
+	public List<DeptInfo> getCoaByAssetPlanId(List<Integer> lst){
+		return deptInfoMapper.getCoaByAssetPlanId(lst);
 	}
 	
 	@Override
-	public List<DeptInfo> getTwoLevelCoaByAssetPlanID(List<Integer> lst){
-		return deptInfoMapper.getTwoLevelCoaByAssetPlanID(lst);
+	public List<DeptInfo> getTwoLevelCoaByAssetPlanId(List<Integer> lst){
+		return deptInfoMapper.getTwoLevelCoaByAssetPlanId(lst);
 	}
 }

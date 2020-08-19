@@ -34,19 +34,19 @@ public class UserInfoEosServiceImpl implements UserInfoEosService {
 		//List<Map> addList=new ArrayList<>();
 		for(Map<String, Object> map :lst) {
 			UserInfo_EOS user= new UserInfo_EOS();
-			user.setNotesId(ObjToStrUtil.ReplaceNullValue(map.get("notesId")));
-			user.setEmpCode(ObjToStrUtil.ReplaceNullValue(map.get("empCode")));
-			user.setDomainAccount(ObjToStrUtil.ReplaceNullValue(map.get("domainAccount")));
-			user.setDisplayName(ObjToStrUtil.ReplaceNullValue(map.get("display_name")));
-			user.setEmpName(ObjToStrUtil.ReplaceNullValue(map.get("empName")));
-			user.setCoaCode(ObjToStrUtil.ReplaceNullValue(map.get("coa_code")));
-			user.setDept1Code(ObjToStrUtil.ReplaceNullValue(map.get("firstDeptCode")));
-			user.setDept2Code(ObjToStrUtil.ReplaceNullValue(map.get("secondDeptCode")));
-			user.setDept3Code(ObjToStrUtil.ReplaceNullValue(map.get("thirdDeptCode")));
-			//user.setDept4Code(ObjToStrUtil.ReplaceNullValue(map.get("dept4_code")));
-			user.setDeptCode(ObjToStrUtil.ReplaceNullValue(map.get("deptCode")));
-			user.setDeptName(ObjToStrUtil.ReplaceNullValue(map.get("deptName")));
-			user.setEmail(ObjToStrUtil.ReplaceNullValue(map.get("email")));
+			user.setNotesId(ObjToStrUtil.replaceNullValue(map.get("notesId")));
+			user.setEmpCode(ObjToStrUtil.replaceNullValue(map.get("empCode")));
+			user.setDomainAccount(ObjToStrUtil.replaceNullValue(map.get("domainAccount")));
+			user.setDisplayName(ObjToStrUtil.replaceNullValue(map.get("display_name")));
+			user.setEmpName(ObjToStrUtil.replaceNullValue(map.get("empName")));
+			user.setCoaCode(ObjToStrUtil.replaceNullValue(map.get("coa_code")));
+			user.setDept1Code(ObjToStrUtil.replaceNullValue(map.get("firstDeptCode")));
+			user.setDept2Code(ObjToStrUtil.replaceNullValue(map.get("secondDeptCode")));
+			user.setDept3Code(ObjToStrUtil.replaceNullValue(map.get("thirdDeptCode")));
+			//user.setDept4Code(ObjToStrUtil.replaceNullValue(map.get("dept4_code")));
+			user.setDeptCode(ObjToStrUtil.replaceNullValue(map.get("deptCode")));
+			user.setDeptName(ObjToStrUtil.replaceNullValue(map.get("deptName")));
+			user.setEmail(ObjToStrUtil.replaceNullValue(map.get("email")));
 			user.setUpdateTime(new Date());
 			userInfoEosMapper.insertSelective(user);
 		}

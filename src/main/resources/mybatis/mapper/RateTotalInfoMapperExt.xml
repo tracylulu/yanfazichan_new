@@ -18,7 +18,7 @@
       )
        </foreach>
   </insert>
-  <delete id="deleteByID" parameterType="java.util.List">
+  <delete id="deleteById" parameterType="java.util.List">
   	delete from RateTotalInfo where id in 
   	  <foreach collection="lst" item="item" index="index" open="(" close=")" separator=",">  
   	  	#{item}

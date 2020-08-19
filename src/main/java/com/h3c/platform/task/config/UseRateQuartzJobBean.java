@@ -59,7 +59,7 @@ private Logger logger = LoggerFactory.getLogger(AssetPlanQuartzJobBean.class);
 				e.printStackTrace();
 			}
 				
-			operationLogService.SaveLog(log);
+			operationLogService.saveLog(log);
 			e.printStackTrace();
 		}
 

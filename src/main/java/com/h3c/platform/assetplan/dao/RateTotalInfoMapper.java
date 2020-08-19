@@ -30,5 +30,5 @@ public interface RateTotalInfoMapper {
     
     int insertBatch(@Param("lst")List<RateTotalInfo> lst);
     
-    int deleteByID(@Param("lst")List<Integer> lst);
+    int deleteById(@Param("lst")List<Integer> lst);
 }

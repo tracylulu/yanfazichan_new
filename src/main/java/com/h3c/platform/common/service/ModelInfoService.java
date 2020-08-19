@@ -18,5 +18,5 @@ public interface ModelInfoService {
 	 * 根据厂家删除型号
 	 * @param id
 	 */
-	void DelByManufacturerID(Integer id);
+	void delByManufacturerId(Integer id);
 }

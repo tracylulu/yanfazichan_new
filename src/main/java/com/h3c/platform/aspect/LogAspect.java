@@ -119,7 +119,7 @@ public class LogAspect {
 			e.printStackTrace();
 		}
 			
-		operationLogService.SaveLog(log);
+		operationLogService.saveLog(log);
 	}
 	
 

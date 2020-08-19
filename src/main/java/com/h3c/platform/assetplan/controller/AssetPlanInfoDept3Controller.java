@@ -320,7 +320,7 @@ public class AssetPlanInfoDept3Controller {
 			newlist = removeDuplicate(newlist);
 			for (int i = 0; i < newlist.size(); i++) {
 				JSONObject jsonObject1 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, newlist.get(i));
-	   			String dicName3=ObjToStrUtil.ReplaceNullValue(jsonObject1.getString("dic_value"));
+	   			String dicName3=ObjToStrUtil.replaceNullValue(jsonObject1.getString("dic_value"));
 	   			if(StringUtils.isNotBlank(dicName3)) {
 	   				Map<String, Object> param1 = new HashMap<>();
    	   				param1.put("Dept3Code",newlist.get(i));
@@ -396,7 +396,7 @@ public class AssetPlanInfoDept3Controller {
 			newlist = removeDuplicate(newlist);
 			for (int k = 0; k < newlist.size(); k++) {
 				JSONObject jsonObject2 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, newlist.get(k));
-				String dicName2=ObjToStrUtil.ReplaceNullValue(jsonObject2.getString("dic_value"));
+				String dicName2=ObjToStrUtil.replaceNullValue(jsonObject2.getString("dic_value"));
 				if(StringUtils.isNotBlank(dicName2)) {
 					Map<String, Object> param1 = new HashMap<>();
    	   				param1.put("Dept3Code",null);
@@ -502,7 +502,7 @@ public class AssetPlanInfoDept3Controller {
 		   				}
 	   					
 	   					JSONObject jsonObject33 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, allChildDept.get(i).getDeptCode().toString());
-	   		   			String dicNameForDept33=ObjToStrUtil.ReplaceNullValue(jsonObject33.getString("dic_value"));
+	   		   			String dicNameForDept33=ObjToStrUtil.replaceNullValue(jsonObject33.getString("dic_value"));
 		   		   		if(StringUtils.isNotBlank(dicNameForDept33)) {
 		   					String[] split = dicNameForDept33.split("_");
 		   	   				daoHuo = Integer.parseInt(split[0]);
@@ -588,12 +588,12 @@ public class AssetPlanInfoDept3Controller {
    			DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(deptCode));
    			JSONObject jsonObject3 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, deptCode);
    			//当前登录人所在部门的预算
-   			String dicName=ObjToStrUtil.ReplaceNullValue(jsonObject3.getString("dic_value"));
+   			String dicName=ObjToStrUtil.replaceNullValue(jsonObject3.getString("dic_value"));
    			
    			JSONObject jsonObject1 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, user.getDept3Code());
-   			String dicName3=ObjToStrUtil.ReplaceNullValue(jsonObject1.getString("dic_value"));
+   			String dicName3=ObjToStrUtil.replaceNullValue(jsonObject1.getString("dic_value"));
    			JSONObject jsonObject2 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, user.getDept2Code());
-			String dicName2=ObjToStrUtil.ReplaceNullValue(jsonObject2.getString("dic_value"));
+			String dicName2=ObjToStrUtil.replaceNullValue(jsonObject2.getString("dic_value"));
 			
 			//实际到货_在途_预算
 			int daoHuo = 0;
@@ -741,7 +741,7 @@ public class AssetPlanInfoDept3Controller {
 	   				}
    					
    					JSONObject jsonObject33 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, allChildDept.get(i).getDeptCode().toString());
-   		   			String dicNameForDept33=ObjToStrUtil.ReplaceNullValue(jsonObject33.getString("dic_value"));
+   		   			String dicNameForDept33=ObjToStrUtil.replaceNullValue(jsonObject33.getString("dic_value"));
 	   		   		if(StringUtils.isNotBlank(dicNameForDept33)) {
 	   					String[] split = dicNameForDept33.split("_");
 	   	   				daoHuo = Integer.parseInt(split[0]);

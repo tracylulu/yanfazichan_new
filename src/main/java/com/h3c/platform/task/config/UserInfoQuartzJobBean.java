@@ -80,7 +80,7 @@ public class UserInfoQuartzJobBean extends QuartzJobBean{
 				ex.printStackTrace();
 			}
 				
-			operationLogService.SaveLog(log);
+			operationLogService.saveLog(log);
 			e.printStackTrace();
 		}
 

@@ -68,7 +68,7 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 		manufacturerInfoMapper.updateByPrimaryKeySelective(info);
 		
 		if("0".equals(info.getDeleteFlag())) {
-			modelInfoService.DelByManufacturerID(info.getId());
+			modelInfoService.delByManufacturerId(info.getId());
 		}
 		
 		return ResponseResult.success("修改成功！");

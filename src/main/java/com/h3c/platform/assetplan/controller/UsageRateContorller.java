@@ -34,7 +34,7 @@ public class UsageRateContorller {
 	@GetMapping("/getRate")
 	@ApiOperation("获取使用率统计信息")	
 	public ResponseResult getRate(SearchRateParamEntity param) throws Exception{
-		RateTotalInfo total= rateTotalInfoService.getRateTotalInfoByID(param.getId());
+		RateTotalInfo total= rateTotalInfoService.getRateTotalInfoById(param.getId());
 		if(total==null||total.getId()==null||total.getId()==0) {
 			total =rateInfoService.getRate(param.getAssetCategory(), param.getDeptCode(), param.getCollectTime());
 		}

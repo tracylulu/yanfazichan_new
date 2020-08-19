@@ -16,7 +16,7 @@ public class OperationLogServiceImpl implements OperationLogService {
 	@Autowired
 	private OperationLogMapper  optLogMapper;
 	
-	public void SaveLog(OperationLog operationLog) {
+	public void saveLog(OperationLog operationLog) {
 		operationLog.setLogtime(new Date());
 		operationLog.setUserid(UserUtils.getCurrentUserId());
 		optLogMapper.insert(operationLog);		

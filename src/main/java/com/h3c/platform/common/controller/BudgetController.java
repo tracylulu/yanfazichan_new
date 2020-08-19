@@ -63,28 +63,28 @@ public class BudgetController {
 
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			obj.put("deptCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));
+			obj.put("deptCode", ObjToStrUtil.replaceNullValue(obj.get("dic_code")));
 			Optional<DeptInfo> temp = lstDept.stream()
-					.filter(o -> ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")).equals(o.getDeptCode().toString()))
+					.filter(o -> ObjToStrUtil.replaceNullValue(obj.get("dic_code")).equals(o.getDeptCode().toString()))
 					.findAny();
 			if (temp.isPresent()) {
 				obj.put("deptName", temp.get().getDeptName());
 			} else {
 				obj.put("deptName", "");
 			}
-			String[] dicNameArr = ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_");
+			String[] dicNameArr = ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_");
 			obj.put("daoHuo", dicNameArr[0]);
 			obj.put("zaiTu", dicNameArr[1]);
 			obj.put("budget", dicNameArr[2]);
 
-			obj.put("creater", ObjToStrUtil.ReplaceNullValue(obj.get("creatername")) + " "
-					+ ObjToStrUtil.ReplaceNullValue(obj.get("createrempcode")));
-			obj.put("last_modifier", ObjToStrUtil.ReplaceNullValue(obj.get("modifiername")) + " "
-					+ ObjToStrUtil.ReplaceNullValue(obj.get("modifierempcode")));
-			obj.put("create_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time"))) ? ""
+			obj.put("creater", ObjToStrUtil.replaceNullValue(obj.get("creatername")) + " "
+					+ ObjToStrUtil.replaceNullValue(obj.get("createrempcode")));
+			obj.put("last_modifier", ObjToStrUtil.replaceNullValue(obj.get("modifiername")) + " "
+					+ ObjToStrUtil.replaceNullValue(obj.get("modifierempcode")));
+			obj.put("create_time", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("create_time"))) ? ""
 					: obj.getDate("create_time"));
 			obj.put("last_modify_time",
-					StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time"))) ? ""
+					StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("last_modify_time"))) ? ""
 							: obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
 		}
@@ -122,7 +122,7 @@ public class BudgetController {
 		JSONArray lst = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getDeptCode().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+			if (entity.getDeptCode().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 				return ResponseResult.fail("此部门信息已配置");
 			}
 		}
@@ -148,7 +148,7 @@ public class BudgetController {
 		JSONArray lst = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getDeptCode().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])
+			if (entity.getDeptCode().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[1])
 					&& !entity.getId().equals(obj.getInteger("id"))) {
 				return ResponseResult.fail("此部门信息已配置");
 			}
@@ -178,21 +178,21 @@ public class BudgetController {
 	@ApiOperation(value = "根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model = dicServer.getByID(id);
-		model.put("deptCode", ObjToStrUtil.ReplaceNullValue(model.get("dicCode")));
-		DeptInfo dept = deptService.getByCode(ObjToStrUtil.ReplaceNullValue(model.get("dicCode")));
+		model.put("deptCode", ObjToStrUtil.replaceNullValue(model.get("dicCode")));
+		DeptInfo dept = deptService.getByCode(ObjToStrUtil.replaceNullValue(model.get("dicCode")));
 		if (dept != null && dept.getDeptCode() != null && dept.getDeptCode() != 0) {
 			model.put("deptName", dept.getDeptName());
 		} else {
 			model.put("deptName", "");
 		}
-		String[] dicNameArr = ObjToStrUtil.ReplaceNullValue(model.get("dicValue")).split("_");
+		String[] dicNameArr = ObjToStrUtil.replaceNullValue(model.get("dicValue")).split("_");
 		model.put("daoHuo", dicNameArr[0]);
 		model.put("zaiTu", dicNameArr[1]);
 		model.put("budget", dicNameArr[2]);
-		model.put("createTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime"))) ? ""
+		model.put("createTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime"))) ? ""
 				: model.getDate("createTime"));
 		model.put("lastModifyTime",
-				StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime"))) ? ""
+				StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime"))) ? ""
 						: model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
@@ -259,7 +259,7 @@ public class BudgetController {
 
 			for (int i = 0; i < lstAll.size(); i++) {
 				JSONObject obj = lstAll.getJSONObject(i);
-				if (deptCode.equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")))) {
+				if (deptCode.equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
 					dic = obj;
 					break;
 				}
@@ -275,7 +275,7 @@ public class BudgetController {
 			dic.put("lastModifier", UserUtils.getCurrentDominAccount());						
 			dic.put("isAble", 1);
 			dic.put("isDeleted", 0);
-			if(StringUtils.isNotBlank(ObjToStrUtil.ReplaceNullValue(dic.get("id")))) {
+			if(StringUtils.isNotBlank(ObjToStrUtil.replaceNullValue(dic.get("id")))) {
 				lstEdit.add(dic);				
 			}else {
 				dic.put("creater", UserUtils.getCurrentDominAccount());

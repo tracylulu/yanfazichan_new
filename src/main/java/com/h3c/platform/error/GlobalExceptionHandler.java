@@ -82,7 +82,7 @@ public class GlobalExceptionHandler implements ErrorController {
 		//RequestAttributes requestAttributes = new ServletRequestAttributes(request);
 		Map<String, Object> body = this.errorAttributes.getErrorAttributes(webRequest, true);
 		//int status = getStatus(request);
-		String errMsg = ObjToStrUtil.ReplaceNullValue(body.get("message"));
+		String errMsg = ObjToStrUtil.replaceNullValue(body.get("message"));
 		if (StringUtils.isNotBlank(errMsg) && errMsg.contains("登录")) {
 			String requestTicket = null;
 			String url = request.getRequestURL().toString();
@@ -99,7 +99,7 @@ public class GlobalExceptionHandler implements ErrorController {
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			}
-			operationLogService.SaveLog(log);
+			operationLogService.saveLog(log);
 			try {
 				RequestTicket ticket = RequestTicket.getInstance();
 				ticket.setSiteId(siteId);
@@ -169,7 +169,7 @@ public class GlobalExceptionHandler implements ErrorController {
 //			} catch (UnknownHostException e) {
 //				e.printStackTrace();
 //			}
-//			operationLogService.SaveLog(log);
+//			operationLogService.saveLog(log);
 //			try {
 //				RequestTicket ticket = RequestTicket.getInstance();
 //				ticket.setSiteId(siteId);
@@ -199,7 +199,7 @@ public class GlobalExceptionHandler implements ErrorController {
 //		} catch (UnknownHostException e) {
 //			e.printStackTrace();
 //		}
-//		operationLogService.SaveLog(log);
+//		operationLogService.saveLog(log);
 //		try {
 //			RequestTicket ticket = RequestTicket.getInstance();
 //			ticket.setSiteId(siteId);

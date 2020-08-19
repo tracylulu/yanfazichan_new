@@ -88,7 +88,7 @@ public class DeptInfoQuartzJobBean  extends QuartzJobBean{
 				e.printStackTrace();
 			}
 				
-			operationLogService.SaveLog(log);
+			operationLogService.saveLog(log);
 			e.printStackTrace();
 		}
 

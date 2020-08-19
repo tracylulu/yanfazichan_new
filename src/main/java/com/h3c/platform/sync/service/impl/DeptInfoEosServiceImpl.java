@@ -35,15 +35,15 @@ public class DeptInfoEosServiceImpl implements DeptInfoEosService{
 		for(Map<String, Object> map :lst) {
 			DeptInfo_EOS dept= new DeptInfo_EOS();
 			dept.setDeptCode(Integer.parseInt(map.get("dept_code").toString()));
-			dept.setDeptName(ObjToStrUtil.ReplaceNullValue(map.get("dept_name")));
-			dept.setCoa(ObjToStrUtil.ReplaceNullValue(map.get("coa")));
-			dept.setDeptLevel(ObjToStrUtil.ReplaceNullValue(map.get("dept_level")));
-			dept.setSupDeptCode(ObjToStrUtil.ReplaceNullValue(map.get("sup_dept_code")));
-			dept.setTypeId(ObjToStrUtil.ReplaceNullValue(map.get("type_id")));
-			dept.setDeptType(ObjToStrUtil.ReplaceNullValue(map.get("dept_type")));
-			dept.setDeptManagerCode(ObjToStrUtil.ReplaceNullValue(map.get("director")));
-			dept.setDeptPlannerCode(ObjToStrUtil.ReplaceNullValue(map.get("planner")));
-			dept.setDeptCodeChain(ObjToStrUtil.ReplaceNullValue(map.get("dept_code_chain")));
+			dept.setDeptName(ObjToStrUtil.replaceNullValue(map.get("dept_name")));
+			dept.setCoa(ObjToStrUtil.replaceNullValue(map.get("coa")));
+			dept.setDeptLevel(ObjToStrUtil.replaceNullValue(map.get("dept_level")));
+			dept.setSupDeptCode(ObjToStrUtil.replaceNullValue(map.get("sup_dept_code")));
+			dept.setTypeId(ObjToStrUtil.replaceNullValue(map.get("type_id")));
+			dept.setDeptType(ObjToStrUtil.replaceNullValue(map.get("dept_type")));
+			dept.setDeptManagerCode(ObjToStrUtil.replaceNullValue(map.get("director")));
+			dept.setDeptPlannerCode(ObjToStrUtil.replaceNullValue(map.get("planner")));
+			dept.setDeptCodeChain(ObjToStrUtil.replaceNullValue(map.get("dept_code_chain")));
 			dept.setUpdateTime(new Date());
 			deptInfoEosMapper.insertSelective(dept);
 		}

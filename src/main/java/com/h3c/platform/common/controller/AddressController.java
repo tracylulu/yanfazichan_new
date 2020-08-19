@@ -57,9 +57,9 @@ public class AddressController {
 	
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
-			obj.put("dicCode", ObjToStrUtil.ReplaceNullValue(obj.get("dic_code")));			
+			obj.put("dicCode", ObjToStrUtil.replaceNullValue(obj.get("dic_code")));			
 			
-			String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_");
+			String[] dicNameArr=ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_");
 			obj.put("consignee", dicNameArr[0]);
 			obj.put("place", dicNameArr[1]);
 			obj.put("detail", dicNameArr[2]);
@@ -69,10 +69,10 @@ public class AddressController {
 				obj.put("approver", "");
 			}
 			
-			obj.put("creater",  ObjToStrUtil.ReplaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("createrempcode")));
-			obj.put("last_modifier", ObjToStrUtil.ReplaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.ReplaceNullValue(obj.get("modifierempcode")));
-			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
-			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
+			obj.put("creater",  ObjToStrUtil.replaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("createrempcode")));
+			obj.put("last_modifier", ObjToStrUtil.replaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("modifierempcode")));
+			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
+			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
 		}
 		
@@ -109,7 +109,7 @@ public class AddressController {
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getPlace().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])) {
+			if (entity.getPlace().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[1])) {
 				return ResponseResult.fail("到货地点配置重复");
 			}
 		}
@@ -133,7 +133,7 @@ public class AddressController {
 		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
-			if (entity.getPlace().equals(ObjToStrUtil.ReplaceNullValue(obj.get("dic_value")).split("_")[1])&&!entity.getId().equals(obj.getInteger("id"))) {
+			if (entity.getPlace().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[1])&&!entity.getId().equals(obj.getInteger("id"))) {
 				return ResponseResult.fail("到货地点配置重复");
 			}
 		}
@@ -163,7 +163,7 @@ public class AddressController {
 	public ResponseResult getByID(Integer id) throws Exception {
 		JSONObject model=dicServer.getByID(id);
 	
-		String[] dicNameArr=ObjToStrUtil.ReplaceNullValue(model.get("dicValue")).split("_");
+		String[] dicNameArr=ObjToStrUtil.replaceNullValue(model.get("dicValue")).split("_");
 		model.put("consignee", dicNameArr[0]);
 		model.put("place", dicNameArr[1]);
 		model.put("detail", dicNameArr[2]);
@@ -172,8 +172,8 @@ public class AddressController {
 		}else {
 			model.put("approver", "");
 		}
-		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
-		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.ReplaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
+		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
+		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
 	}
 }

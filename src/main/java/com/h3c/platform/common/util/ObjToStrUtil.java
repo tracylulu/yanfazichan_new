@@ -8,7 +8,7 @@ public class ObjToStrUtil {
 	 * @param val
 	 * @return
 	 */
-	public static String ReplaceNullValue(Object val) {
+	public static String replaceNullValue(Object val) {
 		String value=ObjectUtils.toString(val, "");	
 		if("null".equalsIgnoreCase(value)) {
 			return "";
