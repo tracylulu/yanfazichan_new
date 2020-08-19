@@ -30,11 +30,11 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 	private PurchaseReportInfoMapper purchaseReportInfoMapper;
 	
 	@Override
-	public List<PurchaseReportInfoExt> getByPurchaseReportID(String purchaseReportID) throws Exception{
+	public List<PurchaseReportInfoExt> getByPurchaseReportId(String purchaseReportId) throws Exception{
 		List<PurchaseReportInfoExt> lstResult= new ArrayList<>();
 		PurchaseReportInfoExample example=new PurchaseReportInfoExample();
 		PurchaseReportInfoExample.Criteria cri= example.createCriteria();
-		cri.andPurchasereportidEqualTo(purchaseReportID);
+		cri.andPurchasereportidEqualTo(purchaseReportId);
 		List<PurchaseReportInfo> lst=purchaseReportInfoMapper.selectByExample(example);
 		
 		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.REQPURCHOASEREPORT,"1");
@@ -78,10 +78,10 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 	}
 
 	@Override
-	public List<PurchaseReportInfo> getByID(String purchaseReportID) {
+	public List<PurchaseReportInfo> getById(String purchaseReportId) {
 		PurchaseReportInfoExample example=new PurchaseReportInfoExample();
 		PurchaseReportInfoExample.Criteria cri= example.createCriteria();
-		cri.andPurchasereportidEqualTo(purchaseReportID);
+		cri.andPurchasereportidEqualTo(purchaseReportId);
 		List<PurchaseReportInfo> lst=purchaseReportInfoMapper.selectByExample(example);
 		return lst;
 	}

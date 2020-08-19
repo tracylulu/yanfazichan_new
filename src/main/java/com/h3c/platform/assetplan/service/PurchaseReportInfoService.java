@@ -6,9 +6,9 @@ import com.h3c.platform.assetplan.entity.PurchaseReportInfo;
 import com.h3c.platform.assetplan.entity.PurchaseReportInfoExt;
 
 public interface PurchaseReportInfoService  {
-	List<PurchaseReportInfoExt> getByPurchaseReportID(String purchaseReportID) throws Exception;
+	List<PurchaseReportInfoExt> getByPurchaseReportId(String purchaseReportId) throws Exception;
 	
 	List<PurchaseReportInfoExt> getEmptyFiled() throws Exception;
 	
-	public List<PurchaseReportInfo> getByID(String purchaseReportID);
+	public List<PurchaseReportInfo> getById(String purchaseReportId);
 }

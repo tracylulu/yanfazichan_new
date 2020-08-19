@@ -408,7 +408,7 @@ public class AssetPlanInfoApplyController {
 				//有申购报告
 				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
 					String purchasereportid = ap.getPurchasereportid();
-					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportID(purchasereportid);
+					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportId(purchasereportid);
 					assetPlanGlobalInfoAll.setPurchaseReportInfo(lstPur);
 				}else {
 					assetPlanGlobalInfoAll.setPurchaseReportInfo(null);
@@ -417,7 +417,7 @@ public class AssetPlanInfoApplyController {
 				//有指定供应商
 				if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
 					String specifymanufacturerid = ap.getSpecifymanufacturerid();
-					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerID(specifymanufacturerid);
+					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerId(specifymanufacturerid);
 					
 					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(lstSpec);
 				}else {
@@ -468,7 +468,7 @@ public class AssetPlanInfoApplyController {
    				//有申购报告
    				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
    					String purchasereportid = ap.getPurchasereportid();
-   					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportID(purchasereportid);
+   					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportId(purchasereportid);
    					assetPlanGlobalInfoAll.setPurchaseReportInfo(lstPur);   					
    				}else {
    					assetPlanGlobalInfoAll.setPurchaseReportInfo(null);
@@ -477,7 +477,7 @@ public class AssetPlanInfoApplyController {
    				//有指定供应商
    				if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
    					String specifymanufacturerid = ap.getSpecifymanufacturerid();
-   					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerID(specifymanufacturerid);
+   					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerId(specifymanufacturerid);
    					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(lstSpec);
    				}else {
    					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(null);
@@ -1484,7 +1484,7 @@ public class AssetPlanInfoApplyController {
    				if("1".equals(ap.getIsreqpurchasereport())) {
    					picId=ap.getPurchasereportid();
    					String purchasereportid = ap.getPurchasereportid();
-   					List<PurchaseReportInfo> list = purchaseReportInfoService.getByID(purchasereportid);
+   					List<PurchaseReportInfo> list = purchaseReportInfoService.getById(purchasereportid);
    					for (int i = 0; i < list.size(); i++) {
    						if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
    							String picturepath = list.get(i).getPicturepath();
@@ -1505,7 +1505,7 @@ public class AssetPlanInfoApplyController {
    				if("1".equals(ap.getIsspecifymanufacturer())) {
    					picId=ap.getSpecifymanufacturerid();
    					String specifymanufacturerid = ap.getSpecifymanufacturerid();
-   					List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getByID(specifymanufacturerid);
+   					List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getById(specifymanufacturerid);
    					for (int i = 0; i < list.size(); i++) {
    						if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
    							String picturepath = list.get(i).getPicturepath();
@@ -1633,7 +1633,7 @@ public class AssetPlanInfoApplyController {
 		//有申购报告
 		if("1".equals(ap.getIsreqpurchasereport())) {
 			String purchasereportid = ap.getPurchasereportid();
-			List<PurchaseReportInfo> list = purchaseReportInfoService.getByID(purchasereportid);
+			List<PurchaseReportInfo> list = purchaseReportInfoService.getById(purchasereportid);
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
 					Map<String, Object> detail = new HashMap<>();
@@ -1657,7 +1657,7 @@ public class AssetPlanInfoApplyController {
 		//有指定供应商
 		if("1".equals(ap.getIsspecifymanufacturer())) {
 			String specifymanufacturerid = ap.getSpecifymanufacturerid();
-			List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getByID(specifymanufacturerid);
+			List<SpecifyManufacturerInfo> list = specifyManufacturerInfoService.getById(specifymanufacturerid);
 			for (int i = 0; i < list.size(); i++) {
 				if(StringUtils.isNotBlank(list.get(i).getPicturepath())) {
 					Map<String, Object> detail = new HashMap<>();

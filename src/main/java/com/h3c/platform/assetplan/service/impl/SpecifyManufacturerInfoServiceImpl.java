@@ -29,11 +29,11 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 	private SpecifyManufacturerInfoMapper specifyManufacturerInfoMapper;
 
 	@Override
-	public List<SpecifyManufacturerInfoExt> getBySpecifyManufacturerID(String SpecifyManufacturerID) throws Exception{
+	public List<SpecifyManufacturerInfoExt> getBySpecifyManufacturerId(String specifyManufacturerId) throws Exception{
 		List<SpecifyManufacturerInfoExt> lstResult= new ArrayList<>();
 		SpecifyManufacturerInfoExample example=new SpecifyManufacturerInfoExample();
 		SpecifyManufacturerInfoExample.Criteria cri= example.createCriteria();
-		cri.andSpecifymanufactureridEqualTo(SpecifyManufacturerID);
+		cri.andSpecifymanufactureridEqualTo(specifyManufacturerId);
 		List<SpecifyManufacturerInfo> lst=specifyManufacturerInfoMapper.selectByExample(example);
 		
 		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.SPECIFYMAUFACTURER,"1");
@@ -78,10 +78,10 @@ public class SpecifyManufacturerInfoServiceImpl implements SpecifyManufacturerIn
 	}
 
 	@Override
-	public List<SpecifyManufacturerInfo> getByID(String SpecifyManufacturerID) {
+	public List<SpecifyManufacturerInfo> getById(String specifyManufacturerId) {
 		SpecifyManufacturerInfoExample example=new SpecifyManufacturerInfoExample();
 		SpecifyManufacturerInfoExample.Criteria cri= example.createCriteria();
-		cri.andSpecifymanufactureridEqualTo(SpecifyManufacturerID);
+		cri.andSpecifymanufactureridEqualTo(specifyManufacturerId);
 		List<SpecifyManufacturerInfo> lst=specifyManufacturerInfoMapper.selectByExample(example);
 		return lst;
 	}

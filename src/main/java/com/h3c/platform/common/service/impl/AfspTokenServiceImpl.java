@@ -16,13 +16,13 @@ public class AfspTokenServiceImpl implements AfspTokenService{
 	@Value("${afsp.applicationId}")
 	private String  applicationId;
 	@Value("${afsp.dic.url.token}")
-	private String url_Token;
+	private String urlToken;
 	@Value("${afsp.password}")
 	private String password;
 	
 	public  String getEosToken() throws Exception{
     	String params="{\"account\":\""+applicationId+"\",\"password\":\""+password+"\"}";			
-		String result= HttpClientUtil.sendHttpPostJson(eosUrl+url_Token, params);
+		String result= HttpClientUtil.sendHttpPostJson(eosUrl+urlToken, params);
 		
 		//JSONObject json = new JSONObject();
 		JSONObject jsonResult = JSON.parseObject(result);
