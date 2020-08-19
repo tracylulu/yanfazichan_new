@@ -68,11 +68,21 @@
              <!--PurchaseReportID的值为0的时候，因为其数据类型为Integer，所以这个判断是为false的，就是说int类型的判断，Mybatis是认定0为''的，所以为false。  -->
              <!--不为0说明有申购报告   -->
              <if test="param.IsReqPurchaseReport !=null  and param.IsReqPurchaseReport !='' ">
-				and IsReqPurchaseReport = #{param.IsReqPurchaseReport}
+             	 <if test="param.IsReqPurchaseReport ==0   ">
+					and (IsReqPurchaseReport ="0" || IsReqPurchaseReport ="" )
+				</if>
+				<if test="param.IsReqPurchaseReport ==1   ">
+					and IsReqPurchaseReport = #{param.IsReqPurchaseReport}
+				</if>
 			</if>
 			
 			<if test="param.ISSpecifyManufacturer !=null and param.ISSpecifyManufacturer !='' ">
-				and ISSpecifyManufacturer = #{param.ISSpecifyManufacturer}
+				<if test="param.ISSpecifyManufacturer ==0   ">
+					and (ISSpecifyManufacturer = "0" || ISSpecifyManufacturer ="" )
+				</if>
+				<if test="param.ISSpecifyManufacturer ==1   ">
+					and ISSpecifyManufacturer = #{param.ISSpecifyManufacturer}
+				</if>
 			</if>
 			
              <if test="param.ApplyResult !=null and param.ApplyResult ==1 ">
@@ -214,12 +224,22 @@
 			</if>
              <!--PurchaseReportID的值为0的时候，因为其数据类型为Integer，所以这个判断是为false的，就是说int类型的判断，Mybatis是认定0为''的，所以为false。  -->
              <!--不为0说明有申购报告   -->
-             <if test="param.IsReqPurchaseReport !=null  and param.IsReqPurchaseReport !='' ">
-				and IsReqPurchaseReport = #{param.IsReqPurchaseReport}
+			<if test="param.IsReqPurchaseReport !=null  and param.IsReqPurchaseReport !='' ">
+             	 <if test="param.IsReqPurchaseReport ==0   ">
+					and (IsReqPurchaseReport ="0" || IsReqPurchaseReport ="" )
+				</if>
+				<if test="param.IsReqPurchaseReport ==1   ">
+					and IsReqPurchaseReport = #{param.IsReqPurchaseReport}
+				</if>
 			</if>
 			
 			<if test="param.ISSpecifyManufacturer !=null and param.ISSpecifyManufacturer !='' ">
-				and ISSpecifyManufacturer = #{param.ISSpecifyManufacturer}
+				<if test="param.ISSpecifyManufacturer ==0   ">
+					and (ISSpecifyManufacturer = "0" || ISSpecifyManufacturer ="" )
+				</if>
+				<if test="param.ISSpecifyManufacturer ==1   ">
+					and ISSpecifyManufacturer = #{param.ISSpecifyManufacturer}
+				</if>
 			</if>
 			
              <if test="param.ApplyResult !=null and param.ApplyResult ==1 ">
