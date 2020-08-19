@@ -90,15 +90,15 @@ public class AssetPlanInfoOQDeptController {
 					Map<String, Object> param = new HashMap<>();
 					param.put("OQDeptReviewer",oqDeptReviewer);
    					param.put("ApplyMonth",applymonth);
-   					List<Integer> flag= assetPlanInfoService.getOQDeptListForFlag(param);
-	   				int listSize=assetPlanInfoService.getOQDeptListSize(param);
+   					List<Integer> flag= assetPlanInfoService.getOqDeptListForFlag(param);
+	   				int listSize=assetPlanInfoService.getOqDeptListSize(param);
 	   				for (int i = 0; i < flag.size(); i++) {
 	   					JSONObject json=new JSONObject();
 	   					param.put("GroupFlag",flag.get(i));
 	   					List<AssetPlanInfoAll> listofOQDeptDetail = assetPlanInfoService.listofOqDeptDetail(param);
 	   					if(!listofOQDeptDetail.isEmpty()) {
 	   						String groupflagdetail = listofOQDeptDetail.get(0).getGroupflagdetail();
-	   						Map<String,Object> groupMess = assetPlanInfoService.getOQDeptGroupMess(param);
+	   						Map<String,Object> groupMess = assetPlanInfoService.getOqDeptGroupMess(param);
 	   						DecimalFormat df = new DecimalFormat("0.00");
 	   						BigDecimal  requireds = (BigDecimal) groupMess.get("Requireds");
 	   						BigDecimal  requiredsAudit = (BigDecimal) groupMess.get("RequiredsAudit");

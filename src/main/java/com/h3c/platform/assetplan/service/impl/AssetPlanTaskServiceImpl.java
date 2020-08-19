@@ -27,7 +27,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 	@Autowired
 	private SysDicInfoService dicService;
 	@Override
-	public void SubmitAllForDept3() throws Exception {
+	public void submitAllForDept3() throws Exception {
 		Integer day=getStartDay();
 		if(day==0) {
 			throw new Exception("未配置任务启动时间");

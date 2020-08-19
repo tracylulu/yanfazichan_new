@@ -111,7 +111,7 @@ public class AssetPlanQuartzJobBean extends QuartzJobBean{
 				logger.info(df.format(workEndThird));
 				if(df.format(workEndThird).equals(df.format(new Date()))) {
 					assetPlanTaskService.dept3OutTime();
-					assetPlanTaskService.SubmitAllForDept3();
+					assetPlanTaskService.submitAllForDept3();
 					logger.info("third  out time");
 				}
 				

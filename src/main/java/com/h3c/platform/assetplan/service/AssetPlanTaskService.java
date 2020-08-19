@@ -12,7 +12,7 @@ public interface AssetPlanTaskService {
 	/**
 	 * 第二环节统一提价第三环节
 	 */
-	void SubmitAllForDept3()  throws Exception;
+	void submitAllForDept3()  throws Exception;
 	
 	/**
 	 * 申请环节超期

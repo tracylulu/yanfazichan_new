@@ -178,11 +178,11 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	 */
 	@Override
 	@Transactional
-	public int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstID) throws Exception{
+	public int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstId) throws Exception{
 		//更新流程状态
 		batchEdit(lst);
 		//异步写入使用率
-		syncEdit( lst, lstID);
+		syncEdit( lst, lstId);
 		return lst.size();
 	}
 	
@@ -413,9 +413,9 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	
 	@Override	
 	@Transactional
-	public int delAssetPlanInfo(List<Integer> lstDelID){
+	public int delAssetPlanInfo(List<Integer> lstDelId){
 		Map<String,Object> param=new HashMap<>();
-		param.put("id", lstDelID);
+		param.put("id", lstDelId);
 		param.put("Modifier", UserUtils.getCurrentUserId());
 		return  assetPlanInfoMapper.deleteById(param);
 	}
@@ -630,17 +630,17 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	}*/
 	
 	@Override
-	public List<Integer> getOQDeptListForFlag(Map<String, Object> param) {
+	public List<Integer> getOqDeptListForFlag(Map<String, Object> param) {
 		return oqDeptViewMapper.getListForFlag(param);
 	}
     
 	@Override
-	public Map<String,Object>getOQDeptGroupMess(Map<String, Object> param){
+	public Map<String,Object>getOqDeptGroupMess(Map<String, Object> param){
 		return oqDeptViewMapper.getGroupMess(param);
 	}
     
 	@Override
-	public Integer getOQDeptListSize(Map<String, Object> param) {
+	public Integer getOqDeptListSize(Map<String, Object> param) {
 		return oqDeptViewMapper.getListSize(param);
 	}
 

@@ -43,7 +43,7 @@ public interface AssetPlanInfoService {
 	 * @param lst
 	 * @return
 	 */
-	int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstID) throws Exception;
+	int batchEditAssetPlanAndRate(List<AssetPlanInfo> lst,List<Integer> lstId) throws Exception;
 	
 	int batchEditAssetPlanInfo(List<AssetPlanInfo> lst);
 	
@@ -71,7 +71,7 @@ public interface AssetPlanInfoService {
 	 * @param id
 	 * @return
 	 */
-	int delAssetPlanInfo(List<Integer> lstDelID);
+	int delAssetPlanInfo(List<Integer> lstDelId);
 	
 	/**
 	 * 修改数量
@@ -149,11 +149,11 @@ public interface AssetPlanInfoService {
     
   	//String getSumMoneyAfterForOQDept(Map<String, Object> param); 
   	
-  	List<Integer> getOQDeptListForFlag(Map<String, Object> param) ;
+  	List<Integer> getOqDeptListForFlag(Map<String, Object> param) ;
     
-    Map<String,Object>getOQDeptGroupMess(Map<String, Object> param);
+    Map<String,Object>getOqDeptGroupMess(Map<String, Object> param);
     
-    Integer getOQDeptListSize(Map<String, Object> param);
+    Integer getOqDeptListSize(Map<String, Object> param);
   	
   	List<AssetPlanInfoAll> listofDept1Detail(Map<String, Object> param);
   	
