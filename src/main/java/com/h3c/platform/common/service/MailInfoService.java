@@ -83,4 +83,15 @@ public interface MailInfoService {
      * @param link  环节  3或4 
      */
     void sendDeptMgnMail(String sendTo, String ccTo, String process,  boolean isAbnormalPlan, int link ,String url) throws Exception;
+
+    /**
+     * 发送提醒邮件(发起工作委托后，请邮件通知被委托人，同时抄送原审批人和操作人)
+     * @param sendTo
+     * @param ccTo
+     * @param subject 邮件主题
+     * @param process 流程环节名称
+     * @param url 流程链接  ,为空不加超链接 
+     */
+    void sendRemindMailForWork(String sendTo, String ccTo, String beforeHandler, String process,String url);
+
 }

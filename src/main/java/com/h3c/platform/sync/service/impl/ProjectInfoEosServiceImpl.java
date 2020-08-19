@@ -23,12 +23,12 @@ import com.h3c.platform.sync.service.ProjectInfoEosService;
 public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 
 	@Autowired
-	private  ProjectInfo_EOSMapper projectInfoEOSMapper;
+	private  ProjectInfo_EOSMapper projectInfoEosMapper;
 	
 	@Override
 	@Transactional
 	public int syncProjectInfoEos(List<Map<String, Object>> lst) {
-		projectInfoEOSMapper.deleteProjectInfoEos();
+		projectInfoEosMapper.deleteProjectInfoEos();
 		insertDeptEos(lst);
 		return 1;
 	}
@@ -67,7 +67,7 @@ public class ProjectInfoEosServiceImpl implements  ProjectInfoEosService {
 				}
 				
 				pro.setUpdateTime(new Date());
-				projectInfoEOSMapper.insertSelective(pro);
+				projectInfoEosMapper.insertSelective(pro);
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

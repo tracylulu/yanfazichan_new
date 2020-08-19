@@ -78,7 +78,7 @@
   <sql id="Blob_Column_List">
     Content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.h3c.platform.sysmgr.entity.OperationLogExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBlobs" parameterType="com.h3c.platform.sysmgr.entity.OperationLogExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -238,7 +238,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
+  <update id="updateByExampleWithBlobs" parameterType="map">
     update OperationLog
     set LogID = #{record.logid,jdbcType=BIGINT},
       ModelCode = #{record.modelcode,jdbcType=VARCHAR},
@@ -297,7 +297,7 @@
     </set>
     where LogID = #{logid,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
+  <update id="updateByPrimaryKeyWithBlobs" parameterType="com.h3c.platform.sysmgr.entity.OperationLog">
     update OperationLog
     set ModelCode = #{modelcode,jdbcType=VARCHAR},
       ModelName = #{modelname,jdbcType=VARCHAR},

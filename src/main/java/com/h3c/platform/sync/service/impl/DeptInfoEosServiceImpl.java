@@ -18,12 +18,12 @@ import com.h3c.platform.sync.service.DeptInfoEosService;
 public class DeptInfoEosServiceImpl implements DeptInfoEosService{
 
 	@Autowired
-	private DeptInfo_EOSMapper  deptInfoEOSMapper;
+	private DeptInfo_EOSMapper  deptInfoEosMapper;
 	
 	@Override
 	@Transactional
 	public int syncDeptInfoEos( List<Map<String, Object>> lst) {
-		deptInfoEOSMapper.deleteDeptEos();
+		deptInfoEosMapper.deleteDeptEos();
 		insertDeptEos(lst);
 		
 		return 1;
@@ -45,7 +45,7 @@ public class DeptInfoEosServiceImpl implements DeptInfoEosService{
 			dept.setDeptPlannerCode(ObjToStrUtil.ReplaceNullValue(map.get("planner")));
 			dept.setDeptCodeChain(ObjToStrUtil.ReplaceNullValue(map.get("dept_code_chain")));
 			dept.setUpdateTime(new Date());
-			deptInfoEOSMapper.insertSelective(dept);
+			deptInfoEosMapper.insertSelective(dept);
 		}
 	}
 }

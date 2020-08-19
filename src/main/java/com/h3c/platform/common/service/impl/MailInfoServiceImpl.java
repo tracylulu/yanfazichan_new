@@ -187,6 +187,21 @@ public class MailInfoServiceImpl implements MailInfoService {
 	}
 
 	@Override
+	public void sendRemindMailForWork(String sendTo, String ccTo, String beforeHandler,String process, String url) {
+
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$node", process);
+		contentJson.put("$user", beforeHandler);
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
+		sendMailAndRecord(MailTempConst.AUTHORIZEWORK, sendTo, ccTo, contentJson, templeteArr, null);
+	}
+	
+	@Override
 	public void sendProcessEndMail(String sendTo, String ccTo, String url) {
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : endUrl);

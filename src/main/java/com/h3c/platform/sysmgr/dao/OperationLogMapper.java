@@ -16,7 +16,7 @@ public interface OperationLogMapper {
 
     int insertSelective(OperationLog record);
 
-    List<OperationLog> selectByExampleWithBLOBs(OperationLogExample example);
+    List<OperationLog> selectByExampleWithBlobs(OperationLogExample example);
 
     List<OperationLog> selectByExample(OperationLogExample example);
 
@@ -24,13 +24,13 @@ public interface OperationLogMapper {
 
     int updateByExampleSelective(@Param("record") OperationLog record, @Param("example") OperationLogExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") OperationLog record, @Param("example") OperationLogExample example);
+    int updateByExampleWithBlobs(@Param("record") OperationLog record, @Param("example") OperationLogExample example);
 
     int updateByExample(@Param("record") OperationLog record, @Param("example") OperationLogExample example);
 
     int updateByPrimaryKeySelective(OperationLog record);
 
-    int updateByPrimaryKeyWithBLOBs(OperationLog record);
+    int updateByPrimaryKeyWithBlobs(OperationLog record);
 
     int updateByPrimaryKey(OperationLog record);
 }

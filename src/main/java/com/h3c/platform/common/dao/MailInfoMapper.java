@@ -16,7 +16,7 @@ public interface MailInfoMapper {
 
     int insertSelective(MailInfo record);
 
-    List<MailInfo> selectByExampleWithBLOBs(MailInfoExample example);
+    List<MailInfo> selectByExampleWithBlobs(MailInfoExample example);
 
     List<MailInfo> selectByExample(MailInfoExample example);
 
@@ -24,13 +24,13 @@ public interface MailInfoMapper {
 
     int updateByExampleSelective(@Param("record") MailInfo record, @Param("example") MailInfoExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") MailInfo record, @Param("example") MailInfoExample example);
+    int updateByExampleWithBlobs(@Param("record") MailInfo record, @Param("example") MailInfoExample example);
 
     int updateByExample(@Param("record") MailInfo record, @Param("example") MailInfoExample example);
 
     int updateByPrimaryKeySelective(MailInfo record);
 
-    int updateByPrimaryKeyWithBLOBs(MailInfo record);
+    int updateByPrimaryKeyWithBlobs(MailInfo record);
 
     int updateByPrimaryKey(MailInfo record);
 }

@@ -14,5 +14,7 @@ public class MailTempConst {
 			// 系统公用模板
 			SYSTEM = "$system",
 			//二三级主管审核模板
-			DEPTAPPROVALDATA="DeptApproveData";
+			DEPTAPPROVALDATA="DeptApproveData",
+			//工作委托模板
+			AUTHORIZEWORK="AuthorizeWork";
 }

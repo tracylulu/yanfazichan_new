@@ -94,10 +94,7 @@ public class AssetPlanInfoDept3Controller {
 	@UserLoginToken
    	public ResponseResult getDept3InfoList(@RequestParam @ApiParam(name="dept3Manager",value="三级主管审核环节处理人(当前登录人)",required=true)String dept3Manager,
    			@RequestParam @ApiParam(name="apstage",value="物品所处的三级主管审核阶段",required=true)String apstage,
-   			@RequestParam @ApiParam(name="applymonth",value="申请月份",required=true)String applymonth,
-   			@RequestParam @ApiParam(name="pageSize",value="每页行数",required=true)int pageSize,
-   			@RequestParam @ApiParam(name="pageNum",value="页码",required=true)int pageNum) throws Exception{
-   		//try {
+   			@RequestParam @ApiParam(name="applymonth",value="申请月份",required=true)String applymonth) throws Exception{
    			//封装返回数据的表头信息
    			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFODEPT3VIEW);
    			
@@ -118,11 +115,10 @@ public class AssetPlanInfoDept3Controller {
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("3")) {
 				//解决sonar扫描列出来的错误
 				//PageHelper.startPage(pageNum, pageSize);
-				com.github.pagehelper.page.PageMethod.startPage(pageNum, pageSize);
+				//com.github.pagehelper.page.PageMethod.startPage(pageNum, pageSize);
    				List<AssetPlanInfoAll> dept3InfoList = assetPlanInfoService.listofDept3Detail(param);
-   				PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(dept3InfoList);
+   				//PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(dept3InfoList);
    				if(dept3InfoList.size()>0) {
-   					
 	   				//申购金额合计  totalmoneySum
 	   				String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept3(param1);
 	   				//同意申购金额合计  ActualMoneySum
@@ -130,11 +126,11 @@ public class AssetPlanInfoDept3Controller {
 	   				json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
 	   				json.put("ActualMoneySum",new BigDecimal(actualMoneySum));
 	   				//数据集list
-	   				json.put("DataSet" , pageInfo.getList());
+	   				json.put("DataSet" , dept3InfoList);
 	   				arrayData.add(json);	
-	   				return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, arrayData);
+	   				return ResponseResult.success(0, "查询成功", 0, dept3InfoList.size(), columnList, arrayData);
    				}else {
-   					return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, arrayData);
+   					return ResponseResult.success(0, "查询成功", 0, dept3InfoList.size(), columnList, arrayData);
    				}
    			}else {
    				return ResponseResult.fail(false, "查询失败，审核阶段不匹配");
@@ -142,12 +138,6 @@ public class AssetPlanInfoDept3Controller {
 		}else {
 			return ResponseResult.fail(false, "查询失败，人员不匹配");
 		}
-   			
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "查询失败");
-   		}*/
-		
    	}
 	
   

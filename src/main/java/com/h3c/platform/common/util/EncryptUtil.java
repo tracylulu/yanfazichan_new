@@ -110,7 +110,7 @@ public class EncryptUtil {
      * @param isEncode
      * @return
      */
-    private String keyGeneratorES(String res, String algorithm, String key,
+    private String keyGeneratorEs(String res, String algorithm, String key,
             int keysize, boolean isEncode) {
         try {
             KeyGenerator kg = KeyGenerator.getInstance(algorithm);
@@ -232,7 +232,7 @@ public class EncryptUtil {
      * @return
      */
     public String desEncode(String res, String key) {
-        return keyGeneratorES(res, DES, key, keysizeDes, true);
+        return keyGeneratorEs(res, DES, key, keysizeDes, true);
     }
 
     /**
@@ -245,7 +245,7 @@ public class EncryptUtil {
      * @return
      */
     public String desDecode(String res, String key) {
-        return keyGeneratorES(res, DES, key, keysizeDes, false);
+        return keyGeneratorEs(res, DES, key, keysizeDes, false);
     }
 
     /**
@@ -258,7 +258,7 @@ public class EncryptUtil {
      * @return
      */
     public String aesEncode(String res, String key) {
-        return keyGeneratorES(res, AES, key, keysizeAes, true);
+        return keyGeneratorEs(res, AES, key, keysizeAes, true);
     }
 
     /**
@@ -271,7 +271,7 @@ public class EncryptUtil {
      * @return
      */
     public String aesDecode(String res, String key) {
-        return keyGeneratorES(res, AES, key, keysizeAes, false);
+        return keyGeneratorEs(res, AES, key, keysizeAes, false);
     }
 
     /**
