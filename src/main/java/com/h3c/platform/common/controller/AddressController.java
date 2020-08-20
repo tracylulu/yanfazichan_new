@@ -53,7 +53,7 @@ public class AddressController {
 	@ApiOperation(value="获取列表")
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_ADDRESS,"");
 	
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
@@ -106,7 +106,7 @@ public class AddressController {
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
 	public ResponseResult add(@RequestBody AddressEntity entity) throws Exception {	
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_ADDRESS,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			if (entity.getPlace().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[1])) {
@@ -130,7 +130,7 @@ public class AddressController {
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
 	public ResponseResult edit(@RequestBody AddressEntity entity) throws Exception {
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_ADDRESS,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			if (entity.getPlace().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[1])&&!entity.getId().equals(obj.getInteger("id"))) {
@@ -161,7 +161,7 @@ public class AddressController {
 	@PostMapping("/getByID")
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
-		JSONObject model=dicServer.getByID(id);
+		JSONObject model=dicServer.getById(id);
 	
 		String[] dicNameArr=ObjToStrUtil.replaceNullValue(model.get("dicValue")).split("_");
 		model.put("consignee", dicNameArr[0]);

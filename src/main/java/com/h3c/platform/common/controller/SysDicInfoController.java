@@ -75,7 +75,7 @@ public class SysDicInfoController {
 	@ApiOperation(value="获取列表")	
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
-		JSONArray lst= sysDicInfoService.getJSONArrayDicsByType(param.getSearchParam(),"");
+		JSONArray lst= sysDicInfoService.getJsonArrayDicsByType(param.getSearchParam(),"");
 		
 		//List<UserInfo> lstUser=userService.getAll();
 		for(int i=0;i<lst.size();i++) {
@@ -146,7 +146,7 @@ public class SysDicInfoController {
 	@PostMapping("/getByID")
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
-		JSONObject model=sysDicInfoService.getByID(id);	
+		JSONObject model=sysDicInfoService.getById(id);	
 		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
 		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);

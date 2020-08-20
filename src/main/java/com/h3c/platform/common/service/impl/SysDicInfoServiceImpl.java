@@ -102,9 +102,9 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	@Override
 	public List<Map<String, Object>> getColumn(String viewName) throws Exception {
 		List<Map<String, Object>> lstColumns = new ArrayList<>();
-		JSONArray arrName = getJSONArrayDicsByType("R_" + viewName + "_CNName", "1");
-		JSONArray arrLength = getJSONArrayDicsByType("R_" + viewName + "_Length", "1");
-		JSONArray arrisEdit = getJSONArrayDicsByType("R_" + viewName + "_isEdit", "1");
+		JSONArray arrName = getJsonArrayDicsByType("R_" + viewName + "_CNName", "1");
+		JSONArray arrLength = getJsonArrayDicsByType("R_" + viewName + "_Length", "1");
+		JSONArray arrisEdit = getJsonArrayDicsByType("R_" + viewName + "_isEdit", "1");
 
 		if (arrName != null && arrName.size() > 0) {
 			for (int i = 0; i < arrName.size(); i++) {
@@ -145,7 +145,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	 * @return JSONArray
 	 */
 	@Override
-	public JSONArray getJSONArrayDicsByType(String type, String isDelete) throws Exception {
+	public JSONArray getJsonArrayDicsByType(String type, String isDelete) throws Exception {
 		EosSearchParamEntity eosSearchParamEntity = new EosSearchParamEntity();
 		eosSearchParamEntity.setApplicationId(applicationId);
 		if (StringUtils.isNotBlank(isDelete)) {
@@ -195,7 +195,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	@Override
 	public JSONObject getDicByTypeAndCode(String type, String code) throws Exception {
 		JSONObject result = new JSONObject();
-		JSONArray arr = getJSONArrayDicsByType(type, "1");
+		JSONArray arr = getJsonArrayDicsByType(type, "1");
 
 		for (int i = 0; i < arr.size(); i++) {
 			JSONObject obj = arr.getJSONObject(i);
@@ -214,7 +214,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
 
 	@Override
-	public String getOQ() throws Exception {
+	public String getOq() throws Exception {
 		return getDicCode(DicConst.R_OQ);
 	}
 
@@ -224,7 +224,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
 
 	private String getDicCode(String type) throws Exception {
-		JSONArray jsonArray = getJSONArrayDicsByType(type, "1");
+		JSONArray jsonArray = getJsonArrayDicsByType(type, "1");
 		if (jsonArray.size() == 0) {
 			return "";
 		}
@@ -283,7 +283,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 	}
 
 	@Override
-	public JSONObject getByID(Integer id) throws Exception {
+	public JSONObject getById(Integer id) throws Exception {
 		JSONObject obj = new JSONObject();
 		obj.put("applicationId", applicationId);
 		obj.put("id", id);

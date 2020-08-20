@@ -6,39 +6,37 @@ import java.util.List;
 
 public class SysDicCategoryEntity   {	
 	
-	public String AssetCategoryId;
+	public String assetCategoryId;
 
-    public  String AssetCategory;
+    public  String assetCategory;
 
-    public  String Goodstime;
+    public  String goodstime;
 
 	public String getAssetCategoryId() {
-		return AssetCategoryId;
+		return assetCategoryId;
 	}
 
 	public void setAssetCategoryId(String assetCategoryId) {
-		AssetCategoryId = assetCategoryId;
+		this.assetCategoryId = assetCategoryId;
 	}
 
 	public String getAssetCategory() {
-		return AssetCategory;
+		return assetCategory;
 	}
 
 	public void setAssetCategory(String assetCategory) {
-		AssetCategory = assetCategory;
+		this.assetCategory = assetCategory;
 	}
 
 	public String getGoodstime() {
-		return Goodstime;
+		return goodstime;
 	}
 
 	public void setGoodstime(String goodstime) {
-		Goodstime = goodstime;
+		this.goodstime = goodstime;
 	}
-    
-    
-    
-    
+
+	
     
     
 }

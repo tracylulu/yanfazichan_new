@@ -47,7 +47,7 @@ public class CategoryController {
 	@ApiOperation(value="获取列表")
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
 		
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
@@ -94,7 +94,7 @@ public class CategoryController {
 	@PostMapping("/add")
 	@ApiOperation(value="新增")
 	public ResponseResult add(@RequestBody CategoryEntity entity) throws Exception {
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			if (entity.getCategory().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[2])) {
@@ -118,7 +118,7 @@ public class CategoryController {
 	@PutMapping("/edit")
 	@ApiOperation(value="修改")
 	public ResponseResult edit(@RequestBody CategoryEntity entity) throws Exception {
-		JSONArray lst= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			if (entity.getCategory().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[2])&&!entity.getId().equals(obj.getInteger("id"))) {
@@ -148,7 +148,7 @@ public class CategoryController {
 	@PostMapping("/getByID")
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
-		JSONObject model=dicServer.getByID(id);
+		JSONObject model=dicServer.getById(id);
 		model.put("deptCode", ObjToStrUtil.replaceNullValue(model.get("dicCode")));
 		String[] dicNameArr=ObjToStrUtil.replaceNullValue(model.get("dicValue")).split("_");
 		model.put("certifier", dicNameArr[0]);

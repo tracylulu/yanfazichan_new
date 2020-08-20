@@ -191,7 +191,7 @@ public class AssetPlanInfoPlannerController {
 		   			for (int j = 0; j < newLstsubmitID.size(); j++) {
 		   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
 		   				//下一环节审批人
-		   				String oq = sysDicInfoService.getOQ();
+		   				String oq = sysDicInfoService.getOq();
 		   				if(StringUtils.isNotBlank(oq)) {
 		   					ap.setOqdeptreviewer(oq);
 		   				}else {

@@ -50,7 +50,7 @@ public class AssetPlanTaskServiceImpl implements AssetPlanTaskService {
 		cale = java.util.Calendar.getInstance(); 
 		int month=cale.get(java.util.Calendar.MONTH)+1;
 		try {
-			JSONArray dicArr= dicService.getJSONArrayDicsByType("R_StartDate","1");
+			JSONArray dicArr= dicService.getJsonArrayDicsByType("R_StartDate","1");
 			for(int i=0;i<dicArr.size();i++) {
 				JSONObject obj=dicArr.getJSONObject(i);
 				if(obj.getInteger("dic_code").equals(month)) {

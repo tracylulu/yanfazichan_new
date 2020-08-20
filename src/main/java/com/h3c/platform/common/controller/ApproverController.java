@@ -48,9 +48,9 @@ public class ApproverController {
 	@ApiOperation(value="获取列表")
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
-		JSONArray lstPlanner= dicServer.getJSONArrayDicsByType(DicConst.R_PLANNER,"");
-		JSONArray lstOQ= dicServer.getJSONArrayDicsByType(DicConst.R_OQ,"");
-		JSONArray lstDept= dicServer.getJSONArrayDicsByType(DicConst.R_FISRTDEPTMGN,"");
+		JSONArray lstPlanner= dicServer.getJsonArrayDicsByType(DicConst.R_PLANNER,"");
+		JSONArray lstOQ= dicServer.getJsonArrayDicsByType(DicConst.R_OQ,"");
+		JSONArray lstDept= dicServer.getJsonArrayDicsByType(DicConst.R_FISRTDEPTMGN,"");
 		List<UserInfo> lstUser=userService.getAll();
 	
 		for(int i=0;i<lstPlanner.size();i++) {
@@ -130,7 +130,7 @@ public class ApproverController {
 	@PostMapping("/getByID")
 	@ApiOperation(value="根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
-		JSONObject model=dicServer.getByID(id);
+		JSONObject model=dicServer.getById(id);
 		UserInfo user=userService.getUserByEmpCode(ObjToStrUtil.replaceNullValue(model.get("dicCode")));
 		switch (ObjToStrUtil.replaceNullValue(model.get("dicTypeId"))) {
 		case "R_Planner":
