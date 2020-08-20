@@ -42,6 +42,7 @@ import com.h3c.platform.assetplan.dao.DeptInfoMapper;
 import com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper;
 import com.h3c.platform.assetplan.entity.AssetInfoSubmitEntity;
 import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntity;
+import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntityForDept3AndOther;
 import com.h3c.platform.assetplan.entity.AssetPlanGlobalInfo;
 import com.h3c.platform.assetplan.service.AssetPlanInfoService;
 import com.h3c.platform.assetplan.service.DeptInfoService;
@@ -218,6 +219,8 @@ public class AssetPlanInfoDept3Controller {
 	   			//UserInfo user = userService.getUserByEmpCode(ap.getRequireduser());
    				
    				ap.setDept3checktime(new Date());
+   				//设置二级审批页面默认的评审意见为同意，前台展示使用（同意，不同意）
+	   			ap.setDept2checknote("同意");
    				lst.add(ap);
    			}
    			assetPlanInfoService.batchEditAssetPlanInfo(lst);
@@ -256,8 +259,7 @@ public class AssetPlanInfoDept3Controller {
    	@PutMapping("/updateDept3InfoList")
    	@ResponseBody
 	@UserLoginToken(logType=LogType.MODIFY)
-   	public ResponseResult updateDept3InfoList(@RequestBody AssetInfoUpdateEntity updateEntity) throws Exception{
-		//try {
+   	public ResponseResult updateDept3InfoList(@RequestBody AssetInfoUpdateEntityForDept3AndOther updateEntity) throws Exception{
 			List<Integer> assetplanidList = updateEntity.getAssetplanid();
 			for (int i = 0; i < assetplanidList.size(); i++) {
 				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanidList.get(i));
@@ -265,9 +267,9 @@ public class AssetPlanInfoDept3Controller {
 				ap.setRequiredsaudit((updateEntity.getRequiredsaudit().get(i)));
 				//评审后总金额
 				ap.setActualmoney(updateEntity.getActualmoney().get(i));
-				//审核意见不是必填
-				ap.setDept3checknote(updateEntity.getDept3checknote());
-				ap.setModifier(ap.getDept3manager());
+				//审核意见
+				ap.setDept3checknote(updateEntity.getDept3checknote().get(i));
+				ap.setModifier(UserUtils.getCurrentUserId());
 				ap.setModifitime(new Date());
 				
 				//数量修改完后对相关联的表RequestsNumApproveRecord进行Dept3managercount字段的更新
@@ -277,13 +279,8 @@ public class AssetPlanInfoDept3Controller {
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 				
 				this.assetPlanInfoService.editAssetPlanInfo(ap);
-				
 			}
 			return ResponseResult.success(true,"修改成功");
-		/*} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseResult.fail(false,"修改失败");
-		}*/
 	}
     
 

@@ -34,6 +34,8 @@ public class AssetPlanInfoOQDeptView {
 
     private String deptcode;
 
+    private String dept3name;
+
     private String dept2code;
 
     private String dept2name;
@@ -180,6 +182,14 @@ public class AssetPlanInfoOQDeptView {
 
     public void setDeptcode(String deptcode) {
         this.deptcode = deptcode == null ? null : deptcode.trim();
+    }
+
+    public String getDept3name() {
+        return dept3name;
+    }
+
+    public void setDept3name(String dept3name) {
+        this.dept3name = dept3name == null ? null : dept3name.trim();
     }
 
     public String getDept2code() {

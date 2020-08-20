@@ -17,6 +17,7 @@
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
+    <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
     <result column="dept2Code" jdbcType="VARCHAR" property="dept2code" />
     <result column="dept2Name" jdbcType="VARCHAR" property="dept2name" />
     <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
@@ -93,9 +94,9 @@
   <sql id="Base_Column_List">
     OQDeptReviewer, AssetPlanID, PlanCode, AssetName, ApplyMonth, AssetManufacturer, 
     Requireds, RequiredsAudit, NoPassCount, PPrice, TotalMoney, ActualMoney, RequiredUserName, 
-    RequiredUser, DeptCode, dept2Code, dept2Name, IsCompleteSet, CompleteSetCode, AssetModel, 
-    ItemCode, Purpose, OQDeptReviewNote, UsageRate, ManufacturerTypeEnum, AssetCategory, 
-    GroupFlag, ReviewTime, GroupflagDetail
+    RequiredUser, DeptCode, Dept3Name, dept2Code, dept2Name, IsCompleteSet, CompleteSetCode, 
+    AssetModel, ItemCode, Purpose, OQDeptReviewNote, UsageRate, ManufacturerTypeEnum, 
+    AssetCategory, GroupFlag, ReviewTime, GroupflagDetail
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptViewExample" resultMap="BaseResultMap">
     select
@@ -123,21 +124,23 @@
       Requireds, RequiredsAudit, NoPassCount, 
       PPrice, TotalMoney, ActualMoney, 
       RequiredUserName, RequiredUser, DeptCode, 
-      dept2Code, dept2Name, IsCompleteSet, 
-      CompleteSetCode, AssetModel, ItemCode, 
-      Purpose, OQDeptReviewNote, UsageRate, 
-      ManufacturerTypeEnum, AssetCategory, GroupFlag, 
-      ReviewTime, GroupflagDetail)
+      Dept3Name, dept2Code, dept2Name, 
+      IsCompleteSet, CompleteSetCode, AssetModel, 
+      ItemCode, Purpose, OQDeptReviewNote, 
+      UsageRate, ManufacturerTypeEnum, AssetCategory, 
+      GroupFlag, ReviewTime, GroupflagDetail
+      )
     values (#{oqdeptreviewer,jdbcType=VARCHAR}, #{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, 
       #{assetname,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, 
       #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, #{nopasscount,jdbcType=BIGINT}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
       #{requiredusername,jdbcType=VARCHAR}, #{requireduser,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
-      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{iscompleteset,jdbcType=VARCHAR}, 
-      #{completesetcode,jdbcType=INTEGER}, #{assetmodel,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
-      #{purpose,jdbcType=VARCHAR}, #{oqdeptreviewnote,jdbcType=VARCHAR}, #{usagerate,jdbcType=VARCHAR}, 
-      #{manufacturertypeenum,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{groupflag,jdbcType=VARCHAR}, 
-      #{reviewtime,jdbcType=TIMESTAMP}, #{groupflagdetail,jdbcType=VARCHAR})
+      #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
+      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{assetmodel,jdbcType=VARCHAR}, 
+      #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{oqdeptreviewnote,jdbcType=VARCHAR}, 
+      #{usagerate,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
+      #{groupflag,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, #{groupflagdetail,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView">
     insert into AssetPlanInfoOQDeptView
@@ -186,6 +189,9 @@
       </if>
       <if test="deptcode != null">
         DeptCode,
+      </if>
+      <if test="dept3name != null">
+        Dept3Name,
       </if>
       <if test="dept2code != null">
         dept2Code,
@@ -275,6 +281,9 @@
       </if>
       <if test="deptcode != null">
         #{deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dept3name != null">
+        #{dept3name,jdbcType=VARCHAR},
       </if>
       <if test="dept2code != null">
         #{dept2code,jdbcType=VARCHAR},
@@ -374,6 +383,9 @@
       <if test="record.deptcode != null">
         DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       </if>
+      <if test="record.dept3name != null">
+        Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
+      </if>
       <if test="record.dept2code != null">
         dept2Code = #{record.dept2code,jdbcType=VARCHAR},
       </if>
@@ -438,6 +450,7 @@
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       dept2Code = #{record.dept2code,jdbcType=VARCHAR},
       dept2Name = #{record.dept2name,jdbcType=VARCHAR},
       IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},

@@ -25,6 +25,7 @@ import com.h3c.platform.assetplan.dao.AssetPlanInfoMapper;
 import com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper;
 import com.h3c.platform.assetplan.entity.AssetInfoSubmitEntity;
 import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntity;
+import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntityForDept3AndOther;
 import com.h3c.platform.assetplan.entity.AssetPlanInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoDept1View;
@@ -244,8 +245,7 @@ public class AssetPlanInfoDept1Controller {
    	@PutMapping("/updateDept1InfoList")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
-   	public ResponseResult updateDept1InfoList(@RequestBody AssetInfoUpdateEntity updateEntity) throws Exception{
-		//try {
+   	public ResponseResult updateDept1InfoList(@RequestBody AssetInfoUpdateEntityForDept3AndOther updateEntity) throws Exception{
 			List<Integer> assetplanidList = updateEntity.getAssetplanid();
 			for (int i = 0; i < assetplanidList.size(); i++) {
 				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanidList.get(i));
@@ -253,9 +253,9 @@ public class AssetPlanInfoDept1Controller {
 				ap.setRequiredsaudit((updateEntity.getRequiredsaudit().get(i)));
 				//评审后总金额
 				ap.setActualmoney(updateEntity.getActualmoney().get(i));
-				//审核意见不是必填
-				ap.setDept1reviewnote(updateEntity.getDept1reviewnote());
-				ap.setModifier(ap.getDept1reviewer());
+				//审核意见
+				ap.setDept1reviewnote(updateEntity.getDept1reviewnote().get(i));
+				ap.setModifier(UserUtils.getCurrentUserId());
 				ap.setModifitime(new Date());
 				
 				//数量修改完后对相关联的表RequestsNumApproveRecord进行Dept1reviewercount字段的更新
@@ -266,12 +266,7 @@ public class AssetPlanInfoDept1Controller {
 				
 				this.assetPlanInfoService.editAssetPlanInfo(ap);
 			}
-			
 			return ResponseResult.success(true,"修改成功");
-		/*} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseResult.fail(false,"修改失败");
-		}*/
 	}
     
 	

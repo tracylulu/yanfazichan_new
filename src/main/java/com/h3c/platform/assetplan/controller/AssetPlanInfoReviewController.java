@@ -354,6 +354,8 @@ public class AssetPlanInfoReviewController {
    	   				ap.setModifier(applyuser);
    	   				ap.setModifitime(new Date());
    	   				ap.setReviewtime(new Date());
+   	   				//设置三级审批页面默认的评审意见为同意，前台展示使用（同意，不同意）
+   	   				ap.setDept3checknote("同意");
    	   				lst.add(ap);
    	   			}
    	   			assetPlanInfoService.batchEditAssetPlanAndRate(lst, allReviewListID);
