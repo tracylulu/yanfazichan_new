@@ -203,7 +203,7 @@ public class BudgetController {
 	public ResponseResult importBudget(@RequestParam("file") MultipartFile file) throws IOException, Exception {
 		StringBuffer errMsg = new StringBuffer();
 		int rowIndex = 1;
-		String regex = "^[1-9]\\d*|0$";
+		String regex = "^(([1-9]{1}\\\\d*)|(0{1}))(\\\\.\\\\d{0,2})?$";//^[1-9]\\d*|0$
 		List<JSONObject> lstAdd = new ArrayList<>();
 		List<JSONObject> lstEdit = new ArrayList<>();
 		String fileName = file.getOriginalFilename();
@@ -248,13 +248,13 @@ public class BudgetController {
 			String budget = excelReader.readCellValue(row.getCell(3));
 
 			if (!daohuo.matches(regex)) {
-				errMsg.append("第" + rowIndex + "行，到货请填写整数！\n");
+				errMsg.append("第" + rowIndex + "行，到货请填写数字，最多两位小数！\n");
 			}
 			if (!ziatu.matches(regex)) {
-				errMsg.append("第" + rowIndex + "行，在途请填写整数！\n");
+				errMsg.append("第" + rowIndex + "行，在途请填写数字，最多两位小数！\n");
 			}
 			if (!budget.matches(regex)) {
-				errMsg.append("第" + rowIndex + "行，预算请填写整数！\n");
+				errMsg.append("第" + rowIndex + "行，预算请填写数字，最多两位小数！\n");
 			}
 
 			for (int i = 0; i < lstAll.size(); i++) {
