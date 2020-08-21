@@ -34,6 +34,14 @@ public class AssetPlanInfoSearchView {
 
     private BigDecimal actualmoney;
 
+    private Integer dept3managercount;
+
+    private Integer dept2managercount;
+
+    private BigDecimal dept3agreemoney;
+
+    private BigDecimal dept2agreemoney;
+
     private String requireduser;
 
     private String requiredusername;
@@ -224,6 +232,38 @@ public class AssetPlanInfoSearchView {
 
     public void setActualmoney(BigDecimal actualmoney) {
         this.actualmoney = actualmoney;
+    }
+
+    public Integer getDept3managercount() {
+        return dept3managercount;
+    }
+
+    public void setDept3managercount(Integer dept3managercount) {
+        this.dept3managercount = dept3managercount;
+    }
+
+    public Integer getDept2managercount() {
+        return dept2managercount;
+    }
+
+    public void setDept2managercount(Integer dept2managercount) {
+        this.dept2managercount = dept2managercount;
+    }
+
+    public BigDecimal getDept3agreemoney() {
+        return dept3agreemoney;
+    }
+
+    public void setDept3agreemoney(BigDecimal dept3agreemoney) {
+        this.dept3agreemoney = dept3agreemoney;
+    }
+
+    public BigDecimal getDept2agreemoney() {
+        return dept2agreemoney;
+    }
+
+    public void setDept2agreemoney(BigDecimal dept2agreemoney) {
+        this.dept2agreemoney = dept2agreemoney;
     }
 
     public String getRequireduser() {

@@ -916,5 +916,30 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	public  List<AssetPlanInfo> selectByIds(List<String> lst){
 		return assetPlanInfoMapper.selectByIds(lst);
 	}
+
+	@Override
+	public String getDept3Apply(Map<String, Object> param) {
+		return searchViewMapper.getDept3Apply(param);
+	}
+
+	@Override
+	public String getDept2Apply(Map<String, Object> param) {
+		return searchViewMapper.getDept2Apply(param);
+	}
+
+	@Override
+	public String getDept3Planed(Map<String, Object> param) {
+		return searchViewMapper.getDept3Planed(param);
+	}
+
+	@Override
+	public String getDept2Planed(Map<String, Object> param) {
+		return searchViewMapper.getDept2Planed(param);
+	}
+
+	@Override
+	public String getDept2PlanedForDept3(Map<String, Object> param) {
+		return searchViewMapper.getDept2PlanedForDept3(param);
+	}
 }
 

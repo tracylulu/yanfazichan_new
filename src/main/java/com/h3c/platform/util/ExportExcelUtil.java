@@ -30,7 +30,8 @@ public class ExportExcelUtil<T> {
 	public final static String EXCEL_FILE_2007 = "2007";
 	// 2003 版本 最大支持65536 行
 	public final static String EXCEL_FILE_2003 = "2003";
-
+	
+	public final static Pattern p = Pattern.compile("^//d+(//.//d+)?$");
 	/**
 	 * 通过版本类判断是
 	 *
@@ -121,7 +122,7 @@ public class ExportExcelUtil<T> {
 		//Field[] fields;
 		//Field field;
 		// HSSFRichTextString richString;
-		Pattern p = Pattern.compile("^//d+(//.//d+)?$");
+		//Pattern p = Pattern.compile("^//d+(//.//d+)?$");
 		Matcher matcher;
 		String fieldName;
 		String getMethodName;

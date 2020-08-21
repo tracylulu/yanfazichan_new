@@ -9,6 +9,8 @@
     <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
     <result column="PPrice" jdbcType="DECIMAL" property="pprice" />
+    <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
+    <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
     <result column="PlanMonth" jdbcType="DATE" property="planmonth" />
     <result column="ApplyUser" jdbcType="VARCHAR" property="applyuser" />
     <result column="ApplyTime" jdbcType="TIMESTAMP" property="applytime" />
@@ -104,11 +106,11 @@
   </sql>
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, AssetCategory, PPrice, 
-    PlanMonth, ApplyUser, ApplyTime, Reviewer, ReviewTime, ReviewResult, ReviewNote, 
-    Dept3Manager, Dept3CheckTime, Dept3CheckNote, Dept2Manager, Dept2CheckTime, Dept2CheckNote, 
-    Planner, PlannerTime, PlannerNote, OQDeptReviewer, OQDeptReviewTime, OQDeptReviewNote, 
-    Dept1Reviewer, Dept1ReviewTime, Dept1ReviewNote, APStatus, APStage, APStatusDetail, 
-    ApplyMonth, ReviewerCount, ReviewerPerson, Dept3ManagerCount, Dept2ManagerCount, 
+    TotalMoney, ActualMoney, PlanMonth, ApplyUser, ApplyTime, Reviewer, ReviewTime, ReviewResult, 
+    ReviewNote, Dept3Manager, Dept3CheckTime, Dept3CheckNote, Dept2Manager, Dept2CheckTime, 
+    Dept2CheckNote, Planner, PlannerTime, PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
+    OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, Dept1ReviewNote, APStatus, APStage, 
+    APStatusDetail, ApplyMonth, ReviewerCount, ReviewerPerson, Dept3ManagerCount, Dept2ManagerCount, 
     PlannerCount, OQDeptReviewerCount, Dept1ReviewerCount, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageViewExample" resultMap="BaseResultMap">
@@ -134,32 +136,34 @@
   <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView">
     insert into AssetPlanInfoHomePageView (AssetPlanID, PlanCode, AssetName, 
       AssetManufacturer, AssetModel, AssetCategory, 
-      PPrice, PlanMonth, ApplyUser, 
-      ApplyTime, Reviewer, ReviewTime, 
-      ReviewResult, ReviewNote, Dept3Manager, 
-      Dept3CheckTime, Dept3CheckNote, Dept2Manager, 
-      Dept2CheckTime, Dept2CheckNote, Planner, 
-      PlannerTime, PlannerNote, OQDeptReviewer, 
-      OQDeptReviewTime, OQDeptReviewNote, Dept1Reviewer, 
-      Dept1ReviewTime, Dept1ReviewNote, APStatus, 
-      APStage, APStatusDetail, ApplyMonth, 
-      ReviewerCount, ReviewerPerson, Dept3ManagerCount, 
-      Dept2ManagerCount, PlannerCount, OQDeptReviewerCount, 
-      Dept1ReviewerCount, DeleteFlag)
+      PPrice, TotalMoney, ActualMoney, 
+      PlanMonth, ApplyUser, ApplyTime, 
+      Reviewer, ReviewTime, ReviewResult, 
+      ReviewNote, Dept3Manager, Dept3CheckTime, 
+      Dept3CheckNote, Dept2Manager, Dept2CheckTime, 
+      Dept2CheckNote, Planner, PlannerTime, 
+      PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
+      OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
+      Dept1ReviewNote, APStatus, APStage, 
+      APStatusDetail, ApplyMonth, ReviewerCount, 
+      ReviewerPerson, Dept3ManagerCount, Dept2ManagerCount, 
+      PlannerCount, OQDeptReviewerCount, Dept1ReviewerCount, 
+      DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
-      #{pprice,jdbcType=DECIMAL}, #{planmonth,jdbcType=DATE}, #{applyuser,jdbcType=VARCHAR}, 
-      #{applytime,jdbcType=TIMESTAMP}, #{reviewer,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, 
-      #{reviewresult,jdbcType=INTEGER}, #{reviewnote,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, 
-      #{dept3checktime,jdbcType=TIMESTAMP}, #{dept3checknote,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, 
-      #{dept2checktime,jdbcType=TIMESTAMP}, #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, 
-      #{plannertime,jdbcType=TIMESTAMP}, #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, 
-      #{oqdeptreviewtime,jdbcType=TIMESTAMP}, #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, 
-      #{dept1reviewtime,jdbcType=TIMESTAMP}, #{dept1reviewnote,jdbcType=VARCHAR}, #{apstatus,jdbcType=VARCHAR}, 
-      #{apstage,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, 
-      #{reviewercount,jdbcType=INTEGER}, #{reviewerperson,jdbcType=VARCHAR}, #{dept3managercount,jdbcType=INTEGER}, 
-      #{dept2managercount,jdbcType=INTEGER}, #{plannercount,jdbcType=INTEGER}, #{oqdeptreviewercount,jdbcType=INTEGER}, 
-      #{dept1reviewercount,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR})
+      #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
+      #{planmonth,jdbcType=DATE}, #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, 
+      #{reviewer,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, #{reviewresult,jdbcType=INTEGER}, 
+      #{reviewnote,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept3checktime,jdbcType=TIMESTAMP}, 
+      #{dept3checknote,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, #{dept2checktime,jdbcType=TIMESTAMP}, 
+      #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
+      #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
+      #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
+      #{dept1reviewnote,jdbcType=VARCHAR}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
+      #{apstatusdetail,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, #{reviewercount,jdbcType=INTEGER}, 
+      #{reviewerperson,jdbcType=VARCHAR}, #{dept3managercount,jdbcType=INTEGER}, #{dept2managercount,jdbcType=INTEGER}, 
+      #{plannercount,jdbcType=INTEGER}, #{oqdeptreviewercount,jdbcType=INTEGER}, #{dept1reviewercount,jdbcType=INTEGER}, 
+      #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView">
     insert into AssetPlanInfoHomePageView
@@ -184,6 +188,12 @@
       </if>
       <if test="pprice != null">
         PPrice,
+      </if>
+      <if test="totalmoney != null">
+        TotalMoney,
+      </if>
+      <if test="actualmoney != null">
+        ActualMoney,
       </if>
       <if test="planmonth != null">
         PlanMonth,
@@ -309,6 +319,12 @@
       </if>
       <if test="pprice != null">
         #{pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalmoney != null">
+        #{totalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="actualmoney != null">
+        #{actualmoney,jdbcType=DECIMAL},
       </if>
       <if test="planmonth != null">
         #{planmonth,jdbcType=DATE},
@@ -444,6 +460,12 @@
       <if test="record.pprice != null">
         PPrice = #{record.pprice,jdbcType=DECIMAL},
       </if>
+      <if test="record.totalmoney != null">
+        TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualmoney != null">
+        ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
+      </if>
       <if test="record.planmonth != null">
         PlanMonth = #{record.planmonth,jdbcType=DATE},
       </if>
@@ -560,6 +582,8 @@
       AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
       PPrice = #{record.pprice,jdbcType=DECIMAL},
+      TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
+      ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       PlanMonth = #{record.planmonth,jdbcType=DATE},
       ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
       ApplyTime = #{record.applytime,jdbcType=TIMESTAMP},

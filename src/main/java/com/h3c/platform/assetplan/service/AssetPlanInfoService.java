@@ -225,6 +225,10 @@ public interface AssetPlanInfoService {
      
      String getBudgetSum(Map<String, Object> param);
      
+     String getDept3Apply(Map<String, Object> param);
+     
+     String getDept2Apply(Map<String, Object> param);
+     
      String getBudgetTotalMoneyForDept3(@Param("param") Map<String, Object> param);
      
      ResponseResult updateReviewResult(List<Integer> ids,Integer result,String reviewNote) throws Exception;
@@ -249,4 +253,10 @@ public interface AssetPlanInfoService {
       * @return
       */
      List<AssetPlanInfo> selectByIds(List<String> lst);
+     
+     String getDept3Planed(Map<String, Object> param);
+     
+     String getDept2Planed(Map<String, Object> param);
+     
+     String getDept2PlanedForDept3(Map<String, Object> param);
 }

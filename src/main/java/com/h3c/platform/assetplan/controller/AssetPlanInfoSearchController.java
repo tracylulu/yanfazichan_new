@@ -115,7 +115,6 @@ public class AssetPlanInfoSearchController {
     @ResponseBody
     @UserLoginToken
     public ResponseResult listOfAssetPlanInfo(@RequestBody @ApiParam(name="查询对象",value="传入json格式",required=true) SearchAssetParamEntity searchAssetParamEntity) throws Exception{
-    	//try {
     	    String currentUserId = UserUtils.getCurrentUserId();
     		Map<String, Object> param = new HashMap<>();
             param.put("APStage", searchAssetParamEntity.getApStage());
@@ -151,6 +150,8 @@ public class AssetPlanInfoSearchController {
             	}
             }
             param.put("AssetManufacturer", searchAssetParamEntity.getAssetManufacturer());
+            //增加物品类别查询条件
+            param.put("AssetCategory", searchAssetParamEntity.getAssetcategory());
             param.put("ReceiverPlace", searchAssetParamEntity.getReceiverPlace());
             param.put("AbnormalPlanEnum", searchAssetParamEntity.getAbnormalPlanEnum());
             param.put("OutTimePlanEnum", searchAssetParamEntity.getOutTimePlanEnum());
@@ -192,15 +193,16 @@ public class AssetPlanInfoSearchController {
             }
             
    			List<AssetPlanInfoSearchView> planInfoList = assetPlanInfoSearchService.listofAssetPlanInfo(param);
+   			//物品类别转换成汉字重新赋值
+			for (int i = 0; i < planInfoList.size(); i++) {
+					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(planInfoList.get(i).getAssetcategory());
+					planInfoList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
+			}
    			int totalCount = assetPlanInfoSearchService.countAssetPlanInfo(param);
    			//封装返回数据的表头信息
    			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOSEARCHVIEW);
    			
    			return ResponseResult.success(0, "查询成功", pageNum, totalCount,columnList, planInfoList);
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "查询失败");
-   		}*/
     }
     
     @ApiOperation(value="激活按钮状态修改")
@@ -376,6 +378,8 @@ public class AssetPlanInfoSearchController {
             	}
             }
             param.put("AssetManufacturer", searchAssetParamEntity.getAssetManufacturer());
+            //增加物品类别查询条件
+            param.put("AssetCategory", searchAssetParamEntity.getAssetcategory());
             param.put("ReceiverPlace", searchAssetParamEntity.getReceiverPlace());
             param.put("AbnormalPlanEnum", searchAssetParamEntity.getAbnormalPlanEnum());
             param.put("OutTimePlanEnum", searchAssetParamEntity.getOutTimePlanEnum());
@@ -678,6 +682,7 @@ public class AssetPlanInfoSearchController {
 		json.put("apstatusdetail",  "规范审核");
 		json.put("pprice", record.getPprice());
 		json.put("reviewercount", record.getReviewercount());
+		json.put("actualmoney", record.getActualmoney());
 		json.put("reviewnote", record.getReviewnote());
 		UserInfo user2 = userService.getUserByEmpCode(record.getReviewerperson());
 		if(user2==null) {
@@ -699,7 +704,9 @@ public class AssetPlanInfoSearchController {
 		json1.put("apstage",  "3");
 		json1.put("apstatusdetail",  "三级部门主管审批");
 		json1.put("pprice", record.getPprice());
+		json1.put("reviewercount", record.getReviewercount());
 		json1.put("dept3managercount", record.getDept3managercount());
+		json1.put("actualmoney", record.getActualmoney());
 		json1.put("dept3checknote", record.getDept3checknote());
 		UserInfo user3 = userService.getUserByEmpCode(record.getDept3manager());
 		if(user3==null) {
@@ -721,7 +728,9 @@ public class AssetPlanInfoSearchController {
 		json2.put("apstage",  "4");
 		json2.put("apstatusdetail",  "二级部门主管审批");
 		json2.put("pprice", record.getPprice());
+		json2.put("dept3managercount", record.getDept3managercount());
 		json2.put("dept2managercount", record.getDept2managercount());
+		json2.put("actualmoney", record.getActualmoney());
 		json2.put("dept2checknote", record.getDept2checknote());
 		UserInfo user4 = userService.getUserByEmpCode(record.getDept2manager());
 		if(user4==null) {
@@ -743,7 +752,9 @@ public class AssetPlanInfoSearchController {
 		json3.put("apstage",  "5");
 		json3.put("apstatusdetail",  "计划员审批");
 		json3.put("pprice", record.getPprice());
+		json3.put("dept2managercount", record.getDept2managercount());
 		json3.put("plannercount", record.getPlannercount());
+		json3.put("actualmoney", record.getActualmoney());
 		json3.put("plannernote", record.getPlannernote());
 		UserInfo user5 = userService.getUserByEmpCode(record.getPlanner());
 		if(user5==null) {
@@ -765,7 +776,9 @@ public class AssetPlanInfoSearchController {
 		json4.put("apstage",  "6");
 		json4.put("apstatusdetail",  "专家团审核");
 		json4.put("pprice", record.getPprice());
+		json4.put("plannercount", record.getPlannercount());
 		json4.put("oqdeptreviewercount", record.getOqdeptreviewercount());
+		json4.put("actualmoney", record.getActualmoney());
 		json4.put("oqdeptreviewnote", record.getOqdeptreviewnote());
 		UserInfo user6 = userService.getUserByEmpCode(record.getOqdeptreviewer());
 		if(user6==null) {
@@ -787,7 +800,9 @@ public class AssetPlanInfoSearchController {
 		json5.put("apstage",  "7");
 		json5.put("apstatusdetail",  "一级部门主管审批");
 		json5.put("pprice", record.getPprice());
+		json5.put("oqdeptreviewercount", record.getOqdeptreviewercount());
 		json5.put("dept1reviewercount", record.getDept1reviewercount());
+		json5.put("actualmoney", record.getActualmoney());
 		json5.put("dept1reviewnote", record.getDept1reviewnote());
 		UserInfo user7 = userService.getUserByEmpCode(record.getDept1reviewer());
 		if(user7==null) {

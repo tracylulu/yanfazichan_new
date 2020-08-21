@@ -14,7 +14,7 @@ public class AssetPlanInfoHomePageViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoHomePageViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -71,7 +71,7 @@ public class AssetPlanInfoHomePageViewExample {
 
         protected GeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -118,7 +118,7 @@ public class AssetPlanInfoHomePageViewExample {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
-            List<java.sql.Date> dateList = new ArrayList<>();
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
             while (iter.hasNext()) {
                 dateList.add(new java.sql.Date(iter.next().getTime()));
@@ -600,6 +600,126 @@ public class AssetPlanInfoHomePageViewExample {
 
         public Criteria andPpriceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("PPrice not between", value1, value2, "pprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyIsNull() {
+            addCriterion("TotalMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyIsNotNull() {
+            addCriterion("TotalMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyEqualTo(BigDecimal value) {
+            addCriterion("TotalMoney =", value, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyNotEqualTo(BigDecimal value) {
+            addCriterion("TotalMoney <>", value, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyGreaterThan(BigDecimal value) {
+            addCriterion("TotalMoney >", value, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("TotalMoney >=", value, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyLessThan(BigDecimal value) {
+            addCriterion("TotalMoney <", value, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("TotalMoney <=", value, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyIn(List<BigDecimal> values) {
+            addCriterion("TotalMoney in", values, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyNotIn(List<BigDecimal> values) {
+            addCriterion("TotalMoney not in", values, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("TotalMoney between", value1, value2, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("TotalMoney not between", value1, value2, "totalmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyIsNull() {
+            addCriterion("ActualMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyIsNotNull() {
+            addCriterion("ActualMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney =", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyNotEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney <>", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyGreaterThan(BigDecimal value) {
+            addCriterion("ActualMoney >", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney >=", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyLessThan(BigDecimal value) {
+            addCriterion("ActualMoney <", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("ActualMoney <=", value, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyIn(List<BigDecimal> values) {
+            addCriterion("ActualMoney in", values, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyNotIn(List<BigDecimal> values) {
+            addCriterion("ActualMoney not in", values, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ActualMoney between", value1, value2, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andActualmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ActualMoney not between", value1, value2, "actualmoney");
             return (Criteria) this;
         }
 

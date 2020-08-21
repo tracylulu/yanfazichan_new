@@ -322,12 +322,10 @@ public class AssetPlanInfoDept3Controller {
 	   				Map<String, Object> param1 = new HashMap<>();
    	   				param1.put("Dept3Code",newlist.get(i));
    	   				param1.put("Dept2Code",null);
-   	   				//param1.put("APStatus","0");
-   	   				param1.put("APStage","0");
    	   				param1.put("ApplyMonth",applymonth);
-   	   				String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
+   	   				String budgetSum1 = assetPlanInfoService.getDept3Apply(param1);
    	   				if(StringUtils.isNotBlank(budgetSum1)) {
-   	   					budgetSum=Double.parseDouble(assetPlanInfoService.getBudgetSum(param1))/10000;
+   	   					budgetSum=Double.parseDouble(assetPlanInfoService.getDept3Apply(param1))/10000;
    	   					//df.format(budgetSum);
    	   					BigDecimal bg = new BigDecimal(budgetSum);    
    	   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
@@ -336,13 +334,12 @@ public class AssetPlanInfoDept3Controller {
    	   				
    	   				Map<String, Object> param = new HashMap<>();
    	   				param.put("Dept3Manager",applyuser);
-   	   				param.put("DeptCode",newlist.get(i));
-   	   				param.put("APStage","3");
+   	   				param.put("Dept3Code",newlist.get(i));
    	   				param.put("ApplyMonth",applymonth);
    	   				//计划新增金额（万元），修改，得区分部门的
-   	   				String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept3(param);
+   	   				String totalmoneySum1 = assetPlanInfoService.getDept3Planed(param);
 	   				if(StringUtils.isNotBlank(totalmoneySum1)) {
-	   					totalmoneySum=Double.parseDouble(assetPlanInfoService.getSumTotalMoneyForDept3(param))/10000;
+	   					totalmoneySum=Double.parseDouble(assetPlanInfoService.getDept3Planed(param))/10000;
 	   					//df.format(totalmoneySum);
 	   					BigDecimal bg = new BigDecimal(totalmoneySum);    
 	   					totalmoneySum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -368,6 +365,7 @@ public class AssetPlanInfoDept3Controller {
    	   				DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(newlist.get(i)));
    	   				json2.put("deptCode", deptInfo.getDeptCode());
    	   				json2.put("deptName", deptInfo.getDeptName());
+   	   				json2.put("deptlevel", deptInfo.getDeptLevel());
    	   				json2.put("totalmoneySum", totalmoneySum);
    	   				json2.put("budgetSum", budgetSum);
    	   				json2.put("daoHuo", daoHuo);
@@ -398,12 +396,10 @@ public class AssetPlanInfoDept3Controller {
 					Map<String, Object> param1 = new HashMap<>();
    	   				param1.put("Dept3Code",null);
    	   				param1.put("Dept2Code",newlist.get(k));
-   	   				//param1.put("APStatus","0");
-   	   				param1.put("APStage","0");
    	   				param1.put("ApplyMonth",applymonth);
-   	   				String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
+   	   				String budgetSum1 = assetPlanInfoService.getDept2Apply(param1);
 	   				if(StringUtils.isNotBlank(budgetSum1)) {
-	   					budgetSum=Double.parseDouble(assetPlanInfoService.getBudgetSum(param1))/10000;
+	   					budgetSum=Double.parseDouble(assetPlanInfoService.getDept2Apply(param1))/10000;
 	   					//df.format(budgetSum);
 	   					BigDecimal bg = new BigDecimal(budgetSum);    
 	   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -413,10 +409,9 @@ public class AssetPlanInfoDept3Controller {
    	   				Map<String, Object> param = new HashMap<>();
    	   				param.put("Dept2Manager",applyuser);
    	   				param.put("Dept2Code",newlist.get(k));
-   	   				param.put("APStage","4");
    	   				param.put("ApplyMonth",applymonth);
    	   				//计划新增金额（万元）
-	   	   			String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept2(param);
+	   	   			String totalmoneySum1 = assetPlanInfoService.getDept2Planed(param);
 	   				if(StringUtils.isNotBlank(totalmoneySum1)) {	   					
 	   					totalmoneySum=Double.parseDouble(totalmoneySum1)/10000;
 	   					//df.format(totalmoneySum);
@@ -443,6 +438,7 @@ public class AssetPlanInfoDept3Controller {
    	   				DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(newlist.get(k)));
    	   				json2.put("deptCode", deptInfo.getDeptCode());
    	   				json2.put("deptName", deptInfo.getDeptName());
+   	   				json2.put("deptlevel", deptInfo.getDeptLevel());
    	   				json2.put("totalmoneySum", totalmoneySum);
    	   				json2.put("budgetSum", budgetSum);
    	   				json2.put("daoHuo", daoHuo);
@@ -469,11 +465,10 @@ public class AssetPlanInfoDept3Controller {
 	   	   				boolean isEmpty = false;
 	   					//JSONObject json33=new JSONObject();
 	   					Map<String, Object> param_2 = new HashMap<>();
-	   					param_2.put("DeptCode",allChildDept.get(i).getDeptCode());
-	   					param_2.put("APStage","4");
+	   					param_2.put("Dept3Code",allChildDept.get(i).getDeptCode());
 	   					param_2.put("ApplyMonth",applymonth);
 	   	   				//计划新增金额（万元）
-		   	   			String totalmoneySum11 = assetPlanInfoService.getSumMoneyWithThirdDept(param_2);
+		   	   			String totalmoneySum11 = assetPlanInfoService.getDept2PlanedForDept3(param_2);
 		   				if(StringUtils.isNotBlank(totalmoneySum11)) {
 		   					totalmoneySum=Double.parseDouble(totalmoneySum11)/10000;
 		   					//df.format(totalmoneySum);
@@ -482,16 +477,14 @@ public class AssetPlanInfoDept3Controller {
 		   				}else {
 		   				}
 	   				
-	   					//本月评审已通过（万元）（入参：当前部门，当前月份，审批已结束的状态）
+	   					//本月评审已通过（万元）
 	   					Map<String, Object> param_3 = new HashMap<>();
 	   					param_3.put("Dept3Code",allChildDept.get(i).getDeptCode());
 	   					param_3.put("Dept2Code",null);
-	   					//param_3.put("APStatus","0");
-	   					param_3.put("APStage","0");
 	   					param_3.put("ApplyMonth",applymonth);
-	   					String budgetSum11 = assetPlanInfoService.getBudgetSum(param_3);
+	   					String budgetSum11 = assetPlanInfoService.getDept3Apply(param_3);
 		   				if(StringUtils.isNotBlank(budgetSum11)) {
-		   					budgetSum=Double.parseDouble(assetPlanInfoService.getBudgetSum(param_3))/10000;
+		   					budgetSum=Double.parseDouble(assetPlanInfoService.getDept3Apply(param_3))/10000;
 		   					//df.format(budgetSum);
 		   					BigDecimal bg = new BigDecimal(budgetSum);    
 		   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
@@ -523,6 +516,7 @@ public class AssetPlanInfoDept3Controller {
 		   		   		JSONObject json22=new JSONObject();
 			   		   	json22.put("deptCode", allChildDept.get(i).getDeptCode());
 		   				json22.put("deptName", allChildDept.get(i).getDeptName());
+		   				json22.put("deptlevel", allChildDept.get(i).getDeptLevel());
 		   				json22.put("totalmoneySum", totalmoneySum);
 		   				json22.put("budgetSum", budgetSum);
 		   				json22.put("daoHuo", daoHuo);
@@ -555,6 +549,7 @@ public class AssetPlanInfoDept3Controller {
 	   					DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(newlist.get(k)));
 		   				json1.put("deptCode", deptInfo.getDeptCode());
 		   				json1.put("deptName", deptInfo.getDeptName());
+		   				json1.put("deptlevel", deptInfo.getDeptLevel());
 		   				json1.put("totalmoneySum", totalmoneySum2);
 		   				json1.put("budgetSum", budgetSum2);
 		   				json1.put("daoHuo", daoHuo2);

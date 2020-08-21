@@ -53,6 +53,9 @@ public class SearchAssetParamEntity {
     //厂家
     private String assetManufacturer;
     
+    //物品类别
+    private String assetcategory;
+    
     //到货地点
     private String receiverPlace;
     
@@ -229,6 +232,14 @@ public class SearchAssetParamEntity {
 
 	public void setLstexportId(List<String> lstexportId) {
 		this.lstexportId = lstexportId;
+	}
+
+	public String getAssetcategory() {
+		return assetcategory;
+	}
+
+	public void setAssetcategory(String assetcategory) {
+		this.assetcategory = assetcategory;
 	}
 
 	
