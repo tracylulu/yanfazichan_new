@@ -587,6 +587,222 @@ public class AssetPlanInfoSearchController {
 		}*/
 	}
     
+    
+    @ApiOperation(value="详情页面的审批记录信息")
+   	@GetMapping("/getApprovalRecordByIdForDetail")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getApprovalRecordByIdForDetail(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception{
+   			//封装返回数据的表头信息
+   			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOHOMEPAGEVIEW);
+      			
+   			AssetPlanInfoHomePageView record = homePageViewMapper.getApprovalRecordById(assetplanid);
+   			SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+   			JSONArray arrayData = new JSONArray();
+   			JSONObject json0=new JSONObject();
+   			json0.put("apstage", record.getApstage());
+   			json0.put("apstatusdetail", record.getApstatusdetail());
+   			UserInfo userByEmpCode = userService.getUserByEmpCode(record.getApplyuser());
+   			if(userByEmpCode==null) {
+   				json0.put("applyuser", "");
+   			}else {
+   				json0.put("applyuser", userByEmpCode.getEmpName()+""+record.getApplyuser());
+   			}
+   			
+   			json0.put("PlanCode", record.getPlancode());
+   			json0.put("applytime", dateformat.format(record.getApplytime()));
+   			arrayData.add(json0);
+   			
+   			//三级主管审核页面看见规范审核的和三级待审核的记录
+   			if("3".equals(record.getApstage())) {
+   				JSONObject recordReview = this.getRecordReview(record);
+   				arrayData.add(recordReview);
+   				JSONObject recordDept3 = this.getRecordDept3(record);
+   				arrayData.add(recordDept3);
+   			}
+   			//二级
+   			if("4".equals(record.getApstage())) {
+   				JSONObject recordReview = this.getRecordReview(record);
+   				arrayData.add(recordReview);
+   				JSONObject recordDept3 = this.getRecordDept3(record);
+   				arrayData.add(recordDept3);
+   				JSONObject recordDept2 = this.getRecordDept2(record);
+   				arrayData.add(recordDept2);
+   			}
+   			//计划员
+   			if("5".equals(record.getApstage())) {
+   				JSONObject recordReview = this.getRecordReview(record);
+   				arrayData.add(recordReview);
+   				JSONObject recordDept3 = this.getRecordDept3(record);
+   				arrayData.add(recordDept3);
+   				JSONObject recordDept2 = this.getRecordDept2(record);
+   				arrayData.add(recordDept2);
+   				JSONObject recordPlanner = this.getRecordPlanner(record);
+   				arrayData.add(recordPlanner);
+   			}
+   			//专家团
+   			if("6".equals(record.getApstage())) {
+   				JSONObject recordReview = this.getRecordReview(record);
+   				arrayData.add(recordReview);
+   				JSONObject recordDept3 = this.getRecordDept3(record);
+   				arrayData.add(recordDept3);
+   				JSONObject recordDept2 = this.getRecordDept2(record);
+   				arrayData.add(recordDept2);
+   				JSONObject recordPlanner = this.getRecordPlanner(record);
+   				arrayData.add(recordPlanner);
+   				JSONObject recordOq = this.getRecordOq(record);
+   				arrayData.add(recordOq);
+   			}
+   			//一级
+   			if("7".equals(record.getApstage())) {
+   				JSONObject recordReview = this.getRecordReview(record);
+   				arrayData.add(recordReview);
+   				JSONObject recordDept3 = this.getRecordDept3(record);
+   				arrayData.add(recordDept3);
+   				JSONObject recordDept2 = this.getRecordDept2(record);
+   				arrayData.add(recordDept2);
+   				JSONObject recordPlanner = this.getRecordPlanner(record);
+   				arrayData.add(recordPlanner);
+   				JSONObject recordOq = this.getRecordOq(record);
+   				arrayData.add(recordOq);
+   				JSONObject recordDept1 = this.getRecordDept1(record);
+   				arrayData.add(recordDept1);
+   			}
+   			return ResponseResult.success(0, "查询成功", 0, 0, columnList, arrayData);
+   	}
+    
+    public JSONObject getRecordReview(AssetPlanInfoHomePageView record) {   
+    	SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	JSONObject json=new JSONObject();
+		json.put("apstage",  "2");
+		json.put("apstatusdetail",  "规范审核");
+		json.put("pprice", record.getPprice());
+		json.put("reviewercount", record.getReviewercount());
+		json.put("reviewnote", record.getReviewnote());
+		UserInfo user2 = userService.getUserByEmpCode(record.getReviewerperson());
+		if(user2==null) {
+			json.put("reviewer", "");
+		}else {
+			json.put("reviewer", user2.getDisplayName()+" "+user2.getEmpCode());
+		}
+		if(record.getReviewtime()==null) {
+			json.put("reviewtime", "");
+		}else {
+			json.put("reviewtime", dateformat.format(record.getReviewtime()));
+		}
+        return json;   
+    }
+    
+    public JSONObject getRecordDept3(AssetPlanInfoHomePageView record) {  
+    	SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	JSONObject json1=new JSONObject();
+		json1.put("apstage",  "3");
+		json1.put("apstatusdetail",  "三级部门主管审批");
+		json1.put("pprice", record.getPprice());
+		json1.put("dept3managercount", record.getDept3managercount());
+		json1.put("dept3checknote", record.getDept3checknote());
+		UserInfo user3 = userService.getUserByEmpCode(record.getDept3manager());
+		if(user3==null) {
+			json1.put("dept3manager", "");
+		}else {
+			json1.put("dept3manager", user3.getDisplayName()+" "+record.getDept3manager());
+		}
+		if(record.getDept3checktime()==null) {
+			json1.put("dept3checktime", "");
+		}else {
+			json1.put("dept3checktime", dateformat.format(record.getDept3checktime()));
+		}
+        return json1;   
+    }
+    
+    public JSONObject getRecordDept2(AssetPlanInfoHomePageView record) {  
+    	SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	JSONObject json2=new JSONObject();
+		json2.put("apstage",  "4");
+		json2.put("apstatusdetail",  "二级部门主管审批");
+		json2.put("pprice", record.getPprice());
+		json2.put("dept2managercount", record.getDept2managercount());
+		json2.put("dept2checknote", record.getDept2checknote());
+		UserInfo user4 = userService.getUserByEmpCode(record.getDept2manager());
+		if(user4==null) {
+			json2.put("dept2manager", "");
+		}else {
+			json2.put("dept2manager", user4.getDisplayName()+" "+record.getDept2manager());
+		}
+		if(record.getDept2checktime()==null) {
+			json2.put("dept2checktime", "");
+		}else {
+			json2.put("dept2checktime", dateformat.format(record.getDept2checktime()));
+		}
+        return json2;   
+    }
+    
+    public JSONObject getRecordPlanner(AssetPlanInfoHomePageView record) {  
+    	SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	JSONObject json3=new JSONObject();
+		json3.put("apstage",  "5");
+		json3.put("apstatusdetail",  "计划员审批");
+		json3.put("pprice", record.getPprice());
+		json3.put("plannercount", record.getPlannercount());
+		json3.put("plannernote", record.getPlannernote());
+		UserInfo user5 = userService.getUserByEmpCode(record.getPlanner());
+		if(user5==null) {
+			json3.put("planner", "");
+		}else {
+			json3.put("planner", user5.getDisplayName()+" "+record.getPlanner());
+		}
+		if(record.getPlannertime()==null) {
+			json3.put("plannertime", "");
+		}else {
+			json3.put("plannertime", dateformat.format(record.getPlannertime()));
+		}
+        return json3;   
+    }
+    
+    public JSONObject getRecordOq(AssetPlanInfoHomePageView record) {  
+    	SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	JSONObject json4=new JSONObject();
+		json4.put("apstage",  "6");
+		json4.put("apstatusdetail",  "专家团审核");
+		json4.put("pprice", record.getPprice());
+		json4.put("oqdeptreviewercount", record.getOqdeptreviewercount());
+		json4.put("oqdeptreviewnote", record.getOqdeptreviewnote());
+		UserInfo user6 = userService.getUserByEmpCode(record.getOqdeptreviewer());
+		if(user6==null) {
+			json4.put("oqdeptreviewer", "");
+		}else {
+			json4.put("oqdeptreviewer", user6.getDisplayName()+" "+record.getOqdeptreviewer());
+		}
+		if(record.getOqdeptreviewtime()==null) {
+			json4.put("oqdeptreviewtime", "");
+		}else {
+			json4.put("oqdeptreviewtime", dateformat.format(record.getOqdeptreviewtime()));
+		}
+        return json4;   
+    }
+    
+    public JSONObject getRecordDept1(AssetPlanInfoHomePageView record) {  
+    	SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	JSONObject json5=new JSONObject();
+		json5.put("apstage",  "7");
+		json5.put("apstatusdetail",  "一级部门主管审批");
+		json5.put("pprice", record.getPprice());
+		json5.put("dept1reviewercount", record.getDept1reviewercount());
+		json5.put("dept1reviewnote", record.getDept1reviewnote());
+		UserInfo user7 = userService.getUserByEmpCode(record.getDept1reviewer());
+		if(user7==null) {
+			json5.put("dept1reviewer", "");
+		}else {
+			json5.put("dept1reviewer", user7.getDisplayName()+" "+record.getDept1reviewer());
+		}
+		if(record.getDept1reviewtime()==null) {
+			json5.put("dept1reviewtime", "");
+		}else {
+			json5.put("dept1reviewtime", dateformat.format(record.getDept1reviewtime()));
+		}
+        return json5;   
+    }
+    
     @ApiOperation(value="研发有效的部门树方法")
    	@GetMapping("/getDeptTreeInfoNormal")
    	@ResponseBody

@@ -296,10 +296,10 @@ public class AssetPlanInfoDept3Controller {
 		List<JSONObject> lstResult=new ArrayList<>();
 		List<JSONObject> lstChild=new ArrayList<>();
 		//实际到货_在途_预算
-		int daoHuo = 0;
-		int zaiTu = 0;
-		int totalBudget = 0;
-		int total=0;
+		double daoHuo = 0;
+		double zaiTu = 0;
+		double totalBudget = 0;
+		double total=0;
 		double totalBudgetSY=0;
 		double budgetSum=0;
 		double totalmoneySum=0;
@@ -352,9 +352,9 @@ public class AssetPlanInfoDept3Controller {
    	   				//实际到货_在途_预算 万元   1_12_123
    	   				if(StringUtils.isNotBlank(dicName3)) {
    	   					String[] split = dicName3.split("_");
-   	   	   				daoHuo = Integer.parseInt(split[0]);
-   	   	   				zaiTu = Integer.parseInt(split[1]);
-   	   	   				totalBudget = Integer.parseInt(split[2]);
+   	   	   				daoHuo = Double.parseDouble(split[0]);
+   	   	   				zaiTu = Double.parseDouble(split[1]);
+   	   	   				totalBudget = Double.parseDouble(split[2]);
    	   	   				total=daoHuo+zaiTu;
    	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
    	   	   				BigDecimal bg = new BigDecimal(totalBudgetSY);    
@@ -427,9 +427,9 @@ public class AssetPlanInfoDept3Controller {
    	   				//实际到货_在途_预算 万元   1_12_123
    	   				if(StringUtils.isNotBlank(dicName2)) {
    	   					String[] split = dicName2.split("_");
-   	   	   				daoHuo = Integer.parseInt(split[0]);
-   	   	   				zaiTu = Integer.parseInt(split[1]);
-   	   	   				totalBudget = Integer.parseInt(split[2]);
+   	   	   				daoHuo = Double.parseDouble(split[0]);
+   	   	   				zaiTu = Double.parseDouble(split[1]);
+   	   	   				totalBudget = Double.parseDouble(split[2]);
    	   	   				total=daoHuo+zaiTu;
    	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
    	   	   				BigDecimal bg = new BigDecimal(totalBudgetSY);    
@@ -457,10 +457,10 @@ public class AssetPlanInfoDept3Controller {
 					//同时加载全部三级部门的信息
 					double totalmoneySum2=0;
 	   	   			double budgetSum2=0;
-	   				int daoHuo2=0;
-	   				int zaiTu2=0;
-	   				int total2=0;
-	   				int totalBudget2=0;
+	   	   			double daoHuo2=0;
+	   	   			double zaiTu2=0;
+	   	   			double total2=0;
+	   	   			double totalBudget2=0;
 	   				double totalBudgetSY2=0;
 	   				//根据二级部门获得所有三级部门集合
 	   				List<DeptInfo> allChildDept = deptInfoService.getAllChildDept(newlist.get(k));
@@ -502,9 +502,9 @@ public class AssetPlanInfoDept3Controller {
 	   		   			String dicNameForDept33=ObjToStrUtil.replaceNullValue(jsonObject33.getString("dic_value"));
 		   		   		if(StringUtils.isNotBlank(dicNameForDept33)) {
 		   					String[] split = dicNameForDept33.split("_");
-		   	   				daoHuo = Integer.parseInt(split[0]);
-		   	   				zaiTu = Integer.parseInt(split[1]);
-		   	   				totalBudget = Integer.parseInt(split[2]);
+		   	   				daoHuo = Double.parseDouble(split[0]);
+		   	   				zaiTu = Double.parseDouble(split[1]);
+		   	   				totalBudget = Double.parseDouble(split[2]);
 		   	   				total=daoHuo+zaiTu;
 		   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
 		   	   				BigDecimal bg = new BigDecimal(totalBudgetSY);    
@@ -572,226 +572,6 @@ public class AssetPlanInfoDept3Controller {
 		}
 		
 		return ResponseResult.success(0, "查询成功", 0, 0, null, lstResult);
-		
-		/*
-		
-		
-			List<JSONObject> lstResult=new ArrayList<JSONObject>();
-			List<JSONObject> lstChild=new ArrayList<JSONObject>();
-			//当前登录人工号
-   			UserInfo user = userService.getUserByEmpCode(applyuser);
-   			//当前登录人所在部门code
-   			String deptCode = user.getDeptCode();
-   			DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(deptCode));
-   			JSONObject jsonObject3 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, deptCode);
-   			//当前登录人所在部门的预算
-   			String dicName=ObjToStrUtil.replaceNullValue(jsonObject3.getString("dic_value"));
-   			
-   			JSONObject jsonObject1 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, user.getDept3Code());
-   			String dicName3=ObjToStrUtil.replaceNullValue(jsonObject1.getString("dic_value"));
-   			JSONObject jsonObject2 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, user.getDept2Code());
-			String dicName2=ObjToStrUtil.replaceNullValue(jsonObject2.getString("dic_value"));
-			
-			//实际到货_在途_预算
-			int daoHuo = 0;
-			int zaiTu = 0;
-			int totalBudget = 0;
-   			int total=0;
-   			int totalBudgetSY=0;
-   			int	budgetSum=0;
-   			int totalmoneySum=0;
-   			//不为空，说明预算坐在该部门
-   			if(StringUtils.isNotBlank(dicName)) {
-   				if("3".equals(deptInfo.getDeptLevel())) {
-   					Map<String, Object> param1 = new HashMap<>();
-   	   				param1.put("DeptCode",user.getDept3Code());
-   	   				param1.put("Dept2Code",null);
-   	   				param1.put("APStatus","0");
-   	   				param1.put("APStage","0");
-   	   				param1.put("ApplyMonth",applymonth);
-   	   				String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
-   	   				if(StringUtils.isNotBlank(budgetSum1)) {
-   	   					budgetSum=Integer.parseInt(assetPlanInfoService.getBudgetSum(param1))/10000;
-   	   				}else {
-   	   				}
-   	   				
-   	   				Map<String, Object> param = new HashMap<>();
-   	   				param.put("Dept3Manager",applyuser);
-   	   				param.put("APStage","3");
-   	   				param.put("ApplyMonth",applymonth);
-   	   				//计划新增金额（万元）
-   	   				String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept3(param);
-	   				if(StringUtils.isNotBlank(totalmoneySum1)) {
-	   					totalmoneySum=new Double(Double.parseDouble(assetPlanInfoService.getSumTotalMoneyForDept3(param))).intValue()/10000;
-	   				}else {
-	   				}
-   	   				
-   	   				//实际到货_在途_预算 万元   1_12_123
-   	   				if(StringUtils.isNotBlank(dicName)) {
-   	   					String[] split = dicName.split("_");
-   	   	   				daoHuo = Integer.parseInt(split[0]);
-   	   	   				zaiTu = Integer.parseInt(split[1]);
-   	   	   				totalBudget = Integer.parseInt(split[2]);
-   	   	   				total=daoHuo+zaiTu;
-   	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
-   	   				}else {
-   	   					totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
-   	   				}
-   	   				JSONObject json2=new JSONObject();
-   	   				json2.put("deptCode", deptInfo.getDeptCode());
-   	   				json2.put("deptName", deptInfo.getDeptName());
-   	   				json2.put("totalmoneySum", totalmoneySum);
-   	   				json2.put("budgetSum", budgetSum);
-   	   				json2.put("daoHuo", daoHuo);
-   	   				json2.put("zaiTu", zaiTu);
-   	   				json2.put("total", total);
-   	   				json2.put("totalBudget", totalBudget);
-   	   				json2.put("totalBudgetSY", totalBudgetSY);
-   	   				lstResult.add(json2);   	   			
-   	   				
-   				}else if("2".equals(deptInfo.getDeptLevel())) {
-   					Map<String, Object> param1 = new HashMap<>();
-   	   				param1.put("DeptCode",null);
-   	   				param1.put("Dept2Code",user.getDept2Code());
-   	   				param1.put("APStatus","0");
-   	   				param1.put("APStage","0");
-   	   				param1.put("ApplyMonth",applymonth);
-   	   				String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
-	   				if(StringUtils.isNotBlank(budgetSum1)) {
-	   					budgetSum=Integer.parseInt(assetPlanInfoService.getBudgetSum(param1))/10000;
-	   				}else {
-	   				}
-   	   				
-   	   				Map<String, Object> param = new HashMap<>();
-   	   				param.put("Dept2Manager",applyuser);
-   	   				param.put("APStage","4");
-   	   				param.put("ApplyMonth",applymonth);
-   	   				//计划新增金额（万元）
-	   	   			String totalmoneySum1 = assetPlanInfoService.getSumTotalMoneyForDept2(param);
-	   				if(StringUtils.isNotBlank(totalmoneySum1)) {	   					
-	   					totalmoneySum=new Double(Double.parseDouble(totalmoneySum1)).intValue()/10000;
-	   				}else {
-	   				}
-   	   				//实际到货_在途_预算 万元   1_12_123
-   	   				if(StringUtils.isNotBlank(dicName)) {
-   	   					String[] split = dicName.split("_");
-   	   	   				daoHuo = Integer.parseInt(split[0]);
-   	   	   				zaiTu = Integer.parseInt(split[1]);
-   	   	   				totalBudget = Integer.parseInt(split[2]);
-   	   	   				total=daoHuo+zaiTu;
-   	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
-   	   				}else {
-   	   					totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
-   	   				}
-   	   				JSONObject json2=new JSONObject();
-   	   				json2.put("deptCode", deptInfo.getDeptCode());
-   	   				json2.put("deptName", deptInfo.getDeptName());
-   	   				json2.put("totalmoneySum", totalmoneySum);
-   	   				json2.put("budgetSum", budgetSum);
-   	   				json2.put("daoHuo", daoHuo);
-   	   				json2.put("zaiTu", zaiTu);
-   	   				json2.put("total", total);
-   	   				json2.put("totalBudget", totalBudget);
-   	   				json2.put("totalBudgetSY", totalBudgetSY);
-   	   				lstResult.add(json2);
-   				}
-   				
-   			//当前部门为2级，2及查不到，3级能查到，预算坐在三级，返回所有三级预算列表
-   			//}else if("2".equals(deptInfo.getDeptLevel()) && StringUtils.isBlank(dicName2) && StringUtils.isNotBlank(dicName3) ){
-   			}else if("2".equals(deptInfo.getDeptLevel()) && StringUtils.isBlank(dicName2) ){
-   				int totalmoneySum2=0;
-   				int budgetSum2=0;
-   				int daoHuo2=0;
-   				int zaiTu2=0;
-   				int total2=0;
-   				int totalBudget2=0;
-   				int totalBudgetSY2=0;   			
-   				
-   				//根据二级部门获得所有三级部门集合
-   				List<DeptInfo> allChildDept = deptInfoService.getAllChildDept(user.getDept2Code());
-   				for (int i = 0; i < allChildDept.size(); i++) {
-   					//标示是否为空  true 空
-   	   				boolean isEmpty = false;
-   					JSONObject json2=new JSONObject();
-   					Map<String, Object> param = new HashMap<>();
-   	   				param.put("DeptCode",allChildDept.get(i).getDeptCode());
-   	   				param.put("APStage","4");
-   	   				param.put("ApplyMonth",applymonth);
-   	   				//计划新增金额（万元）
-	   	   			String totalmoneySum1 = assetPlanInfoService.getSumMoneyWithThirdDept(param);
-	   				if(StringUtils.isNotBlank(totalmoneySum1)) {
-	   					totalmoneySum=new Double(Double.parseDouble(totalmoneySum1)).intValue()/10000;
-	   				}else {
-	   				}
-   				
-   					//本月评审已通过（万元）（入参：当前部门，当前月份，审批已结束的状态）
-   					Map<String, Object> param1 = new HashMap<>();
-   					param1.put("DeptCode",allChildDept.get(i).getDeptCode());
-   					param1.put("Dept2Code",null);
-   					param1.put("APStatus","0");
-   					param1.put("APStage","0");
-   					param1.put("ApplyMonth",applymonth);
-   					String budgetSum1 = assetPlanInfoService.getBudgetSum(param1);
-	   				if(StringUtils.isNotBlank(budgetSum1)) {
-	   					budgetSum=Integer.parseInt(assetPlanInfoService.getBudgetSum(param1))/10000;
-	   				}else {
-	   				}
-   					
-   					JSONObject jsonObject33 = sysDicInfoService.getDicByTypeAndCode(DicConst.R_BUDGET, allChildDept.get(i).getDeptCode().toString());
-   		   			String dicNameForDept33=ObjToStrUtil.replaceNullValue(jsonObject33.getString("dic_value"));
-	   		   		if(StringUtils.isNotBlank(dicNameForDept33)) {
-	   					String[] split = dicNameForDept33.split("_");
-	   	   				daoHuo = Integer.parseInt(split[0]);
-	   	   				zaiTu = Integer.parseInt(split[1]);
-	   	   				totalBudget = Integer.parseInt(split[2]);
-	   	   				total=daoHuo+zaiTu;
-	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
-	   				}else {
-	   					//不展示三级预算为空的部门
-	   					isEmpty=true;
-	   					daoHuo =0;
-	   	   				zaiTu = 0;
-	   	   				totalBudget = 0;
-	   	   				total=0;
-	   					totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
-	   				}
-		   		   	json2.put("deptCode", allChildDept.get(i).getDeptCode());
-	   				json2.put("deptName", allChildDept.get(i).getDeptName());
-	   				json2.put("totalmoneySum", totalmoneySum);
-	   				json2.put("budgetSum", budgetSum);
-	   				json2.put("daoHuo", daoHuo);
-	   				json2.put("zaiTu", zaiTu);
-	   				json2.put("total", total);
-	   				json2.put("totalBudget", totalBudget);
-	   				json2.put("totalBudgetSY", totalBudgetSY);	   				
-	   				if(!isEmpty) {
-	   					lstChild.add(json2);
-	   				}
-	   				totalmoneySum2+=totalmoneySum;
-	   				budgetSum2+=budgetSum;
-	   				daoHuo2+=daoHuo;
-	   				zaiTu2+=zaiTu;
-	   				total2+=total;
-	   				totalBudget2+=totalBudget;
-	   				totalBudgetSY2+=totalBudgetSY;	   					   				
-   				}
-   				JSONObject json1=new JSONObject();
-   				json1.put("deptCode", deptInfo.getDeptCode());
-   				json1.put("deptName", deptInfo.getDeptName());
-   				json1.put("totalmoneySum", totalmoneySum2);
-   				json1.put("budgetSum", budgetSum2);
-   				json1.put("daoHuo", daoHuo2);
-   				json1.put("zaiTu", zaiTu2);
-   				json1.put("total", total2);
-   				json1.put("totalBudget", totalBudget2);
-   				json1.put("totalBudgetSY", totalBudgetSY2);
-   				lstResult.add(json1);
-   				
-   				lstResult.addAll(lstChild);
-   			}
-   			//2级,3级都查不到，没有预算lstResult为空	*/
-   			//return ResponseResult.success(0, "查询成功", 0, 0, null, lstResult);
-		
 	}
 	
 	//通过HashSet踢除重复元素
