@@ -31,7 +31,7 @@ public class ExportExcelUtil<T> {
 	// 2003 版本 最大支持65536 行
 	public final static String EXCEL_FILE_2003 = "2003";
 	
-	public final static Pattern p = Pattern.compile("^//d+(//.//d+)?$");
+	public final static Pattern P = Pattern.compile("^//d+(//.//d+)?$");
 	/**
 	 * 通过版本类判断是
 	 *
@@ -190,7 +190,7 @@ public class ExportExcelUtil<T> {
 						}
 					}
 					if (textValue != null) {
-						matcher = p.matcher(textValue);
+						matcher = P.matcher(textValue);
 						if (matcher.matches()) {
 							// 是数字当作double处理
 							cell.setCellValue(Double.parseDouble(textValue));
