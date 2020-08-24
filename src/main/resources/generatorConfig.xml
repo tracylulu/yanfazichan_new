@@ -35,7 +35,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.h3c.platform.assetplan.dao"  targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-         <table tableName="AssetPlanInfoDetailView" domainObjectName="AssetPlanInfoDetailView"></table>
+         <table tableName="AssetPlanInfoHomePageView" domainObjectName="AssetPlanInfoHomePageView"></table>
           <!--
          <table tableName="PDMAN_DB_VERSION" domainObjectName="PDMAN_DB_VERSION"></table>
          <table tableName="PurchaseReportInfo" domainObjectName="PurchaseReportInfo"></table>

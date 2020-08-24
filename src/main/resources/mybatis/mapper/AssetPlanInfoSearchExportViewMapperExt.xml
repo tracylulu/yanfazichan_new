@@ -47,6 +47,10 @@
 				and ReceiverPlace = #{param.ReceiverPlace}
 			</if>
 			
+			<if test="param.AssetCategory !=null and param.AssetCategory !='' ">
+				and AssetCategory = #{param.AssetCategory}
+			</if>
+			
 			<if test="param.AbnormalPlanEnum !=null and param.AbnormalPlanEnum !='' ">
 				and AbnormalPlanEnum = #{param.AbnormalPlanEnum}
 			</if>

@@ -15,6 +15,7 @@
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
     <result column="RequiredUserName" jdbcType="VARCHAR" property="requiredusername" />
     <result column="DeptCode" jdbcType="VARCHAR" property="deptcode" />
+    <result column="Dept3Name" jdbcType="VARCHAR" property="dept3name" />
     <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
     <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
     <result column="OutTimePlanEnum" jdbcType="INTEGER" property="outtimeplanenum" />
@@ -91,9 +92,10 @@
   </sql>
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, Requireds, RequiredsAudit, 
-    PPrice, TotalMoney, ActualMoney, RequiredUser, RequiredUserName, DeptCode, ItemCode, 
-    Purpose, OutTimePlanEnum, ApplyUser, UsageRate, Dept3Manager, Dept3CheckNote, IsCompleteSet, 
-    CompleteSetCode, APStatus, APStage, ReviewResult, ReviewTime, ApplyMonth, DeleteFlag
+    PPrice, TotalMoney, ActualMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, 
+    ItemCode, Purpose, OutTimePlanEnum, ApplyUser, UsageRate, Dept3Manager, Dept3CheckNote, 
+    IsCompleteSet, CompleteSetCode, APStatus, APStage, ReviewResult, ReviewTime, ApplyMonth, 
+    DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDept3ViewExample" resultMap="BaseResultMap">
     select
@@ -120,22 +122,22 @@
       AssetManufacturer, AssetModel, Requireds, 
       RequiredsAudit, PPrice, TotalMoney, 
       ActualMoney, RequiredUser, RequiredUserName, 
-      DeptCode, ItemCode, Purpose, 
-      OutTimePlanEnum, ApplyUser, UsageRate, 
-      Dept3Manager, Dept3CheckNote, IsCompleteSet, 
-      CompleteSetCode, APStatus, APStage, 
-      ReviewResult, ReviewTime, ApplyMonth, 
-      DeleteFlag)
+      DeptCode, Dept3Name, ItemCode, 
+      Purpose, OutTimePlanEnum, ApplyUser, 
+      UsageRate, Dept3Manager, Dept3CheckNote, 
+      IsCompleteSet, CompleteSetCode, APStatus, 
+      APStage, ReviewResult, ReviewTime, 
+      ApplyMonth, DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
       #{requiredsaudit,jdbcType=INTEGER}, #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, 
       #{actualmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, 
-      #{deptcode,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, 
-      #{outtimeplanenum,jdbcType=INTEGER}, #{applyuser,jdbcType=VARCHAR}, #{usagerate,jdbcType=VARCHAR}, 
-      #{dept3manager,jdbcType=VARCHAR}, #{dept3checknote,jdbcType=VARCHAR}, #{iscompleteset,jdbcType=VARCHAR}, 
-      #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
-      #{reviewresult,jdbcType=INTEGER}, #{reviewtime,jdbcType=TIMESTAMP}, #{applymonth,jdbcType=VARCHAR}, 
-      #{deleteflag,jdbcType=VARCHAR})
+      #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
+      #{purpose,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, #{applyuser,jdbcType=VARCHAR}, 
+      #{usagerate,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept3checknote,jdbcType=VARCHAR}, 
+      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, 
+      #{apstage,jdbcType=VARCHAR}, #{reviewresult,jdbcType=INTEGER}, #{reviewtime,jdbcType=TIMESTAMP}, 
+      #{applymonth,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDept3View">
     insert into AssetPlanInfoDept3View
@@ -178,6 +180,9 @@
       </if>
       <if test="deptcode != null">
         DeptCode,
+      </if>
+      <if test="dept3name != null">
+        Dept3Name,
       </if>
       <if test="itemcode != null">
         ItemCode,
@@ -264,6 +269,9 @@
       </if>
       <if test="deptcode != null">
         #{deptcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dept3name != null">
+        #{dept3name,jdbcType=VARCHAR},
       </if>
       <if test="itemcode != null">
         #{itemcode,jdbcType=VARCHAR},
@@ -360,6 +368,9 @@
       <if test="record.deptcode != null">
         DeptCode = #{record.deptcode,jdbcType=VARCHAR},
       </if>
+      <if test="record.dept3name != null">
+        Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
+      </if>
       <if test="record.itemcode != null">
         ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       </if>
@@ -425,6 +436,7 @@
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},
       RequiredUserName = #{record.requiredusername,jdbcType=VARCHAR},
       DeptCode = #{record.deptcode,jdbcType=VARCHAR},
+      Dept3Name = #{record.dept3name,jdbcType=VARCHAR},
       ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       Purpose = #{record.purpose,jdbcType=VARCHAR},
       OutTimePlanEnum = #{record.outtimeplanenum,jdbcType=INTEGER},
