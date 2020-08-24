@@ -70,7 +70,7 @@ public class AssetPlanInfoReportController {
    		List<AssetInfoReportEntity> dataForPieChart = assetPlanInfoReportService.getDataForPieChart();
    		JSONArray arrayData = new JSONArray();
 		//JSONArray arrayData = new JSONArray();
-		com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
+		com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
     	for (int i = 0; i < dataForPieChart.size(); i++) {
     		if("0.00".equals(dataForPieChart.get(i).getPieChartMoney())) {
     			continue;
@@ -139,7 +139,7 @@ public class AssetPlanInfoReportController {
    		JSONArray arrayData = new JSONArray();
    		List<String> listCode=new ArrayList<>();
    		//获取字典表中的部门code
-   		JSONArray objDicBudget=sysDicInfoService.getJSONArrayDicsByType(DicConst.R_BUDGET,"1");
+   		JSONArray objDicBudget=sysDicInfoService.getJsonArrayDicsByType(DicConst.R_BUDGET,"1");
    		for (int i = 0; i < objDicBudget.size(); i++) {
 				JSONObject obj= objDicBudget.getJSONObject(i);
 				String code= obj.get("dic_code")==null?"":obj.get("dic_code").toString();

@@ -73,9 +73,9 @@ import com.h3c.platform.common.commonconst.DicConst;
 import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.MailInfoService;
 import com.h3c.platform.common.service.PlanTimeWindowsService;
+import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.MailSendToAndCcToUtils;
 import com.h3c.platform.common.util.UUIDUtil;
-import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.UserService;
@@ -706,7 +706,7 @@ public class AssetPlanInfoApplyController {
    	public ResponseResult getAssetCategoryAndGoodstime() throws Exception{
    		//try {
    			JSONArray arrayData = new JSONArray();
-   			com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
+   			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
    			
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
@@ -732,7 +732,7 @@ public class AssetPlanInfoApplyController {
    	public ResponseResult getReceiverPlaceList() throws Exception{
    		//try {
    			JSONArray arrayData = new JSONArray();
-   			com.alibaba.fastjson.JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_ADDRESS,"1");
+   			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"1");
    			
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);

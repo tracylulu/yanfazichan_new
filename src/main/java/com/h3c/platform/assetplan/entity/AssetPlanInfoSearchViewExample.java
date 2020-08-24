@@ -14,7 +14,7 @@ public class AssetPlanInfoSearchViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoSearchViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -66,12 +66,12 @@ public class AssetPlanInfoSearchViewExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class AbstractGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected AbstractGeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -107,18 +107,18 @@ public class AssetPlanInfoSearchViewExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+        protected void addCriterionForJdbcDate(String condition, Date value, String property) {
             if (value == null) {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             addCriterion(condition, new java.sql.Date(value.getTime()), property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+        protected void addCriterionForJdbcDate(String condition, List<Date> values, String property) {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
-            List<java.sql.Date> dateList = new ArrayList<>();
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
             while (iter.hasNext()) {
                 dateList.add(new java.sql.Date(iter.next().getTime()));
@@ -126,7 +126,7 @@ public class AssetPlanInfoSearchViewExample {
             addCriterion(condition, dateList, property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+        protected void addCriterionForJdbcDate(String condition, Date value1, Date value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -274,52 +274,52 @@ public class AssetPlanInfoSearchViewExample {
         }
 
         public Criteria andPlanmonthEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth =", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth =", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth <>", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <>", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThan(Date value) {
-            addCriterionForJDBCDate("PlanMonth >", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth >", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth >=", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth >=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThan(Date value) {
-            addCriterionForJDBCDate("PlanMonth <", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth <=", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthIn(List<Date> values) {
-            addCriterionForJDBCDate("PlanMonth in", values, "planmonth");
+            addCriterionForJdbcDate("PlanMonth in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotIn(List<Date> values) {
-            addCriterionForJDBCDate("PlanMonth not in", values, "planmonth");
+            addCriterionForJdbcDate("PlanMonth not in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("PlanMonth between", value1, value2, "planmonth");
+            addCriterionForJdbcDate("PlanMonth between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("PlanMonth not between", value1, value2, "planmonth");
+            addCriterionForJdbcDate("PlanMonth not between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
@@ -1110,6 +1110,246 @@ public class AssetPlanInfoSearchViewExample {
 
         public Criteria andActualmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("ActualMoney not between", value1, value2, "actualmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountIsNull() {
+            addCriterion("Dept3ManagerCount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountIsNotNull() {
+            addCriterion("Dept3ManagerCount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountEqualTo(Integer value) {
+            addCriterion("Dept3ManagerCount =", value, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountNotEqualTo(Integer value) {
+            addCriterion("Dept3ManagerCount <>", value, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountGreaterThan(Integer value) {
+            addCriterion("Dept3ManagerCount >", value, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Dept3ManagerCount >=", value, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountLessThan(Integer value) {
+            addCriterion("Dept3ManagerCount <", value, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountLessThanOrEqualTo(Integer value) {
+            addCriterion("Dept3ManagerCount <=", value, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountIn(List<Integer> values) {
+            addCriterion("Dept3ManagerCount in", values, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountNotIn(List<Integer> values) {
+            addCriterion("Dept3ManagerCount not in", values, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountBetween(Integer value1, Integer value2) {
+            addCriterion("Dept3ManagerCount between", value1, value2, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3managercountNotBetween(Integer value1, Integer value2) {
+            addCriterion("Dept3ManagerCount not between", value1, value2, "dept3managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountIsNull() {
+            addCriterion("Dept2ManagerCount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountIsNotNull() {
+            addCriterion("Dept2ManagerCount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountEqualTo(Integer value) {
+            addCriterion("Dept2ManagerCount =", value, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountNotEqualTo(Integer value) {
+            addCriterion("Dept2ManagerCount <>", value, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountGreaterThan(Integer value) {
+            addCriterion("Dept2ManagerCount >", value, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Dept2ManagerCount >=", value, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountLessThan(Integer value) {
+            addCriterion("Dept2ManagerCount <", value, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountLessThanOrEqualTo(Integer value) {
+            addCriterion("Dept2ManagerCount <=", value, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountIn(List<Integer> values) {
+            addCriterion("Dept2ManagerCount in", values, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountNotIn(List<Integer> values) {
+            addCriterion("Dept2ManagerCount not in", values, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountBetween(Integer value1, Integer value2) {
+            addCriterion("Dept2ManagerCount between", value1, value2, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2managercountNotBetween(Integer value1, Integer value2) {
+            addCriterion("Dept2ManagerCount not between", value1, value2, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyIsNull() {
+            addCriterion("Dept3AgreeMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyIsNotNull() {
+            addCriterion("Dept3AgreeMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyEqualTo(BigDecimal value) {
+            addCriterion("Dept3AgreeMoney =", value, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyNotEqualTo(BigDecimal value) {
+            addCriterion("Dept3AgreeMoney <>", value, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyGreaterThan(BigDecimal value) {
+            addCriterion("Dept3AgreeMoney >", value, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("Dept3AgreeMoney >=", value, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyLessThan(BigDecimal value) {
+            addCriterion("Dept3AgreeMoney <", value, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("Dept3AgreeMoney <=", value, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyIn(List<BigDecimal> values) {
+            addCriterion("Dept3AgreeMoney in", values, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyNotIn(List<BigDecimal> values) {
+            addCriterion("Dept3AgreeMoney not in", values, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Dept3AgreeMoney between", value1, value2, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3agreemoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Dept3AgreeMoney not between", value1, value2, "dept3agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyIsNull() {
+            addCriterion("Dept2AgreeMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyIsNotNull() {
+            addCriterion("Dept2AgreeMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyEqualTo(BigDecimal value) {
+            addCriterion("Dept2AgreeMoney =", value, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyNotEqualTo(BigDecimal value) {
+            addCriterion("Dept2AgreeMoney <>", value, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyGreaterThan(BigDecimal value) {
+            addCriterion("Dept2AgreeMoney >", value, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("Dept2AgreeMoney >=", value, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyLessThan(BigDecimal value) {
+            addCriterion("Dept2AgreeMoney <", value, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("Dept2AgreeMoney <=", value, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyIn(List<BigDecimal> values) {
+            addCriterion("Dept2AgreeMoney in", values, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyNotIn(List<BigDecimal> values) {
+            addCriterion("Dept2AgreeMoney not in", values, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Dept2AgreeMoney between", value1, value2, "dept2agreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept2agreemoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Dept2AgreeMoney not between", value1, value2, "dept2agreemoney");
             return (Criteria) this;
         }
 
@@ -3574,7 +3814,7 @@ public class AssetPlanInfoSearchViewExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends AbstractGeneratedCriteria {
 
         protected Criteria() {
             super();

@@ -28,6 +28,7 @@ import com.h3c.platform.assetplan.dao.DeptInfoMapper;
 import com.h3c.platform.assetplan.dao.RequestsNumApproveRecordMapper;
 import com.h3c.platform.assetplan.entity.AssetInfoSubmitEntity;
 import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntity;
+import com.h3c.platform.assetplan.entity.AssetInfoUpdateEntityForDept3AndOther;
 import com.h3c.platform.assetplan.entity.AssetPlanInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView;
@@ -185,6 +186,8 @@ public class AssetPlanInfoOQDeptController {
    				ap.setModifitime(new Date());
    				
    				ap.setOqdeptreviewtime(new Date());
+   				//设置一级部门审批页面默认的评审意见为同意，前台展示使用（同意，不同意）
+	   			ap.setDept1reviewnote("同意");
    				lst.add(ap);
    			}
    			assetPlanInfoService.batchEditAssetPlanInfo(lst);
@@ -219,8 +222,7 @@ public class AssetPlanInfoOQDeptController {
    	@PutMapping("/updateOqdeptInfoList")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
-   	public ResponseResult updateOqdeptInfoList(@RequestBody AssetInfoUpdateEntity updateEntity) throws Exception{
-		//try {
+   	public ResponseResult updateOqdeptInfoList(@RequestBody AssetInfoUpdateEntityForDept3AndOther updateEntity) throws Exception{
 			List<Integer> assetplanidList = updateEntity.getAssetplanid();
 			for (int i = 0; i < assetplanidList.size(); i++) {
 				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanidList.get(i));
@@ -228,9 +230,9 @@ public class AssetPlanInfoOQDeptController {
 				ap.setRequiredsaudit((updateEntity.getRequiredsaudit().get(i)));
 				//评审后总金额
 				ap.setActualmoney(updateEntity.getActualmoney().get(i));
-				//审核意见不是必填
-				ap.setOqdeptreviewnote((updateEntity.getOqdeptreviewnote()));
-				ap.setModifier(ap.getOqdeptreviewer());
+				//审核意见
+				ap.setOqdeptreviewnote(updateEntity.getOqdeptreviewnote().get(i));
+				ap.setModifier(UserUtils.getCurrentUserId());
 				ap.setModifitime(new Date());
 				
 				//数量修改完后对相关联的表RequestsNumApproveRecord进行OQDeptReviewerCount字段的更新
@@ -243,10 +245,6 @@ public class AssetPlanInfoOQDeptController {
 			}
 			
 			return ResponseResult.success(true,"修改成功");
-		/*} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseResult.fail(false,"修改失败");
-		}*/
 	}
     
 	//通过HashSet踢除重复元素

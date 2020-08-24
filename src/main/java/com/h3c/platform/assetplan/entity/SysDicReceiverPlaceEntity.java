@@ -6,29 +6,25 @@ import java.util.List;
 
 public class SysDicReceiverPlaceEntity   {	
 	
-	public String ReceiverPlaceId;
+	public String receiverPlaceId;
 
-    public  String ReceiverPlace;
+    public  String receiverPlace;
 
 	public String getReceiverPlaceId() {
-		return ReceiverPlaceId;
+		return receiverPlaceId;
 	}
 
 	public void setReceiverPlaceId(String receiverPlaceId) {
-		ReceiverPlaceId = receiverPlaceId;
+		this.receiverPlaceId = receiverPlaceId;
 	}
 
 	public String getReceiverPlace() {
-		return ReceiverPlace;
+		return receiverPlace;
 	}
 
 	public void setReceiverPlace(String receiverPlace) {
-		ReceiverPlace = receiverPlace;
+		this.receiverPlace = receiverPlace;
 	}
 
-    
-    
-    
-    
     
 }

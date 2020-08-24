@@ -71,14 +71,14 @@ public class IBPMController {
 			ResponseResult.fail("当前人员没有权限处理此单据！");
 		}
 		// 查询数据
-		List<AssetPlanInfo> lst = assetPlanService.selectByIds(Arrays.asList(entity.getIamplanID().split(",")));
+		List<AssetPlanInfo> lst = assetPlanService.selectByIds(Arrays.asList(entity.getIamplanId().split(",")));
 		List<AssetPlanInfo> lstTemp= lst.stream().filter(o->!"0".equals(o.getApstage())).collect(Collectors.toList());
 		if(CollectionUtils.isNotEmpty(lstTemp)) {
 			ResponseResult.fail("当前勾选单据包含未结束流程！");
 		}
 		
-		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
-		JSONArray lstCategory= dicServer.getJSONArrayDicsByType(DicConst.R_CATEGORY,"");
+		JSONArray lstAddr= dicServer.getJsonArrayDicsByType(DicConst.R_ADDRESS,"");
+		JSONArray lstCategory= dicServer.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
 
 		List<ProjectInfo> lstPro = projectInfoService.getAll();
 		// 拼接数据
@@ -123,8 +123,8 @@ public class IBPMController {
 		}
 		Map<String, Object> result = new HashMap<>();
 		// 查询数据
-		List<AssetPlanInfo> lst = assetPlanService.selectByIds(Arrays.asList(entity.getIamplanID().split(",")));
-		JSONArray lstAddr= dicServer.getJSONArrayDicsByType(DicConst.R_ADDRESS,"");
+		List<AssetPlanInfo> lst = assetPlanService.selectByIds(Arrays.asList(entity.getIamplanId().split(",")));
+		JSONArray lstAddr= dicServer.getJsonArrayDicsByType(DicConst.R_ADDRESS,"");
 		List<AssetPlanInfo> lstTemp= lst.stream().filter(o->!"0".equals(o.getApstage())).collect(Collectors.toList());
 		if(CollectionUtils.isNotEmpty(lstTemp)) {
 			ResponseResult.fail("当前勾选单据包含未结束流程！");

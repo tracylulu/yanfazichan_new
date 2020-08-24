@@ -29,4 +29,14 @@ public interface AssetPlanInfoSearchViewMapper {
     List<AssetPlanInfoSearchView> exportAssetPlanInfoByIds(@Param("param") Map<String, Object> param);
     
     String getBudgetSum(@Param("param") Map<String, Object> param);
+    
+    String getDept3Apply(@Param("param") Map<String, Object> param);
+    
+    String getDept2Apply(@Param("param") Map<String, Object> param);
+    
+    String getDept3Planed(@Param("param") Map<String, Object> param);
+    
+    String getDept2Planed(@Param("param") Map<String, Object> param);
+    
+    String getDept2PlanedForDept3(@Param("param") Map<String, Object> param);
 }

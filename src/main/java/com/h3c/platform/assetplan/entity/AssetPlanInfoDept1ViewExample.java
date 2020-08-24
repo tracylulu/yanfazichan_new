@@ -13,7 +13,7 @@ public class AssetPlanInfoDept1ViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoDept1ViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -65,12 +65,12 @@ public class AssetPlanInfoDept1ViewExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class AbstractGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected AbstractGeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -1086,6 +1086,76 @@ public class AssetPlanInfoDept1ViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andDept3nameIsNull() {
+            addCriterion("Dept3Name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameIsNotNull() {
+            addCriterion("Dept3Name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameEqualTo(String value) {
+            addCriterion("Dept3Name =", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameNotEqualTo(String value) {
+            addCriterion("Dept3Name <>", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameGreaterThan(String value) {
+            addCriterion("Dept3Name >", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameGreaterThanOrEqualTo(String value) {
+            addCriterion("Dept3Name >=", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameLessThan(String value) {
+            addCriterion("Dept3Name <", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameLessThanOrEqualTo(String value) {
+            addCriterion("Dept3Name <=", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameLike(String value) {
+            addCriterion("Dept3Name like", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameNotLike(String value) {
+            addCriterion("Dept3Name not like", value, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameIn(List<String> values) {
+            addCriterion("Dept3Name in", values, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameNotIn(List<String> values) {
+            addCriterion("Dept3Name not in", values, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameBetween(String value1, String value2) {
+            addCriterion("Dept3Name between", value1, value2, "dept3name");
+            return (Criteria) this;
+        }
+
+        public Criteria andDept3nameNotBetween(String value1, String value2) {
+            addCriterion("Dept3Name not between", value1, value2, "dept3name");
+            return (Criteria) this;
+        }
+
         public Criteria andDept2codeIsNull() {
             addCriterion("dept2Code is null");
             return (Criteria) this;
@@ -2047,7 +2117,7 @@ public class AssetPlanInfoDept1ViewExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends AbstractGeneratedCriteria {
 
         protected Criteria() {
             super();

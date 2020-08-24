@@ -28,7 +28,7 @@ public class BPMRelationInfoServiceImpl implements BPMRelationInfoService {
 	@Transactional
 	public boolean writeBpmCode(IBPMEntity entity) throws Exception{
 		
-		for(String id:entity.getIamplanID().split(",")) {
+		for(String id:entity.getIamplanId().split(",")) {
 			if(StringUtils.isBlank(id)) continue;
 			
 			BPMRelationInfo info=new BPMRelationInfo();

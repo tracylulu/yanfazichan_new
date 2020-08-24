@@ -37,7 +37,7 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 		cri.andPurchasereportidEqualTo(purchaseReportId);
 		List<PurchaseReportInfo> lst=purchaseReportInfoMapper.selectByExample(example);
 		
-		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.REQPURCHOASEREPORT,"1");
+		JSONArray arr=dicService.getJsonArrayDicsByType(DicConst.REQPURCHOASEREPORT,"1");
 		
 		for(PurchaseReportInfo info : lst) {
 			PurchaseReportInfoExt infoExt = new PurchaseReportInfoExt();
@@ -63,7 +63,7 @@ public class PurchaseReportInfoServiceImpl implements PurchaseReportInfoService{
 	@Override
 	public List<PurchaseReportInfoExt> getEmptyFiled() throws Exception{
 		List<PurchaseReportInfoExt> lstResult= new ArrayList<>();
-		JSONArray arr=dicService.getJSONArrayDicsByType(DicConst.REQPURCHOASEREPORT,"1");
+		JSONArray arr=dicService.getJsonArrayDicsByType(DicConst.REQPURCHOASEREPORT,"1");
 		for(int i =0;i<arr.size();i++) {
 			PurchaseReportInfoExt infoExt = new PurchaseReportInfoExt();
 			JSONObject obj=arr.getJSONObject(i);

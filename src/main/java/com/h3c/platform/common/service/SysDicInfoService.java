@@ -26,7 +26,7 @@ public interface SysDicInfoService {
 	
 	List<Map<String,Object>> getColumn(String viewName) throws Exception;
 	
-	JSONArray getJSONArrayDicsByType(String type, String isDelete) throws Exception;
+	JSONArray getJsonArrayDicsByType(String type, String isDelete) throws Exception;
 	
 	List<JSONObject> getManuAndModel(String name) throws Exception;
     
@@ -42,7 +42,7 @@ public interface SysDicInfoService {
 	 * 获取专家团审核人员
 	 * @return
 	 */
-	String getOQ() throws Exception;
+	String getOq() throws Exception;
 	
 	/**
 	 * 获取一级部门主管
@@ -56,7 +56,7 @@ public interface SysDicInfoService {
 	
 	ResponseResult del(String ids) throws Exception;
 	
-	JSONObject getByID(Integer id) throws Exception;
+	JSONObject getById(Integer id) throws Exception;
 	
 	void batchInsert(List<JSONObject> lst) throws Exception;
 	

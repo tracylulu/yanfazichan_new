@@ -30,6 +30,8 @@ public class AssetPlanInfoDept3View {
 
     private String deptcode;
 
+    private String dept3name;
+
     private String itemcode;
 
     private String purpose;
@@ -162,6 +164,14 @@ public class AssetPlanInfoDept3View {
 
     public void setDeptcode(String deptcode) {
         this.deptcode = deptcode == null ? null : deptcode.trim();
+    }
+
+    public String getDept3name() {
+        return dept3name;
+    }
+
+    public void setDept3name(String dept3name) {
+        this.dept3name = dept3name == null ? null : dept3name.trim();
     }
 
     public String getItemcode() {

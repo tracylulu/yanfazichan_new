@@ -323,7 +323,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 		Integer month = cal.get(Calendar.MONTH) + 1;
 		int startDay = 0, firstLen = 0, secondLen = 0, thirdLen = 0, fourthLen = 0;
 
-		JSONArray approveDate = sysDicInfoService.getJSONArrayDicsByType(DicConst.R_APPROVEDATE, "1");
+		JSONArray approveDate = sysDicInfoService.getJsonArrayDicsByType(DicConst.R_APPROVEDATE, "1");
 		JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());
 		startDay = objStartDay.getIntValue("dic_value");
 		Calendar startCal = null;

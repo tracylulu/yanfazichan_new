@@ -58,7 +58,7 @@ public class BudgetController {
 	@ApiOperation(value = "获取列表")
 	public ResponseResult list(@RequestBody SearchParamEntity param) throws Exception {
 		List<JSONObject> lstResultAll = new ArrayList<>();
-		JSONArray lst = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
+		JSONArray lst = dicServer.getJsonArrayDicsByType(DicConst.R_BUDGET, "");
 		List<DeptInfo> lstDept = deptService.getAll();
 
 		for (int i = 0; i < lst.size(); i++) {
@@ -119,7 +119,7 @@ public class BudgetController {
 	@ApiOperation(value = "新增")
 	public ResponseResult add(@RequestBody BudgetEntity entity) throws Exception {
 		// 校验部门编码是否重复
-		JSONArray lst = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
+		JSONArray lst = dicServer.getJsonArrayDicsByType(DicConst.R_BUDGET, "");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			if (entity.getDeptCode().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
@@ -145,7 +145,7 @@ public class BudgetController {
 	@ApiOperation(value = "修改")
 	public ResponseResult edit(@RequestBody BudgetEntity entity) throws Exception {
 		// 校验部门编码是否重复
-		JSONArray lst = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
+		JSONArray lst = dicServer.getJsonArrayDicsByType(DicConst.R_BUDGET, "");
 		for (int i = 0; i < lst.size(); i++) {
 			JSONObject obj = lst.getJSONObject(i);
 			if (entity.getDeptCode().equals(ObjToStrUtil.replaceNullValue(obj.get("dic_value")).split("_")[1])
@@ -177,7 +177,7 @@ public class BudgetController {
 	@PostMapping("/getByID")
 	@ApiOperation(value = "根据主键获取数据")
 	public ResponseResult getByID(Integer id) throws Exception {
-		JSONObject model = dicServer.getByID(id);
+		JSONObject model = dicServer.getById(id);
 		model.put("deptCode", ObjToStrUtil.replaceNullValue(model.get("dicCode")));
 		DeptInfo dept = deptService.getByCode(ObjToStrUtil.replaceNullValue(model.get("dicCode")));
 		if (dept != null && dept.getDeptCode() != null && dept.getDeptCode() != 0) {
@@ -218,7 +218,7 @@ public class BudgetController {
 			return ResponseResult.fail("导入模板不正确！");
 		}
 
-		JSONArray lstAll = dicServer.getJSONArrayDicsByType(DicConst.R_BUDGET, "");
+		JSONArray lstAll = dicServer.getJsonArrayDicsByType(DicConst.R_BUDGET, "");
 		List<DeptInfo> lstDept = deptService.getAll();
 
 		while (excelReader.hasNextRow()) {

@@ -24,7 +24,7 @@ public class SysDicInfoUtil {
 	
 	public SysDicCategoryEntity getSysDicCategory(String assetCategoryId) throws Exception{
 		SysDicCategoryEntity categoryEntity =new SysDicCategoryEntity();
-		JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_CATEGORY,"1");
+		JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
 			for (int i = 0; i < objDic.size(); i++) {
 				JSONObject obj= objDic.getJSONObject(i);
 				String dicCode = ObjToStrUtil.replaceNullValue(obj.get("dic_code"));
@@ -42,7 +42,7 @@ public class SysDicInfoUtil {
 		 
 	public SysDicReceiverPlaceEntity getSysDicReceiverPlace(String receiverPlaceId) throws Exception{
 		SysDicReceiverPlaceEntity receiverPlaceEntity =new SysDicReceiverPlaceEntity();
-		JSONArray objDic=dicService.getJSONArrayDicsByType(DicConst.R_ADDRESS,"1");
+		JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"1");
 			for (int i = 0; i < objDic.size(); i++) {
 				JSONObject obj= objDic.getJSONObject(i);
 				String dicCode = ObjToStrUtil.replaceNullValue(obj.get("dic_code"));

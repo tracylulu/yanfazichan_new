@@ -18,6 +18,10 @@ public class AssetPlanInfoHomePageView {
 
     private BigDecimal pprice;
 
+    private BigDecimal totalmoney;
+
+    private BigDecimal actualmoney;
+
     private Date planmonth;
 
     private String applyuser;
@@ -140,6 +144,22 @@ public class AssetPlanInfoHomePageView {
 
     public void setPprice(BigDecimal pprice) {
         this.pprice = pprice;
+    }
+
+    public BigDecimal getTotalmoney() {
+        return totalmoney;
+    }
+
+    public void setTotalmoney(BigDecimal totalmoney) {
+        this.totalmoney = totalmoney;
+    }
+
+    public BigDecimal getActualmoney() {
+        return actualmoney;
+    }
+
+    public void setActualmoney(BigDecimal actualmoney) {
+        this.actualmoney = actualmoney;
     }
 
     public Date getPlanmonth() {
