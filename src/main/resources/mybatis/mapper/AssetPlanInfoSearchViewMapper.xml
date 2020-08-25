@@ -17,8 +17,10 @@
     <result column="PPrice" jdbcType="DECIMAL" property="pprice" />
     <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
     <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
+    <result column="ReviewerCount" jdbcType="INTEGER" property="reviewercount" />
     <result column="Dept3ManagerCount" jdbcType="INTEGER" property="dept3managercount" />
     <result column="Dept2ManagerCount" jdbcType="INTEGER" property="dept2managercount" />
+    <result column="ReviewerAgreeMoney" jdbcType="DECIMAL" property="revieweragreemoney" />
     <result column="Dept3AgreeMoney" jdbcType="DECIMAL" property="dept3agreemoney" />
     <result column="Dept2AgreeMoney" jdbcType="DECIMAL" property="dept2agreemoney" />
     <result column="RequiredUser" jdbcType="VARCHAR" property="requireduser" />
@@ -119,13 +121,13 @@
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, PlanMonth, ApplyMonth, AssetName, AssetManufacturer, AssetModel, 
     AssetCategory, Goodstime, Purpose, Requireds, RequiredsAudit, PPrice, TotalMoney, 
-    ActualMoney, Dept3ManagerCount, Dept2ManagerCount, Dept3AgreeMoney, Dept2AgreeMoney, 
-    RequiredUser, RequiredUserName, ReviewPerson, Reviewer, Dept3Manager, Dept2Manager, 
-    Planner, OQDeptReviewer, Dept1Reviewer, DeptCode, Dept3Code, Dept3Name, Dept2Code, 
-    Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, 
-    AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, APStatus, APStatusDetail, 
-    APStage, ApprovalPerson, ApprovalNote, ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
-    ManufacturerTypeEnum, ReviewResult, DeleteFlag
+    ActualMoney, ReviewerCount, Dept3ManagerCount, Dept2ManagerCount, ReviewerAgreeMoney, 
+    Dept3AgreeMoney, Dept2AgreeMoney, RequiredUser, RequiredUserName, ReviewPerson, Reviewer, 
+    Dept3Manager, Dept2Manager, Planner, OQDeptReviewer, Dept1Reviewer, DeptCode, Dept3Code, 
+    Dept3Name, Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, 
+    OutTimePlanEnum, AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, 
+    APStatus, APStatusDetail, APStage, ApprovalPerson, ApprovalNote, ApprovalResult, 
+    IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, ReviewResult, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultMap="BaseResultMap">
     select
@@ -153,39 +155,41 @@
       AssetModel, AssetCategory, Goodstime, 
       Purpose, Requireds, RequiredsAudit, 
       PPrice, TotalMoney, ActualMoney, 
-      Dept3ManagerCount, Dept2ManagerCount, Dept3AgreeMoney, 
-      Dept2AgreeMoney, RequiredUser, RequiredUserName, 
-      ReviewPerson, Reviewer, Dept3Manager, 
-      Dept2Manager, Planner, OQDeptReviewer, 
-      Dept1Reviewer, DeptCode, Dept3Code, 
-      Dept3Name, Dept2Code, Dept2Name, 
-      Dept1Code, Dept1Name, ItemCode, 
-      ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, 
-      AssetNote, ApplyUser, ApplyTime, 
-      IsCompleteSet, CompleteSetCode, APStatus, 
-      APStatusDetail, APStage, ApprovalPerson, 
-      ApprovalNote, ApprovalResult, IsReqPurchaseReport, 
-      ISSpecifyManufacturer, ManufacturerTypeEnum, 
-      ReviewResult, DeleteFlag)
+      ReviewerCount, Dept3ManagerCount, Dept2ManagerCount, 
+      ReviewerAgreeMoney, Dept3AgreeMoney, Dept2AgreeMoney, 
+      RequiredUser, RequiredUserName, ReviewPerson, 
+      Reviewer, Dept3Manager, Dept2Manager, 
+      Planner, OQDeptReviewer, Dept1Reviewer, 
+      DeptCode, Dept3Code, Dept3Name, 
+      Dept2Code, Dept2Name, Dept1Code, 
+      Dept1Name, ItemCode, ReceiverPlace, 
+      AbnormalPlanEnum, OutTimePlanEnum, AssetNote, 
+      ApplyUser, ApplyTime, IsCompleteSet, 
+      CompleteSetCode, APStatus, APStatusDetail, 
+      APStage, ApprovalPerson, ApprovalNote, 
+      ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
+      ManufacturerTypeEnum, ReviewResult, DeleteFlag
+      )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, 
       #{applymonth,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, 
       #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, #{goodstime,jdbcType=VARCHAR}, 
       #{purpose,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, 
-      #{dept3managercount,jdbcType=INTEGER}, #{dept2managercount,jdbcType=INTEGER}, #{dept3agreemoney,jdbcType=DECIMAL}, 
-      #{dept2agreemoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, 
-      #{reviewperson,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, 
-      #{dept2manager,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, 
-      #{dept1reviewer,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{dept3code,jdbcType=VARCHAR}, 
-      #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
-      #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
-      #{receiverplace,jdbcType=VARCHAR}, #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, 
-      #{assetnote,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, 
-      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, 
-      #{apstatusdetail,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, 
-      #{approvalnote,jdbcType=VARCHAR}, #{approvalresult,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
-      #{isspecifymanufacturer,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=INTEGER}, 
-      #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR})
+      #{reviewercount,jdbcType=INTEGER}, #{dept3managercount,jdbcType=INTEGER}, #{dept2managercount,jdbcType=INTEGER}, 
+      #{revieweragreemoney,jdbcType=DECIMAL}, #{dept3agreemoney,jdbcType=DECIMAL}, #{dept2agreemoney,jdbcType=DECIMAL}, 
+      #{requireduser,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, 
+      #{reviewer,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, 
+      #{planner,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, 
+      #{deptcode,jdbcType=VARCHAR}, #{dept3code,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
+      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, 
+      #{dept1name,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, 
+      #{abnormalplanenum,jdbcType=INTEGER}, #{outtimeplanenum,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, 
+      #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
+      #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, #{approvalnote,jdbcType=VARCHAR}, 
+      #{approvalresult,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{manufacturertypeenum,jdbcType=INTEGER}, #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView">
     insert into AssetPlanInfoSearchView
@@ -235,11 +239,17 @@
       <if test="actualmoney != null">
         ActualMoney,
       </if>
+      <if test="reviewercount != null">
+        ReviewerCount,
+      </if>
       <if test="dept3managercount != null">
         Dept3ManagerCount,
       </if>
       <if test="dept2managercount != null">
         Dept2ManagerCount,
+      </if>
+      <if test="revieweragreemoney != null">
+        ReviewerAgreeMoney,
       </if>
       <if test="dept3agreemoney != null">
         Dept3AgreeMoney,
@@ -402,11 +412,17 @@
       <if test="actualmoney != null">
         #{actualmoney,jdbcType=DECIMAL},
       </if>
+      <if test="reviewercount != null">
+        #{reviewercount,jdbcType=INTEGER},
+      </if>
       <if test="dept3managercount != null">
         #{dept3managercount,jdbcType=INTEGER},
       </if>
       <if test="dept2managercount != null">
         #{dept2managercount,jdbcType=INTEGER},
+      </if>
+      <if test="revieweragreemoney != null">
+        #{revieweragreemoney,jdbcType=DECIMAL},
       </if>
       <if test="dept3agreemoney != null">
         #{dept3agreemoney,jdbcType=DECIMAL},
@@ -578,11 +594,17 @@
       <if test="record.actualmoney != null">
         ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       </if>
+      <if test="record.reviewercount != null">
+        ReviewerCount = #{record.reviewercount,jdbcType=INTEGER},
+      </if>
       <if test="record.dept3managercount != null">
         Dept3ManagerCount = #{record.dept3managercount,jdbcType=INTEGER},
       </if>
       <if test="record.dept2managercount != null">
         Dept2ManagerCount = #{record.dept2managercount,jdbcType=INTEGER},
+      </if>
+      <if test="record.revieweragreemoney != null">
+        ReviewerAgreeMoney = #{record.revieweragreemoney,jdbcType=DECIMAL},
       </if>
       <if test="record.dept3agreemoney != null">
         Dept3AgreeMoney = #{record.dept3agreemoney,jdbcType=DECIMAL},
@@ -720,8 +742,10 @@
       PPrice = #{record.pprice,jdbcType=DECIMAL},
       TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
       ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
+      ReviewerCount = #{record.reviewercount,jdbcType=INTEGER},
       Dept3ManagerCount = #{record.dept3managercount,jdbcType=INTEGER},
       Dept2ManagerCount = #{record.dept2managercount,jdbcType=INTEGER},
+      ReviewerAgreeMoney = #{record.revieweragreemoney,jdbcType=DECIMAL},
       Dept3AgreeMoney = #{record.dept3agreemoney,jdbcType=DECIMAL},
       Dept2AgreeMoney = #{record.dept2agreemoney,jdbcType=DECIMAL},
       RequiredUser = #{record.requireduser,jdbcType=VARCHAR},

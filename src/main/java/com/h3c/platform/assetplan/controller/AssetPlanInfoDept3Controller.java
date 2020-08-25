@@ -353,11 +353,11 @@ public class AssetPlanInfoDept3Controller {
    	   	   				zaiTu = Double.parseDouble(split[1]);
    	   	   				totalBudget = Double.parseDouble(split[2]);
    	   	   				total=daoHuo+zaiTu;
-   	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
+   	   	   				totalBudgetSY=totalBudget-budgetSum-total;
    	   	   				BigDecimal bg = new BigDecimal(totalBudgetSY);    
    	   	   				totalBudgetSY= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();    
    	   				}else {
-   	   					totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
+   	   					totalBudgetSY=totalBudget-budgetSum-total;
    	   					BigDecimal bg = new BigDecimal(totalBudgetSY);    
 	   	   				totalBudgetSY= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
    	   				}
@@ -426,11 +426,11 @@ public class AssetPlanInfoDept3Controller {
    	   	   				zaiTu = Double.parseDouble(split[1]);
    	   	   				totalBudget = Double.parseDouble(split[2]);
    	   	   				total=daoHuo+zaiTu;
-   	   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
+   	   	   				totalBudgetSY=totalBudget-budgetSum-total;
    	   	   				BigDecimal bg = new BigDecimal(totalBudgetSY);    
    	   	   				totalBudgetSY= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
    	   				}else {
-   	   					totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
+   	   					totalBudgetSY=totalBudget-budgetSum-total;
    	   					BigDecimal bg = new BigDecimal(totalBudgetSY);    
 	   	   				totalBudgetSY= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
    	   				}
@@ -499,7 +499,7 @@ public class AssetPlanInfoDept3Controller {
 		   	   				zaiTu = Double.parseDouble(split[1]);
 		   	   				totalBudget = Double.parseDouble(split[2]);
 		   	   				total=daoHuo+zaiTu;
-		   	   				totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
+		   	   				totalBudgetSY=totalBudget-budgetSum-total;
 		   	   				BigDecimal bg = new BigDecimal(totalBudgetSY);    
 		   	   				totalBudgetSY= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 		   				}else {
@@ -509,7 +509,7 @@ public class AssetPlanInfoDept3Controller {
 		   	   				zaiTu = 0;
 		   	   				totalBudget = 0;
 		   	   				total=0;
-		   					totalBudgetSY=totalBudget-budgetSum-totalmoneySum-total;
+		   					totalBudgetSY=totalBudget-budgetSum-total;
 		   					BigDecimal bg = new BigDecimal(totalBudgetSY);    
 	   	   	   				totalBudgetSY= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
 		   				}

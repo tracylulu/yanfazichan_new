@@ -34,9 +34,13 @@ public class AssetPlanInfoSearchView {
 
     private BigDecimal actualmoney;
 
+    private Integer reviewercount;
+
     private Integer dept3managercount;
 
     private Integer dept2managercount;
+
+    private BigDecimal revieweragreemoney;
 
     private BigDecimal dept3agreemoney;
 
@@ -234,6 +238,14 @@ public class AssetPlanInfoSearchView {
         this.actualmoney = actualmoney;
     }
 
+    public Integer getReviewercount() {
+        return reviewercount;
+    }
+
+    public void setReviewercount(Integer reviewercount) {
+        this.reviewercount = reviewercount;
+    }
+
     public Integer getDept3managercount() {
         return dept3managercount;
     }
@@ -248,6 +260,14 @@ public class AssetPlanInfoSearchView {
 
     public void setDept2managercount(Integer dept2managercount) {
         this.dept2managercount = dept2managercount;
+    }
+
+    public BigDecimal getRevieweragreemoney() {
+        return revieweragreemoney;
+    }
+
+    public void setRevieweragreemoney(BigDecimal revieweragreemoney) {
+        this.revieweragreemoney = revieweragreemoney;
     }
 
     public BigDecimal getDept3agreemoney() {

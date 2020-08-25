@@ -66,10 +66,10 @@ public class AssetPlanInfoSearchViewExample {
         distinct = false;
     }
 
-    protected abstract static class AbstractGeneratedCriteria {
+    protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected AbstractGeneratedCriteria() {
+        protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
         }
@@ -107,14 +107,14 @@ public class AssetPlanInfoSearchViewExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJdbcDate(String condition, Date value, String property) {
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
             if (value == null) {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             addCriterion(condition, new java.sql.Date(value.getTime()), property);
         }
 
-        protected void addCriterionForJdbcDate(String condition, List<Date> values, String property) {
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
@@ -126,7 +126,7 @@ public class AssetPlanInfoSearchViewExample {
             addCriterion(condition, dateList, property);
         }
 
-        protected void addCriterionForJdbcDate(String condition, Date value1, Date value2, String property) {
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -274,52 +274,52 @@ public class AssetPlanInfoSearchViewExample {
         }
 
         public Criteria andPlanmonthEqualTo(Date value) {
-            addCriterionForJdbcDate("PlanMonth =", value, "planmonth");
+            addCriterionForJDBCDate("PlanMonth =", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotEqualTo(Date value) {
-            addCriterionForJdbcDate("PlanMonth <>", value, "planmonth");
+            addCriterionForJDBCDate("PlanMonth <>", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThan(Date value) {
-            addCriterionForJdbcDate("PlanMonth >", value, "planmonth");
+            addCriterionForJDBCDate("PlanMonth >", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJdbcDate("PlanMonth >=", value, "planmonth");
+            addCriterionForJDBCDate("PlanMonth >=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThan(Date value) {
-            addCriterionForJdbcDate("PlanMonth <", value, "planmonth");
+            addCriterionForJDBCDate("PlanMonth <", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThanOrEqualTo(Date value) {
-            addCriterionForJdbcDate("PlanMonth <=", value, "planmonth");
+            addCriterionForJDBCDate("PlanMonth <=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthIn(List<Date> values) {
-            addCriterionForJdbcDate("PlanMonth in", values, "planmonth");
+            addCriterionForJDBCDate("PlanMonth in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotIn(List<Date> values) {
-            addCriterionForJdbcDate("PlanMonth not in", values, "planmonth");
+            addCriterionForJDBCDate("PlanMonth not in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthBetween(Date value1, Date value2) {
-            addCriterionForJdbcDate("PlanMonth between", value1, value2, "planmonth");
+            addCriterionForJDBCDate("PlanMonth between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotBetween(Date value1, Date value2) {
-            addCriterionForJdbcDate("PlanMonth not between", value1, value2, "planmonth");
+            addCriterionForJDBCDate("PlanMonth not between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
@@ -1113,6 +1113,66 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andReviewercountIsNull() {
+            addCriterion("ReviewerCount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountIsNotNull() {
+            addCriterion("ReviewerCount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountEqualTo(Integer value) {
+            addCriterion("ReviewerCount =", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountNotEqualTo(Integer value) {
+            addCriterion("ReviewerCount <>", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountGreaterThan(Integer value) {
+            addCriterion("ReviewerCount >", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ReviewerCount >=", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountLessThan(Integer value) {
+            addCriterion("ReviewerCount <", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountLessThanOrEqualTo(Integer value) {
+            addCriterion("ReviewerCount <=", value, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountIn(List<Integer> values) {
+            addCriterion("ReviewerCount in", values, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountNotIn(List<Integer> values) {
+            addCriterion("ReviewerCount not in", values, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountBetween(Integer value1, Integer value2) {
+            addCriterion("ReviewerCount between", value1, value2, "reviewercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewercountNotBetween(Integer value1, Integer value2) {
+            addCriterion("ReviewerCount not between", value1, value2, "reviewercount");
+            return (Criteria) this;
+        }
+
         public Criteria andDept3managercountIsNull() {
             addCriterion("Dept3ManagerCount is null");
             return (Criteria) this;
@@ -1230,6 +1290,66 @@ public class AssetPlanInfoSearchViewExample {
 
         public Criteria andDept2managercountNotBetween(Integer value1, Integer value2) {
             addCriterion("Dept2ManagerCount not between", value1, value2, "dept2managercount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyIsNull() {
+            addCriterion("ReviewerAgreeMoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyIsNotNull() {
+            addCriterion("ReviewerAgreeMoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyEqualTo(BigDecimal value) {
+            addCriterion("ReviewerAgreeMoney =", value, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyNotEqualTo(BigDecimal value) {
+            addCriterion("ReviewerAgreeMoney <>", value, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyGreaterThan(BigDecimal value) {
+            addCriterion("ReviewerAgreeMoney >", value, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("ReviewerAgreeMoney >=", value, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyLessThan(BigDecimal value) {
+            addCriterion("ReviewerAgreeMoney <", value, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("ReviewerAgreeMoney <=", value, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyIn(List<BigDecimal> values) {
+            addCriterion("ReviewerAgreeMoney in", values, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyNotIn(List<BigDecimal> values) {
+            addCriterion("ReviewerAgreeMoney not in", values, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ReviewerAgreeMoney between", value1, value2, "revieweragreemoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andRevieweragreemoneyNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ReviewerAgreeMoney not between", value1, value2, "revieweragreemoney");
             return (Criteria) this;
         }
 
@@ -3814,7 +3934,7 @@ public class AssetPlanInfoSearchViewExample {
         }
     }
 
-    public static class Criteria extends AbstractGeneratedCriteria {
+    public static class Criteria extends GeneratedCriteria {
 
         protected Criteria() {
             super();
