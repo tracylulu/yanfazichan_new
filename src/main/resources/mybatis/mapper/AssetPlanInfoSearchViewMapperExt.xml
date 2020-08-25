@@ -174,8 +174,7 @@
   
   <select id="getDept3Apply" parameterType="map" resultType="java.lang.String">
   	select  ifnull(SUM(Dept3AgreeMoney),0) as m from AssetPlanInfoSearchView
-  		where 
-  		DeleteFlag=1 and ReviewResult=1 and APStatus in (40,41,50,60,70,0,03,04,05,051,06,07)
+  		where APStatus in (40,41,50,60,70,0,03,04,05,051,06,07)
 			<if test="param.Dept2Code !=null">
 				and Dept2Code = #{param.Dept2Code}
 			</if>
@@ -189,8 +188,7 @@
   
   <select id="getDept2Apply" parameterType="map" resultType="java.lang.String">
   	select  ifnull(SUM(Dept2AgreeMoney),0) as m from AssetPlanInfoSearchView
-  		where 
-  		DeleteFlag=1 and ReviewResult=1 and APStatus in (41,50,60,70,0,04,05,051,06,07)
+  		where APStatus in (50,60,70,0,04,05,051,06,07)
 			<if test="param.Dept2Code !=null">
 				and Dept2Code = #{param.Dept2Code}
 			</if>
@@ -205,8 +203,7 @@
   
   <select id="getDept3Planed" parameterType="map" resultType="java.lang.String">
   	select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoSearchView
-		where
-			DeleteFlag=1 and ReviewResult=1 and OutTimePlanEnum !=0 and APStatus in (30,40,41,50,60,70,0,03,04,05,051,06,07)
+		where APStatus in (30,40,41,50,60,70,0,03,04,05,051,06,07)
 			<if test="param.Dept3Manager !=null">
 				and Dept3Manager = #{param.Dept3Manager}
 			</if>
@@ -220,8 +217,7 @@
   
   <select id="getDept2Planed" parameterType="map" resultType="java.lang.String">
   	select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoSearchView
-		where
-			DeleteFlag=1 and ReviewResult=1 and OutTimePlanEnum !=0 and APStatus in (40,41,50,60,70,0,04,05,051,06,07)
+		where APStatus in (40,50,60,70,0,04,05,051,06,07)
 			<if test="param.Dept2Manager !=null">
 				and Dept2Manager = #{param.Dept2Manager}
 			</if>
@@ -235,8 +231,7 @@
   
    <select id="getDept2PlanedForDept3" parameterType="map" resultType="java.lang.String">
   	select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoSearchView
-		where
-			DeleteFlag=1 and ReviewResult=1 and OutTimePlanEnum !=0 and APStatus in (40,41,50,60,70,0,04,05,051,06,07)
+		where APStatus in (40,50,60,70,0,04,05,051,06,07)
 			<if test="param.ApplyMonth !=null">
 				and ApplyMonth = #{param.ApplyMonth}
 			</if>

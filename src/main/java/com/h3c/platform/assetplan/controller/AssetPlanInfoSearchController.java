@@ -283,12 +283,12 @@ public class AssetPlanInfoSearchController {
    					}
    				}
    				
-   				if(newLstActivateID.size()<newLstsubmitID.size()) {
+   				/*if(newLstActivateID.size()<newLstsubmitID.size()) {
    					return ResponseResult.success(true, "部分激活");
-   				}
-   				return ResponseResult.success(true, "激活成功");
+   				}*/
+   				return ResponseResult.success(true, "审批超时数据激活成功");
    			}else {
-   				return ResponseResult.fail(false, "无需激活");
+   				return ResponseResult.fail(false, "无审批超时数据需激活");
    			}
    		
    		/*} catch (Exception e) {

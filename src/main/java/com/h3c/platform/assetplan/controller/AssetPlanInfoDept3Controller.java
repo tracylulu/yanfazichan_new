@@ -482,9 +482,9 @@ public class AssetPlanInfoDept3Controller {
 	   					param_3.put("Dept3Code",allChildDept.get(i).getDeptCode());
 	   					param_3.put("Dept2Code",null);
 	   					param_3.put("ApplyMonth",applymonth);
-	   					String budgetSum11 = assetPlanInfoService.getDept3Apply(param_3);
+	   					String budgetSum11 = assetPlanInfoService.getDept2Apply(param_3);
 		   				if(StringUtils.isNotBlank(budgetSum11)) {
-		   					budgetSum=Double.parseDouble(assetPlanInfoService.getDept3Apply(param_3))/10000;
+		   					budgetSum=Double.parseDouble(assetPlanInfoService.getDept2Apply(param_3))/10000;
 		   					//df.format(budgetSum);
 		   					BigDecimal bg = new BigDecimal(budgetSum);    
 		   					budgetSum= bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(); 
