@@ -124,7 +124,7 @@ public class AssetPlanInfoSearchController {
             //param.put("StartApplyTime", searchAssetParamEntity.getStartApplyTime());
             //param.put("EndApplyTime", searchAssetParamEntity.getEndApplyTime());
             List<String> applyTimeList = searchAssetParamEntity.getApplyTime();
-            if(applyTimeList.size()>0) {
+            if(applyTimeList!=null && applyTimeList.size()>0) {
             	String applyMonthDetail = applyTimeList.get(0);
             	param.put("ApplyMonthDetail", applyMonthDetail);
             	String startApplyTime = applyTimeList.get(0)+"-01 00:00:00";
