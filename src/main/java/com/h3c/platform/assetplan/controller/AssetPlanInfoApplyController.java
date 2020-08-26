@@ -502,6 +502,52 @@ public class AssetPlanInfoApplyController {
    		}*/
    	}
     
+    
+    @ApiOperation(value="查看单条资源信息（查询记录，三级页面以后的详情专用）")
+   	@GetMapping("/getInfoByIdForDept3AndOther")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getInfoByIdForDept3AndOther(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception{
+   			AssetPlanGlobalInfoAll assetPlanGlobalInfoAll = new AssetPlanGlobalInfoAll();
+   			List<AssetPlanInfoDetailView> lst =new ArrayList<>();
+   			assetPlanGlobalInfoAll.setLst(lst);
+   			AssetPlanInfoDetailView ap = assetPlanInfoService.getByAssetId(assetplanid);
+   			if(StringUtils.isNotBlank(ap.getDeleteflag()) && !"0".equals(ap.getDeleteflag()) ) {
+   				//只展示查询的一条数据，不把成套的带出来一起展示
+   				assetPlanGlobalInfoAll.getLst().add(ap);
+   				//有申购报告
+   				if(StringUtils.isNotBlank(ap.getIsreqpurchasereport()) && "1".equals(ap.getIsreqpurchasereport())) {
+   					String purchasereportid = ap.getPurchasereportid();
+   					List<PurchaseReportInfoExt> lstPur= purchaseReportInfoService.getByPurchaseReportId(purchasereportid);
+   					assetPlanGlobalInfoAll.setPurchaseReportInfo(lstPur);   					
+   				}else {
+   					assetPlanGlobalInfoAll.setPurchaseReportInfo(null);
+   				}
+   				
+   				//有指定供应商
+   				if(StringUtils.isNotBlank(ap.getIsspecifymanufacturer()) && "1".equals(ap.getIsspecifymanufacturer())) {
+   					String specifymanufacturerid = ap.getSpecifymanufacturerid();
+   					List<SpecifyManufacturerInfoExt> lstSpec=specifyManufacturerInfoService.getBySpecifyManufacturerId(specifymanufacturerid);
+   					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(lstSpec);
+   				}else {
+   					assetPlanGlobalInfoAll.setSpecifyManufacturerInfo(null);
+   				}
+   				for (int i = 0; i < assetPlanGlobalInfoAll.getLst().size(); i++) {
+					String requireduser = assetPlanGlobalInfoAll.getLst().get(i).getRequireduser();
+					UserInfo user = userService.getUserByEmpCode(requireduser);
+					String requireduserNew=user.getEmpName()+"/"+requireduser;
+					assetPlanGlobalInfoAll.getLst().get(i).setRequireduser(requireduserNew);
+				}
+   			}
+   			
+   			if(assetPlanGlobalInfoAll.getLst().size()>0) {
+   				return ResponseResult.success(0, "查询成功", assetPlanGlobalInfoAll, assetPlanGlobalInfoAll.getLst().size());
+   			}else {
+   				return ResponseResult.fail(false,"查询失败，该条数据已删除");
+   			}
+   	}
+    
+    
     @ApiOperation(value="删除资源信息")
 	@DeleteMapping("/delAssetPlanInfo")
 	@ResponseBody

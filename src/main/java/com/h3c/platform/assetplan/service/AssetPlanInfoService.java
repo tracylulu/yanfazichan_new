@@ -99,11 +99,11 @@ public interface AssetPlanInfoService {
     
 	List<AssetPlanInfoMenuView> listofTodoInfoForRequiredUser(Map<String, Object> param);
 	
-    int countTodoInfo(Map<String, Object> param);
+    //int countTodoInfo(Map<String, Object> param);
     
-    List<AssetPlanInfo> listofTodoInfoDetail(Map<String, Object> param);   
+    //List<AssetPlanInfo> listofTodoInfoDetail(Map<String, Object> param);   
     
-    int countTodoInfoDetail(Map<String, Object> param);
+    //int countTodoInfoDetail(Map<String, Object> param);
     
     //根据申请人code查询申请人资源列表草稿信息
   	//List<AssetPlanInfoApplyView> getDraftInfoList(String applyUser,String apstage,String applymonth);
@@ -117,17 +117,17 @@ public interface AssetPlanInfoService {
   	//根据申请人code和状态查询二级部门审核列表信息
   	//List<AssetPlanInfoDept2View> getDept2InfoList(String dept2Manager,String apstage);
   	
-  	int submitInfoFromReviewToDept3(Map<String, Object> param);
+  	//int submitInfoFromReviewToDept3(Map<String, Object> param);
   	
-  	int submitInfoFromDept3ToDept2(Map<String, Object> param);
+  	//int submitInfoFromDept3ToDept2(Map<String, Object> param);
   	
-  	int submitInfoFromDept2ToPlanner(Map<String, Object> param);
+  	//int submitInfoFromDept2ToPlanner(Map<String, Object> param);
   	
   	int submitInfoFromPlannerToOqDept(Map<String, Object> param); 
   	
-  	int submitInfoFromOqDeptToDept1(Map<String, Object> param); 
+  	//int submitInfoFromOqDeptToDept1(Map<String, Object> param); 
   	
-  	int submitInfoFromDept1ToEnd(Map<String, Object> param); 
+  	//int submitInfoFromDept1ToEnd(Map<String, Object> param); 
   	
   	List<AssetPlanInfoAll> listofPlannerDetail(Map<String, Object> param);
   	
@@ -191,7 +191,7 @@ public interface AssetPlanInfoService {
   	
      String getSumTotalMoneyForDept2(Map<String, Object> param);
      
-      String getSumMoneyWithThirdDept(Map<String, Object> param);
+     //String getSumMoneyWithThirdDept(Map<String, Object> param);
      
      String getSumActualMoneySumForDept2(Map<String, Object> param);
 
@@ -223,13 +223,13 @@ public interface AssetPlanInfoService {
      
      List<AssetPlanInfo> getInfoListByReviewer(Map<String, Object> param);
      
-     String getBudgetSum(Map<String, Object> param);
+     //String getBudgetSum(Map<String, Object> param);
      
      String getDept3Apply(Map<String, Object> param);
      
      String getDept2Apply(Map<String, Object> param);
      
-     String getBudgetTotalMoneyForDept3(@Param("param") Map<String, Object> param);
+     //String getBudgetTotalMoneyForDept3(@Param("param") Map<String, Object> param);
      
      ResponseResult updateReviewResult(List<Integer> ids,Integer result,String reviewNote) throws Exception;
      

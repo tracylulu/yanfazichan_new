@@ -72,13 +72,13 @@
 		
   </select>
   
-  <select id="countTodoInfo" parameterType="map" resultType="int">
+  <!-- <select id="countTodoInfo" parameterType="map" resultType="int">
   	select count(*) from AssetPlanInfoMenuView
   		<if test="_parameter != null">
     		<include refid="condition_sql"></include>
     	</if>
   
-  </select>
+  </select> -->
 
   
 </mapper>

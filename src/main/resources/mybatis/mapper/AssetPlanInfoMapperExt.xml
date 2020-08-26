@@ -52,7 +52,7 @@
 		</foreach>
 	</update>
 
-	<update id="submitInfoFromReviewToDept3" parameterType="map">
+	<!-- <update id="submitInfoFromReviewToDept3" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -65,9 +65,9 @@
 			open="(" close=")" separator=",">
 			#{code}
 		</foreach>
-	</update>
+	</update> -->
 
-	<update id="submitInfoFromDept3ToDept2" parameterType="map">
+	<!-- <update id="submitInfoFromDept3ToDept2" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -80,9 +80,9 @@
 			open="(" close=")" separator=",">
 			#{code}
 		</foreach>
-	</update>
+	</update> -->
 
-	<update id="submitInfoFromDept2ToPlanner" parameterType="map">
+	<!-- <update id="submitInfoFromDept2ToPlanner" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -95,7 +95,7 @@
 			open="(" close=")" separator=",">
 			#{code}
 		</foreach>
-	</update>
+	</update> -->
 
 	<update id="submitInfoFromPlannerToOqDept" parameterType="map">
 		update AssetPlanInfo set
@@ -113,7 +113,7 @@
 	</update>
 
 
-	<update id="submitInfoFromOqDeptToDept1" parameterType="map">
+	<!-- <update id="submitInfoFromOqDeptToDept1" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -126,9 +126,9 @@
 			open="(" close=")" separator=",">
 			#{code}
 		</foreach>
-	</update>
+	</update> -->
 
-	<update id="submitInfoFromDept1ToEnd" parameterType="map">
+	<!-- <update id="submitInfoFromDept1ToEnd" parameterType="map">
 		update AssetPlanInfo set
 		APStatus=#{param.APStatus},
 		APStage=#{param.APStage},
@@ -140,7 +140,7 @@
 			open="(" close=")" separator=",">
 			#{code}
 		</foreach>
-	</update>
+	</update> -->
 
 
 	<select id="getMaxCompleteSetCode" resultType="Integer"
@@ -166,24 +166,24 @@
 		</where>
 	</sql>
 
-	<select id="countTodoInfoDetail" parameterType="map"
+	<!-- <select id="countTodoInfoDetail" parameterType="map"
 		resultType="int">
 		select count(*) from AssetPlanInfo
 		<if test="_parameter != null">
 			<include refid="condition_sql"></include>
 		</if>
 
-	</select>
+	</select> -->
 
 
-	<select id="listofTodoInfoDetail" parameterType="map"
+	<!-- <select id="listofTodoInfoDetail" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from AssetPlanInfo
 		<if test="_parameter != null">
 			<include refid="condition_sql"></include>
 		</if>
 
-	</select>
+	</select> -->
 
 	<!-- <sql id="condition_sql"> <where> DeleteFlag=1 and ReviewResult=1 <if 
 		test="param.Dept3Manager !=null"> and Dept3Manager = #{param.Dept3Manager} 

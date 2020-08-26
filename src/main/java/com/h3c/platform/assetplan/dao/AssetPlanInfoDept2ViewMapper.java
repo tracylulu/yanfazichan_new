@@ -27,7 +27,7 @@ public interface AssetPlanInfoDept2ViewMapper {
     
     String getSumActualMoneySumForDept2(@Param("param") Map<String, Object> param);
     
-    String getSumMoneyWithThirdDept(@Param("param") Map<String, Object> param);
+    //String getSumMoneyWithThirdDept(@Param("param") Map<String, Object> param);
     
     List<AssetPlanInfoAll> listofDept2Detail(@Param("param") Map<String, Object> param);
 }

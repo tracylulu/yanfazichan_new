@@ -134,29 +134,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Autowired
 	private AssetPlanInfoSearchExportViewMapper  searchExportViewMapper;
 	
-	/*@Override
-	public int addAssetPlanInfo(AssetPlanInfo ap) {
-		ap.setPlanmonth(new Date());
-		ap.setApplytime(new Date());
-		ap.setApplyuser("123123sad");
-		ap.setModifier("123123sad");
-		ap.setModifitime(new Date());
-		return assetPlanInfoMapper.insert(ap);
-	}*/
-
-	/*@Override
-	@Transactional
-	public int batchAddAssetPlanInfo(List<AssetPlanInfo> lst)  {
-		for(AssetPlanInfo ap:lst) {
-			ap.setPlanmonth(new Date());
-			ap.setApplytime(new Date());
-			ap.setApplyuser("123123sad");
-			ap.setModifier("123123sad");
-			ap.setModifitime(new Date());
-			assetPlanInfoMapper.insert(ap);
-		}
-		return lst.size();
-	}*/
+	
 	
 	@Override
  	public int editAssetPlanInfo(AssetPlanInfo assetPlanInfo) {		
@@ -433,12 +411,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return newCode;
 	}
 	
-	/*@Override
-	@Transactional
-	public int editQuantity(AssetPlanInfo assetPlanlInfo) {				
-		AssetPlanInfo old = assetPlanInfoMapper.selectByPrimaryKey(assetPlanlInfo.getAssetplanid());
-		return 0;
-	}*/
+	
 
 	@Override	
 	@Transactional
@@ -457,35 +430,27 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return assetPlanInfoMapper.selectByExample(example);
 	}
 
-	/*@Override
-	public List<AssetPlanInfoApplyView> getAssetPlanInfoList(String applyUser) {
-		AssetPlanInfoApplyViewExample example=new AssetPlanInfoApplyViewExample();
-		AssetPlanInfoApplyViewExample.Criteria cia=example.createCriteria();
-		cia.andApplyuserEqualTo(applyUser);
-		cia.andDeleteflagEqualTo("1");
-		return applyViewMapper.selectByExample(example);
-		
-	}*/
+
 
 	@Override
 	public List<AssetPlanInfoMenuView> listofTodoInfo(Map<String, Object> param) {
 		return menuViewMapper.listofTodoInfo(param);
 	}
 
-	@Override
+	/*@Override
 	public int countTodoInfo(Map<String, Object> param) {
 		return menuViewMapper.countTodoInfo(param);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public List<AssetPlanInfo> listofTodoInfoDetail(Map<String, Object> param) {
 		return assetPlanInfoMapper.listofTodoInfoDetail(param);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int countTodoInfoDetail(Map<String, Object> param) {
 		return assetPlanInfoMapper.countTodoInfoDetail(param);
-	}
+	}*/
 
 	/*@Override
 	public List<AssetPlanInfoApplyView> getDraftInfoList(String applyUser, String apstage,String applymonth) {
@@ -534,35 +499,35 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return dept2ViewMapper.selectByExample(example);
 	}*/
 
-	@Override
+	/*@Override
 	public int submitInfoFromReviewToDept3(Map<String, Object> param) {
 		return  assetPlanInfoMapper.submitInfoFromReviewToDept3(param);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int submitInfoFromDept3ToDept2(Map<String, Object> param) {
 		return  assetPlanInfoMapper.submitInfoFromDept3ToDept2(param);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int submitInfoFromDept2ToPlanner(Map<String, Object> param) {
 		return  assetPlanInfoMapper.submitInfoFromDept2ToPlanner(param);
-	}
+	}*/
 
 	@Override
 	public int submitInfoFromPlannerToOqDept(Map<String, Object> param) {
 		return  assetPlanInfoMapper.submitInfoFromPlannerToOqDept(param);
 	}
 	
-	@Override
+	/*@Override
 	public int submitInfoFromOqDeptToDept1(Map<String, Object> param) {
 		return  assetPlanInfoMapper.submitInfoFromOqDeptToDept1(param);
-	}
+	}*/
 	
-	@Override
+	/*@Override
 	public int submitInfoFromDept1ToEnd(Map<String, Object> param) {
 		return  assetPlanInfoMapper.submitInfoFromDept1ToEnd(param);
-	}
+	}*/
 	
 	@Override
 	public List<AssetPlanInfoAll> listofPlannerDetail(Map<String, Object> param) {
@@ -709,10 +674,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return dept2ViewMapper.getSumTotalMoneyForDept2(param);
 	}
 	
-	@Override
+	/*@Override
 	public String getSumMoneyWithThirdDept(Map<String, Object> param) {
 		return dept2ViewMapper.getSumMoneyWithThirdDept(param);
-	}
+	}*/
 
 	@Override
 	public String getSumActualMoneySumForDept2(Map<String, Object> param) {
@@ -813,15 +778,15 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return applyViewMapper.listofDraftDetail(param);
 	}
 
-	@Override
+	/*@Override
 	public String getBudgetSum(Map<String, Object> param) {
 		return searchViewMapper.getBudgetSum(param);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public String getBudgetTotalMoneyForDept3(Map<String, Object> param) {
 		return dept3ViewMapper.getBudgetTotalMoneyForDept3(param);
-	}
+	}*/
 
 	@Override
 	@Transactional

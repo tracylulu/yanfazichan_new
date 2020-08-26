@@ -154,7 +154,7 @@
   </select>
   
   
-  <select id="getBudgetSum" parameterType="map" resultType="java.lang.String">
+  <!-- <select id="getBudgetSum" parameterType="map" resultType="java.lang.String">
   	select  ifnull(SUM(ActualMoney),0) as m from AssetPlanInfoSearchView
   		where 
   		DeleteFlag=1 and ReviewResult=1
@@ -170,7 +170,7 @@
 			<if test="param.ApplyMonth !=null">
 				and ApplyMonth = #{param.ApplyMonth}
 			</if>
-  </select>
+  </select> -->
   
   <select id="getDept3Apply" parameterType="map" resultType="java.lang.String">
   	select  ifnull(SUM(Dept3AgreeMoney),0) as m from AssetPlanInfoSearchView

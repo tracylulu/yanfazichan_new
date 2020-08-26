@@ -25,7 +25,7 @@ public interface AssetPlanInfoDept3ViewMapper {
 
     String getSumTotalMoneyForDept3(@Param("param") Map<String, Object> param);
     
-    String getBudgetTotalMoneyForDept3(@Param("param") Map<String, Object> param);
+    //String getBudgetTotalMoneyForDept3(@Param("param") Map<String, Object> param);
   
     String getSumActualMoneySumForDept3(@Param("param") Map<String, Object> param);
   

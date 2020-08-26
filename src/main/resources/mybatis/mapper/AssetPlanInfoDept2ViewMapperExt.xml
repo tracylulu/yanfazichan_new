@@ -47,14 +47,14 @@
 		</if>
 
 	</select>
-	<select id="getSumMoneyWithThirdDept" parameterType="map"
+	<!-- <select id="getSumMoneyWithThirdDept" parameterType="map"
 		resultType="java.lang.String">
 		select ifnull(SUM(TotalMoney),0) as m from AssetPlanInfoDept2View
 
 		<if test="_parameter != null">
 			<include refid="condition_sql"></include>
 		</if>
-	</select>
+	</select> -->
 
 	<select id="getSumActualMoneySumForDept2" parameterType="map"
 		resultType="java.lang.String">

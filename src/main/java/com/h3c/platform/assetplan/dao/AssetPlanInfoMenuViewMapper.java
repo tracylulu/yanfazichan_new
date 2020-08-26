@@ -26,5 +26,5 @@ public interface AssetPlanInfoMenuViewMapper {
     
     List<AssetPlanInfoMenuView> listofTodoInfoForRequiredUser(@Param("param") Map<String, Object> param);
     
-    int countTodoInfo(@Param("param") Map<String, Object> param);
+    //int countTodoInfo(@Param("param") Map<String, Object> param);
 }

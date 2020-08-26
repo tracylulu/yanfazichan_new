@@ -46,21 +46,21 @@ public interface AssetPlanInfoMapper {
     
     Integer getMaxCompleteSetCode(@Param("partCode")String partCode);
     
-    List<AssetPlanInfo> listofTodoInfoDetail(@Param("param") Map<String, Object> param);   
+    //List<AssetPlanInfo> listofTodoInfoDetail(@Param("param") Map<String, Object> param);   
     
-    int countTodoInfoDetail(@Param("param") Map<String, Object> param);
+    //int countTodoInfoDetail(@Param("param") Map<String, Object> param);
     
-    int submitInfoFromReviewToDept3(@Param("param") Map<String,Object> param);   
+    //int submitInfoFromReviewToDept3(@Param("param") Map<String,Object> param);   
     
-    int submitInfoFromDept3ToDept2(@Param("param") Map<String,Object> param);   
+    //int submitInfoFromDept3ToDept2(@Param("param") Map<String,Object> param);   
     
-    int submitInfoFromDept2ToPlanner(@Param("param") Map<String,Object> param);   
+    //int submitInfoFromDept2ToPlanner(@Param("param") Map<String,Object> param);   
     
     int submitInfoFromPlannerToOqDept(@Param("param") Map<String,Object> param); 
     
-    int submitInfoFromOqDeptToDept1(@Param("param") Map<String,Object> param);
+    //int submitInfoFromOqDeptToDept1(@Param("param") Map<String,Object> param);
     
-    int submitInfoFromDept1ToEnd(@Param("param") Map<String,Object> param);
+    //int submitInfoFromDept1ToEnd(@Param("param") Map<String,Object> param);
     
     int activateAssetPlanInfoByIds(@Param("param") Map<String,Object> param);    
     
