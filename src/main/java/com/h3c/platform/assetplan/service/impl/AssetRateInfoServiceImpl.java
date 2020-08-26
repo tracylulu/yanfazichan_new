@@ -106,7 +106,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 
 		Map<String,Object> mapRD=getRDRate( model, deptCode,date,lstRD);
 		//modify on 20200814
-		if(mapRD.isEmpty()) {
+		if(CollectionUtils.isEmpty(lstRD)) {
 			rateTotal.setRdRate("无");
 		}else {
 			rateTotal.setRdRate((String)mapRD.get("rate"));

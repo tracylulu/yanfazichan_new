@@ -223,6 +223,8 @@ public class AssetPlanInfoReviewController {
 					//不规范的改下状态
 					ap.setApstage("1");
 					ap.setApstatus("11");
+					//不规范的把审核时间，审核人记录下，打回的时候显示使用
+					ap.setReviewtime(new Date());
 				} 
 				//审核意见不是必填
 				ap.setReviewnote(updateEntity.getReviewnote());
@@ -233,6 +235,8 @@ public class AssetPlanInfoReviewController {
 				RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(assetplanidList.get(i));
 				Integer requiredsaudit = updateEntity.getRequiredsaudit().get(i);
 				numApproveRecord.setReviewercount(requiredsaudit);
+				numApproveRecord.setReviewerperson(UserUtils.getCurrentUserId());
+				
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 				
 				this.assetPlanInfoService.editAssetPlanInfo(ap);	
@@ -767,12 +771,15 @@ public class AssetPlanInfoReviewController {
 					//不规范的改下状态
 					lst.get(i).setApstage("1");
 					lst.get(i).setApstatus("11");
+					//不规范的把审核时间，审核人记录下，打回的时候显示使用
+					lst.get(i).setReviewtime(new Date());
 				} 
 				//审核意见前台带过来了
 				//数量修改完后对相关联的表RequestsNumApproveRecord进行ReviewerCount字段的更新
 				RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
 				Integer requiredsaudit = lst.get(i).getRequiredsaudit();
 				numApproveRecord.setReviewercount(requiredsaudit);
+				numApproveRecord.setReviewerperson(UserUtils.getCurrentUserId());
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 				
 			}
