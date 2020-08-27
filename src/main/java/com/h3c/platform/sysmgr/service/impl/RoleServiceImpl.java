@@ -69,7 +69,7 @@ public class RoleServiceImpl implements RoleService {
 			JSONArray jsonArray =jsonResult.getJSONArray("data");
 			
 			for(int i=0;i<jsonArray.size();i++) {
-				if("R_000001".equals(ObjToStrUtil.replaceNullValue(jsonArray.getString(i)))) {
+				if("R_000002".equals(ObjToStrUtil.replaceNullValue(jsonArray.getString(i)))) {
 					isAdmin=true;
 					break;
 				}
@@ -98,7 +98,7 @@ public class RoleServiceImpl implements RoleService {
 			JSONArray jsonArray =jsonResult.getJSONArray("data");
 			
 			for(int i=0;i<jsonArray.size();i++) {
-				if("R_000001".equals(ObjToStrUtil.replaceNullValue(jsonArray.getString(i)))) {
+				if("R_000002".equals(ObjToStrUtil.replaceNullValue(jsonArray.getString(i)))) {
 					isAdmin=true;
 					break;
 				}
