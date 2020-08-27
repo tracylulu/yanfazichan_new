@@ -3,6 +3,8 @@ package com.h3c.platform.assetplan.service.impl;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,10 @@ import com.h3c.platform.assetplan.dao.AssetRateInfoMapper;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetRateInfo;
 import com.h3c.platform.assetplan.entity.AssetRateInfoExample;
+import com.h3c.platform.assetplan.entity.AssetRateInfoExt;
 import com.h3c.platform.assetplan.entity.DeptInfo;
+import com.h3c.platform.assetplan.entity.PurchaseReportInfo;
+import com.h3c.platform.assetplan.entity.PurchaseReportInfoExt;
 import com.h3c.platform.assetplan.service.AssetRateInfoService;
 import com.h3c.platform.assetplan.service.DeptInfoService;
 import com.h3c.platform.response.ResponseResult;
@@ -270,7 +276,19 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 			lstTemp.get(lstTemp.size()-1).setUsageRate(deptUsageRate+"%");
 			lstResultAll.add(lstTemp.get(lstTemp.size()-1));			
 		}
-
+		//新建了一个实体类，继承了AssetRateInfo，多加了一个排序字段，方便排序
+		List<AssetRateInfoExt> lstResultAllExt=new ArrayList<>();
+		for (int i = 0; i < lstResultAll.size(); i++) {
+			AssetRateInfoExt infoExt = new AssetRateInfoExt();
+			BeanUtils.copyProperties(infoExt, lstResultAll.get(i));
+			String usageRate = lstResultAll.get(i).getUsageRate();
+			String str1=usageRate.substring(0, usageRate.indexOf("%"));//截取%之前的字符串
+			infoExt.setSort(Integer.parseInt(str1));
+			lstResultAllExt.add(infoExt);
+		}	
+		Collections.sort(lstResultAllExt, Comparator.comparing(AssetRateInfoExt::getSort));
+		
+		
 		Integer count = lstResultAll.size(); // 记录总数	
         Integer pageCount = 0; // 页数
         if (count % search.getPageSize() == 0) {
@@ -292,7 +310,7 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
         if(fromIndex >= count || count==0) {
         	return ResponseResult.success(0, "查询成功", search.getPageNum(), count, null, new ArrayList<>());
         }
-		List<AssetRateInfo> lstResult= lstResultAll.subList(fromIndex, toIndex);
+		List<AssetRateInfoExt> lstResult= lstResultAllExt.subList(fromIndex, toIndex);
 		
 		return ResponseResult.success(0, "查询成功", search.getPageNum(), count ,null,  lstResult);
 	}
