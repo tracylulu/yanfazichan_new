@@ -45,6 +45,7 @@ import com.h3c.platform.common.commonconst.LogType;
 import com.h3c.platform.common.service.MailInfoService;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.UserUtils;
 
@@ -133,8 +134,8 @@ public class AssetPlanInfoDept2Controller {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitInfoFromDept2ToPlanner(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
-   			String applymonth = submitEntity.getApplymonth();
+			String nextHandlePerson="";	
+			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
    			List<String> sendToPlannerForJHN =new ArrayList<>();
@@ -182,6 +183,8 @@ public class AssetPlanInfoDept2Controller {
    				String planner = sysDicInfoService.getPlanner();
    				if(StringUtils.isNotBlank(planner)) {
    					ap.setPlanner(planner);
+   					UserInfo userByEmpCode = userService.getUserByEmpCode(planner);
+	   				nextHandlePerson=userByEmpCode.getEmpName()+" "+userByEmpCode.getEmpCode();
    				}else {
    					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
    				}
@@ -235,12 +238,8 @@ public class AssetPlanInfoDept2Controller {
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
-   				return ResponseResult.success(true, "提交成功");
+   				return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
    			}
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
    	}
     
 	@ApiOperation(value="二级部门页面修改同意申购数量和审核意见")

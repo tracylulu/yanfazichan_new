@@ -138,7 +138,7 @@ public class AssetPlanInfoOQDeptController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitInfoFromOQDeptToDept1(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
+			String nextHandlePerson="";	
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
@@ -161,6 +161,8 @@ public class AssetPlanInfoOQDeptController {
    				String dept1 = sysDicInfoService.getFirstDeptMgn();
    				if(StringUtils.isNotBlank(dept1)) {
    					ap.setDept1reviewer(dept1);
+   					UserInfo userByEmpCode = userService.getUserByEmpCode(dept1);
+	   				nextHandlePerson=userByEmpCode.getEmpName()+" "+userByEmpCode.getEmpCode();
    				}else {
    					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
    				}
@@ -208,12 +210,7 @@ public class AssetPlanInfoOQDeptController {
 			for (int j = 0; j < sendToDept1.size(); j++) {
 				mailInfoService.sendRemindMail(String.join(",", sendToDept1.get(j)), "", "一级部门审核", url);
 			}
-				
-   			return ResponseResult.success(true, "提交成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
+			return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
    	}
     
     

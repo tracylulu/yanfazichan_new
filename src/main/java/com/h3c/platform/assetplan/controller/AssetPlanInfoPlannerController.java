@@ -53,6 +53,7 @@ import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.IPUtils;
 import com.h3c.platform.response.ResponseResult;
 import com.h3c.platform.sysmgr.entity.OperationLog;
+import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.OperationLogService;
 import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.ExportExcelWrapper;
@@ -154,8 +155,8 @@ public class AssetPlanInfoPlannerController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitInfoFromPlannerToOQDept(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
-   			String applymonth = submitEntity.getApplymonth();
+			String nextHandlePerson="";		
+			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
    			Map<String,Object> param=new HashMap<>();
@@ -194,6 +195,8 @@ public class AssetPlanInfoPlannerController {
 		   				String oq = sysDicInfoService.getOq();
 		   				if(StringUtils.isNotBlank(oq)) {
 		   					ap.setOqdeptreviewer(oq);
+		   					UserInfo userByEmpCode = userService.getUserByEmpCode(oq);
+			   				nextHandlePerson=userByEmpCode.getEmpName()+" "+userByEmpCode.getEmpCode();
 		   				}else {
 		   					return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
 		   				}
@@ -272,11 +275,12 @@ public class AssetPlanInfoPlannerController {
 	   					mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
 	   				}
    				}
-   				return ResponseResult.success(true, "提交成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
+   				if(newLstsubmitID.isEmpty() && !newLstEndID.isEmpty()) {
+   					return ResponseResult.success(true, "归档成功");
+   				}else {
+   					return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   				}
+   				
    	}
     
     

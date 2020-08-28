@@ -147,8 +147,8 @@ public class AssetPlanInfoDept3Controller {
    	@ResponseBody
 	@UserLoginToken(logType=LogType.MODIFY)
 	public ResponseResult submitInfoFromDept3ToDept2(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-		//try {
-   			String applymonth = submitEntity.getApplymonth();
+   			String nextHandlePerson="";
+			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
    			List<Integer> newLstsubmitID =new ArrayList<>();
@@ -192,6 +192,8 @@ public class AssetPlanInfoDept3Controller {
 	   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
 	   			if(StringUtils.isNotBlank(dept2Info.getDeptManagerCode())) {
 	   				ap.setDept2manager(dept2Info.getDeptManagerCode());
+	   				UserInfo userByEmpCode = userService.getUserByEmpCode(dept2Info.getDeptManagerCode());
+	   				nextHandlePerson=userByEmpCode.getEmpName()+" "+userByEmpCode.getEmpCode();
 	   			}else {
 	   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
 	   			}	
@@ -246,13 +248,8 @@ public class AssetPlanInfoDept3Controller {
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
-   				return ResponseResult.success(true, "提交成功");
+   				return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
    			}
-   			
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
    	}
     
 	@ApiOperation(value="三级部门页面修改同意申购数量和审核意见")
