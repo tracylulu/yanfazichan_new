@@ -777,10 +777,20 @@ public class AssetPlanInfoReviewController {
 				//审核意见前台带过来了
 				//数量修改完后对相关联的表RequestsNumApproveRecord进行ReviewerCount字段的更新
 				RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(lst.get(i).getAssetplanid());
-				Integer requiredsaudit = lst.get(i).getRequiredsaudit();
-				numApproveRecord.setReviewercount(requiredsaudit);
-				numApproveRecord.setReviewerperson(UserUtils.getCurrentUserId());
-				recordMapper.updateByPrimaryKey(numApproveRecord);
+				//为空，则对表RequestsNumApproveRecord创建记录数据，与主表对应
+				if(numApproveRecord==null) {
+					RequestsNumApproveRecord numApproveRecordInsert = new RequestsNumApproveRecord();
+					numApproveRecordInsert.setAssetplanid(lst.get(i).getAssetplanid());
+					numApproveRecordInsert.setReviewercount(lst.get(i).getRequiredsaudit());
+					numApproveRecordInsert.setReviewerperson(UserUtils.getCurrentUserId());
+   					recordMapper.insert(numApproveRecordInsert);
+				}else {
+					Integer requiredsaudit = lst.get(i).getRequiredsaudit();
+					numApproveRecord.setReviewercount(requiredsaudit);
+					numApproveRecord.setReviewerperson(UserUtils.getCurrentUserId());
+					recordMapper.updateByPrimaryKey(numApproveRecord);
+				}
+				
 				
 			}
 			
