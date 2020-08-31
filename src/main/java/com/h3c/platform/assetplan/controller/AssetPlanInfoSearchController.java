@@ -455,14 +455,20 @@ public class AssetPlanInfoSearchController {
 	@ResponseBody
 	@UserLoginToken
 	public ResponseResult getApprovalRecordById(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception{
-    		//获取成套设备中的一个审批记录的规范审核审核人，处理的问题：不规范打回成套的这块有一个不显示审批记录
+    		/*//获取成套设备中的一个审批记录的规范审核审核人，处理的问题：不规范打回成套的这块有一个不显示审批记录
     		String reviewerperson="";	
-    		AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanid);
-			List<AssetPlanInfoHomePageView> completeSetList = assetPlanInfoService.selectCompleteSetForRecord(ap.getPlancode(), ap.getCompletesetcode());
-			Optional<AssetPlanInfoHomePageView> temp = completeSetList.stream().filter(o->StringUtils.isNotBlank(o.getReviewerperson())).findAny();
-    		if(temp.isPresent()){
-    			reviewerperson = temp.get().getReviewerperson();
-    		}
+    		AssetPlanInfoHomePageView record1 = homePageViewMapper.getApprovalRecordById(assetplanid);
+    		//非成套
+    		if(record1.getCompletesetcode()==0) {
+    			reviewerperson = record1.getReviewerperson();
+    		}else {
+    			List<AssetPlanInfoHomePageView> completeSetList = assetPlanInfoService.selectCompleteSetForRecord(record1.getPlancode(), record1.getCompletesetcode());
+    			Optional<AssetPlanInfoHomePageView> temp = completeSetList.stream().filter(o->StringUtils.isNotBlank(o.getReviewerperson())).findAny();
+        		if(temp.isPresent()){
+        			reviewerperson = temp.get().getReviewerperson();
+        		}
+    		}*/
+			
 			
 			
 			//封装返回数据的表头信息
@@ -508,7 +514,7 @@ public class AssetPlanInfoSearchController {
 				}*/
 				json.put("reviewercount", record.getReviewercount());
 				json.put("reviewnote", record.getReviewnote());
-				UserInfo user2 = userService.getUserByEmpCode(reviewerperson);
+				UserInfo user2 = userService.getUserByEmpCode(record.getReviewerperson());
 				if(user2==null) {
 					json.put("reviewer", "");
 				}else {

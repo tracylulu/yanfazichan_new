@@ -908,7 +908,7 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return searchViewMapper.getDept2PlanedForDept3(param);
 	}
 
-	@Override
+	/*@Override
 	public List<AssetPlanInfoHomePageView> selectCompleteSetForRecord(String planCode, Integer completeSetCode) {
 		AssetPlanInfoHomePageViewExample example=new AssetPlanInfoHomePageViewExample();
 		AssetPlanInfoHomePageViewExample.Criteria cia=example.createCriteria();
@@ -916,6 +916,6 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		cia.andCompletesetcodeEqualTo(completeSetCode);
 		cia.andDeleteflagEqualTo("1");
 		return homePageViewMapper.selectByExample(example);
-	}
+	}*/
 }
 
