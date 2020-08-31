@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -454,7 +455,16 @@ public class AssetPlanInfoSearchController {
 	@ResponseBody
 	@UserLoginToken
 	public ResponseResult getApprovalRecordById(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception{
-		//try {
+    		//获取成套设备中的一个审批记录的规范审核审核人，处理的问题：不规范打回成套的这块有一个不显示审批记录
+    		String reviewerperson="";	
+    		AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(assetplanid);
+			List<AssetPlanInfoHomePageView> completeSetList = assetPlanInfoService.selectCompleteSetForRecord(ap.getPlancode(), ap.getCompletesetcode());
+			Optional<AssetPlanInfoHomePageView> temp = completeSetList.stream().filter(o->StringUtils.isNotBlank(o.getReviewerperson())).findAny();
+    		if(temp.isPresent()){
+    			reviewerperson = temp.get().getReviewerperson();
+    		}
+			
+			
 			//封装返回数据的表头信息
 			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOHOMEPAGEVIEW);
    			
@@ -498,7 +508,7 @@ public class AssetPlanInfoSearchController {
 				}*/
 				json.put("reviewercount", record.getReviewercount());
 				json.put("reviewnote", record.getReviewnote());
-				UserInfo user2 = userService.getUserByEmpCode(record.getReviewerperson());
+				UserInfo user2 = userService.getUserByEmpCode(reviewerperson);
 				if(user2==null) {
 					json.put("reviewer", "");
 				}else {

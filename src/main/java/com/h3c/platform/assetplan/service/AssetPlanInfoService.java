@@ -86,6 +86,8 @@ public interface AssetPlanInfoService {
 	//查询成套设备
 	List<AssetPlanInfo> selectCompleteSet(String planCode,Integer completeSetCode);
 	
+	List<AssetPlanInfoHomePageView> selectCompleteSetForRecord(String planCode,Integer completeSetCode);
+	
 	//查询成套设备
 	List<AssetPlanInfoDetailView> selectCompleteSetAll(String planCode,Integer completeSetCode);
 		

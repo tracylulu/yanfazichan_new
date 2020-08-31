@@ -263,6 +263,66 @@ public class AssetPlanInfoHomePageViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andCompletesetcodeIsNull() {
+            addCriterion("CompleteSetCode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeIsNotNull() {
+            addCriterion("CompleteSetCode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeEqualTo(Integer value) {
+            addCriterion("CompleteSetCode =", value, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeNotEqualTo(Integer value) {
+            addCriterion("CompleteSetCode <>", value, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeGreaterThan(Integer value) {
+            addCriterion("CompleteSetCode >", value, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("CompleteSetCode >=", value, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeLessThan(Integer value) {
+            addCriterion("CompleteSetCode <", value, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeLessThanOrEqualTo(Integer value) {
+            addCriterion("CompleteSetCode <=", value, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeIn(List<Integer> values) {
+            addCriterion("CompleteSetCode in", values, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeNotIn(List<Integer> values) {
+            addCriterion("CompleteSetCode not in", values, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeBetween(Integer value1, Integer value2) {
+            addCriterion("CompleteSetCode between", value1, value2, "completesetcode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompletesetcodeNotBetween(Integer value1, Integer value2) {
+            addCriterion("CompleteSetCode not between", value1, value2, "completesetcode");
+            return (Criteria) this;
+        }
+
         public Criteria andAssetnameIsNull() {
             addCriterion("AssetName is null");
             return (Criteria) this;

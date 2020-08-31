@@ -61,6 +61,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfoDetailView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoDetailViewExample;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoExample;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoHomePageViewExample;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoMenuView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoOQDeptView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
@@ -905,6 +906,16 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 	@Override
 	public String getDept2PlanedForDept3(Map<String, Object> param) {
 		return searchViewMapper.getDept2PlanedForDept3(param);
+	}
+
+	@Override
+	public List<AssetPlanInfoHomePageView> selectCompleteSetForRecord(String planCode, Integer completeSetCode) {
+		AssetPlanInfoHomePageViewExample example=new AssetPlanInfoHomePageViewExample();
+		AssetPlanInfoHomePageViewExample.Criteria cia=example.createCriteria();
+		cia.andPlancodeEqualTo(planCode);
+		cia.andCompletesetcodeEqualTo(completeSetCode);
+		cia.andDeleteflagEqualTo("1");
+		return homePageViewMapper.selectByExample(example);
 	}
 }
 

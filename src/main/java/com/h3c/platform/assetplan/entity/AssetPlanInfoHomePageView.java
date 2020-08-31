@@ -8,6 +8,8 @@ public class AssetPlanInfoHomePageView {
 
     private String plancode;
 
+    private Integer completesetcode;
+
     private String assetname;
 
     private String assetmanufacturer;
@@ -104,6 +106,14 @@ public class AssetPlanInfoHomePageView {
 
     public void setPlancode(String plancode) {
         this.plancode = plancode == null ? null : plancode.trim();
+    }
+
+    public Integer getCompletesetcode() {
+        return completesetcode;
+    }
+
+    public void setCompletesetcode(Integer completesetcode) {
+        this.completesetcode = completesetcode;
     }
 
     public String getAssetname() {
