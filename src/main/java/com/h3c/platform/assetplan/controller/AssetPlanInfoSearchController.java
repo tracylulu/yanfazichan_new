@@ -457,7 +457,7 @@ public class AssetPlanInfoSearchController {
 	@ResponseBody
 	@UserLoginToken
 	public ResponseResult getApprovalRecordById(@RequestParam @ApiParam(name="assetplanid",value="资源信息主键id",required=true)Integer assetplanid) throws Exception{
-    		/*//获取成套设备中的一个审批记录的规范审核审核人，处理的问题：不规范打回成套的这块有一个不显示审批记录
+    		//获取成套设备中的一个审批记录的规范审核审核人，处理的问题：不规范打回成套的这块修改后可能会不显示审批记录
     		String reviewerperson="";	
     		AssetPlanInfoHomePageView record1 = homePageViewMapper.getApprovalRecordById(assetplanid);
     		//非成套
@@ -469,7 +469,7 @@ public class AssetPlanInfoSearchController {
         		if(temp.isPresent()){
         			reviewerperson = temp.get().getReviewerperson();
         		}
-    		}*/
+    		}
 			
 			
 			
@@ -493,7 +493,7 @@ public class AssetPlanInfoSearchController {
 			json0.put("applytime", dateformat.format(record.getApplytime()));
 			arrayData.add(json0);
 			
-			if(record.getReviewtime()!=null) {
+			if(record.getReviewtime()!=null && !"21".equals(record.getApstatus())) {
 				JSONObject json=new JSONObject();
 				json.put("apstage",  "2");
 				json.put("apstatusdetail",  "规范审核");
@@ -516,7 +516,7 @@ public class AssetPlanInfoSearchController {
 				}*/
 				json.put("reviewercount", record.getReviewercount());
 				json.put("reviewnote", record.getReviewnote());
-				UserInfo user2 = userService.getUserByEmpCode(record.getReviewerperson());
+				UserInfo user2 = userService.getUserByEmpCode(reviewerperson);
 				if(user2==null) {
 					json.put("reviewer", "");
 				}else {
