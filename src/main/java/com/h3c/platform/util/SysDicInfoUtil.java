@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
 import com.h3c.platform.assetplan.entity.SysDicCategoryEntity;
 import com.h3c.platform.assetplan.entity.SysDicReceiverPlaceEntity;
@@ -56,5 +60,95 @@ public class SysDicInfoUtil {
 				}
 			return receiverPlaceEntity; 
 	}
+	
+	
+	public List<AssetPlanInfoAll> replaceDicCategory(List<AssetPlanInfoAll> list) throws Exception{
+			JSONArray arrayData = new JSONArray();
+			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
+			for (int i = 0; i < objDic.size(); i++) {
+				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+				String[] arrvalue =value.split("_");
+				for (int j = 0; j < list.size(); j++) {
+					if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
+						list.get(j).setAssetcategoryId(obj.get("dic_code").toString());
+						list.get(j).setAssetcategory(arrvalue[2]);
+						list.get(j).setGoodstime(arrvalue[3]);
+					}
+				}
+			}
+		return list;
+	}
+	
+	public List<AssetPlanInfoSearchView> replaceDicCategoryForSearch(List<AssetPlanInfoSearchView> list) throws Exception{
+		JSONArray arrayData = new JSONArray();
+		com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
+		for (int i = 0; i < objDic.size(); i++) {
+			com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+			String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+			String[] arrvalue =value.split("_");
+			for (int j = 0; j < list.size(); j++) {
+				if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
+					list.get(j).setAssetcategory(arrvalue[2]);
+				}
+			}
+		}
+		return list;
+	}
     
+	public List<AssetPlanInfoSearchExportView> replaceDicForSearchExport(List<AssetPlanInfoSearchExportView> list) throws Exception{
+		com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
+		com.alibaba.fastjson.JSONArray objDic1=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"1");
+		for (int i = 0; i < objDic.size(); i++) {
+			com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+			String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+			String[] arrvalue =value.split("_");
+			for (int j = 0; j < list.size(); j++) {
+				if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
+					list.get(j).setAssetcategory(arrvalue[2]);
+					list.get(j).setGoodstime(arrvalue[3]);
+				}
+			}
+		}
+		for (int i = 0; i < objDic1.size(); i++) {
+			com.alibaba.fastjson.JSONObject obj= objDic1.getJSONObject(i);
+			String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+			String[] arrvalue =value.split("_");
+			for (int j = 0; j < list.size(); j++) {
+				if(list.get(j).getReceiverplace().equals(obj.get("dic_code").toString())) {
+					list.get(j).setReceiverplace(arrvalue[1]);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public List<AssetPlanInfoPlannerView> replaceDicForPlannerExport(List<AssetPlanInfoPlannerView> list) throws Exception{
+		com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
+		com.alibaba.fastjson.JSONArray objDic1=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"1");
+		for (int i = 0; i < objDic.size(); i++) {
+			com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+			String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+			String[] arrvalue =value.split("_");
+			for (int j = 0; j < list.size(); j++) {
+				if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
+					list.get(j).setAssetcategory(arrvalue[2]);
+					list.get(j).setGoodstime(arrvalue[3]);
+				}
+			}
+		}
+		for (int i = 0; i < objDic1.size(); i++) {
+			com.alibaba.fastjson.JSONObject obj= objDic1.getJSONObject(i);
+			String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+			String[] arrvalue =value.split("_");
+			for (int j = 0; j < list.size(); j++) {
+				if(list.get(j).getReceiverplace().equals(obj.get("dic_code").toString())) {
+					list.get(j).setReceiverplace(arrvalue[1]);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 }

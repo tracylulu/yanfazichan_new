@@ -195,10 +195,11 @@ public class AssetPlanInfoSearchController {
             
    			List<AssetPlanInfoSearchView> planInfoList = assetPlanInfoSearchService.listofAssetPlanInfo(param);
    			//物品类别转换成汉字重新赋值
-			for (int i = 0; i < planInfoList.size(); i++) {
+			/*for (int i = 0; i < planInfoList.size(); i++) {
 					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(planInfoList.get(i).getAssetcategory());
 					planInfoList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
-			}
+			}*/
+   			planInfoList = sysDicInfoUtil.replaceDicCategoryForSearch(planInfoList);
    			int totalCount = assetPlanInfoSearchService.countAssetPlanInfo(param);
    			//封装返回数据的表头信息
    			List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOSEARCHVIEW);
@@ -425,13 +426,14 @@ public class AssetPlanInfoSearchController {
 			List<AssetPlanInfoSearchExportView> lst = assetPlanInfoService.exportAssetPlanInfoByIds(param);
 			System.out.println("111-----"+new Date());
 			//类别，货期，到货地点转换成汉字重新赋值导出
-			for (int i = 0; i < lst.size(); i++) {
+			/*for (int i = 0; i < lst.size(); i++) {
 					SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(lst.get(i).getAssetcategory());
 					lst.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
 					lst.get(i).setGoodstime(sysDicCategory.getGoodstime());
 					SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(lst.get(i).getReceiverplace());
 					lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
-			}
+			}*/
+			lst = sysDicInfoUtil.replaceDicForSearchExport(lst);
 			System.out.println("222-----"+new Date());
 			ExportExcelWrapper<AssetPlanInfoSearchExportView> excelWrapper = new ExportExcelWrapper<>();
 

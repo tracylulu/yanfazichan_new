@@ -350,13 +350,14 @@ public class AssetPlanInfoPlannerController {
 		param.put("ApplyMonth",applymonth);
 		List<AssetPlanInfoPlannerView> lst = assetPlanInfoService.exportAssetPlanInfoForPlanner(param);
 		//类别，货期，到货地点转换成汉字重新赋值导出
-		for (int i = 0; i < lst.size(); i++) {
+		/*for (int i = 0; i < lst.size(); i++) {
 			SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(lst.get(i).getAssetcategory());
 			lst.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
 			lst.get(i).setGoodstime(sysDicCategory.getGoodstime());
 			SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(lst.get(i).getReceiverplace());
 			lst.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
-		}
+		}*/
+		lst = sysDicInfoUtil.replaceDicForPlannerExport(lst);
 		
 		ExportExcelWrapper<AssetPlanInfoPlannerView> excelWrapper = new ExportExcelWrapper<>();
 

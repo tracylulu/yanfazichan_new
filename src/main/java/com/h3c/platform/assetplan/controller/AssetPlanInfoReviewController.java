@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -58,6 +60,7 @@ import com.h3c.platform.common.service.MailInfoService;
 import com.h3c.platform.common.service.SysDicInfoService;
 import com.h3c.platform.common.util.UUIDUtil;
 import com.h3c.platform.response.ResponseResult;
+import com.h3c.platform.sysmgr.controller.LoginConroller;
 import com.h3c.platform.sysmgr.entity.UserInfo;
 import com.h3c.platform.sysmgr.service.UserService;
 import com.h3c.platform.util.SysDicInfoUtil;
@@ -110,7 +113,9 @@ public class AssetPlanInfoReviewController {
 	@Value("${spring.remindEmailForPlanner.url}")
     private  String remindEmailForPlanner ;
 	
-	@ApiOperation(value="查看规范审核列表信息")
+	private static final Logger logger = LoggerFactory.getLogger(AssetPlanInfoReviewController.class);
+	
+	@ApiOperation(value="查看规范审核列表信息----这个方法之前用的，现在不用了")
    	@GetMapping("/getReviewInfoList")
    	@ResponseBody
    	@UserLoginToken
@@ -461,7 +466,7 @@ public class AssetPlanInfoReviewController {
    	}
 	
     
-	@ApiOperation(value="规范审核状态筛选")
+	@ApiOperation(value="规范审核状态筛选----这个方法之前用的，现在不用了")
    	@GetMapping("/getReviewResult")
    	@ResponseBody
    	@UserLoginToken
@@ -527,6 +532,7 @@ public class AssetPlanInfoReviewController {
    	@ResponseBody
    	@UserLoginToken
    	public ResponseResult getSearchResultForReview(@RequestBody @ApiParam(name="查询规范审核列表",value="传入json格式",required=true) AssetInfoReviewEntity assetInfoReviewEntity) throws Exception{
+		logger.info("1printTime"+System.currentTimeMillis());
 		//封装返回数据的表头信息
 		List<Map<String, Object>> columnList = sysDicInfoService.getColumn(DicConst.ASSETPLANINFOREVIEWVIEW);
 		
@@ -564,16 +570,20 @@ public class AssetPlanInfoReviewController {
 		JSONObject json=new JSONObject();
 		//PageHelper.startPage(pageNum,pageSize);
 		com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
+		logger.info("2printTime"+System.currentTimeMillis());
 		List<AssetPlanInfoAll> reviewResultList = assetPlanInfoService.getSearchResultForReview(param);
-		for (int i = 0; i < reviewResultList.size(); i++) {
+		logger.info("3printTime"+System.currentTimeMillis());
+		/*for (int i = 0; i < reviewResultList.size(); i++) {
 			SysDicCategoryEntity sysDicCategory = sysDicInfoUtil.getSysDicCategory(reviewResultList.get(i).getAssetcategory());
 			reviewResultList.get(i).setAssetcategoryId(sysDicCategory.getAssetCategoryId());
 			reviewResultList.get(i).setAssetcategory(sysDicCategory.getAssetCategory());
 			reviewResultList.get(i).setGoodstime(sysDicCategory.getGoodstime());
-			SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewResultList.get(i).getReceiverplace());
-			reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
-			reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
-		}
+			//SysDicReceiverPlaceEntity sysDicReceiverPlace = sysDicInfoUtil.getSysDicReceiverPlace(reviewResultList.get(i).getReceiverplace());
+			//reviewResultList.get(i).setReceiverplaceId(sysDicReceiverPlace.getReceiverPlaceId());
+			//reviewResultList.get(i).setReceiverplace(sysDicReceiverPlace.getReceiverPlace());
+		}*/
+		reviewResultList = sysDicInfoUtil.replaceDicCategory(reviewResultList);
+		logger.info("4printTime"+System.currentTimeMillis());
 		PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(reviewResultList);
 		if(reviewResultList.size()>0) {
 			String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForReview(param);
@@ -584,6 +594,7 @@ public class AssetPlanInfoReviewController {
 			//数据集list
 			json.put("DataSet" , pageInfo.getList());
 			arrayData.add(json);	
+			logger.info("5printTime"+System.currentTimeMillis());
 			return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, arrayData);
 		}else {
 			return ResponseResult.success(0, "查询成功", pageNum, pageInfo.getTotal(), columnList, null);
