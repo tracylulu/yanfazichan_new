@@ -584,14 +584,15 @@ public class AssetPlanInfoApplyController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitAssetPlanInfoByIds(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
-   			//不选中的时候提示：请确认是否全部提交，选中提交的时候提示：请确认是否将所选物品及成套设备全部提交 
+    		List<String> sendToForJHN =new ArrayList<>();
+			List<String> sendToForJHW =new ArrayList<>();
+    		//不选中的时候提示：请确认是否全部提交，选中提交的时候提示：请确认是否将所选物品及成套设备全部提交 
    			List<Integer> lstsubmitID = submitEntity.getLstsubmitId();
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			//申请人和申购人id的list,规范审核人code的list(后续邮件使用)
 	   		List<String> newLstApplyRequiredUserID =new ArrayList<>();
-	   		List<String> getsendToList =new ArrayList<>();
+	   		//List<String> getsendToList =new ArrayList<>();
 	   		List<Integer> newLstsubmitID =new ArrayList<>();
    			if(lstsubmitID.isEmpty()) {
    				//传过来的集合为空，说明全部提交
@@ -614,7 +615,14 @@ public class AssetPlanInfoApplyController {
 	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
 	   				String[] split = draftInfoList.get(i).getReviewperson().split(",");
 	   				for (int j = 0; j < split.length; j++) {
-	   					getsendToList.add(split[j]);
+	   					//计划内
+	   					if(draftInfoList.get(i).getAbnormalplanenum()==0) {
+	   						sendToForJHN.add(split[j]);
+	   					}else {
+	   						//计划外
+	   						sendToForJHW.add(split[j]);
+	   					}
+	   					//getsendToList.add(split[j]);
 					}
 	   				
    				}
@@ -624,7 +632,14 @@ public class AssetPlanInfoApplyController {
 	   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
 	   				String[] split = todoList.get(j).getReviewperson().split(",");
 	   				for (int k = 0; k < split.length; k++) {
-	   					getsendToList.add(split[k]);
+	   					//计划内
+	   					if(todoList.get(j).getAbnormalplanenum()==0) {
+	   						sendToForJHN.add(split[k]);
+	   					}else {
+	   						//计划外
+	   						sendToForJHW.add(split[k]);
+	   					}
+	   					//getsendToList.add(split[k]);
 					}
 	   				
 				}
@@ -642,7 +657,14 @@ public class AssetPlanInfoApplyController {
    	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getRequireduser());
    	   					    String[] split = completeSetList.get(j).getReviewperson().split(",");
 	   	   					for (int k = 0; k < split.length; k++) {
-	   		   					getsendToList.add(split[k]);
+	   	   						//计划内
+	   		   					if(completeSetList.get(j).getAbnormalplanenum()==0) {
+	   		   						sendToForJHN.add(split[k]);
+	   		   					}else {
+	   		   						//计划外
+	   		   						sendToForJHW.add(split[k]);
+	   		   					}
+	   		   					//getsendToList.add(split[k]);
 	   						}
    	   					}
    	   				//无成套设备	
@@ -652,7 +674,14 @@ public class AssetPlanInfoApplyController {
   						newLstApplyRequiredUserID.add(ap.getRequireduser());
   						String[] split = ap.getReviewperson().split(",");
   						for (int k = 0; k < split.length; k++) {
-   		   					getsendToList.add(split[k]);
+  							//计划内
+   		   					if(ap.getAbnormalplanenum()==0) {
+   		   						sendToForJHN.add(split[k]);
+   		   					}else {
+   		   						//计划外
+   		   						sendToForJHW.add(split[k]);
+   		   					}
+   		   					//getsendToList.add(split[k]);
    						}
    	   				}
    	   			}
@@ -698,36 +727,64 @@ public class AssetPlanInfoApplyController {
 			String url=remindEmailForReview+applymonth;
 			List<String> ccTo =new ArrayList<>();
 			List<String> sendTo =new ArrayList<>();
-			getsendToList=removeDuplicate(getsendToList);
-			for (int j = 0; j < getsendToList.size(); j++) {
-				if(getsendToList.size()==1) {
+			//getsendToList=removeDuplicate(getsendToList);
+			sendToForJHN=removeDuplicate(sendToForJHN);
+			sendToForJHW=removeDuplicate(sendToForJHW);
+			//计划内的单子，邮件通知规范审核
+			for (int j = 0; j < sendToForJHN.size(); j++) {
+				if(sendToForJHN.size()==1) {
 					//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 					ccTo = removeDuplicate(newLstApplyRequiredUserID);
 					//功能已实现，先注释，以免误发邮件
-					mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
+					//mailInfoService.sendRemindMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", url);
+					mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", true,2,url);
 				}else {
 					//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
 					Map<String,Object> param1=new HashMap<>();
 		   			param1.put("id", newLstsubmitID);
-		   			param1.put("Reviewer", getsendToList.get(j));
+		   			param1.put("Reviewer", sendToForJHN.get(j));
 					List<AssetPlanInfo> infoListByReviewer = assetPlanInfoService.getInfoListByReviewer(param1);
 					for(int k = 0; k < infoListByReviewer.size(); k++) {
 						ccTo.add(infoListByReviewer.get(k).getApplyuser());
 						ccTo.add(infoListByReviewer.get(k).getRequireduser());
 					}
 					ccTo = removeDuplicate(ccTo);
-					sendTo.add(getsendToList.get(j));
+					sendTo.add(sendToForJHN.get(j));
 					//功能已实现，先注释，以免误发邮件
-					mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
+					//mailInfoService.sendRemindMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", url);
+					mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", true,2,url);
+					sendTo.clear();
+					ccTo.clear();
+				}
+			}
+			//计划外的单子，邮件通知规范审核
+			for (int j = 0; j < sendToForJHW.size(); j++) {
+				if(sendToForJHW.size()==1) {
+					//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
+					ccTo = removeDuplicate(newLstApplyRequiredUserID);
+					//功能已实现，先注释，以免误发邮件
+					//mailInfoService.sendRemindMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", url);
+					mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHW.get(j)), String.join(",", ccTo), "规范审核", false,2,url);
+				}else {
+					//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
+					Map<String,Object> param1=new HashMap<>();
+		   			param1.put("id", newLstsubmitID);
+		   			param1.put("Reviewer", sendToForJHW.get(j));
+					List<AssetPlanInfo> infoListByReviewer = assetPlanInfoService.getInfoListByReviewer(param1);
+					for(int k = 0; k < infoListByReviewer.size(); k++) {
+						ccTo.add(infoListByReviewer.get(k).getApplyuser());
+						ccTo.add(infoListByReviewer.get(k).getRequireduser());
+					}
+					ccTo = removeDuplicate(ccTo);
+					sendTo.add(sendToForJHW.get(j));
+					//功能已实现，先注释，以免误发邮件
+					//mailInfoService.sendRemindMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", url);
+					mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHW.get(j)), String.join(",", ccTo), "规范审核", false,2,url);
 					sendTo.clear();
 					ccTo.clear();
 				}
 			}
 			return ResponseResult.success(true, "提交成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
    	}
     
     @ApiOperation(value="返回厂家和对应的型号集合")
@@ -1382,6 +1439,8 @@ public class AssetPlanInfoApplyController {
 			/*for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
 				lstsubmitID.add(ap.getAssetplanid());
 			}*/
+		 		List<String> sendToForJHN =new ArrayList<>();
+		 		List<String> sendToForJHW =new ArrayList<>();
 	   			Date planmonth = assetPlanGlobalInfo.getLst().get(0).getPlanmonth();
 	   			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM"); 
 	   			String applymonth = sdf.format(planmonth);
@@ -1389,7 +1448,7 @@ public class AssetPlanInfoApplyController {
 	   			String applyuser = assetPlanGlobalInfo.getLst().get(0).getApplyuser();
 	   			//申请人和申购人id的list,规范审核人code的list(后续邮件使用)
 		   		List<String> newLstApplyRequiredUserID =new ArrayList<>();
-		   		List<String> getsendToList =new ArrayList<>();
+		   		//List<String> getsendToList =new ArrayList<>();
 		   		List<Integer> newLstsubmitID =new ArrayList<>();
 	   			if(lstsubmitID.isEmpty()) {
 	   				//传过来的集合为空，说明全部提交
@@ -1412,7 +1471,13 @@ public class AssetPlanInfoApplyController {
 		   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
 		   				String[] split = draftInfoList.get(i).getReviewperson().split(",");
 		   				for (int j = 0; j < split.length; j++) {
-		   					getsendToList.add(split[j]);
+		   					//计划内
+		   					if(draftInfoList.get(i).getAbnormalplanenum()==0) {
+		   						sendToForJHN.add(split[j]);
+		   					}else {
+		   						//计划外
+		   						sendToForJHW.add(split[j]);
+		   					}
 						}
 		   				
 	   				}
@@ -1422,7 +1487,13 @@ public class AssetPlanInfoApplyController {
 		   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
 		   				String[] split = todoList.get(j).getReviewperson().split(",");
 		   				for (int k = 0; k < split.length; k++) {
-		   					getsendToList.add(split[k]);
+		   					//计划内
+		   					if(todoList.get(j).getAbnormalplanenum()==0) {
+		   						sendToForJHN.add(split[k]);
+		   					}else {
+		   						//计划外
+		   						sendToForJHW.add(split[k]);
+		   					}
 						}
 		   				
 					}
@@ -1440,7 +1511,13 @@ public class AssetPlanInfoApplyController {
 	   	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getRequireduser());
 	   	   					    String[] split = completeSetList.get(j).getReviewperson().split(",");
 		   	   					for (int k = 0; k < split.length; k++) {
-		   		   					getsendToList.add(split[k]);
+		   	   						//计划内
+		   		   					if(completeSetList.get(j).getAbnormalplanenum()==0) {
+		   		   						sendToForJHN.add(split[k]);
+		   		   					}else {
+		   		   						//计划外
+		   		   						sendToForJHW.add(split[k]);
+		   		   					}
 		   						}
 	   	   					}
 	   	   				//无成套设备	
@@ -1450,7 +1527,13 @@ public class AssetPlanInfoApplyController {
 	  						newLstApplyRequiredUserID.add(ap.getRequireduser());
 	  						String[] split = ap.getReviewperson().split(",");
 	  						for (int k = 0; k < split.length; k++) {
-	   		   					getsendToList.add(split[k]);
+	  							//计划内
+	   		   					if(ap.getAbnormalplanenum()==0) {
+	   		   						sendToForJHN.add(split[k]);
+	   		   					}else {
+	   		   						//计划外
+	   		   						sendToForJHW.add(split[k]);
+	   		   					}
 	   						}
 	   	   				}
 	   	   			}
@@ -1496,27 +1579,59 @@ public class AssetPlanInfoApplyController {
 				String url=remindEmailForReview+applymonth;
 				List<String> ccTo =new ArrayList<>();
 				List<String> sendTo =new ArrayList<>();
-				getsendToList=removeDuplicate(getsendToList);
-				for (int j = 0; j < getsendToList.size(); j++) {
-					if(getsendToList.size()==1) {
+				//getsendToList=removeDuplicate(getsendToList);
+				sendToForJHN=removeDuplicate(sendToForJHN);
+				sendToForJHW=removeDuplicate(sendToForJHW);
+				//计划内的单子，邮件通知规范审核
+				for (int j = 0; j < sendToForJHN.size(); j++) {
+					if(sendToForJHN.size()==1) {
 						//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 						ccTo = removeDuplicate(newLstApplyRequiredUserID);
 						//功能已实现，先注释，以免误发邮件
-						mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
+						//mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
+						mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", true,2,url);
 					}else {
 						//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
 						Map<String,Object> param1=new HashMap<>();
 			   			param1.put("id", newLstsubmitID);
-			   			param1.put("Reviewer", getsendToList.get(j));
+			   			param1.put("Reviewer", sendToForJHN.get(j));
 						List<AssetPlanInfo> infoListByReviewer = assetPlanInfoService.getInfoListByReviewer(param1);
 						for(int k = 0; k < infoListByReviewer.size(); k++) {
 							ccTo.add(infoListByReviewer.get(k).getApplyuser());
 							ccTo.add(infoListByReviewer.get(k).getRequireduser());
 						}
 						ccTo = removeDuplicate(ccTo);
-						sendTo.add(getsendToList.get(j));
+						sendTo.add(sendToForJHN.get(j));
 						//功能已实现，先注释，以免误发邮件
-						mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
+						//mailInfoService.sendRemindMail(String.join(",", getsendToList.get(j)), String.join(",", ccTo), "规范审核", url);
+						mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", true,2,url);
+						sendTo.clear();
+						ccTo.clear();
+					}
+				}
+				//计划外的单子，邮件通知规范审核
+				for (int j = 0; j < sendToForJHW.size(); j++) {
+					if(sendToForJHW.size()==1) {
+						//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
+						ccTo = removeDuplicate(newLstApplyRequiredUserID);
+						//功能已实现，先注释，以免误发邮件
+						//mailInfoService.sendRemindMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", url);
+						mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHW.get(j)), String.join(",", ccTo), "规范审核", false,2,url);
+					}else {
+						//发送给多个规范审核人得根据发送人查询申请人和申购人逐条发送
+						Map<String,Object> param1=new HashMap<>();
+			   			param1.put("id", newLstsubmitID);
+			   			param1.put("Reviewer", sendToForJHW.get(j));
+						List<AssetPlanInfo> infoListByReviewer = assetPlanInfoService.getInfoListByReviewer(param1);
+						for(int k = 0; k < infoListByReviewer.size(); k++) {
+							ccTo.add(infoListByReviewer.get(k).getApplyuser());
+							ccTo.add(infoListByReviewer.get(k).getRequireduser());
+						}
+						ccTo = removeDuplicate(ccTo);
+						sendTo.add(sendToForJHW.get(j));
+						//功能已实现，先注释，以免误发邮件
+						//mailInfoService.sendRemindMail(String.join(",", sendToForJHN.get(j)), String.join(",", ccTo), "规范审核", url);
+						mailInfoService.sendDeptMgnMail(String.join(",", sendToForJHW.get(j)), String.join(",", ccTo), "规范审核", false,2,url);
 						sendTo.clear();
 						ccTo.clear();
 					}

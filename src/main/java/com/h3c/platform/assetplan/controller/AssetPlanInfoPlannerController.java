@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ import com.h3c.platform.assetplan.entity.AssetPlanInfo;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
+import com.h3c.platform.assetplan.entity.AssetRateInfo;
 import com.h3c.platform.assetplan.entity.DeptInfo;
 import com.h3c.platform.assetplan.entity.RequestsNumApproveRecord;
 import com.h3c.platform.assetplan.entity.SearchAssetParamEntity;
@@ -189,6 +191,7 @@ public class AssetPlanInfoPlannerController {
 	   				//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
 		   			List<AssetPlanInfo> lst=new ArrayList<>();
 		   			List<String> sendToOQ =new ArrayList<>();
+		   			List<AssetPlanInfo> newLstByZeroAssetPlanInfo = new ArrayList<>();
 		   			for (int j = 0; j < newLstsubmitID.size(); j++) {
 		   				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
 		   				//下一环节审批人
@@ -204,15 +207,15 @@ public class AssetPlanInfoPlannerController {
 		   					//同意数量改成0的单子,标记状态为051
 		   					ap.setApstatus("051");
 		   					ap.setApstage("0");
-		   					
-		   					List<String> sendTo =new ArrayList<>();
+		   					newLstByZeroAssetPlanInfo.add(ap);
+		   					/*List<String> sendTo =new ArrayList<>();
 		   					List<String> ccTo =new ArrayList<>();
 		   					String url="";
 		   					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
 		   					sendTo.add(ap.getApplyuser());
 		   					ccTo.add(ap.getRequireduser());
 		   					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "计划员审核", url);
-		   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
+		   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);*/
 		   				}else {
 		   					ap.setApstatus("60");
 		   					ap.setApstage("6");
@@ -246,6 +249,18 @@ public class AssetPlanInfoPlannerController {
 	   				for (int j = 0; j < sendToOQ.size(); j++) {
 	   					mailInfoService.sendRemindMail(String.join(",", sendToOQ.get(j)), "", "专家团审核", url);
 	   				}
+	   				
+	   				//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+	   	   			Map<String, List<AssetPlanInfo>> collect = newLstByZeroAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+	   	   			for(String key:collect.keySet()) {
+	   	   				List<AssetPlanInfo> lstTemp=collect.get(key);
+	   	   				List<String> sendToEnd =new ArrayList<>();
+	   	   				List<String> ccToEnd =new ArrayList<>();
+	   	   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+	   	   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+	   	   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+	   	   			}
+	   				
    				}
    				//结束归档
    				if(newLstEndID.size()>0) {
@@ -257,8 +272,10 @@ public class AssetPlanInfoPlannerController {
    	   				param.put("OQDeptReviewer", "");
    	   				this.assetPlanInfoService.submitInfoFromPlannerToOqDept(param);
    	   				//结束归档的单子也记录下
+   	   				List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
 	   	   			for (int k = 0; k < newLstEndID.size(); k++) {
 	   					AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstEndID.get(k));
+	   					newLstEndAssetPlanInfo.add(ap);
 	   					Integer requiredsaudit = ap.getRequiredsaudit();
 	   					RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(newLstEndID.get(k));
 	   					numApproveRecord.setPlannercount(requiredsaudit);
@@ -266,14 +283,24 @@ public class AssetPlanInfoPlannerController {
 	   					numApproveRecord.setOqdeptreviewercount(requiredsaudit);
 	   					recordMapper.updateByPrimaryKey(numApproveRecord);
 	   					
-	   					//将审批结束的信息邮件主送申请人抄送申购人，告知审批结果。
+	   					/*//将审批结束的信息邮件主送申请人抄送申购人，告知审批结果。
 	   					List<String> sendToEnd =new ArrayList<>();
 	   					List<String> ccToEnd =new ArrayList<>();
 	   					sendToEnd.add(ap.getApplyuser());
 	   					ccToEnd.add(ap.getRequireduser());
 	   					//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "计划员审核环节归档", "");
-	   					mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
-	   				}
+	   					mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");*/
+	   	   			}
+	   	   			//按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+	   	   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+	   	   			for(String key:collect.keySet()) {
+	   	   				List<AssetPlanInfo> lstTemp=collect.get(key);
+	   	   				List<String> sendToEnd =new ArrayList<>();
+	   	   				List<String> ccToEnd =new ArrayList<>();
+	   	   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+	   	   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+	   	   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+	   	   			}
    				}
    				if(newLstsubmitID.isEmpty() && !newLstEndID.isEmpty()) {
    					return ResponseResult.success(true, "归档成功");
@@ -284,6 +311,11 @@ public class AssetPlanInfoPlannerController {
    	}
     
     
+	private static String fetchGroupKey(AssetPlanInfo e) {
+		return e.getApplyuser() +"#"+ e.getRequireduser();
+	}
+
+
 	@ApiOperation(value="计划员审核页面修改同意申购数量和审核意见")
    	@PutMapping("/updatePlannerInfoList")
    	@ResponseBody

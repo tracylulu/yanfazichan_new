@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -301,9 +302,12 @@ public class AssetPlanInfoReviewController {
    	   			param2.put("APStage", "2");
    	   			allReviewListID= assetPlanInfoService.getAllReviewListForGuiFan(param2);
    			}	
-   			List<String> sendTo3Dept =new ArrayList<>();
-   			List<String> sendTo2Dept =new ArrayList<>();
+   			//List<String> sendTo3Dept =new ArrayList<>();
+   			//List<String> sendTo2Dept =new ArrayList<>();
    			List<String> sendToPlanner =new ArrayList<>();
+   			List<String> sendTo3DeptJHN =new ArrayList<>();List<String> sendTo3DeptJHW =new ArrayList<>();
+   			List<String> sendTo2DeptJHN =new ArrayList<>();List<String> sendTo2DeptJHW =new ArrayList<>();
+   			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
    			if(allReviewListID.size()>0) {
    				List<AssetPlanInfo> lst=new ArrayList<>();
@@ -316,15 +320,16 @@ public class AssetPlanInfoReviewController {
 	   					ap.setApstatus("02");
 	   					ap.setApstage("0");
 	   					ap.setDept3manager("");
+	   					newLstEndAssetPlanInfo.add(ap);
 	   	   				//sendTo.add("");
-	   	   				List<String> sendTo0 =new ArrayList<>();
+	   	   				/*List<String> sendTo0 =new ArrayList<>();
 	   					List<String> ccTo0 =new ArrayList<>();
 	   					String url="";
 	   					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
 	   					sendTo0.add(ap.getApplyuser());
 	   					ccTo0.add(ap.getRequireduser());
 	   					//mailInfoService.sendRemindMail(sendTo0.toString(), ccTo0.toString(), "规范审核结束", url);
-	   					mailInfoService.sendProcessEndMail(String.join(",", sendTo0), String.join(",", ccTo0), url);
+	   					mailInfoService.sendProcessEndMail(String.join(",", sendTo0), String.join(",", ccTo0), url);*/
    	   				}else {
 	   					if("1".equals(deptInfo.getDeptLevel())) {
 	   						ap.setApstatus("50");
@@ -342,7 +347,13 @@ public class AssetPlanInfoReviewController {
 		   	   				ap.setApstage("4");
 				   			if(StringUtils.isNotBlank(deptInfo.getDeptManagerCode())) {
 				   				ap.setDept2manager(deptInfo.getDeptManagerCode());
-				   				sendTo2Dept.add(deptInfo.getDeptManagerCode());
+				   				//计划内
+		   	   					if(ap.getAbnormalplanenum()==0) {
+		   	   						sendTo2DeptJHN.add(deptInfo.getDeptManagerCode());
+		   	   					}else {
+		   	   						//计划外
+		   	   						sendTo2DeptJHW.add(deptInfo.getDeptManagerCode());
+		   	   					}
 				   			}else {
 				   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
 				   			}
@@ -354,7 +365,13 @@ public class AssetPlanInfoReviewController {
 		   	   				//UserInfo user = userService.getUserByEmpCode(ap.getRequireduser());
 			   	   			if(StringUtils.isNotBlank(deptInfo.getDeptManagerCode())) {
 			   	   				ap.setDept3manager(deptInfo.getDeptManagerCode());
-			   	   				sendTo3Dept.add(deptInfo.getDeptManagerCode());
+			   	   				//计划内
+		   	   					if(ap.getAbnormalplanenum()==0) {
+		   	   						sendTo3DeptJHN.add(deptInfo.getDeptManagerCode());
+		   	   					}else {
+		   	   						//计划外
+		   	   						sendTo3DeptJHW.add(deptInfo.getDeptManagerCode());
+		   	   					}
 				   			}else {
 				   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
 				   			}
@@ -373,7 +390,6 @@ public class AssetPlanInfoReviewController {
    			}
 			
 			for (int k = 0; k < allReviewListID.size(); k++) {
-				
 				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(allReviewListID.get(k));
 				DeptInfo deptInfo = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
 				Integer requiredsaudit = ap.getRequiredsaudit();
@@ -398,22 +414,51 @@ public class AssetPlanInfoReviewController {
 			String urlForDept2=remindEmailForDept2+applymonth;
 			String urlForPlanner=remindEmailForPlanner+applymonth;
 			//去重后的三级部门主管code
-			sendTo3Dept = removeDuplicate(sendTo3Dept);
-			for (int j = 0; j < sendTo3Dept.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendTo3Dept.get(j)), "", "三级部门主管审核", urlForDept3);
+			//计划内的单子，邮件通知三级主管审核
+			sendTo3DeptJHN = removeDuplicate(sendTo3DeptJHN);
+			for (int j = 0; j < sendTo3DeptJHN.size(); j++) {
+				mailInfoService.sendDeptMgnMail(String.join(",", sendTo3DeptJHN.get(j)), "", "三级部门主管审核", true,3,urlForDept3);
 			}
+			//计划外的单子，邮件通知三级主管审核
+			sendTo3DeptJHW = removeDuplicate(sendTo3DeptJHW);
+			for (int j = 0; j < sendTo3DeptJHW.size(); j++) {
+				mailInfoService.sendDeptMgnMail(String.join(",", sendTo3DeptJHW.get(j)), "", "三级部门主管审核", false,3,urlForDept3);
+			}
+			
 			//12级主管提单的特殊流程，发给对应的待审核人
-			sendTo2Dept = removeDuplicate(sendTo2Dept);
-			for (int j = 0; j < sendTo2Dept.size(); j++) {
-				mailInfoService.sendRemindMail(String.join(",", sendTo2Dept.get(j)), "", "二级部门主管审核", urlForDept2);
+			//计划内的单子，邮件通知二级主管审核
+			sendTo2DeptJHN = removeDuplicate(sendTo2DeptJHN);
+			for (int j = 0; j < sendTo2DeptJHN.size(); j++) {
+				mailInfoService.sendDeptMgnMail(String.join(",", sendTo2DeptJHN.get(j)), "", "二级部门主管审核", true,4,urlForDept2);
 			}
+			//计划外的单子，邮件通知二级主管审核
+			sendTo2DeptJHW = removeDuplicate(sendTo2DeptJHW);
+			for (int j = 0; j < sendTo2DeptJHW.size(); j++) {
+				mailInfoService.sendDeptMgnMail(String.join(",", sendTo2DeptJHW.get(j)), "", "二级部门主管审核", false,4,urlForDept2);
+			}
+			//发给计划员不需要待时间的模板，用原来的就行了
 			sendToPlanner = removeDuplicate(sendToPlanner);
 			for (int j = 0; j < sendToPlanner.size(); j++) {
 				mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "计划员审核", urlForPlanner);
 			}
 			
+			//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+   			for(String key:collect.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				List<String> sendToEnd =new ArrayList<>();
+   				List<String> ccToEnd =new ArrayList<>();
+   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   			}
+			
 			return ResponseResult.success(true, "提交成功");
    	}
+	
+	private static String fetchGroupKey(AssetPlanInfo e) {
+		return e.getApplyuser() +"#"+ e.getRequireduser();
+	}
 	
 	@ApiOperation(value="手工不规范邮件提醒")
    	@GetMapping("/emailForNotReview")

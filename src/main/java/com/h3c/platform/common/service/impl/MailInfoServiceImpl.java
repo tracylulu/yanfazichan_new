@@ -367,7 +367,10 @@ public class MailInfoServiceImpl implements MailInfoService {
 		if (workEndSecond == null) {
 			throw new Exception("未查询到结束工作日");
 		}
-
+		Date secondEmailDate = calendarService.getEndDay(workEndFirst, secondLen);
+		if (secondEmailDate == null) {
+			throw new Exception("未查询到结束工作日");
+		}
 		// 第三环节 三级部门截止时间
 		Date workEndThird = calendarService.getEndNextDay(workEndSecond, thirdLen);
 		if (workEndThird == null) {
@@ -377,16 +380,17 @@ public class MailInfoServiceImpl implements MailInfoService {
 		if (thirdEmailDate == null) {
 			throw new Exception("未查询到结束工作日");
 		}
-
+		// 第四环节 二级部门截止时间
+		Date fourthEmailDate = calendarService.getEndDay(workEndThird, fourthLen);
+		if (fourthEmailDate == null) {
+			throw new Exception("未查询到结束工作日");
+		}
+		if (link == 2) {
+			return secondEmailDate;
+		}			
 		if (link == 3) {
 			return thirdEmailDate;
 		} else {
-			// 第四环节 二级部门截止时间
-			Date fourthEmailDate = calendarService.getEndDay(workEndThird, fourthLen);
-			if (fourthEmailDate == null) {
-				throw new Exception("未查询到结束工作日");
-			}
-
 			return fourthEmailDate;
 		}
 	}

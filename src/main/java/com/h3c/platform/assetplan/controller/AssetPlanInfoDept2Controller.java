@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,9 +138,9 @@ public class AssetPlanInfoDept2Controller {
 			String nextHandlePerson="";	
 			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
-   			
-   			List<String> sendToPlannerForJHN =new ArrayList<>();
-   			List<String> sendToPlannerForJHW =new ArrayList<>();
+   			List<String> sendToPlanner =new ArrayList<>();
+   			//List<String> sendToPlannerForJHN =new ArrayList<>();
+   			//List<String> sendToPlannerForJHW =new ArrayList<>();
    			List<Integer> newLstsubmitID =new ArrayList<>();
    			Map<String,Object> param=new HashMap<>();
    			param.put("Dept2Manager",applyuser);
@@ -152,6 +153,7 @@ public class AssetPlanInfoDept2Controller {
 			}
    			//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
    			List<AssetPlanInfo> lst=new ArrayList<>();
+   			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			boolean flag=false;
    			for (int j = 0; j < newLstsubmitID.size(); j++) {
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
@@ -164,15 +166,15 @@ public class AssetPlanInfoDept2Controller {
    				if(ap.getRequiredsaudit()==0) {
    					ap.setApstatus("04");
    					ap.setApstage("0");
-   					
-   					List<String> sendTo =new ArrayList<>();
+   					newLstEndAssetPlanInfo.add(ap);
+   					/*List<String> sendTo =new ArrayList<>();
    					List<String> ccTo =new ArrayList<>();
    					String url="";
    					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "二级部门主管审核", url);
-   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
+   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);*/
    				}else {
    					ap.setApstatus("50");
    					ap.setApstage("5");
@@ -194,14 +196,14 @@ public class AssetPlanInfoDept2Controller {
    					//数量改为0的不要给下一环节审批人发邮件了
    					if(ap.getRequiredsaudit()==0) {
    					}else {
-   						sendToPlannerForJHN.add(planner);
+   						sendToPlanner.add(planner);
    					}
    				//计划外
    				}else {
    					//数量改为0的不要给下一环节审批人发邮件了
    					if(ap.getRequiredsaudit()==0) {
    					}else {
-   						sendToPlannerForJHW.add(planner);
+   						sendToPlanner.add(planner);
    					}
    				}
    				
@@ -224,7 +226,7 @@ public class AssetPlanInfoDept2Controller {
 			//计划员外的单子，邮件通知计划员审核
 			String url=remindEmailForPlanner+applymonth;
 			//去重后的计划员code
-			sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
+			/*sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
 			for (int j = 0; j < sendToPlannerForJHW.size(); j++) {
 				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", false,4,url);
 			}
@@ -232,9 +234,24 @@ public class AssetPlanInfoDept2Controller {
 			sendToPlannerForJHN = removeDuplicate(sendToPlannerForJHN);
 			for (int j = 0; j < sendToPlannerForJHN.size(); j++) {
 				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHN.get(j)), "", "计划员审核", true,4,url);
+			}*/
+   			//二级提交发邮件给计划员，不需要加时间的模板的。
+			sendToPlanner = removeDuplicate(sendToPlanner);
+			for (int j = 0; j < sendToPlanner.size(); j++) {
+				mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "计划员审核", url);
 			}
-   			
-   			
+			
+			//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+   			for(String key:collect.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				List<String> sendToEnd =new ArrayList<>();
+   				List<String> ccToEnd =new ArrayList<>();
+   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   			}
+			
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
@@ -242,6 +259,10 @@ public class AssetPlanInfoDept2Controller {
    			}
    	}
     
+	private static String fetchGroupKey(AssetPlanInfo e) {
+		return e.getApplyuser() +"#"+ e.getRequireduser();
+	}
+	
 	@ApiOperation(value="二级部门页面修改同意申购数量和审核意见")
    	@PutMapping("/updateDept2InfoList")
    	@ResponseBody

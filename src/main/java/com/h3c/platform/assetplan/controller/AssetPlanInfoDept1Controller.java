@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,7 +129,6 @@ public class AssetPlanInfoDept1Controller {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult agree(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
@@ -159,36 +159,47 @@ public class AssetPlanInfoDept1Controller {
    				lst.add(ap);
    			}
    			assetPlanInfoService.batchEditAssetPlanInfo(lst);
-   			
+   			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			for (int k = 0; k < newLstsubmitID.size(); k++) {
 				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+				newLstEndAssetPlanInfo.add(ap);
 				Integer requiredsaudit = ap.getRequiredsaudit();
 				RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(newLstsubmitID.get(k));
 				numApproveRecord.setDept1reviewercount(requiredsaudit);
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 			
-				//将审批结束的信息邮件主送申请人抄送申购人，告知审批结果。
+				/*//将审批结束的信息邮件主送申请人抄送申购人，告知审批结果。
 				List<String> sendToEnd =new ArrayList<>();
 				List<String> ccToEnd =new ArrayList<>();
 				sendToEnd.add(ap.getApplyuser());
 				ccToEnd.add(ap.getRequireduser());
 				//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
 				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
-				
+				*/
    			}
+   			//按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+   			for(String key:collect.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				List<String> sendToEnd =new ArrayList<>();
+   				List<String> ccToEnd =new ArrayList<>();
+   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   			}
+   			
    			return ResponseResult.success(true, "提交成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
    	}
 	
-	@ApiOperation(value="一级部门审核页面不同意后结束审批后归档，数量改为0")
+	private static String fetchGroupKey(AssetPlanInfo e) {
+		return e.getApplyuser() +"#"+ e.getRequireduser();
+	}
+	
+	@ApiOperation(value="一级部门审核页面不同意后结束审批后归档，数量改为0-----这个方法现在不用了")
 	@PostMapping("/unagree")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult unAgree(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-   		//try {
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
    			
@@ -218,27 +229,35 @@ public class AssetPlanInfoDept1Controller {
    				lst.add(ap);
    			}
    			assetPlanInfoService.batchEditAssetPlanInfo(lst);
-   			
+   			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			for (int k = 0; k < newLstsubmitID.size(); k++) {
 				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(k));
+				newLstEndAssetPlanInfo.add(ap);
 				Integer requiredsaudit = ap.getRequiredsaudit();
 				RequestsNumApproveRecord numApproveRecord = recordMapper.selectByPrimaryKey(newLstsubmitID.get(k));
 				numApproveRecord.setDept1reviewercount(requiredsaudit);
 				recordMapper.updateByPrimaryKey(numApproveRecord);
 			
 				//将审批结束的信息邮件主送申购人抄送申请人，告知审批结果。
-				List<String> sendToEnd =new ArrayList<>();
+				/*List<String> sendToEnd =new ArrayList<>();
 				List<String> ccToEnd =new ArrayList<>();
 				sendToEnd.add(ap.getRequireduser());
 				ccToEnd.add(ap.getApplyuser());
 				//mailInfoService.sendRemindMail(sendToEnd.toString(), ccToEnd.toString(), "一级部门审核环节归档", "");
-				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");*/
    			}
+   			//按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+   			for(String key:collect.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				List<String> sendToEnd =new ArrayList<>();
+   				List<String> ccToEnd =new ArrayList<>();
+   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   			}
+   			
    			return ResponseResult.success(true, "提交成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "提交失败");
-   		}*/
    	}
     
 	@ApiOperation(value="一级部门审核页面修改同意申购数量和审核意见")
