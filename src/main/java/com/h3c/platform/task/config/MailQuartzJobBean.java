@@ -63,8 +63,8 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			Integer month = cal.get(Calendar.MONTH) + 1;
 			int startDay = 0, firstLen=0,secondLen=0,thirdLen=0,fourthLen=0;
 
-			JSONArray approveDate = sysDicInfoService.getJsonArrayDicsByType(DicConst.R_APPROVEDATE,"1");
-			JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());
+			JSONArray approveDate = sysDicInfoService.getJsonArrayDicsByType(DicConst.R_APPROVEDATE,"1");              //获取1-4环节有效时间
+			JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());    //本月计划启动时间
 			startDay = objStartDay.getIntValue("dic_value");
 			Calendar startCal = null;
 			startCal = Calendar.getInstance();
@@ -75,7 +75,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			if (workDate == null) {
 				throw new Exception("未查询到启动工作日");
 			}
-			if (new Date().after(df.parse(df.format(workDate)))) {
+			//if (new Date().after(df.parse(df.format(workDate)))) {
 				for (int i = 0; i < approveDate.size(); i++) {
 					JSONObject obj = approveDate.getJSONObject(i);
 					if ("1".equals(ObjToStrUtil.replaceNullValue(obj.get("dic_code")))) {
@@ -94,7 +94,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 						fourthLen = obj.getInteger("dic_value");
 					}
 				}
-			}
+			//}
 
 			// 第一环节截止时间
 			Date workEndFirst=calendarService.getEndNextDay(workDate,firstLen);
@@ -138,31 +138,44 @@ public class MailQuartzJobBean extends QuartzJobBean {
 
 			Map<String, Object> param = new HashMap<>();
 			List<AssetPlanInfo> lst = assetPlanTaskService.getAssetPlanEmailByMap(param);
+			String type="";
 
 			List<String> lstApplyCode = new ArrayList<>();
 			lst.stream().filter(o -> "1".equals(o.getApstage())).forEach(o -> {
-
 				if (!lstApplyCode.contains(o.getApplyuser())&&StringUtils.isNotBlank(o.getApplyuser())) {
 					lstApplyCode.add(o.getApplyuser());
 				}
-			});
+			});				
 
 			for (String user : lstApplyCode) {
-				mailInfoService.sendRemindMailWithEndTime(user, "", "资源计划申请", firstEmailDate, isAbnormalPlan[0],"");
+				Map<Integer,List<AssetPlanInfo>> mapApplyType=lst.stream().filter(o -> "1".equals(o.getApstage()) && user.equals(o.getApplyuser())).collect(Collectors.groupingBy(AssetPlanInfo::getAbnormalplanenum));
+				if(mapApplyType.get(0)!=null && !mapApplyType.get(0).isEmpty()) {
+					type+="计划内申购单，";
+				}
+				if((mapApplyType.get(1)!=null && !mapApplyType.get(1).isEmpty())||(mapApplyType.get(2)!=null && !mapApplyType.get(2).isEmpty())) {
+					type+="计划外申购单，";
+				}
+				mailInfoService.sendRemindMailWithEndTime(user, "", "资源计划不规范驳回", secondEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
 
 			}
 
 			List<String> lstReviewCode = new ArrayList<>();
-			lst.stream().filter(
-					o -> "2".equals(o.getApstage()))
-					.forEach(o -> {
+			lst.stream().filter(o -> "2".equals(o.getApstage())).forEach(o -> {
 			
 						if (!lstReviewCode.contains(o.getReviewer())&&StringUtils.isNotBlank(o.getReviewer())) {
 							lstReviewCode.add(o.getReviewer());
 						}
 					});
 			for (String user : lstReviewCode) {
-				mailInfoService.sendRemindMailWithEndTime(user, "", "规范性审核", secondEmailDate, isAbnormalPlan[0], "");
+				type="";
+				Map<Integer,List<AssetPlanInfo>> mapReviewType=lst.stream().filter(o -> "2".equals(o.getApstage()) && user.equals(o.getReviewer())).collect(Collectors.groupingBy(AssetPlanInfo::getAbnormalplanenum));
+				if(mapReviewType.get(0)!=null && !mapReviewType.get(0).isEmpty()) {
+					type+="计划内申购单，";
+				} 
+				if((mapReviewType.get(1)!=null && !mapReviewType.get(1).isEmpty())||(mapReviewType.get(2)!=null && !mapReviewType.get(2).isEmpty())) {
+					type+="计划外申购单，";
+				}
+				mailInfoService.sendRemindMailWithEndTime(user, "", "规范性审核", secondEmailDate, isAbnormalPlan[0], "",type.substring(0, type.length()-1));
 			}
 
 			
@@ -174,7 +187,15 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				}
 			});
 			for (String user : lstDeptTCode) {
-				mailInfoService.sendRemindMailWithEndTime(user, "", "三级部门主管审核", thirdEmailDate, isAbnormalPlan[0],"");
+				type="";
+				Map<Integer,List<AssetPlanInfo>> mapDeptTType=lst.stream().filter(o -> "3".equals(o.getApstage()) && user.equals(o.getDept3manager())).collect(Collectors.groupingBy(AssetPlanInfo::getAbnormalplanenum));
+				if(mapDeptTType.get(0)!=null && !mapDeptTType.get(0).isEmpty()) {
+					type+="计划内申购单，";
+				} 
+				if((mapDeptTType.get(1)!=null && !mapDeptTType.get(1).isEmpty())||(mapDeptTType.get(2)!=null && !mapDeptTType.get(2).isEmpty())) {
+					type+="计划外申购单，";
+				}
+				mailInfoService.sendRemindMailWithEndTime(user, "", "三级部门主管审核", thirdEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
 			}
 
 			
@@ -185,9 +206,17 @@ public class MailQuartzJobBean extends QuartzJobBean {
 					lstDeptSCode.add(o.getDept2manager());
 				}
 			});
-
+			
 			for (String user : lstDeptSCode) {
-				mailInfoService.sendRemindMailWithEndTime(user, "", "二级部门主管审核", fourthEmailDate, isAbnormalPlan[0],"");
+				type="";
+				Map<Integer,List<AssetPlanInfo>> mapDeptSType=lst.stream().filter(o -> "4".equals(o.getApstage()) && user.equals(o.getDept2manager())).collect(Collectors.groupingBy(AssetPlanInfo::getAbnormalplanenum));
+				if(mapDeptSType.get(0)!=null && !mapDeptSType.get(0).isEmpty()) {
+					type+="计划内申购单，";
+				}
+				if((mapDeptSType.get(1)!=null && !mapDeptSType.get(1).isEmpty())||(mapDeptSType.get(2)!=null && !mapDeptSType.get(2).isEmpty())) {
+					type+="计划外申购单，";
+				}
+				mailInfoService.sendRemindMailWithEndTime(user, "", "二级部门主管审核", fourthEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
 			}
 
 			List<String> lstPlannerCode = new ArrayList<>();
