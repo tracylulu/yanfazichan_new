@@ -12,7 +12,7 @@ public class AssetPlanInfoReviewViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoReviewViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -64,12 +64,12 @@ public class AssetPlanInfoReviewViewExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class AbstractGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected AbstractGeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -302,6 +302,76 @@ public class AssetPlanInfoReviewViewExample {
 
         public Criteria andAssetnameNotBetween(String value1, String value2) {
             addCriterion("AssetName not between", value1, value2, "assetname");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIsNull() {
+            addCriterion("ExpenseType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIsNotNull() {
+            addCriterion("ExpenseType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeEqualTo(String value) {
+            addCriterion("ExpenseType =", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotEqualTo(String value) {
+            addCriterion("ExpenseType <>", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThan(String value) {
+            addCriterion("ExpenseType >", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ExpenseType >=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThan(String value) {
+            addCriterion("ExpenseType <", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThanOrEqualTo(String value) {
+            addCriterion("ExpenseType <=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLike(String value) {
+            addCriterion("ExpenseType like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotLike(String value) {
+            addCriterion("ExpenseType not like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIn(List<String> values) {
+            addCriterion("ExpenseType in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotIn(List<String> values) {
+            addCriterion("ExpenseType not in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeBetween(String value1, String value2) {
+            addCriterion("ExpenseType between", value1, value2, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotBetween(String value1, String value2) {
+            addCriterion("ExpenseType not between", value1, value2, "expensetype");
             return (Criteria) this;
         }
 
@@ -1975,6 +2045,76 @@ public class AssetPlanInfoReviewViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsspecifymanufacturerIsNull() {
+            addCriterion("ISSpecifyManufacturer is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerIsNotNull() {
+            addCriterion("ISSpecifyManufacturer is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerEqualTo(String value) {
+            addCriterion("ISSpecifyManufacturer =", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerNotEqualTo(String value) {
+            addCriterion("ISSpecifyManufacturer <>", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerGreaterThan(String value) {
+            addCriterion("ISSpecifyManufacturer >", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerGreaterThanOrEqualTo(String value) {
+            addCriterion("ISSpecifyManufacturer >=", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerLessThan(String value) {
+            addCriterion("ISSpecifyManufacturer <", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerLessThanOrEqualTo(String value) {
+            addCriterion("ISSpecifyManufacturer <=", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerLike(String value) {
+            addCriterion("ISSpecifyManufacturer like", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerNotLike(String value) {
+            addCriterion("ISSpecifyManufacturer not like", value, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerIn(List<String> values) {
+            addCriterion("ISSpecifyManufacturer in", values, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerNotIn(List<String> values) {
+            addCriterion("ISSpecifyManufacturer not in", values, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerBetween(String value1, String value2) {
+            addCriterion("ISSpecifyManufacturer between", value1, value2, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsspecifymanufacturerNotBetween(String value1, String value2) {
+            addCriterion("ISSpecifyManufacturer not between", value1, value2, "isspecifymanufacturer");
+            return (Criteria) this;
+        }
+
         public Criteria andApstatusIsNull() {
             addCriterion("APStatus is null");
             return (Criteria) this;
@@ -2326,7 +2466,7 @@ public class AssetPlanInfoReviewViewExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends AbstractGeneratedCriteria {
 
         protected Criteria() {
             super();

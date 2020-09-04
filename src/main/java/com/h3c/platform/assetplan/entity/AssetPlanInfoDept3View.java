@@ -10,6 +10,8 @@ public class AssetPlanInfoDept3View {
 
     private String assetname;
 
+    private String expensetype;
+
     private String assetmanufacturer;
 
     private String assetmodel;
@@ -84,6 +86,14 @@ public class AssetPlanInfoDept3View {
 
     public void setAssetname(String assetname) {
         this.assetname = assetname == null ? null : assetname.trim();
+    }
+
+    public String getExpensetype() {
+        return expensetype;
+    }
+
+    public void setExpensetype(String expensetype) {
+        this.expensetype = expensetype == null ? null : expensetype.trim();
     }
 
     public String getAssetmanufacturer() {

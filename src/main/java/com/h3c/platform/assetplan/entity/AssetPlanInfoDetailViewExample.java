@@ -14,7 +14,7 @@ public class AssetPlanInfoDetailViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoDetailViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -66,12 +66,12 @@ public class AssetPlanInfoDetailViewExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class AbstractGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected AbstractGeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -107,18 +107,18 @@ public class AssetPlanInfoDetailViewExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+        protected void addCriterionForJdbcDate(String condition, Date value, String property) {
             if (value == null) {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             addCriterion(condition, new java.sql.Date(value.getTime()), property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+        protected void addCriterionForJdbcDate(String condition, List<Date> values, String property) {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
-            List<java.sql.Date> dateList = new ArrayList<>();
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
             while (iter.hasNext()) {
                 dateList.add(new java.sql.Date(iter.next().getTime()));
@@ -126,7 +126,7 @@ public class AssetPlanInfoDetailViewExample {
             addCriterion(condition, dateList, property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+        protected void addCriterionForJdbcDate(String condition, Date value1, Date value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -513,6 +513,76 @@ public class AssetPlanInfoDetailViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andExpensetypeIsNull() {
+            addCriterion("ExpenseType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIsNotNull() {
+            addCriterion("ExpenseType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeEqualTo(String value) {
+            addCriterion("ExpenseType =", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotEqualTo(String value) {
+            addCriterion("ExpenseType <>", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThan(String value) {
+            addCriterion("ExpenseType >", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ExpenseType >=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThan(String value) {
+            addCriterion("ExpenseType <", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThanOrEqualTo(String value) {
+            addCriterion("ExpenseType <=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLike(String value) {
+            addCriterion("ExpenseType like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotLike(String value) {
+            addCriterion("ExpenseType not like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIn(List<String> values) {
+            addCriterion("ExpenseType in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotIn(List<String> values) {
+            addCriterion("ExpenseType not in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeBetween(String value1, String value2) {
+            addCriterion("ExpenseType between", value1, value2, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotBetween(String value1, String value2) {
+            addCriterion("ExpenseType not between", value1, value2, "expensetype");
+            return (Criteria) this;
+        }
+
         public Criteria andAssetmanufacturerIsNull() {
             addCriterion("AssetManufacturer is null");
             return (Criteria) this;
@@ -734,52 +804,52 @@ public class AssetPlanInfoDetailViewExample {
         }
 
         public Criteria andPlanmonthEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth =", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth =", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth <>", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <>", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThan(Date value) {
-            addCriterionForJDBCDate("PlanMonth >", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth >", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth >=", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth >=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThan(Date value) {
-            addCriterionForJDBCDate("PlanMonth <", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth <=", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthIn(List<Date> values) {
-            addCriterionForJDBCDate("PlanMonth in", values, "planmonth");
+            addCriterionForJdbcDate("PlanMonth in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotIn(List<Date> values) {
-            addCriterionForJDBCDate("PlanMonth not in", values, "planmonth");
+            addCriterionForJdbcDate("PlanMonth not in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("PlanMonth between", value1, value2, "planmonth");
+            addCriterionForJdbcDate("PlanMonth between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("PlanMonth not between", value1, value2, "planmonth");
+            addCriterionForJdbcDate("PlanMonth not between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
@@ -1664,52 +1734,52 @@ public class AssetPlanInfoDetailViewExample {
         }
 
         public Criteria andReqarrivaldateEqualTo(Date value) {
-            addCriterionForJDBCDate("ReqArrivalDate =", value, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate =", value, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("ReqArrivalDate <>", value, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate <>", value, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateGreaterThan(Date value) {
-            addCriterionForJDBCDate("ReqArrivalDate >", value, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate >", value, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("ReqArrivalDate >=", value, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate >=", value, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateLessThan(Date value) {
-            addCriterionForJDBCDate("ReqArrivalDate <", value, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate <", value, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("ReqArrivalDate <=", value, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate <=", value, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateIn(List<Date> values) {
-            addCriterionForJDBCDate("ReqArrivalDate in", values, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate in", values, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("ReqArrivalDate not in", values, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate not in", values, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("ReqArrivalDate between", value1, value2, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate between", value1, value2, "reqarrivaldate");
             return (Criteria) this;
         }
 
         public Criteria andReqarrivaldateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("ReqArrivalDate not between", value1, value2, "reqarrivaldate");
+            addCriterionForJdbcDate("ReqArrivalDate not between", value1, value2, "reqarrivaldate");
             return (Criteria) this;
         }
 
@@ -4474,7 +4544,7 @@ public class AssetPlanInfoDetailViewExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends AbstractGeneratedCriteria {
 
         protected Criteria() {
             super();

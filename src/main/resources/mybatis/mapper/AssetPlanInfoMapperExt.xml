@@ -558,7 +558,7 @@
       Dept2CheckNote, Planner, PlannerTime, 
       PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
       OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
-      Dept1ReviewNote, ReviewPerson)
+      Dept1ReviewNote, ReviewPerson,ExpenseType)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{pprice,jdbcType=DECIMAL}, 
       #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
@@ -578,7 +578,7 @@
       #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
       #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
       #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
-      #{dept1reviewnote,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR})
+      #{dept1reviewnote,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, #{expensetype,jdbcType=VARCHAR})
   </insert>
   
 </mapper>

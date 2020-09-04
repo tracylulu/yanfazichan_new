@@ -8,6 +8,7 @@
     <result column="TotalMoney" jdbcType="DECIMAL" property="totalmoney" />
     <result column="ActualMoney" jdbcType="DECIMAL" property="actualmoney" />
     <result column="AssetName" jdbcType="VARCHAR" property="assetname" />
+    <result column="ExpenseType" jdbcType="VARCHAR" property="expensetype" />
     <result column="AssetManufacturer" jdbcType="VARCHAR" property="assetmanufacturer" />
     <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
@@ -127,7 +128,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    AssetPlanID, PlanCode, PPrice, TotalMoney, ActualMoney, AssetName, AssetManufacturer, 
+    AssetPlanID, PlanCode, PPrice, TotalMoney, ActualMoney, AssetName, ExpenseType, AssetManufacturer, 
     AssetModel, AssetCategory, PlanMonth, Requireds, RequiredsAudit, Purpose, DeptCode, 
     ItemCode, RequiredUser, ReceiverPlace, AssetNote, ApplyUser, ApplyTime, Modifier, 
     ModifiTime, Goodstime, ReqArrivalDate, IsCompleteSet, CompleteSetCode, IsReqPurchaseReport, 
@@ -162,50 +163,52 @@
   <insert id="insert" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDetailView">
     insert into AssetPlanInfoDetailView (AssetPlanID, PlanCode, PPrice, 
       TotalMoney, ActualMoney, AssetName, 
-      AssetManufacturer, AssetModel, AssetCategory, 
-      PlanMonth, Requireds, RequiredsAudit, 
-      Purpose, DeptCode, ItemCode, 
-      RequiredUser, ReceiverPlace, AssetNote, 
-      ApplyUser, ApplyTime, Modifier, 
-      ModifiTime, Goodstime, ReqArrivalDate, 
-      IsCompleteSet, CompleteSetCode, IsReqPurchaseReport, 
-      PurchaseReportID, ISSpecifyManufacturer, 
-      ManufacturerTypeEnum, SpecifyManufacturerID, 
-      AbnormalPlanEnum, APStatus, APStage, 
-      DeleteFlag, OutTimePlanEnum, UsageRate, 
-      Reviewer, ReviewTime, ReviewResult, 
-      ReviewNote, Dept3Manager, Dept3CheckTime, 
-      Dept3CheckNote, Dept2Manager, Dept2CheckTime, 
-      Dept2CheckNote, Planner, PlannerTime, 
-      PlannerNote, OQDeptReviewer, OQDeptReviewTime, 
-      OQDeptReviewNote, Dept1Reviewer, Dept1ReviewTime, 
-      Dept1ReviewNote, RequiredUserName, ItemName, 
-      Dept3Name, Dept2Code, Dept2Name, 
-      Dept1Code, Dept1Name, RequiredUserType, 
-      ReviewerName)
+      ExpenseType, AssetManufacturer, AssetModel, 
+      AssetCategory, PlanMonth, Requireds, 
+      RequiredsAudit, Purpose, DeptCode, 
+      ItemCode, RequiredUser, ReceiverPlace, 
+      AssetNote, ApplyUser, ApplyTime, 
+      Modifier, ModifiTime, Goodstime, 
+      ReqArrivalDate, IsCompleteSet, CompleteSetCode, 
+      IsReqPurchaseReport, PurchaseReportID, 
+      ISSpecifyManufacturer, ManufacturerTypeEnum, 
+      SpecifyManufacturerID, AbnormalPlanEnum, 
+      APStatus, APStage, DeleteFlag, 
+      OutTimePlanEnum, UsageRate, Reviewer, 
+      ReviewTime, ReviewResult, ReviewNote, 
+      Dept3Manager, Dept3CheckTime, Dept3CheckNote, 
+      Dept2Manager, Dept2CheckTime, Dept2CheckNote, 
+      Planner, PlannerTime, PlannerNote, 
+      OQDeptReviewer, OQDeptReviewTime, OQDeptReviewNote, 
+      Dept1Reviewer, Dept1ReviewTime, Dept1ReviewNote, 
+      RequiredUserName, ItemName, Dept3Name, 
+      Dept2Code, Dept2Name, Dept1Code, 
+      Dept1Name, RequiredUserType, ReviewerName
+      )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{pprice,jdbcType=DECIMAL}, 
       #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{assetname,jdbcType=VARCHAR}, 
-      #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
-      #{planmonth,jdbcType=DATE}, #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, 
-      #{purpose,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{itemcode,jdbcType=VARCHAR}, 
-      #{requireduser,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, #{assetnote,jdbcType=VARCHAR}, 
-      #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
-      #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=VARCHAR}, #{reqarrivaldate,jdbcType=DATE}, 
-      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{isreqpurchasereport,jdbcType=VARCHAR}, 
-      #{purchasereportid,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
-      #{manufacturertypeenum,jdbcType=INTEGER}, #{specifymanufacturerid,jdbcType=VARCHAR}, 
-      #{abnormalplanenum,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
-      #{deleteflag,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, #{usagerate,jdbcType=VARCHAR}, 
-      #{reviewer,jdbcType=VARCHAR}, #{reviewtime,jdbcType=TIMESTAMP}, #{reviewresult,jdbcType=INTEGER}, 
-      #{reviewnote,jdbcType=VARCHAR}, #{dept3manager,jdbcType=VARCHAR}, #{dept3checktime,jdbcType=TIMESTAMP}, 
-      #{dept3checknote,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, #{dept2checktime,jdbcType=TIMESTAMP}, 
-      #{dept2checknote,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, 
-      #{plannernote,jdbcType=VARCHAR}, #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, 
-      #{oqdeptreviewnote,jdbcType=VARCHAR}, #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, 
-      #{dept1reviewnote,jdbcType=VARCHAR}, #{requiredusername,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, 
-      #{dept3name,jdbcType=VARCHAR}, #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, 
-      #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, #{requiredusertype,jdbcType=VARCHAR}, 
-      #{reviewername,jdbcType=VARCHAR})
+      #{expensetype,jdbcType=VARCHAR}, #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, 
+      #{assetcategory,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, #{requireds,jdbcType=INTEGER}, 
+      #{requiredsaudit,jdbcType=INTEGER}, #{purpose,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, 
+      #{itemcode,jdbcType=VARCHAR}, #{requireduser,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, 
+      #{assetnote,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{modifitime,jdbcType=TIMESTAMP}, #{goodstime,jdbcType=VARCHAR}, 
+      #{reqarrivaldate,jdbcType=DATE}, #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, 
+      #{isreqpurchasereport,jdbcType=VARCHAR}, #{purchasereportid,jdbcType=VARCHAR}, 
+      #{isspecifymanufacturer,jdbcType=VARCHAR}, #{manufacturertypeenum,jdbcType=INTEGER}, 
+      #{specifymanufacturerid,jdbcType=VARCHAR}, #{abnormalplanenum,jdbcType=INTEGER}, 
+      #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR}, 
+      #{outtimeplanenum,jdbcType=INTEGER}, #{usagerate,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, 
+      #{reviewtime,jdbcType=TIMESTAMP}, #{reviewresult,jdbcType=INTEGER}, #{reviewnote,jdbcType=VARCHAR}, 
+      #{dept3manager,jdbcType=VARCHAR}, #{dept3checktime,jdbcType=TIMESTAMP}, #{dept3checknote,jdbcType=VARCHAR}, 
+      #{dept2manager,jdbcType=VARCHAR}, #{dept2checktime,jdbcType=TIMESTAMP}, #{dept2checknote,jdbcType=VARCHAR}, 
+      #{planner,jdbcType=VARCHAR}, #{plannertime,jdbcType=TIMESTAMP}, #{plannernote,jdbcType=VARCHAR}, 
+      #{oqdeptreviewer,jdbcType=VARCHAR}, #{oqdeptreviewtime,jdbcType=TIMESTAMP}, #{oqdeptreviewnote,jdbcType=VARCHAR}, 
+      #{dept1reviewer,jdbcType=VARCHAR}, #{dept1reviewtime,jdbcType=TIMESTAMP}, #{dept1reviewnote,jdbcType=VARCHAR}, 
+      #{requiredusername,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
+      #{dept2code,jdbcType=VARCHAR}, #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, 
+      #{dept1name,jdbcType=VARCHAR}, #{requiredusertype,jdbcType=VARCHAR}, #{reviewername,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoDetailView">
     insert into AssetPlanInfoDetailView
@@ -227,6 +230,9 @@
       </if>
       <if test="assetname != null">
         AssetName,
+      </if>
+      <if test="expensetype != null">
+        ExpenseType,
       </if>
       <if test="assetmanufacturer != null">
         AssetManufacturer,
@@ -424,6 +430,9 @@
       </if>
       <if test="assetname != null">
         #{assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="expensetype != null">
+        #{expensetype,jdbcType=VARCHAR},
       </if>
       <if test="assetmanufacturer != null">
         #{assetmanufacturer,jdbcType=VARCHAR},
@@ -631,6 +640,9 @@
       <if test="record.assetname != null">
         AssetName = #{record.assetname,jdbcType=VARCHAR},
       </if>
+      <if test="record.expensetype != null">
+        ExpenseType = #{record.expensetype,jdbcType=VARCHAR},
+      </if>
       <if test="record.assetmanufacturer != null">
         AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
       </if>
@@ -821,6 +833,7 @@
       TotalMoney = #{record.totalmoney,jdbcType=DECIMAL},
       ActualMoney = #{record.actualmoney,jdbcType=DECIMAL},
       AssetName = #{record.assetname,jdbcType=VARCHAR},
+      ExpenseType = #{record.expensetype,jdbcType=VARCHAR},
       AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
       AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},

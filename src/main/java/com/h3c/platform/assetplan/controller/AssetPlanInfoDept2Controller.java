@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +92,6 @@ public class AssetPlanInfoDept2Controller {
 			
 		Map<String, Object> param = new HashMap<>();
 		JSONArray arrayData = new JSONArray();
-		JSONObject json=new JSONObject();
 		param.put("Dept2Manager",dept2Manager);
 		param.put("APStage",apstage);
 		param.put("ApplyMonth",applymonth);
@@ -102,11 +104,44 @@ public class AssetPlanInfoDept2Controller {
 		
 		if(StringUtils.isNotBlank(dept2Manager)){
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("4")) {
-				//PageHelper.startPage(pageNum,pageSize);
-				//com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 				List<AssetPlanInfoAll> dept2InfoList = assetPlanInfoService.listofDept2Detail(param);
-				//PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(dept2InfoList);
-				if(dept2InfoList.size()>0) {
+				Optional<AssetPlanInfoAll> optional = dept2InfoList.stream().filter(o->StringUtils.isBlank(o.getExpensetype())).findAny();
+   				if(optional.isPresent()) {
+   					return ResponseResult.fail(false, "有条目的预算类型为空，请检查数据");
+   				}
+				Map<String, List<AssetPlanInfoAll>> collect = dept2InfoList.stream().collect(Collectors.groupingBy(AssetPlanInfoAll::getExpensetype));
+				collect = collect.entrySet().stream().sorted(Map.Entry.<String, List<AssetPlanInfoAll>>comparingByKey().reversed()).collect(
+   		                Collectors.toMap(
+   		                     Map.Entry::getKey, 
+   		                     Map.Entry::getValue,
+   		                     (oldVal, newVal) -> oldVal,
+   		                     LinkedHashMap::new
+   		                 )
+   		         );
+				for(String key:collect.keySet()) {
+					JSONObject json=new JSONObject();
+					List<AssetPlanInfoAll> list = collect.get(key);
+   	   				param.put("ExpenseType",key);
+   	   				param1.put("ExpenseType",key);
+					//申购金额合计  totalmoneySum
+					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param1);
+   					//同意申购金额合计  ActualMoneySum
+   					String actualMoneySum = assetPlanInfoService.getSumActualMoneySumForDept2(param);
+   					if("2".equals(key)) {
+	   					//groupName
+   						json.put("GroupName", "CAPEX预算类计划");
+	   				}else {
+	   					//groupName
+   						json.put("GroupName", "费用类计划");
+	   				}
+   					json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
+   					json.put("ActualMoneySum",new BigDecimal(actualMoneySum));
+   					//数据集list
+   					json.put("DataSet" , list);
+   					arrayData.add(json);	
+				}
+				return ResponseResult.success(0, "查询成功", 0, dept2InfoList.size(), columnList, arrayData);
+				/*if(dept2InfoList.size()>0) {
 					//申购金额合计  totalmoneySum
 					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param1);
    					//同意申购金额合计  ActualMoneySum
@@ -119,7 +154,7 @@ public class AssetPlanInfoDept2Controller {
    					return ResponseResult.success(0, "查询成功", 0, dept2InfoList.size(), columnList, arrayData);
 				}else {
 					return ResponseResult.success(0, "查询成功", 0, dept2InfoList.size(), columnList, arrayData);
-				}
+				}*/
 			}else {
 				return ResponseResult.fail(false, "查询失败，审核阶段不匹配");
 			}
@@ -137,9 +172,9 @@ public class AssetPlanInfoDept2Controller {
 			String nextHandlePerson="";	
 			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
-   			
-   			List<String> sendToPlannerForJHN =new ArrayList<>();
-   			List<String> sendToPlannerForJHW =new ArrayList<>();
+   			List<String> sendToPlanner =new ArrayList<>();
+   			//List<String> sendToPlannerForJHN =new ArrayList<>();
+   			//List<String> sendToPlannerForJHW =new ArrayList<>();
    			List<Integer> newLstsubmitID =new ArrayList<>();
    			Map<String,Object> param=new HashMap<>();
    			param.put("Dept2Manager",applyuser);
@@ -152,6 +187,7 @@ public class AssetPlanInfoDept2Controller {
 			}
    			//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
    			List<AssetPlanInfo> lst=new ArrayList<>();
+   			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			boolean flag=false;
    			for (int j = 0; j < newLstsubmitID.size(); j++) {
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
@@ -164,15 +200,15 @@ public class AssetPlanInfoDept2Controller {
    				if(ap.getRequiredsaudit()==0) {
    					ap.setApstatus("04");
    					ap.setApstage("0");
-   					
-   					List<String> sendTo =new ArrayList<>();
+   					newLstEndAssetPlanInfo.add(ap);
+   					/*List<String> sendTo =new ArrayList<>();
    					List<String> ccTo =new ArrayList<>();
    					String url="";
    					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "二级部门主管审核", url);
-   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
+   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);*/
    				}else {
    					ap.setApstatus("50");
    					ap.setApstage("5");
@@ -194,14 +230,14 @@ public class AssetPlanInfoDept2Controller {
    					//数量改为0的不要给下一环节审批人发邮件了
    					if(ap.getRequiredsaudit()==0) {
    					}else {
-   						sendToPlannerForJHN.add(planner);
+   						sendToPlanner.add(planner);
    					}
    				//计划外
    				}else {
    					//数量改为0的不要给下一环节审批人发邮件了
    					if(ap.getRequiredsaudit()==0) {
    					}else {
-   						sendToPlannerForJHW.add(planner);
+   						sendToPlanner.add(planner);
    					}
    				}
    				
@@ -224,7 +260,7 @@ public class AssetPlanInfoDept2Controller {
 			//计划员外的单子，邮件通知计划员审核
 			String url=remindEmailForPlanner+applymonth;
 			//去重后的计划员code
-			sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
+			/*sendToPlannerForJHW = removeDuplicate(sendToPlannerForJHW);
 			for (int j = 0; j < sendToPlannerForJHW.size(); j++) {
 				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHW.get(j)), "", "计划员审核", false,4,url);
 			}
@@ -232,9 +268,24 @@ public class AssetPlanInfoDept2Controller {
 			sendToPlannerForJHN = removeDuplicate(sendToPlannerForJHN);
 			for (int j = 0; j < sendToPlannerForJHN.size(); j++) {
 				mailInfoService.sendDeptMgnMail(String.join(",", sendToPlannerForJHN.get(j)), "", "计划员审核", true,4,url);
+			}*/
+   			//二级提交发邮件给计划员，不需要加时间的模板的。
+			sendToPlanner = removeDuplicate(sendToPlanner);
+			for (int j = 0; j < sendToPlanner.size(); j++) {
+				mailInfoService.sendRemindMail(String.join(",", sendToPlanner.get(j)), "", "计划员审核", url);
 			}
-   			
-   			
+			
+			//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+   			for(String key:collect.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				List<String> sendToEnd =new ArrayList<>();
+   				List<String> ccToEnd =new ArrayList<>();
+   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   			}
+			
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
@@ -242,6 +293,10 @@ public class AssetPlanInfoDept2Controller {
    			}
    	}
     
+	private static String fetchGroupKey(AssetPlanInfo e) {
+		return e.getApplyuser() +"#"+ e.getRequireduser();
+	}
+	
 	@ApiOperation(value="二级部门页面修改同意申购数量和审核意见")
    	@PutMapping("/updateDept2InfoList")
    	@ResponseBody

@@ -57,6 +57,7 @@ public class CategoryController {
 			obj.put("name", dicNameArr[1]);
 			obj.put("category", dicNameArr[2]);
 			obj.put("deliveryTime", dicNameArr[3]);
+			obj.put("expenseType", dicNameArr[4]);
 
 			obj.put("creater",  ObjToStrUtil.replaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("createrempcode")));
 			obj.put("last_modifier", ObjToStrUtil.replaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("modifierempcode")));
@@ -103,7 +104,7 @@ public class CategoryController {
 		}
 		JSONObject model= new JSONObject();
 		model.put("dicCode", entity.getDicCode());
-		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime()+"_"+entity.getExpenseType());
 		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
@@ -128,7 +129,7 @@ public class CategoryController {
 		JSONObject model= new JSONObject();		
 		model.put("id",  entity.getId());
 		model.put("dicCode", entity.getDicCode());
-		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime());
+		model.put("dicValue", entity.getCertifier()+"_"+entity.getName()+"_"+entity.getCategory()+"_"+entity.getDeliveryTime()+"_"+entity.getExpenseType());
 		model.put("dicName", model.get("dicValue"));
 		model.put("applicationId",applicationId);
 		model.put("dicTypeId", DicConst.R_CATEGORY);
@@ -155,6 +156,7 @@ public class CategoryController {
 		model.put("name", dicNameArr[1]);
 		model.put("category", dicNameArr[2]);
 		model.put("deliveryTime", dicNameArr[3]);
+		model.put("expenseType", dicNameArr[4]);
 		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
 		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);

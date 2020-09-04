@@ -306,6 +306,76 @@ public class AssetPlanInfoDept3ViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andExpensetypeIsNull() {
+            addCriterion("ExpenseType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIsNotNull() {
+            addCriterion("ExpenseType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeEqualTo(String value) {
+            addCriterion("ExpenseType =", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotEqualTo(String value) {
+            addCriterion("ExpenseType <>", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThan(String value) {
+            addCriterion("ExpenseType >", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ExpenseType >=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThan(String value) {
+            addCriterion("ExpenseType <", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThanOrEqualTo(String value) {
+            addCriterion("ExpenseType <=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLike(String value) {
+            addCriterion("ExpenseType like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotLike(String value) {
+            addCriterion("ExpenseType not like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIn(List<String> values) {
+            addCriterion("ExpenseType in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotIn(List<String> values) {
+            addCriterion("ExpenseType not in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeBetween(String value1, String value2) {
+            addCriterion("ExpenseType between", value1, value2, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotBetween(String value1, String value2) {
+            addCriterion("ExpenseType not between", value1, value2, "expensetype");
+            return (Criteria) this;
+        }
+
         public Criteria andAssetmanufacturerIsNull() {
             addCriterion("AssetManufacturer is null");
             return (Criteria) this;

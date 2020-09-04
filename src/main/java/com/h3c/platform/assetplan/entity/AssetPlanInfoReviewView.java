@@ -9,6 +9,8 @@ public class AssetPlanInfoReviewView {
 
     private String assetname;
 
+    private String expensetype;
+
     private String assetmanufacturer;
 
     private String assetmodel;
@@ -59,6 +61,8 @@ public class AssetPlanInfoReviewView {
 
     private String isreqpurchasereport;
 
+    private String isspecifymanufacturer;
+
     private String apstatus;
 
     private String apstage;
@@ -91,6 +95,14 @@ public class AssetPlanInfoReviewView {
 
     public void setAssetname(String assetname) {
         this.assetname = assetname == null ? null : assetname.trim();
+    }
+
+    public String getExpensetype() {
+        return expensetype;
+    }
+
+    public void setExpensetype(String expensetype) {
+        this.expensetype = expensetype == null ? null : expensetype.trim();
     }
 
     public String getAssetmanufacturer() {
@@ -291,6 +303,14 @@ public class AssetPlanInfoReviewView {
 
     public void setIsreqpurchasereport(String isreqpurchasereport) {
         this.isreqpurchasereport = isreqpurchasereport == null ? null : isreqpurchasereport.trim();
+    }
+
+    public String getIsspecifymanufacturer() {
+        return isspecifymanufacturer;
+    }
+
+    public void setIsspecifymanufacturer(String isspecifymanufacturer) {
+        this.isspecifymanufacturer = isspecifymanufacturer == null ? null : isspecifymanufacturer.trim();
     }
 
     public String getApstatus() {

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,6 +156,7 @@ public class AssetPlanInfoOQDeptController {
 			}
    			//把所有同意数量修改为0的单子的状态置为已结束，其他的状态为提交下一环节
    			List<AssetPlanInfo> lst=new ArrayList<>();
+   			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			for (int j = 0; j < newLstsubmitID.size(); j++) {
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
    				//下一环节审批人
@@ -170,15 +172,15 @@ public class AssetPlanInfoOQDeptController {
    				if(ap.getRequiredsaudit()==0) {
    					ap.setApstatus("06");
    					ap.setApstage("0");
-   					
-   					List<String> sendTo =new ArrayList<>();
+   					newLstEndAssetPlanInfo.add(ap);
+   					/*List<String> sendTo =new ArrayList<>();
    					List<String> ccTo =new ArrayList<>();
    					String url="";
    					//若有申请人的统一申购数量修改成0，邮件主送申请人抄送申购人，告知信息和审批意见。
    					sendTo.add(ap.getApplyuser());
    					ccTo.add(ap.getRequireduser());
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "专家团审核", url);
-   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);
+   					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);*/
    				}else {
    					ap.setApstatus("70");
    					ap.setApstage("7");
@@ -210,10 +212,24 @@ public class AssetPlanInfoOQDeptController {
 			for (int j = 0; j < sendToDept1.size(); j++) {
 				mailInfoService.sendRemindMail(String.join(",", sendToDept1.get(j)), "", "一级部门审核", url);
 			}
+			
+			//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
+   			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
+   			for(String key:collect.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				List<String> sendToEnd =new ArrayList<>();
+   				List<String> ccToEnd =new ArrayList<>();
+   				sendToEnd.add(lstTemp.get(0).getApplyuser());
+   				ccToEnd.add(lstTemp.get(0).getRequireduser());
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   			}
+			
 			return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
    	}
     
-    
+	private static String fetchGroupKey(AssetPlanInfo e) {
+		return e.getApplyuser() +"#"+ e.getRequireduser();
+	}
 
 	@ApiOperation(value="专家团审核页面修改同意申购数量和审核意见")
    	@PutMapping("/updateOqdeptInfoList")

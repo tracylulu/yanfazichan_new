@@ -12,6 +12,8 @@ public class CategoryEntity {
 	private String category;
 
 	private Integer deliveryTime;
+	
+	private String expenseType;
 
 	private byte isAble;
 
@@ -80,4 +82,13 @@ public class CategoryEntity {
 	public void setSortOrder(Integer sortOrder) {
 		this.sortOrder = sortOrder;
 	}
+
+	public String getExpenseType() {
+		return expenseType;
+	}
+
+	public void setExpenseType(String expenseType) {
+		this.expenseType = expenseType;
+	}
+	
 }

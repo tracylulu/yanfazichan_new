@@ -118,6 +118,8 @@ public class AssetPlanInfo {
 
     private String reviewperson;
 
+    private String expensetype;
+
     public Integer getAssetplanid() {
         return assetplanid;
     }
@@ -572,5 +574,13 @@ public class AssetPlanInfo {
 
     public void setReviewperson(String reviewperson) {
         this.reviewperson = reviewperson == null ? null : reviewperson.trim();
+    }
+
+    public String getExpensetype() {
+        return expensetype;
+    }
+
+    public void setExpensetype(String expensetype) {
+        this.expensetype = expensetype == null ? null : expensetype.trim();
     }
 }

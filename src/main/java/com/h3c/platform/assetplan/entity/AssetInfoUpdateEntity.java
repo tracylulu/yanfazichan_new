@@ -30,6 +30,7 @@ public class AssetInfoUpdateEntity   {
     
     private String reviewnote;
     
+    private String expensetype;
     //计划员页面
     //同意申购数量
     private List<Integer> requiredsaudit;
@@ -182,6 +183,14 @@ public class AssetInfoUpdateEntity   {
 
 	public void setDept1reviewnote(String dept1reviewnote) {
 		this.dept1reviewnote = dept1reviewnote;
+	}
+
+	public String getExpensetype() {
+		return expensetype;
+	}
+
+	public void setExpensetype(String expensetype) {
+		this.expensetype = expensetype;
 	}
  
     
