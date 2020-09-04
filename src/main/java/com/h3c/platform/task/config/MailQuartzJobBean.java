@@ -155,7 +155,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				if((mapApplyType.get(1)!=null && !mapApplyType.get(1).isEmpty())||(mapApplyType.get(2)!=null && !mapApplyType.get(2).isEmpty())) {
 					type+="计划外申购单，";
 				}
-				mailInfoService.sendRemindMailWithEndTime(user, "", "资源计划不规范驳回", secondEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
+				mailInfoService.sendRemindMailWithEndTime(user, "", "资源计划不规范驳回", secondEmailDate, isAbnormalPlan[0],"");
 
 			}
 
@@ -175,7 +175,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				if((mapReviewType.get(1)!=null && !mapReviewType.get(1).isEmpty())||(mapReviewType.get(2)!=null && !mapReviewType.get(2).isEmpty())) {
 					type+="计划外申购单，";
 				}
-				mailInfoService.sendRemindMailWithEndTime(user, "", "规范性审核", secondEmailDate, isAbnormalPlan[0], "",type.substring(0, type.length()-1));
+				mailInfoService.sendRemindMailWithEndTime(user, "", "规范性审核", secondEmailDate, isAbnormalPlan[0], "");
 			}
 
 			
@@ -195,7 +195,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				if((mapDeptTType.get(1)!=null && !mapDeptTType.get(1).isEmpty())||(mapDeptTType.get(2)!=null && !mapDeptTType.get(2).isEmpty())) {
 					type+="计划外申购单，";
 				}
-				mailInfoService.sendRemindMailWithEndTime(user, "", "三级部门主管审核", thirdEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
+				mailInfoService.sendRemindMailWithEndTime(user, "", "三级部门主管审核", thirdEmailDate, isAbnormalPlan[0],"");
 			}
 
 			
@@ -216,7 +216,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				if((mapDeptSType.get(1)!=null && !mapDeptSType.get(1).isEmpty())||(mapDeptSType.get(2)!=null && !mapDeptSType.get(2).isEmpty())) {
 					type+="计划外申购单，";
 				}
-				mailInfoService.sendRemindMailWithEndTime(user, "", "二级部门主管审核", fourthEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
+				mailInfoService.sendRemindMailWithEndTime(user, "", "二级部门主管审核", fourthEmailDate, isAbnormalPlan[0],"");
 			}
 
 			List<String> lstPlannerCode = new ArrayList<>();
