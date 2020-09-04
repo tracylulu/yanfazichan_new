@@ -57,9 +57,10 @@ public interface MailInfoService {
      * @param ccTo
      * @param subject 邮件主题
      * @param process 流程环节名称
+     * @param type 流程类型
      * @param url 流程链接  ,为空不加超链接 
      */
-    void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url);
+    void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate, boolean isAbnormalPlan, String url,String type);
     
     /**
      * 不规范邮件
