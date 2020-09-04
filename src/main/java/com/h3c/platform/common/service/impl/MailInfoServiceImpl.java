@@ -221,7 +221,7 @@ public class MailInfoServiceImpl implements MailInfoService {
 
 	@Override
 	public void sendRemindMailWithEndTime(String sendTo, String ccTo, String process, Date endDate,
-			boolean isAbnormalPlan, String url) {
+			boolean isAbnormalPlan, String url,String type) {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calMon = Calendar.getInstance();
@@ -230,7 +230,9 @@ public class MailInfoServiceImpl implements MailInfoService {
 		calMon.set(Calendar.DAY_OF_MONTH, maxDay);
 
 		JSONObject contentJson = new JSONObject();
+		contentJson.put("$node", process);
 		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
+		contentJson.put("$type", type);
 		contentJson.put("$endDate", df.format(endDate) + " 24:00:00</br>");
 		contentJson.put("$monthEndDate", df.format(calMon.getTime()) + " 24:00:00</br>");
 
