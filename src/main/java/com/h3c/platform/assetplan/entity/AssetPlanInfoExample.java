@@ -14,7 +14,7 @@ public class AssetPlanInfoExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -71,7 +71,7 @@ public class AssetPlanInfoExample {
 
         protected GeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -118,7 +118,7 @@ public class AssetPlanInfoExample {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
-            List<java.sql.Date> dateList = new ArrayList<>();
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
             while (iter.hasNext()) {
                 dateList.add(new java.sql.Date(iter.next().getTime()));
@@ -3910,6 +3910,76 @@ public class AssetPlanInfoExample {
 
         public Criteria andReviewpersonNotBetween(String value1, String value2) {
             addCriterion("ReviewPerson not between", value1, value2, "reviewperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIsNull() {
+            addCriterion("ExpenseType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIsNotNull() {
+            addCriterion("ExpenseType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeEqualTo(String value) {
+            addCriterion("ExpenseType =", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotEqualTo(String value) {
+            addCriterion("ExpenseType <>", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThan(String value) {
+            addCriterion("ExpenseType >", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ExpenseType >=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThan(String value) {
+            addCriterion("ExpenseType <", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLessThanOrEqualTo(String value) {
+            addCriterion("ExpenseType <=", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeLike(String value) {
+            addCriterion("ExpenseType like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotLike(String value) {
+            addCriterion("ExpenseType not like", value, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeIn(List<String> values) {
+            addCriterion("ExpenseType in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotIn(List<String> values) {
+            addCriterion("ExpenseType not in", values, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeBetween(String value1, String value2) {
+            addCriterion("ExpenseType between", value1, value2, "expensetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpensetypeNotBetween(String value1, String value2) {
+            addCriterion("ExpenseType not between", value1, value2, "expensetype");
             return (Criteria) this;
         }
     }

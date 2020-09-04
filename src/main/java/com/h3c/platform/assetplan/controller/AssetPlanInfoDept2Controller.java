@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -90,7 +92,6 @@ public class AssetPlanInfoDept2Controller {
 			
 		Map<String, Object> param = new HashMap<>();
 		JSONArray arrayData = new JSONArray();
-		JSONObject json=new JSONObject();
 		param.put("Dept2Manager",dept2Manager);
 		param.put("APStage",apstage);
 		param.put("ApplyMonth",applymonth);
@@ -103,11 +104,44 @@ public class AssetPlanInfoDept2Controller {
 		
 		if(StringUtils.isNotBlank(dept2Manager)){
 			if(StringUtils.isNotBlank(apstage) && apstage.contains("4")) {
-				//PageHelper.startPage(pageNum,pageSize);
-				//com.github.pagehelper.page.PageMethod.startPage(pageNum,pageSize);
 				List<AssetPlanInfoAll> dept2InfoList = assetPlanInfoService.listofDept2Detail(param);
-				//PageInfo<AssetPlanInfoAll> pageInfo = new PageInfo<>(dept2InfoList);
-				if(dept2InfoList.size()>0) {
+				Optional<AssetPlanInfoAll> optional = dept2InfoList.stream().filter(o->StringUtils.isBlank(o.getExpensetype())).findAny();
+   				if(optional.isPresent()) {
+   					return ResponseResult.fail(false, "有条目的预算类型为空，请检查数据");
+   				}
+				Map<String, List<AssetPlanInfoAll>> collect = dept2InfoList.stream().collect(Collectors.groupingBy(AssetPlanInfoAll::getExpensetype));
+				collect = collect.entrySet().stream().sorted(Map.Entry.<String, List<AssetPlanInfoAll>>comparingByKey().reversed()).collect(
+   		                Collectors.toMap(
+   		                     Map.Entry::getKey, 
+   		                     Map.Entry::getValue,
+   		                     (oldVal, newVal) -> oldVal,
+   		                     LinkedHashMap::new
+   		                 )
+   		         );
+				for(String key:collect.keySet()) {
+					JSONObject json=new JSONObject();
+					List<AssetPlanInfoAll> list = collect.get(key);
+   	   				param.put("ExpenseType",key);
+   	   				param1.put("ExpenseType",key);
+					//申购金额合计  totalmoneySum
+					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param1);
+   					//同意申购金额合计  ActualMoneySum
+   					String actualMoneySum = assetPlanInfoService.getSumActualMoneySumForDept2(param);
+   					if("2".equals(key)) {
+	   					//groupName
+   						json.put("GroupName", "CAPEX预算类计划");
+	   				}else {
+	   					//groupName
+   						json.put("GroupName", "费用类计划");
+	   				}
+   					json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
+   					json.put("ActualMoneySum",new BigDecimal(actualMoneySum));
+   					//数据集list
+   					json.put("DataSet" , list);
+   					arrayData.add(json);	
+				}
+				return ResponseResult.success(0, "查询成功", 0, dept2InfoList.size(), columnList, arrayData);
+				/*if(dept2InfoList.size()>0) {
 					//申购金额合计  totalmoneySum
 					String totalmoneySum = assetPlanInfoService.getSumTotalMoneyForDept2(param1);
    					//同意申购金额合计  ActualMoneySum
@@ -120,7 +154,7 @@ public class AssetPlanInfoDept2Controller {
    					return ResponseResult.success(0, "查询成功", 0, dept2InfoList.size(), columnList, arrayData);
 				}else {
 					return ResponseResult.success(0, "查询成功", 0, dept2InfoList.size(), columnList, arrayData);
-				}
+				}*/
 			}else {
 				return ResponseResult.fail(false, "查询失败，审核阶段不匹配");
 			}

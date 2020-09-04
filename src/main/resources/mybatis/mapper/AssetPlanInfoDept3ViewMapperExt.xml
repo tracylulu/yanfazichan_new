@@ -14,6 +14,9 @@
 			<if test="param.ApplyMonth !=null">
 				and ApplyMonth = #{param.ApplyMonth}
 			</if>
+			<if test="param.ExpenseType !=null">
+				and ExpenseType = #{param.ExpenseType}
+			</if>
 		</where>
 	</sql>
 	
@@ -31,6 +34,9 @@
 			</if>
 			<if test="param.ApplyMonth !=null">
 				and ApplyMonth = #{param.ApplyMonth}
+			</if>
+			<if test="param.ExpenseType !=null">
+				and ExpenseType = #{param.ExpenseType}
 			</if>
 		</where>
 	</sql>
@@ -69,7 +75,7 @@
   
   </select> -->
   
-  <sql id="condition_sql1">
+<!--   <sql id="condition_sql1">
 		<where>
 			DeleteFlag=1 and ReviewResult=1
 			<if test="param.DeptCode !=null">
@@ -82,7 +88,7 @@
 				and ApplyMonth = #{param.ApplyMonth}
 			</if>
 		</where>
-	</sql>
+	</sql> -->
 	
 	
 </mapper>

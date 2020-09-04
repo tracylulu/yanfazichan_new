@@ -705,6 +705,17 @@ public class AssetPlanInfoApplyController {
 	   			}
    				ap.setModifier(ap.getApplyuser());
    				ap.setModifitime(new Date());
+   				//提交的时候对主表的预算类型进行校验,1费用类，2预算类，3其他
+   				//当物品类别被配置为预算类/费用类时，则为默认类别与价格无关
+   				//配置为其他类的，根据单价确认实际费用类别，规则：单价≥5000 为预算类，单价＜5000 为费用类；
+   				BigDecimal b = new BigDecimal (5000);
+   				if("3".equals(ap.getExpensetype())) {
+   					if(ap.getPprice().compareTo(b)>-1) {
+   						ap.setExpensetype("2");
+   					}else {
+   						ap.setExpensetype("1");
+   					}
+   				}
    				lst.add(ap);
 			}
    			assetPlanInfoService.batchEditAssetPlanInfo(lst);
@@ -819,6 +830,7 @@ public class AssetPlanInfoApplyController {
    				json.put("id", obj.get("dic_code"));
    				json.put("assetcategory", arrvalue[2]);
    				json.put("goodstime", arrvalue[3]);
+   				json.put("expenseType", arrvalue[4]);
    				arrayData.add(json);
    			}
    			return ResponseResult.success(0, "查询成功", 0, 0, null, arrayData);
@@ -1557,6 +1569,17 @@ public class AssetPlanInfoApplyController {
 		   			}
 	   				ap.setModifier(ap.getApplyuser());
 	   				ap.setModifitime(new Date());
+	   				//提交的时候对主表的预算类型进行校验,1费用类，2预算类，3其他
+	   				//当物品类别被配置为预算类/费用类时，则为默认类别与价格无关
+	   				//配置为其他类的，根据单价确认实际费用类别，规则：单价≥5000 为预算类，单价＜5000 为费用类；
+	   				BigDecimal b = new BigDecimal (5000);
+	   				if("3".equals(ap.getExpensetype())) {
+	   					if(ap.getPprice().compareTo(b)>-1) {
+	   						ap.setExpensetype("2");
+	   					}else {
+	   						ap.setExpensetype("1");
+	   					}
+	   				}
 	   				lst.add(ap);
 				}
 	   			assetPlanInfoService.batchEditAssetPlanInfo(lst);

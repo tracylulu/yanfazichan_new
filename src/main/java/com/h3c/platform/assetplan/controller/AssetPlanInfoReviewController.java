@@ -179,7 +179,7 @@ public class AssetPlanInfoReviewController {
    	}
 	
   
-	@ApiOperation(value="非成套的修改规范审核列表信息字段(厂家/型号/预计单价/类别/规范审核状态/审核意见，修改同意申购数量)")
+	@ApiOperation(value="非成套的修改规范审核列表信息字段(厂家/型号/预计单价/类别/规范审核状态/审核意见，修改同意申购数量，修改预算类型)")
    	@PutMapping("/updateReviewInfoList")
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
@@ -208,6 +208,11 @@ public class AssetPlanInfoReviewController {
 				}else {
 					ap.setAssetcategory(updateEntity.getAssetcategory());
 				} 
+				if(StringUtils.isBlank(updateEntity.getExpensetype())){
+					return ResponseResult.fail(false, "预算类型字段必填");
+				}else {
+					ap.setExpensetype(updateEntity.getExpensetype());
+				}
 				ap.setTotalmoney(updateEntity.getTotalmoney().get(i));
 				//add by chenlulu on 20200706
 				//同意申购数量

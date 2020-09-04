@@ -127,6 +127,7 @@ public class AssetPlanInfoAll {
 	
     private String reviewperson;
     
+    private String expensetype;
     
 	//菜单页面视图多加的字段
 	private String apstatusdetail;
@@ -702,6 +703,14 @@ public class AssetPlanInfoAll {
 
 	public void setReviewperson(String reviewperson) {
 		this.reviewperson = reviewperson;
+	}
+
+	public String getExpensetype() {
+		return expensetype;
+	}
+
+	public void setExpensetype(String expensetype) {
+		this.expensetype = expensetype;
 	}
 
 	

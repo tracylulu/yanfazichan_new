@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoAll;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoPlannerView;
+import com.h3c.platform.assetplan.entity.AssetPlanInfoReportView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchExportView;
 import com.h3c.platform.assetplan.entity.AssetPlanInfoSearchView;
 import com.h3c.platform.assetplan.entity.DeptTreeInfo;
@@ -96,6 +97,22 @@ public class SysDicInfoUtil {
 		return list;
 	}
     
+	public List<AssetPlanInfoReportView> replaceDicCategoryForReport(List<AssetPlanInfoReportView> list) throws Exception{
+		JSONArray arrayData = new JSONArray();
+		com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
+		for (int i = 0; i < objDic.size(); i++) {
+			com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+			String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+			String[] arrvalue =value.split("_");
+			for (int j = 0; j < list.size(); j++) {
+				if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
+					list.get(j).setAssetcategory(arrvalue[2]);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public List<AssetPlanInfoSearchExportView> replaceDicForSearchExport(List<AssetPlanInfoSearchExportView> list) throws Exception{
 		com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
 		com.alibaba.fastjson.JSONArray objDic1=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"1");
