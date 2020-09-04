@@ -33,6 +33,8 @@ public class AssetPlanInfoApplyView {
 
     private Integer outtimeplanenum;
 
+    private Integer abnormalplanenum;
+
     private String iscompleteset;
 
     private Integer completesetcode;
@@ -171,6 +173,14 @@ public class AssetPlanInfoApplyView {
 
     public void setOuttimeplanenum(Integer outtimeplanenum) {
         this.outtimeplanenum = outtimeplanenum;
+    }
+
+    public Integer getAbnormalplanenum() {
+        return abnormalplanenum;
+    }
+
+    public void setAbnormalplanenum(Integer abnormalplanenum) {
+        this.abnormalplanenum = abnormalplanenum;
     }
 
     public String getIscompleteset() {

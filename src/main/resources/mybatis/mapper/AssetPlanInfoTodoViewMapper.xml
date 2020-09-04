@@ -17,6 +17,7 @@
     <result column="ItemCode" jdbcType="VARCHAR" property="itemcode" />
     <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
     <result column="OutTimePlanEnum" jdbcType="INTEGER" property="outtimeplanenum" />
+    <result column="AbnormalPlanEnum" jdbcType="INTEGER" property="abnormalplanenum" />
     <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
     <result column="CompleteSetCode" jdbcType="INTEGER" property="completesetcode" />
     <result column="AssetNote" jdbcType="VARCHAR" property="assetnote" />
@@ -89,8 +90,8 @@
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, AssetName, AssetManufacturer, AssetModel, Requireds, PPrice, 
     TotalMoney, RequiredUser, RequiredUserName, DeptCode, Dept3Name, ItemCode, Purpose, 
-    OutTimePlanEnum, IsCompleteSet, CompleteSetCode, AssetNote, APStatus, APStage, ApplyUser, 
-    Reviewer, ReviewPerson, ApplyMonth, DeleteFlag
+    OutTimePlanEnum, AbnormalPlanEnum, IsCompleteSet, CompleteSetCode, AssetNote, APStatus, 
+    APStage, ApplyUser, Reviewer, ReviewPerson, ApplyMonth, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoTodoViewExample" resultMap="BaseResultMap">
     select
@@ -118,19 +119,19 @@
       PPrice, TotalMoney, RequiredUser, 
       RequiredUserName, DeptCode, Dept3Name, 
       ItemCode, Purpose, OutTimePlanEnum, 
-      IsCompleteSet, CompleteSetCode, AssetNote, 
-      APStatus, APStage, ApplyUser, 
-      Reviewer, ReviewPerson, ApplyMonth, 
-      DeleteFlag)
+      AbnormalPlanEnum, IsCompleteSet, CompleteSetCode, 
+      AssetNote, APStatus, APStage, 
+      ApplyUser, Reviewer, ReviewPerson, 
+      ApplyMonth, DeleteFlag)
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
       #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, 
       #{requiredusername,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{dept3name,jdbcType=VARCHAR}, 
       #{itemcode,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{outtimeplanenum,jdbcType=INTEGER}, 
-      #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, 
-      #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, 
-      #{reviewer,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, #{applymonth,jdbcType=VARCHAR}, 
-      #{deleteflag,jdbcType=VARCHAR})
+      #{abnormalplanenum,jdbcType=INTEGER}, #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, 
+      #{assetnote,jdbcType=VARCHAR}, #{apstatus,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
+      #{applyuser,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, 
+      #{applymonth,jdbcType=VARCHAR}, #{deleteflag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoTodoView">
     insert into AssetPlanInfoTodoView
@@ -179,6 +180,9 @@
       </if>
       <if test="outtimeplanenum != null">
         OutTimePlanEnum,
+      </if>
+      <if test="abnormalplanenum != null">
+        AbnormalPlanEnum,
       </if>
       <if test="iscompleteset != null">
         IsCompleteSet,
@@ -256,6 +260,9 @@
       </if>
       <if test="outtimeplanenum != null">
         #{outtimeplanenum,jdbcType=INTEGER},
+      </if>
+      <if test="abnormalplanenum != null">
+        #{abnormalplanenum,jdbcType=INTEGER},
       </if>
       <if test="iscompleteset != null">
         #{iscompleteset,jdbcType=VARCHAR},
@@ -343,6 +350,9 @@
       <if test="record.outtimeplanenum != null">
         OutTimePlanEnum = #{record.outtimeplanenum,jdbcType=INTEGER},
       </if>
+      <if test="record.abnormalplanenum != null">
+        AbnormalPlanEnum = #{record.abnormalplanenum,jdbcType=INTEGER},
+      </if>
       <if test="record.iscompleteset != null">
         IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
       </if>
@@ -395,6 +405,7 @@
       ItemCode = #{record.itemcode,jdbcType=VARCHAR},
       Purpose = #{record.purpose,jdbcType=VARCHAR},
       OutTimePlanEnum = #{record.outtimeplanenum,jdbcType=INTEGER},
+      AbnormalPlanEnum = #{record.abnormalplanenum,jdbcType=INTEGER},
       IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
       CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},
       AssetNote = #{record.assetnote,jdbcType=VARCHAR},

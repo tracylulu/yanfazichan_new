@@ -12,7 +12,7 @@ public class AssetPlanInfoApplyViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoApplyViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -64,12 +64,12 @@ public class AssetPlanInfoApplyViewExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class AbstractGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected AbstractGeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -1105,6 +1105,66 @@ public class AssetPlanInfoApplyViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andAbnormalplanenumIsNull() {
+            addCriterion("AbnormalPlanEnum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumIsNotNull() {
+            addCriterion("AbnormalPlanEnum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumEqualTo(Integer value) {
+            addCriterion("AbnormalPlanEnum =", value, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumNotEqualTo(Integer value) {
+            addCriterion("AbnormalPlanEnum <>", value, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumGreaterThan(Integer value) {
+            addCriterion("AbnormalPlanEnum >", value, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("AbnormalPlanEnum >=", value, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumLessThan(Integer value) {
+            addCriterion("AbnormalPlanEnum <", value, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumLessThanOrEqualTo(Integer value) {
+            addCriterion("AbnormalPlanEnum <=", value, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumIn(List<Integer> values) {
+            addCriterion("AbnormalPlanEnum in", values, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumNotIn(List<Integer> values) {
+            addCriterion("AbnormalPlanEnum not in", values, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumBetween(Integer value1, Integer value2) {
+            addCriterion("AbnormalPlanEnum between", value1, value2, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbnormalplanenumNotBetween(Integer value1, Integer value2) {
+            addCriterion("AbnormalPlanEnum not between", value1, value2, "abnormalplanenum");
+            return (Criteria) this;
+        }
+
         public Criteria andIscompletesetIsNull() {
             addCriterion("IsCompleteSet is null");
             return (Criteria) this;
@@ -1796,7 +1856,7 @@ public class AssetPlanInfoApplyViewExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends AbstractGeneratedCriteria {
 
         protected Criteria() {
             super();
