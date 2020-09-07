@@ -129,7 +129,7 @@ public class AssetPlanInfoDept2Controller {
    					String actualMoneySum = assetPlanInfoService.getSumActualMoneySumForDept2(param);
    					if("2".equals(key)) {
 	   					//groupName
-   						json.put("GroupName", "CAPEX预算类计划");
+   						json.put("GroupName", "CAPEX资产类计划");
 	   				}else {
 	   					//groupName
    						json.put("GroupName", "费用类计划");
