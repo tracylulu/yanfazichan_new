@@ -3,6 +3,7 @@ package com.h3c.platform.assetplan.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,23 +29,23 @@ public class AssetPlanInfoReportServiceImpl implements AssetPlanInfoReportServic
 	}
 
 	@Override
-	public List<AssetInfoReportEntity> getDataForPieChart() {
-		return reportViewMapper.getDataForPieChart();
+	public List<AssetInfoReportEntity> getDataForPieChart(Map<String, Object> param) {
+		return reportViewMapper.getDataForPieChart(param);
 	}
 
 	@Override
-	public List<AssetInfoReportEntity> getDataForLineChart() {
-		return reportViewMapper.getDataForLineChart();
+	public List<AssetInfoReportEntity> getDataForLineChart(Map<String, Object> param) {
+		return reportViewMapper.getDataForLineChart(param);
 	}
 
 	@Override
-	public List<AssetInfoReportEntity> getDataForDept3BarChart() {
-		return reportViewMapper.getDataForDept3BarChart();
+	public List<AssetInfoReportEntity> getDataForDept3BarChart(Map<String, Object> param) {
+		return reportViewMapper.getDataForDept3BarChart(param);
 	}
 
 	@Override
-	public List<AssetInfoReportEntity> getDataForDept2BarChart() {
-		return reportViewMapper.getDataForDept2BarChart();
+	public List<AssetInfoReportEntity> getDataForDept2BarChart(Map<String, Object> param) {
+		return reportViewMapper.getDataForDept2BarChart(param);
 	}
 
 	

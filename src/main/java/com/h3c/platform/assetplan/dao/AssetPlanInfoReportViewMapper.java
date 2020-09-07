@@ -27,12 +27,12 @@ public interface AssetPlanInfoReportViewMapper {
 
     List<AssetPlanInfoReportView> listofAssetPlanInfoForReport(@Param("param") Map<String, Object> param);
 
-    List<AssetInfoReportEntity> getDataForPieChart();
+    List<AssetInfoReportEntity> getDataForPieChart(@Param("param") Map<String, Object> param);
     
-    List<AssetInfoReportEntity> getDataForDept3BarChart();
+    List<AssetInfoReportEntity> getDataForDept3BarChart(@Param("param") Map<String, Object> param);
     
-    List<AssetInfoReportEntity> getDataForDept2BarChart();
+    List<AssetInfoReportEntity> getDataForDept2BarChart(@Param("param") Map<String, Object> param);
     
-    List<AssetInfoReportEntity> getDataForLineChart();
+    List<AssetInfoReportEntity> getDataForLineChart(@Param("param") Map<String, Object> param);
 
 }

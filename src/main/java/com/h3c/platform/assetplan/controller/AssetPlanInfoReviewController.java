@@ -471,7 +471,6 @@ public class AssetPlanInfoReviewController {
    	@UserLoginToken(logType=LogType.SENDMAIL)
    	public ResponseResult emailForNotReview(@RequestParam @ApiParam(name="reviewer",value="规范审核环节处理人(当前登录人)",required=true)String reviewer,
    								@RequestParam @ApiParam(name="applymonth",value="申请月份",required=true)String applymonth) throws Exception{
-   		//try {
    			//modify by chenlulu on 20200630 现在的不规范的驳回给申购人，所以现在邮件得主送申购人，抄送申请人。调换一下
    			List<String> ccTo =new ArrayList<>();
 			List<String> sendTo =new ArrayList<>();
@@ -508,11 +507,12 @@ public class AssetPlanInfoReviewController {
 				sendTo.clear();
 				ccTo.clear();
 			}
-   			return ResponseResult.success(true, "邮件发送成功");
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "邮件发送失败");
-   		}*/
+   			if(notReviewRequiredUserList.isEmpty()) {
+   				return ResponseResult.success(true, "没有不规范的数据需要邮催提醒");
+   			}else {
+   				return ResponseResult.success(true, "邮件发送成功");
+   			}
+   			
    	}
 	
     

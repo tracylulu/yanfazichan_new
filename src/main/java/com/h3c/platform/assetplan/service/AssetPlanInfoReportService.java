@@ -15,12 +15,12 @@ public interface AssetPlanInfoReportService {
 	
 	List<AssetPlanInfoReportView> listofAssetPlanInfoForReport(@Param("param") Map<String, Object> param);
 
-	List<AssetInfoReportEntity> getDataForPieChart();
+	List<AssetInfoReportEntity> getDataForPieChart(Map<String, Object> param);
     
-	List<AssetInfoReportEntity> getDataForDept3BarChart();
+	List<AssetInfoReportEntity> getDataForDept3BarChart(Map<String, Object> param);
     
-    List<AssetInfoReportEntity> getDataForDept2BarChart();
+    List<AssetInfoReportEntity> getDataForDept2BarChart(Map<String, Object> param);
     
-    List<AssetInfoReportEntity> getDataForLineChart();
+    List<AssetInfoReportEntity> getDataForLineChart(Map<String, Object> param);
 
 }
