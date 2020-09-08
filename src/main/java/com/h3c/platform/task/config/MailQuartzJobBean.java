@@ -148,6 +148,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			});				
 
 			for (String user : lstApplyCode) {
+				type="";
 				Map<Integer,List<AssetPlanInfo>> mapApplyType=lst.stream().filter(o -> "1".equals(o.getApstage()) && user.equals(o.getApplyuser())).collect(Collectors.groupingBy(AssetPlanInfo::getAbnormalplanenum));
 				if(mapApplyType.get(0)!=null && !mapApplyType.get(0).isEmpty()) {
 					type+="计划内申购单，";
@@ -155,7 +156,7 @@ public class MailQuartzJobBean extends QuartzJobBean {
 				if((mapApplyType.get(1)!=null && !mapApplyType.get(1).isEmpty())||(mapApplyType.get(2)!=null && !mapApplyType.get(2).isEmpty())) {
 					type+="计划外申购单，";
 				}
-				mailInfoService.sendRemindMailWithEndTime(user, "", "资源计划不规范驳回", secondEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
+				mailInfoService.sendRemindMailWithEndTime(user, "", "资源计划不规范驳回修改", secondEmailDate, isAbnormalPlan[0],"",type.substring(0, type.length()-1));
 
 			}
 
