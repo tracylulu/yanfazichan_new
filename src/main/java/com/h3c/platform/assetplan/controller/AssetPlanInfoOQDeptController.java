@@ -142,7 +142,7 @@ public class AssetPlanInfoOQDeptController {
 			String nextHandlePerson="";	
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
-   			
+   			boolean toNext=false;
    			List<String> sendToDept1 =new ArrayList<>();
    			List<Integer> newLstsubmitID =new ArrayList<>();
    			Map<String,Object> param=new HashMap<>();
@@ -184,6 +184,7 @@ public class AssetPlanInfoOQDeptController {
    				}else {
    					ap.setApstatus("70");
    					ap.setApstage("7");
+   					toNext=true;
    					sendToDept1.add(dept1);
 	   			}
    				ap.setModifier(applyuser);
@@ -223,8 +224,11 @@ public class AssetPlanInfoOQDeptController {
    				ccToEnd.add(lstTemp.get(0).getRequireduser());
    				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
    			}
-			
-			return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   			if(toNext) {
+   				return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+			}else {
+				return ResponseResult.success(true, "审批完成");
+			}
    	}
     
 	private static String fetchGroupKey(AssetPlanInfo e) {

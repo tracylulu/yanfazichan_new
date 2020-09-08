@@ -169,6 +169,7 @@ public class AssetPlanInfoDept2Controller {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitInfoFromDept2ToPlanner(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
+			boolean toNext=false;	
 			String nextHandlePerson="";	
 			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
@@ -212,6 +213,7 @@ public class AssetPlanInfoDept2Controller {
    				}else {
    					ap.setApstatus("50");
    					ap.setApstage("5");
+   					toNext=true;
 	   			}
    				ap.setModifier(applyuser);
    				ap.setModifitime(new Date());
@@ -289,7 +291,11 @@ public class AssetPlanInfoDept2Controller {
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
-   				return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   				if(toNext) {
+   					return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   				}else {
+   					return ResponseResult.success(true, "审批完成");
+   				}
    			}
    	}
     

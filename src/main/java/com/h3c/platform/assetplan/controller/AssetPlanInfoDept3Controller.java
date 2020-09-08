@@ -223,32 +223,32 @@ public class AssetPlanInfoDept3Controller {
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "三级部门主管审核", url);
    					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);*/
    				}else {
-   				//获得下一步审批人	
-				DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
-	   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
-	   			if(StringUtils.isNotBlank(dept2Info.getDeptManagerCode())) {
-	   				ap.setDept2manager(dept2Info.getDeptManagerCode());
-	   				UserInfo userByEmpCode = userService.getUserByEmpCode(dept2Info.getDeptManagerCode());
-	   				nextHandlePerson=userByEmpCode.getEmpName()+" "+userByEmpCode.getEmpCode();
-	   			}else {
-	   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
-	   			}	
-				
-   				//三级提交至2级，都为41，所有的三级都提交完，后根据定时然后改成40，二级视图现在只展示的都是40状态的，测的时候先手动去数据库改成40
-   				//在配置文件增加了开关，open为直接提交到40状态
-   				//计划外单子，三级主管提交至二级，应立即到达二级主管。为0是计划内的
-   				if(ap.getAbnormalplanenum()==0) {
-   					if("close".equals(batchToDept2)) {
-   	   					ap.setApstatus("40");
-   	   				}else {
-   	   					ap.setApstatus("41");
-   	   				}
-   				//计划外
-   				}else {
-   					ap.setApstatus("40");
-   					sendToDept2ForJHW.add(dept2Info.getDeptManagerCode());
-   				}
-   					ap.setApstage("4");
+	   				//获得下一步审批人	
+					DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
+		   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
+		   			if(StringUtils.isNotBlank(dept2Info.getDeptManagerCode())) {
+		   				ap.setDept2manager(dept2Info.getDeptManagerCode());
+		   				UserInfo userByEmpCode = userService.getUserByEmpCode(dept2Info.getDeptManagerCode());
+		   				nextHandlePerson=userByEmpCode.getEmpName()+" "+userByEmpCode.getEmpCode();
+		   			}else {
+		   				return ResponseResult.fail(false, "无审批人信息，请联系系统管理员！");
+		   			}	
+					
+	   				//三级提交至2级，都为41，所有的三级都提交完，后根据定时然后改成40，二级视图现在只展示的都是40状态的，测的时候先手动去数据库改成40
+	   				//在配置文件增加了开关，open为直接提交到40状态
+	   				//计划外单子，三级主管提交至二级，应立即到达二级主管。为0是计划内的
+	   				if(ap.getAbnormalplanenum()==0) {
+	   					if("close".equals(batchToDept2)) {
+	   	   					ap.setApstatus("40");
+	   	   				}else {
+	   	   					ap.setApstatus("41");
+	   	   				}
+	   				//计划外
+	   				}else {
+	   					ap.setApstatus("40");
+	   					sendToDept2ForJHW.add(dept2Info.getDeptManagerCode());
+	   				}
+	   				ap.setApstage("4");
 	   			}
    				ap.setModifier(applyuser);
    				ap.setModifitime(new Date());
@@ -295,7 +295,11 @@ public class AssetPlanInfoDept3Controller {
    			if(flag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
-   				return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   				if(StringUtils.isBlank(nextHandlePerson)) {
+   					return ResponseResult.success(true, "审批完成");
+   				}else {
+   					return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   				}
    			}
    	}
     
