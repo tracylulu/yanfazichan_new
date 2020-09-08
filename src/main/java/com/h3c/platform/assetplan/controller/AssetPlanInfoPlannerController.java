@@ -160,7 +160,7 @@ public class AssetPlanInfoPlannerController {
 			String nextHandlePerson="";		
 			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
-   			
+   			boolean toNext=false;
    			Map<String,Object> param=new HashMap<>();
    			Map<String,Object> param1=new HashMap<>();
    			param1.put("GroupFlag",null);
@@ -220,6 +220,7 @@ public class AssetPlanInfoPlannerController {
 		   					ap.setApstatus("60");
 		   					ap.setApstage("6");
 		   					sendToOQ.add(oq);
+		   					toNext=true;
 			   			}
 		   				ap.setModifier(applyuser);
 		   				ap.setModifitime(new Date());
@@ -305,9 +306,12 @@ public class AssetPlanInfoPlannerController {
    				if(newLstsubmitID.isEmpty() && !newLstEndID.isEmpty()) {
    					return ResponseResult.success(true, "归档成功");
    				}else {
-   					return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   					if(toNext) {
+   						return ResponseResult.success(true, "已成功提交至"+nextHandlePerson+"审批");
+   	   				}else {
+   	   					return ResponseResult.success(true, "审批完成");
+   	   				}
    				}
-   				
    	}
     
     
