@@ -46,6 +46,7 @@
     <result column="OutTimePlanEnum" jdbcType="INTEGER" property="outtimeplanenum" />
     <result column="AssetNote" jdbcType="VARCHAR" property="assetnote" />
     <result column="ApplyUser" jdbcType="VARCHAR" property="applyuser" />
+    <result column="ApplyUserName" jdbcType="VARCHAR" property="applyusername" />
     <result column="ApplyTime" jdbcType="TIMESTAMP" property="applytime" />
     <result column="IsCompleteSet" jdbcType="VARCHAR" property="iscompleteset" />
     <result column="CompleteSetCode" jdbcType="INTEGER" property="completesetcode" />
@@ -126,7 +127,7 @@
     Dept3AgreeMoney, Dept2AgreeMoney, RequiredUser, RequiredUserName, ReviewPerson, Reviewer, 
     Dept3Manager, Dept2Manager, Planner, OQDeptReviewer, Dept1Reviewer, DeptCode, Dept3Code, 
     Dept3Name, Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, 
-    OutTimePlanEnum, AssetNote, ApplyUser, ApplyTime, IsCompleteSet, CompleteSetCode, 
+    OutTimePlanEnum, AssetNote, ApplyUser, ApplyUserName, ApplyTime, IsCompleteSet, CompleteSetCode, 
     APStatus, APStatusDetail, APStage, ApprovalPerson, ApprovalNote, ApprovalResult, 
     IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, ReviewResult, DeleteFlag
   </sql>
@@ -166,10 +167,10 @@
       Dept2Name, Dept1Code, Dept1Name, 
       ItemCode, ReceiverPlace, AbnormalPlanEnum, 
       OutTimePlanEnum, AssetNote, ApplyUser, 
-      ApplyTime, IsCompleteSet, CompleteSetCode, 
-      APStatus, APStatusDetail, APStage, 
-      ApprovalPerson, ApprovalNote, ApprovalResult, 
-      IsReqPurchaseReport, ISSpecifyManufacturer, 
+      ApplyUserName, ApplyTime, IsCompleteSet, 
+      CompleteSetCode, APStatus, APStatusDetail, 
+      APStage, ApprovalPerson, ApprovalNote, 
+      ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, 
       ManufacturerTypeEnum, ReviewResult, DeleteFlag
       )
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, 
@@ -187,10 +188,10 @@
       #{dept2name,jdbcType=VARCHAR}, #{dept1code,jdbcType=VARCHAR}, #{dept1name,jdbcType=VARCHAR}, 
       #{itemcode,jdbcType=VARCHAR}, #{receiverplace,jdbcType=VARCHAR}, #{abnormalplanenum,jdbcType=INTEGER}, 
       #{outtimeplanenum,jdbcType=INTEGER}, #{assetnote,jdbcType=VARCHAR}, #{applyuser,jdbcType=VARCHAR}, 
-      #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, #{completesetcode,jdbcType=INTEGER}, 
-      #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, #{apstage,jdbcType=VARCHAR}, 
-      #{approvalperson,jdbcType=VARCHAR}, #{approvalnote,jdbcType=VARCHAR}, #{approvalresult,jdbcType=VARCHAR}, 
-      #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
+      #{applyusername,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, #{iscompleteset,jdbcType=VARCHAR}, 
+      #{completesetcode,jdbcType=INTEGER}, #{apstatus,jdbcType=VARCHAR}, #{apstatusdetail,jdbcType=VARCHAR}, 
+      #{apstage,jdbcType=VARCHAR}, #{approvalperson,jdbcType=VARCHAR}, #{approvalnote,jdbcType=VARCHAR}, 
+      #{approvalresult,jdbcType=VARCHAR}, #{isreqpurchasereport,jdbcType=VARCHAR}, #{isspecifymanufacturer,jdbcType=VARCHAR}, 
       #{manufacturertypeenum,jdbcType=INTEGER}, #{reviewresult,jdbcType=INTEGER}, #{deleteflag,jdbcType=VARCHAR}
       )
   </insert>
@@ -328,6 +329,9 @@
       </if>
       <if test="applyuser != null">
         ApplyUser,
+      </if>
+      <if test="applyusername != null">
+        ApplyUserName,
       </if>
       <if test="applytime != null">
         ApplyTime,
@@ -504,6 +508,9 @@
       </if>
       <if test="applyuser != null">
         #{applyuser,jdbcType=VARCHAR},
+      </if>
+      <if test="applyusername != null">
+        #{applyusername,jdbcType=VARCHAR},
       </if>
       <if test="applytime != null">
         #{applytime,jdbcType=TIMESTAMP},
@@ -690,6 +697,9 @@
       <if test="record.applyuser != null">
         ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
       </if>
+      <if test="record.applyusername != null">
+        ApplyUserName = #{record.applyusername,jdbcType=VARCHAR},
+      </if>
       <if test="record.applytime != null">
         ApplyTime = #{record.applytime,jdbcType=TIMESTAMP},
       </if>
@@ -783,6 +793,7 @@
       OutTimePlanEnum = #{record.outtimeplanenum,jdbcType=INTEGER},
       AssetNote = #{record.assetnote,jdbcType=VARCHAR},
       ApplyUser = #{record.applyuser,jdbcType=VARCHAR},
+      ApplyUserName = #{record.applyusername,jdbcType=VARCHAR},
       ApplyTime = #{record.applytime,jdbcType=TIMESTAMP},
       IsCompleteSet = #{record.iscompleteset,jdbcType=VARCHAR},
       CompleteSetCode = #{record.completesetcode,jdbcType=INTEGER},

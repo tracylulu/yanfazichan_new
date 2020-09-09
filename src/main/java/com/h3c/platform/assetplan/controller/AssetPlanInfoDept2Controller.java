@@ -170,6 +170,7 @@ public class AssetPlanInfoDept2Controller {
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitInfoFromDept2ToPlanner(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
 			boolean toNext=false;	
+			boolean notChaoShiFlag=false;
 			String nextHandlePerson="";	
 			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
@@ -202,6 +203,7 @@ public class AssetPlanInfoDept2Controller {
    					ap.setApstatus("04");
    					ap.setApstage("0");
    					newLstEndAssetPlanInfo.add(ap);
+   					notChaoShiFlag=true;
    					/*List<String> sendTo =new ArrayList<>();
    					List<String> ccTo =new ArrayList<>();
    					String url="";
@@ -214,6 +216,7 @@ public class AssetPlanInfoDept2Controller {
    					ap.setApstatus("50");
    					ap.setApstage("5");
    					toNext=true;
+   					notChaoShiFlag=true;
 	   			}
    				ap.setModifier(applyuser);
    				ap.setModifitime(new Date());
@@ -288,7 +291,7 @@ public class AssetPlanInfoDept2Controller {
    				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
    			}
 			
-   			if(flag) {
+   			if(flag && !notChaoShiFlag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
    				if(toNext) {

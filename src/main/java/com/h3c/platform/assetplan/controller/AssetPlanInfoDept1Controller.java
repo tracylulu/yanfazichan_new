@@ -188,7 +188,7 @@ public class AssetPlanInfoDept1Controller {
    				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
    			}
    			
-   			return ResponseResult.success(true, "提交成功");
+   			return ResponseResult.success(true, "审批完成");
    	}
 	
 	private static String fetchGroupKey(AssetPlanInfo e) {

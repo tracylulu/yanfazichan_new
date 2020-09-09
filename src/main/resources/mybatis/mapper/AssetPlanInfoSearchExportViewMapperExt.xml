@@ -23,6 +23,9 @@
 			<if test="param.RequiredUser !=null and param.RequiredUser !='' ">
 				and RequiredUser LIKE concat('%',#{param.RequiredUser},'%')
 			</if>
+			<if test="param.ApplyUser !=null and param.ApplyUser !='' ">
+				and ApplyUser LIKE concat('%',#{param.ApplyUser},'%')
+			</if>
 			<if test="param.AssetModel !=null and param.AssetModel !='' ">
 				and AssetModel LIKE concat('%',#{param.AssetModel},'%')
 			</if>

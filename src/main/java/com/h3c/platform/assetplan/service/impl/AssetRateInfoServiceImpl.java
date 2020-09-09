@@ -106,9 +106,15 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 			rateTotal.setRate(deptUsageRate+"%");
 		}
 		List<AssetRateInfo> lstRepeat=lst.stream().filter(distinctByKey(AssetRateInfo::getAssertNumber)).collect(Collectors.toList());
-		rateTotal.setNumber(lstRepeat.size());
-		rateTotal.setDistribution(getDistribution(lstRepeat));
-		rateTotal.setDetail(getRateDetail(lst));
+		if(rateTotal.getRate().equals("无")) {
+			rateTotal.setNumber(null);
+			rateTotal.setDistribution("");
+			rateTotal.setDetail("");
+		}else {
+			rateTotal.setNumber(lstRepeat.size());
+			rateTotal.setDistribution(getDistribution(lstRepeat));
+			rateTotal.setDetail(getRateDetail(lst));
+		}
 
 		Map<String,Object> mapRD=getRDRate( model, deptCode,date,lstRD);
 		//modify on 20200814
@@ -117,8 +123,11 @@ public class AssetRateInfoServiceImpl implements AssetRateInfoService {
 		}else {
 			rateTotal.setRdRate((String)mapRD.get("rate"));
 		}
-		
-		rateTotal.setRdNumber((Integer)mapRD.get("number"));
+		if(rateTotal.getRdRate().equals("无")) {
+			rateTotal.setRdNumber(null);
+		}else {
+			rateTotal.setRdNumber((Integer)mapRD.get("number"));
+		}
 		rateTotal.setRatedetail(rateTotal.getRate()+"/"+rateTotal.getRdRate());
 		
 		return rateTotal;

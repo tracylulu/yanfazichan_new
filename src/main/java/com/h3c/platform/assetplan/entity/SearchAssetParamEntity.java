@@ -29,6 +29,9 @@ public class SearchAssetParamEntity {
     //申请人ID----换成申购人ID
     private String requiredUser;
     
+    //申请人ID----填报人ID
+    private String applyUser;
+    
     //超时记录,只展示三级二级两种情况
     private String outTimePlanEnum;
     
@@ -240,6 +243,14 @@ public class SearchAssetParamEntity {
 
 	public void setAssetcategory(String assetcategory) {
 		this.assetcategory = assetcategory;
+	}
+
+	public String getApplyUser() {
+		return applyUser;
+	}
+
+	public void setApplyUser(String applyUser) {
+		this.applyUser = applyUser;
 	}
 
 	

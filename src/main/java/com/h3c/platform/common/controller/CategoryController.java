@@ -1,8 +1,10 @@
 package com.h3c.platform.common.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
@@ -31,6 +34,7 @@ import com.h3c.platform.util.UserUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @CrossOrigin
 @RestController
@@ -48,7 +52,9 @@ public class CategoryController {
 	public ResponseResult list(@RequestBody SearchParamEntity param ) throws Exception {
 		List<JSONObject> lstResultAll=new ArrayList<>();
 		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
-		
+		lst.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigInteger("is_able")).reversed().
+				thenComparing(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed()));
+		//lst.sort(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed());
 		for(int i=0;i<lst.size();i++) {
 			JSONObject obj=lst.getJSONObject(i);
 		
@@ -58,14 +64,14 @@ public class CategoryController {
 			obj.put("category", dicNameArr[2]);
 			obj.put("deliveryTime", dicNameArr[3]);
 			obj.put("expenseType", dicNameArr[4]);
-
+			obj.put("sort_order",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.get("sort_order")))?"": obj.get("sort_order"));
 			obj.put("creater",  ObjToStrUtil.replaceNullValue(obj.get("creatername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("createrempcode")));
 			obj.put("last_modifier", ObjToStrUtil.replaceNullValue(obj.get("modifiername"))+" "+ObjToStrUtil.replaceNullValue(obj.get("modifierempcode")));
 			obj.put("create_time",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("create_time")))?"": obj.getDate("create_time"));
 			obj.put("last_modify_time", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(obj.getString("last_modify_time")))?"": obj.getDate("last_modify_time"));
 			lstResultAll.add(obj);
 		}
-		
+		//lstResultAll.stream().sorted(Comparator.comparing(get("sort_order")).collect(Collectors.toList());
 		Integer count = lstResultAll.size(); // 记录总数	
         Integer pageCount = 0; // 页数
         if (count % param.getSize() == 0) {
@@ -160,5 +166,82 @@ public class CategoryController {
 		model.put("createTime",StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("createTime")))?"": model.getDate("createTime"));
 		model.put("lastModifyTime", StringUtils.isBlank(ObjToStrUtil.replaceNullValue(model.getString("lastModifyTime")))?"": model.getDate("lastModifyTime"));
 		return ResponseResult.success(model);
+	}
+	
+	
+	@UserLoginToken()
+	@PostMapping("/moveUpOrDown")
+	@ApiOperation(value="上移下移功能")
+	public ResponseResult moveUpOrDown(@RequestParam @ApiParam(name="id",value="条目id",required=true)Integer id,
+			@RequestParam @ApiParam(name="moveId",value="上移1下移2",required=true)Integer moveId) throws Exception {
+		JSONObject model=dicServer.getById(id);
+		String sort_order = ObjToStrUtil.replaceNullValue(model.get("sortOrder"));
+		JSONArray lst= dicServer.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
+		lst.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigInteger("is_able")).reversed().
+				thenComparing(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed()));
+		Integer flagid=0;
+		for(int i=0;i<lst.size();i++) {
+			JSONObject obj=lst.getJSONObject(i);
+			if(Integer.parseInt(obj.getString("id"))==id) {
+				flagid=i;
+				break;
+			}
+		}
+		//上移，找到该条的上一个，
+		if(moveId==1) {
+			if(flagid-1>=0) {
+				JSONObject obj=lst.getJSONObject(flagid-1);
+				String sort_order_1 = ObjToStrUtil.replaceNullValue(obj.get("sort_order"));
+				JSONObject model1= new JSONObject();		
+				model1.put("id",  obj.get("id"));
+				model1.put("sortOrder", Integer.parseInt(sort_order));
+				model1.put("applicationId",applicationId);
+				model1.put("dicValue", obj.get("dic_value"));
+				model1.put("dicName", obj.get("dic_name"));
+				model1.put("lastModifier", UserUtils.getCurrentDominAccount());
+				dicServer.edit(model1);
+				
+				//换下排序字段然后调用修改方法保存原来的对象
+				JSONObject model2= new JSONObject();		
+				model2.put("id", id);
+				model2.put("sortOrder", Integer.parseInt(sort_order_1));
+				model2.put("applicationId",applicationId);
+				model2.put("dicValue", model.get("dicValue"));
+				model2.put("dicName", model.get("dicName"));
+				model2.put("lastModifier", UserUtils.getCurrentDominAccount());
+				dicServer.edit(model2);
+			}else {
+				return ResponseResult.success("无法上移");
+			}
+			
+		}else {
+			if(flagid+1<lst.size()) {
+				//下移，找到该条的下一个,换下排序字段然后调用修改方法
+				JSONObject obj2=lst.getJSONObject(flagid+1);
+				String sort_order_2 = ObjToStrUtil.replaceNullValue(obj2.get("sort_order"));
+				JSONObject model1= new JSONObject();		
+				model1.put("id",  obj2.get("id"));
+				model1.put("sortOrder", Integer.parseInt(sort_order));
+				model1.put("applicationId",applicationId);
+				model1.put("dicValue", obj2.get("dic_value"));
+				model1.put("dicName", obj2.get("dic_name"));
+				model1.put("lastModifier", UserUtils.getCurrentDominAccount());
+				dicServer.edit(model1);
+				
+				//换下排序字段然后调用修改方法保存原来的对象
+				JSONObject model2= new JSONObject();		
+				model2.put("id", id);
+				model2.put("sortOrder", Integer.parseInt(sort_order_2));
+				model2.put("applicationId",applicationId);
+				model2.put("dicValue", model.get("dicValue"));
+				model2.put("dicName", model.get("dicName"));
+				model2.put("lastModifier", UserUtils.getCurrentDominAccount());
+				dicServer.edit(model2);
+			}else {
+				return ResponseResult.success("无法下移");
+			}
+			
+		}
+		return ResponseResult.success();
 	}
 }

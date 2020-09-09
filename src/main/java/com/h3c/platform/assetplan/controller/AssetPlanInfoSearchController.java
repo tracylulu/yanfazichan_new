@@ -122,6 +122,7 @@ public class AssetPlanInfoSearchController {
             param.put("PlanCode", searchAssetParamEntity.getPlanCode());
             param.put("AssetName", searchAssetParamEntity.getAssetName());
             param.put("RequiredUser", searchAssetParamEntity.getRequiredUser());
+            param.put("ApplyUser", searchAssetParamEntity.getApplyUser());
             //param.put("StartApplyTime", searchAssetParamEntity.getStartApplyTime());
             //param.put("EndApplyTime", searchAssetParamEntity.getEndApplyTime());
             List<String> applyTimeList = searchAssetParamEntity.getApplyTime();
@@ -351,6 +352,7 @@ public class AssetPlanInfoSearchController {
             param.put("PlanCode", searchAssetParamEntity.getPlanCode());
             param.put("AssetName", searchAssetParamEntity.getAssetName());
             param.put("RequiredUser", searchAssetParamEntity.getRequiredUser());
+            param.put("ApplyUser", searchAssetParamEntity.getApplyUser());
             //param.put("StartApplyTime", searchAssetParamEntity.getStartApplyTime());
             //param.put("EndApplyTime", searchAssetParamEntity.getEndApplyTime());
             List<String> applyTimeList = searchAssetParamEntity.getApplyTime();

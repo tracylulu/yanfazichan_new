@@ -202,6 +202,7 @@ public class AssetPlanInfoDept3Controller {
    			List<AssetPlanInfo> lst=new ArrayList<>();
    			List<AssetPlanInfo> newLstEndAssetPlanInfo = new ArrayList<>();
    			boolean flag=false;
+   			boolean notChaoShiFlag=false;
    			for (int j = 0; j < newLstsubmitID.size(); j++) {
    				AssetPlanInfo ap = assetPlanInfoMapper.selectByPrimaryKey(newLstsubmitID.get(j));
    				//超时，做下记录
@@ -214,6 +215,7 @@ public class AssetPlanInfoDept3Controller {
    					ap.setApstatus("03");
    					ap.setApstage("0");
    					newLstEndAssetPlanInfo.add(ap);
+   					notChaoShiFlag=true;
    					/*List<String> sendTo =new ArrayList<>();
    					List<String> ccTo =new ArrayList<>();
    					String url="";
@@ -223,6 +225,7 @@ public class AssetPlanInfoDept3Controller {
    					//mailInfoService.sendRemindMail(sendTo.toString(), ccTo.toString(), "三级部门主管审核", url);
    					mailInfoService.sendProcessEndMail(String.join(",", sendTo), String.join(",", ccTo), url);*/
    				}else {
+   					notChaoShiFlag=true;
 	   				//获得下一步审批人	
 					DeptInfo dept3Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(ap.getDeptcode()));
 		   			DeptInfo dept2Info = deptInfoMapper.selectByPrimaryKey(Integer.parseInt(dept3Info.getSupDeptCode()));
@@ -292,7 +295,7 @@ public class AssetPlanInfoDept3Controller {
    				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
    			}
 			
-   			if(flag) {
+   			if(flag && !notChaoShiFlag) {
    				return ResponseResult.success(true, "存在审批超时记录，请联系管理员激活！");
    			}else {
    				if(StringUtils.isBlank(nextHandlePerson)) {

@@ -14,7 +14,7 @@ public class AssetPlanInfoSearchExportViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoSearchExportViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -71,7 +71,7 @@ public class AssetPlanInfoSearchExportViewExample {
 
         protected GeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -118,7 +118,7 @@ public class AssetPlanInfoSearchExportViewExample {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
-            List<java.sql.Date> dateList = new ArrayList<>();
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
             while (iter.hasNext()) {
                 dateList.add(new java.sql.Date(iter.next().getTime()));
@@ -2560,6 +2560,76 @@ public class AssetPlanInfoSearchExportViewExample {
 
         public Criteria andApplyuserNotBetween(String value1, String value2) {
             addCriterion("ApplyUser not between", value1, value2, "applyuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameIsNull() {
+            addCriterion("ApplyUserName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameIsNotNull() {
+            addCriterion("ApplyUserName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameEqualTo(String value) {
+            addCriterion("ApplyUserName =", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotEqualTo(String value) {
+            addCriterion("ApplyUserName <>", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameGreaterThan(String value) {
+            addCriterion("ApplyUserName >", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameGreaterThanOrEqualTo(String value) {
+            addCriterion("ApplyUserName >=", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameLessThan(String value) {
+            addCriterion("ApplyUserName <", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameLessThanOrEqualTo(String value) {
+            addCriterion("ApplyUserName <=", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameLike(String value) {
+            addCriterion("ApplyUserName like", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotLike(String value) {
+            addCriterion("ApplyUserName not like", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameIn(List<String> values) {
+            addCriterion("ApplyUserName in", values, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotIn(List<String> values) {
+            addCriterion("ApplyUserName not in", values, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameBetween(String value1, String value2) {
+            addCriterion("ApplyUserName between", value1, value2, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotBetween(String value1, String value2) {
+            addCriterion("ApplyUserName not between", value1, value2, "applyusername");
             return (Criteria) this;
         }
 

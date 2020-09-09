@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -821,7 +822,8 @@ public class AssetPlanInfoApplyController {
    		//try {
    			JSONArray arrayData = new JSONArray();
    			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"1");
-   			
+   			objDic.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigInteger("is_able")).reversed().
+   					thenComparing(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed()));
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
    				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
@@ -848,7 +850,8 @@ public class AssetPlanInfoApplyController {
    		//try {
    			JSONArray arrayData = new JSONArray();
    			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"1");
-   			
+   			objDic.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigInteger("is_able")).reversed().
+   					thenComparing(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed()));
    			for (int i = 0; i < objDic.size(); i++) {
    				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
    				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
