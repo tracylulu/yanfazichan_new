@@ -114,6 +114,9 @@ public class AssetPlanInfoReviewController {
 	@Value("${spring.remindEmailForPlanner.url}")
     private  String remindEmailForPlanner ;
 	
+	@Value("${spring.endEmail.url}")
+    private  String endEmail ;
+	
 	private static final Logger logger = LoggerFactory.getLogger(AssetPlanInfoReviewController.class);
 	
 	@ApiOperation(value="查看规范审核列表信息----这个方法之前用的，现在不用了")
@@ -450,12 +453,23 @@ public class AssetPlanInfoReviewController {
 			//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
    			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
    			for(String key:collect.keySet()) {
+   				StringBuffer buffer =new StringBuffer();
    				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				for (int i = 0; i < lstTemp.size(); i++) {
+   					buffer.append("</br>");
+   					buffer.append("厂家:"+lstTemp.get(i).getAssetmanufacturer());
+   					buffer.append(" 物品名:"+lstTemp.get(i).getAssetname());
+   					buffer.append(" 型号:"+lstTemp.get(i).getAssetmodel());
+   					buffer.append(" 数量:"+lstTemp.get(i).getRequireds());
+   					buffer.append(" 同意数量:"+lstTemp.get(i).getRequiredsaudit());
+   					buffer.append("</br>");
+				}
    				List<String> sendToEnd =new ArrayList<>();
    				List<String> ccToEnd =new ArrayList<>();
    				sendToEnd.add(lstTemp.get(0).getApplyuser());
    				ccToEnd.add(lstTemp.get(0).getRequireduser());
-   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   				String urlForEndEmail=endEmail+"?applymonth="+applymonth;
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), urlForEndEmail,buffer.toString());
    			}
 			
 			return ResponseResult.success(true, "提交成功");

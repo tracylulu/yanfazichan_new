@@ -202,10 +202,10 @@ public class MailInfoServiceImpl implements MailInfoService {
 	}
 	
 	@Override
-	public void sendProcessEndMail(String sendTo, String ccTo, String url) {
+	public void sendProcessEndMail(String sendTo, String ccTo, String url,String content) {
 		JSONObject contentJson = new JSONObject();
 		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : endUrl);
-
+		contentJson.put("$content", content);
 		JSONArray templeteArr = new JSONArray();
 		JSONObject tempTempleteJson = new JSONObject();
 		tempTempleteJson.put("code", "$system");

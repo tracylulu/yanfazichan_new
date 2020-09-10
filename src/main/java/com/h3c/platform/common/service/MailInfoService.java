@@ -49,7 +49,7 @@ public interface MailInfoService {
      * @param process 流程环节名称
      * @param url 流程链接  ,为空不加超链接 
      */
-    void sendProcessEndMail(String sendTo, String ccTo, String url);
+    void sendProcessEndMail(String sendTo, String ccTo, String url,String content);
     
     /**
      * 发送提醒邮件

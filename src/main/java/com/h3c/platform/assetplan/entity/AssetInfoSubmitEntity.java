@@ -19,6 +19,8 @@ public class AssetInfoSubmitEntity   {
     //
     public String applyuser;
 
+    //区分申请提交环节申请的单子和不规范单子的提交(申请传1，不规范传2)
+    public String checkFlag;
 
 	public List<Integer> getLstsubmitId() {
 		return lstsubmitId;
@@ -68,6 +70,14 @@ public class AssetInfoSubmitEntity   {
 
 	public void setApplyuser(String applyuser) {
 		this.applyuser = applyuser;
+	}
+
+	public String getCheckFlag() {
+		return checkFlag;
+	}
+
+	public void setCheckFlag(String checkFlag) {
+		this.checkFlag = checkFlag;
 	}
 
 	

@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -585,65 +586,92 @@ public class AssetPlanInfoApplyController {
    	@ResponseBody
    	@UserLoginToken(logType=LogType.MODIFY)
    	public ResponseResult submitAssetPlanInfoByIds(@RequestBody AssetInfoSubmitEntity submitEntity) throws Exception{
-    		List<String> sendToForJHN =new ArrayList<>();
-			List<String> sendToForJHW =new ArrayList<>();
+    		//List<String> sendToForJHN =new ArrayList<>();
+			//List<String> sendToForJHW =new ArrayList<>();
+    		//所有全选要提交的单子集合（计划内的和计划外的）
+			List<AssetPlanInfoAll> allSubmitListJHN = new ArrayList<>();
+			List<AssetPlanInfoAll> allSubmitListJHW = new ArrayList<>();
+			//所有选中指定的要提交的单子集合（计划内的和计划外的）
+			List<AssetPlanInfo> allSelectSubmitListJHN = new ArrayList<>();
+			List<AssetPlanInfo> allSelectSubmitListJHW = new ArrayList<>();
     		//不选中的时候提示：请确认是否全部提交，选中提交的时候提示：请确认是否将所选物品及成套设备全部提交 
    			List<Integer> lstsubmitID = submitEntity.getLstsubmitId();
    			String applymonth = submitEntity.getApplymonth();
    			String applyuser = submitEntity.getApplyuser();
+   		    //区分全部提交的时候是申请环节申请的单子还是不规范打回的单子(申请：1，不规范：2) 
+   			String checkFlag = submitEntity.getCheckFlag();
    			//申请人和申购人id的list,规范审核人code的list(后续邮件使用)
 	   		List<String> newLstApplyRequiredUserID =new ArrayList<>();
 	   		//List<String> getsendToList =new ArrayList<>();
 	   		List<Integer> newLstsubmitID =new ArrayList<>();
    			if(lstsubmitID.isEmpty()) {
-   				//传过来的集合为空，说明全部提交
-   				Map<String, Object> param = new HashMap<>();
-   	   			param.put("ApplyUser",applyuser);
-   				param.put("APStage","1");
-   				param.put("ApplyMonth",applymonth);
-   				//申请的单子
-   				List<AssetPlanInfoAll> draftInfoList = assetPlanInfoService.listofDraftDetail(param);
-   				//打回的单子
-   				Map<String, Object> param1 = new HashMap<>();
-   	   			param1.put("RequiredUser",applyuser);
-   				param1.put("APStage","1");
-   				param1.put("ApplyMonth",applymonth);
-   				List<AssetPlanInfoAll> todoList = assetPlanInfoService.listofTodoDetail(param1);
-   				//当前环节该登录人所有待提交的单子
-   	   			for (int i = 0; i < draftInfoList.size(); i++) {
-   	   				newLstsubmitID.add(draftInfoList.get(i).getAssetplanid());
-   	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getApplyuser());
-	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
-	   				String[] split = draftInfoList.get(i).getReviewperson().split(",");
-	   				for (int j = 0; j < split.length; j++) {
-	   					//计划内
-	   					if(draftInfoList.get(i).getAbnormalplanenum()==0) {
-	   						sendToForJHN.add(split[j]);
-	   					}else {
-	   						//计划外
-	   						sendToForJHW.add(split[j]);
-	   					}
-	   					//getsendToList.add(split[j]);
-					}
-	   				
+   				//传过来的集合为空，说明全部提交(全部申请的单子)
+   				if("1".equals(checkFlag)) {
+   					Map<String, Object> param = new HashMap<>();
+   	   	   			param.put("ApplyUser",applyuser);
+   	   				param.put("APStage","1");
+   	   				param.put("ApplyMonth",applymonth);
+   	   				//申请的单子
+   	   				List<AssetPlanInfoAll> draftInfoList = assetPlanInfoService.listofDraftDetail(param);
+   	   				//当前环节该登录人所有待提交的单子
+   	   	   			for (int i = 0; i < draftInfoList.size(); i++) {
+   	   	   				newLstsubmitID.add(draftInfoList.get(i).getAssetplanid());
+   	   	   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getApplyuser());
+   		   				newLstApplyRequiredUserID.add(draftInfoList.get(i).getRequireduser());
+   		   				//计划内
+   		   				if(draftInfoList.get(i).getAbnormalplanenum()==0) {
+   		   					allSubmitListJHN.add(draftInfoList.get(i));
+   		   				}else {
+   	   						//计划外
+   		   					allSubmitListJHW.add(draftInfoList.get(i));
+   	   					}
+   		   				/*String[] split = draftInfoList.get(i).getReviewperson().split(",");
+   		   				for (int j = 0; j < split.length; j++) {
+   		   					//计划内
+   		   					if(draftInfoList.get(i).getAbnormalplanenum()==0) {
+   		   						sendToForJHN.add(split[j]);
+   		   					}else {
+   		   						//计划外
+   		   						sendToForJHW.add(split[j]);
+   		   					}
+   		   					//getsendToList.add(split[j]);
+   						}*/
+   		   				
+   	   				}
+   				}else {
+   					//传过来的集合为空，说明全部提交(全部打回的单子)
+   					//打回的单子
+   	   				Map<String, Object> param1 = new HashMap<>();
+   	   	   			param1.put("RequiredUser",applyuser);
+   	   				param1.put("APStage","1");
+   	   				param1.put("ApplyMonth",applymonth);
+   	   				List<AssetPlanInfoAll> todoList = assetPlanInfoService.listofTodoDetail(param1);
+   	   				
+   	   				
+   	   	   			for (int j = 0; j < todoList.size(); j++) {
+   		   				newLstsubmitID.add(todoList.get(j).getAssetplanid());
+   		   				newLstApplyRequiredUserID.add(todoList.get(j).getApplyuser());
+   		   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
+   		   				//计划内
+   	   					if(todoList.get(j).getAbnormalplanenum()==0) {
+   	   						allSubmitListJHN.add(todoList.get(j));
+   	   					}else {
+   	   						//计划外
+   	   						allSubmitListJHW.add(todoList.get(j));
+   	   					}
+   		   				/*String[] split = todoList.get(j).getReviewperson().split(",");
+   		   				for (int k = 0; k < split.length; k++) {
+   		   					//计划内
+   		   					if(todoList.get(j).getAbnormalplanenum()==0) {
+   		   						sendToForJHN.add(split[k]);
+   		   					}else {
+   		   						//计划外
+   		   						sendToForJHW.add(split[k]);
+   		   					}
+   		   					//getsendToList.add(split[k]);
+   						}*/
+   					}
    				}
-   	   			for (int j = 0; j < todoList.size(); j++) {
-	   				newLstsubmitID.add(todoList.get(j).getAssetplanid());
-	   				newLstApplyRequiredUserID.add(todoList.get(j).getApplyuser());
-	   				newLstApplyRequiredUserID.add(todoList.get(j).getRequireduser());
-	   				String[] split = todoList.get(j).getReviewperson().split(",");
-	   				for (int k = 0; k < split.length; k++) {
-	   					//计划内
-	   					if(todoList.get(j).getAbnormalplanenum()==0) {
-	   						sendToForJHN.add(split[k]);
-	   					}else {
-	   						//计划外
-	   						sendToForJHW.add(split[k]);
-	   					}
-	   					//getsendToList.add(split[k]);
-					}
-	   				
-				}
    			}else {
    				//选中的部分提交
    	   			for (int i = 0; i < lstsubmitID.size(); i++) {
@@ -656,7 +684,14 @@ public class AssetPlanInfoApplyController {
    	   						newLstsubmitID.add(completeSetList.get(j).getAssetplanid());
    	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getApplyuser());
    	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getRequireduser());
-   	   					    String[] split = completeSetList.get(j).getReviewperson().split(",");
+   	   						//计划内
+   		   					if(completeSetList.get(j).getAbnormalplanenum()==0) {
+   		   						allSelectSubmitListJHN.add(completeSetList.get(j));
+   		   					}else {
+   		   						//计划外
+   		   						allSelectSubmitListJHW.add(completeSetList.get(j));
+   		   					}
+   	   					    /*String[] split = completeSetList.get(j).getReviewperson().split(",");
 	   	   					for (int k = 0; k < split.length; k++) {
 	   	   						//计划内
 	   		   					if(completeSetList.get(j).getAbnormalplanenum()==0) {
@@ -666,14 +701,21 @@ public class AssetPlanInfoApplyController {
 	   		   						sendToForJHW.add(split[k]);
 	   		   					}
 	   		   					//getsendToList.add(split[k]);
-	   						}
+	   						}*/
    	   					}
    	   				//无成套设备	
    	   				}else {
    	   					newLstsubmitID.add(assetplanid);
    	   					newLstApplyRequiredUserID.add(ap.getApplyuser());
   						newLstApplyRequiredUserID.add(ap.getRequireduser());
-  						String[] split = ap.getReviewperson().split(",");
+  						//计划内
+	   					if(ap.getAbnormalplanenum()==0) {
+	   						allSelectSubmitListJHN.add(ap);
+	   					}else {
+	   						//计划外
+	   						allSelectSubmitListJHW.add(ap);
+	   					}
+  						/*String[] split = ap.getReviewperson().split(",");
   						for (int k = 0; k < split.length; k++) {
   							//计划内
    		   					if(ap.getAbnormalplanenum()==0) {
@@ -683,7 +725,7 @@ public class AssetPlanInfoApplyController {
    		   						sendToForJHW.add(split[k]);
    		   					}
    		   					//getsendToList.add(split[k]);
-   						}
+   						}*/
    	   				}
    	   			}
    	   			newLstsubmitID=removeDuplicate(newLstsubmitID);
@@ -734,16 +776,76 @@ public class AssetPlanInfoApplyController {
 				}
 			}
    			
-			//提交资源计划申请后，发送邮件给规范审核环节计划员，抄送申购人和申请人。
+			//提交资源计划申请后，发送邮件给规范审核环节计划员，抄送申购人和申请人。(请申请人提交后，按照计划员+地址对应审批人 分组，发送邮件抄送申请人申购人)
 			//下一环节的提醒邮件地址，定位到了详细列表页面
 			String url=remindEmailForReview+applymonth;
 			List<String> ccTo =new ArrayList<>();
 			List<String> sendTo =new ArrayList<>();
 			//getsendToList=removeDuplicate(getsendToList);
-			sendToForJHN=removeDuplicate(sendToForJHN);
-			sendToForJHW=removeDuplicate(sendToForJHW);
-			//计划内的单子，邮件通知规范审核
-			for (int j = 0; j < sendToForJHN.size(); j++) {
+			//sendToForJHN=removeDuplicate(sendToForJHN);
+			//sendToForJHW=removeDuplicate(sendToForJHW);
+			
+			//全部提交的邮件发送功能（计划内的单子，邮件通知规范审核）
+			Map<String, List<AssetPlanInfoAll>> collectAllJHN = allSubmitListJHN.stream().collect(Collectors.groupingBy(AssetPlanInfoAll::getReviewperson));
+			for(String key:collectAllJHN.keySet()) {
+   				List<AssetPlanInfoAll> lstTemp=collectAllJHN.get(key);
+   				for (int i = 0; i < lstTemp.size(); i++) {
+   					ccTo.add(lstTemp.get(i).getApplyuser());
+   					ccTo.add(lstTemp.get(i).getRequireduser());
+				}
+   				List<String> result = new ArrayList<>( Arrays.asList(key.split(",")));
+   				sendTo = removeDuplicate(result);
+   				ccTo = removeDuplicate(ccTo);
+   				mailInfoService.sendDeptMgnMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核", true,2,url);
+   				sendTo.clear();
+				ccTo.clear();
+			}
+			//全部提交的邮件发送功能（计划外的单子，邮件通知规范审核）
+			Map<String, List<AssetPlanInfoAll>> collectAllJHW = allSubmitListJHW.stream().collect(Collectors.groupingBy(AssetPlanInfoAll::getReviewperson));
+			for(String key:collectAllJHW.keySet()) {
+   				List<AssetPlanInfoAll> lstTemp=collectAllJHW.get(key);
+   				for (int i = 0; i < lstTemp.size(); i++) {
+   					ccTo.add(lstTemp.get(i).getApplyuser());
+   					ccTo.add(lstTemp.get(i).getRequireduser());
+				}
+   				List<String> result = new ArrayList<>( Arrays.asList(key.split(",")));
+   				sendTo = removeDuplicate(result);
+   				ccTo = removeDuplicate(ccTo);
+   				mailInfoService.sendDeptMgnMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核", false,2,url);
+   				sendTo.clear();
+				ccTo.clear();
+			}
+			//选中提交的邮件发送功能（计划内的单子，邮件通知规范审核）
+			Map<String, List<AssetPlanInfo>> collectSelectJHN = allSelectSubmitListJHN.stream().collect(Collectors.groupingBy(AssetPlanInfo::getReviewperson));
+			for(String key:collectSelectJHN.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collectSelectJHN.get(key);
+   				for (int i = 0; i < lstTemp.size(); i++) {
+   					ccTo.add(lstTemp.get(i).getApplyuser());
+   					ccTo.add(lstTemp.get(i).getRequireduser());
+				}
+   				List<String> result = new ArrayList<>( Arrays.asList(key.split(",")));
+   				sendTo = removeDuplicate(result);
+   				ccTo = removeDuplicate(ccTo);
+   				mailInfoService.sendDeptMgnMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核", true,2,url);
+   				sendTo.clear();
+				ccTo.clear();
+			}
+			//选中提交的邮件发送功能（计划外的单子，邮件通知规范审核）
+			Map<String, List<AssetPlanInfo>> collectSelectJHW = allSelectSubmitListJHW.stream().collect(Collectors.groupingBy(AssetPlanInfo::getReviewperson));
+			for(String key:collectSelectJHW.keySet()) {
+   				List<AssetPlanInfo> lstTemp=collectSelectJHW.get(key);
+   				for (int i = 0; i < lstTemp.size(); i++) {
+   					ccTo.add(lstTemp.get(i).getApplyuser());
+   					ccTo.add(lstTemp.get(i).getRequireduser());
+				}
+   				List<String> result = new ArrayList<>( Arrays.asList(key.split(",")));
+   				sendTo = removeDuplicate(result);
+   				ccTo = removeDuplicate(ccTo);
+   				mailInfoService.sendDeptMgnMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核", false,2,url);
+   				sendTo.clear();
+				ccTo.clear();
+			}
+			/*for (int j = 0; j < sendToForJHN.size(); j++) {
 				if(sendToForJHN.size()==1) {
 					//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 					ccTo = removeDuplicate(newLstApplyRequiredUserID);
@@ -768,9 +870,9 @@ public class AssetPlanInfoApplyController {
 					sendTo.clear();
 					ccTo.clear();
 				}
-			}
+			}*/
 			//计划外的单子，邮件通知规范审核
-			for (int j = 0; j < sendToForJHW.size(); j++) {
+			/*for (int j = 0; j < sendToForJHW.size(); j++) {
 				if(sendToForJHW.size()==1) {
 					//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 					ccTo = removeDuplicate(newLstApplyRequiredUserID);
@@ -795,7 +897,7 @@ public class AssetPlanInfoApplyController {
 					sendTo.clear();
 					ccTo.clear();
 				}
-			}
+			}*/
 			return ResponseResult.success(true, "提交成功");
    	}
     
@@ -1174,6 +1276,9 @@ public class AssetPlanInfoApplyController {
 	   	@UserLoginToken(logType=LogType.MODIFY)
 	   	public ResponseResult submitAssetPlanInfoByIdsOnAddPage(@RequestBody AssetPlanGlobalInfo assetPlanGlobalInfo) throws Exception{
 		 List<Integer> lstsubmitID=new ArrayList();
+		 //所有选中指定的要提交的单子集合（计划内的和计划外的）
+		 List<AssetPlanInfo> allSelectSubmitListJHN = new ArrayList<>();
+		 List<AssetPlanInfo> allSelectSubmitListJHW = new ArrayList<>();
 		 if(assetPlanGlobalInfo.getLst().get(0).getAssetplanid().intValue()==0) {
 			 //保存操作
 		 	for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
@@ -1454,8 +1559,8 @@ public class AssetPlanInfoApplyController {
 			/*for(AssetPlanInfo ap : assetPlanGlobalInfo.lst) {
 				lstsubmitID.add(ap.getAssetplanid());
 			}*/
-		 		List<String> sendToForJHN =new ArrayList<>();
-		 		List<String> sendToForJHW =new ArrayList<>();
+		 		//List<String> sendToForJHN =new ArrayList<>();
+		 		//List<String> sendToForJHW =new ArrayList<>();
 	   			Date planmonth = assetPlanGlobalInfo.getLst().get(0).getPlanmonth();
 	   			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM"); 
 	   			String applymonth = sdf.format(planmonth);
@@ -1465,7 +1570,8 @@ public class AssetPlanInfoApplyController {
 		   		List<String> newLstApplyRequiredUserID =new ArrayList<>();
 		   		//List<String> getsendToList =new ArrayList<>();
 		   		List<Integer> newLstsubmitID =new ArrayList<>();
-	   			if(lstsubmitID.isEmpty()) {
+		   		
+	   			/*if(lstsubmitID.isEmpty()) {
 	   				//传过来的集合为空，说明全部提交
 	   				Map<String, Object> param = new HashMap<>();
 	   	   			param.put("ApplyUser",applyuser);
@@ -1512,7 +1618,7 @@ public class AssetPlanInfoApplyController {
 						}
 		   				
 					}
-	   			}else {
+	   			}else {*/
 	   				//选中的部分提交
 	   	   			for (int i = 0; i < lstsubmitID.size(); i++) {
 	   	   				Integer assetplanid = lstsubmitID.get(i);
@@ -1524,7 +1630,14 @@ public class AssetPlanInfoApplyController {
 	   	   						newLstsubmitID.add(completeSetList.get(j).getAssetplanid());
 	   	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getApplyuser());
 	   	   						newLstApplyRequiredUserID.add(completeSetList.get(j).getRequireduser());
-	   	   					    String[] split = completeSetList.get(j).getReviewperson().split(",");
+	   	   						//计划内
+	   		   					if(completeSetList.get(j).getAbnormalplanenum()==0) {
+	   		   						allSelectSubmitListJHN.add(completeSetList.get(j));
+	   		   					}else {
+	   		   						//计划外
+	   		   						allSelectSubmitListJHW.add(completeSetList.get(j));
+	   		   					}
+	   	   					    /*String[] split = completeSetList.get(j).getReviewperson().split(",");
 		   	   					for (int k = 0; k < split.length; k++) {
 		   	   						//计划内
 		   		   					if(completeSetList.get(j).getAbnormalplanenum()==0) {
@@ -1533,14 +1646,21 @@ public class AssetPlanInfoApplyController {
 		   		   						//计划外
 		   		   						sendToForJHW.add(split[k]);
 		   		   					}
-		   						}
+		   						}*/
 	   	   					}
 	   	   				//无成套设备	
 	   	   				}else {
 	   	   					newLstsubmitID.add(assetplanid);
 	   	   					newLstApplyRequiredUserID.add(ap.getApplyuser());
 	  						newLstApplyRequiredUserID.add(ap.getRequireduser());
-	  						String[] split = ap.getReviewperson().split(",");
+	  						//计划内
+		   					if(ap.getAbnormalplanenum()==0) {
+		   						allSelectSubmitListJHN.add(ap);
+		   					}else {
+		   						//计划外
+		   						allSelectSubmitListJHW.add(ap);
+		   					}
+	  						/*String[] split = ap.getReviewperson().split(",");
 	  						for (int k = 0; k < split.length; k++) {
 	  							//计划内
 	   		   					if(ap.getAbnormalplanenum()==0) {
@@ -1549,11 +1669,11 @@ public class AssetPlanInfoApplyController {
 	   		   						//计划外
 	   		   						sendToForJHW.add(split[k]);
 	   		   					}
-	   						}
+	   						}*/
 	   	   				}
 	   	   			}
 	   	   			newLstsubmitID=removeDuplicate(newLstsubmitID);
-	   			}
+	   			//}
 	   			
 	   			List<AssetPlanInfo> lst=new ArrayList<>();
 	   			for (int j = 0; j < newLstsubmitID.size(); j++) {
@@ -1606,10 +1726,42 @@ public class AssetPlanInfoApplyController {
 				List<String> ccTo =new ArrayList<>();
 				List<String> sendTo =new ArrayList<>();
 				//getsendToList=removeDuplicate(getsendToList);
-				sendToForJHN=removeDuplicate(sendToForJHN);
-				sendToForJHW=removeDuplicate(sendToForJHW);
+				//sendToForJHN=removeDuplicate(sendToForJHN);
+				//sendToForJHW=removeDuplicate(sendToForJHW);
 				//计划内的单子，邮件通知规范审核
-				for (int j = 0; j < sendToForJHN.size(); j++) {
+				
+				//选中提交的邮件发送功能（计划内的单子，邮件通知规范审核）
+				Map<String, List<AssetPlanInfo>> collectSelectJHN = allSelectSubmitListJHN.stream().collect(Collectors.groupingBy(AssetPlanInfo::getReviewperson));
+				for(String key:collectSelectJHN.keySet()) {
+	   				List<AssetPlanInfo> lstTemp=collectSelectJHN.get(key);
+	   				for (int i = 0; i < lstTemp.size(); i++) {
+	   					ccTo.add(lstTemp.get(i).getApplyuser());
+	   					ccTo.add(lstTemp.get(i).getRequireduser());
+					}
+	   				List<String> result = new ArrayList<>( Arrays.asList(key.split(",")));
+	   				sendTo = removeDuplicate(result);
+	   				ccTo = removeDuplicate(ccTo);
+	   				mailInfoService.sendDeptMgnMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核", true,2,url);
+	   				sendTo.clear();
+					ccTo.clear();
+				}
+				//选中提交的邮件发送功能（计划外的单子，邮件通知规范审核）
+				Map<String, List<AssetPlanInfo>> collectSelectJHW = allSelectSubmitListJHW.stream().collect(Collectors.groupingBy(AssetPlanInfo::getReviewperson));
+				for(String key:collectSelectJHW.keySet()) {
+	   				List<AssetPlanInfo> lstTemp=collectSelectJHW.get(key);
+	   				for (int i = 0; i < lstTemp.size(); i++) {
+	   					ccTo.add(lstTemp.get(i).getApplyuser());
+	   					ccTo.add(lstTemp.get(i).getRequireduser());
+					}
+	   				List<String> result = new ArrayList<>( Arrays.asList(key.split(",")));
+	   				sendTo = removeDuplicate(result);
+	   				ccTo = removeDuplicate(ccTo);
+	   				mailInfoService.sendDeptMgnMail(String.join(",", sendTo), String.join(",", ccTo), "规范审核", false,2,url);
+	   				sendTo.clear();
+					ccTo.clear();
+				}
+				
+				/*for (int j = 0; j < sendToForJHN.size(); j++) {
 					if(sendToForJHN.size()==1) {
 						//发送给一个规范审核人得取所有的申请人和申购人去重一起抄送
 						ccTo = removeDuplicate(newLstApplyRequiredUserID);
@@ -1661,7 +1813,7 @@ public class AssetPlanInfoApplyController {
 						sendTo.clear();
 						ccTo.clear();
 					}
-				}
+				}*/
 				
 				//把数据库中存储的图片路径换成服务器中的路径
 				String picId="";

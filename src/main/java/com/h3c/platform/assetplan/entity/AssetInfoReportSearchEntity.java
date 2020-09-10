@@ -2,6 +2,7 @@ package com.h3c.platform.assetplan.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,10 +20,14 @@ public class AssetInfoReportSearchEntity {
     private Integer pageSize;
     
     //预算部门
-    private String budgetDeptCode;
+    //private String budgetDeptCode;
+    //预算部门（可传多值）
+    private List<String> budgetDeptCode;
     
     //物品类别
-    private String assetcategory;
+    //private String assetcategory;
+    //物品类别（可传多值）
+    private List<String> assetcategory;
     
     //计划起始时间
     private String startTime;
@@ -46,19 +51,21 @@ public class AssetInfoReportSearchEntity {
 		this.pageSize = pageSize;
 	}
 
-	public String getBudgetDeptCode() {
+	
+
+	public List<String> getBudgetDeptCode() {
 		return budgetDeptCode;
 	}
 
-	public void setBudgetDeptCode(String budgetDeptCode) {
+	public void setBudgetDeptCode(List<String> budgetDeptCode) {
 		this.budgetDeptCode = budgetDeptCode;
 	}
 
-	public String getAssetcategory() {
+	public List<String> getAssetcategory() {
 		return assetcategory;
 	}
 
-	public void setAssetcategory(String assetcategory) {
+	public void setAssetcategory(List<String> assetcategory) {
 		this.assetcategory = assetcategory;
 	}
 

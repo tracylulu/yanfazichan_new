@@ -80,6 +80,9 @@ public class AssetPlanInfoDept2Controller {
 	@Value("${spring.remindEmailForPlanner.url}")
     private  String remindEmailForPlanner ;
 	
+	@Value("${spring.endEmail.url}")
+    private  String endEmail ;
+	
 	@ApiOperation(value="展示二级主管审核列表信息")
    	@GetMapping("/getDept2InfoList")
    	@ResponseBody
@@ -283,12 +286,23 @@ public class AssetPlanInfoDept2Controller {
 			//数量改为0的按照申请人和申购人分组发送邮件（相同的申购人和申请人，发送一封邮件就可以了）
    			Map<String, List<AssetPlanInfo>> collect = newLstEndAssetPlanInfo.stream().collect(Collectors.groupingBy(e->fetchGroupKey(e)));
    			for(String key:collect.keySet()) {
+   				StringBuffer buffer =new StringBuffer();
    				List<AssetPlanInfo> lstTemp=collect.get(key);
+   				for (int i = 0; i < lstTemp.size(); i++) {
+   					buffer.append("</br>");
+   					buffer.append("厂家:"+lstTemp.get(i).getAssetmanufacturer());
+   					buffer.append(" 物品名:"+lstTemp.get(i).getAssetname());
+   					buffer.append(" 型号:"+lstTemp.get(i).getAssetmodel());
+   					buffer.append(" 数量:"+lstTemp.get(i).getRequireds());
+   					buffer.append(" 同意数量:"+lstTemp.get(i).getRequiredsaudit());
+   					buffer.append("</br>");
+   				}
    				List<String> sendToEnd =new ArrayList<>();
    				List<String> ccToEnd =new ArrayList<>();
    				sendToEnd.add(lstTemp.get(0).getApplyuser());
    				ccToEnd.add(lstTemp.get(0).getRequireduser());
-   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), "");
+   				String urlForEndEmail=endEmail+"?applymonth="+applymonth;
+   				mailInfoService.sendProcessEndMail(String.join(",", sendToEnd), String.join(",", ccToEnd), urlForEndEmail,buffer.toString());
    			}
 			
    			if(flag && !notChaoShiFlag) {

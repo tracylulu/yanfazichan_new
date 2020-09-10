@@ -215,7 +215,15 @@ public class CategoryController {
 			}
 			
 		}else {
-			if(flagid+1<lst.size()) {
+			//找到所有有效的个数
+			Integer ableCount=0;
+			for(int i=0;i<lst.size();i++) {
+				JSONObject obj=lst.getJSONObject(i);
+				if(Integer.parseInt(obj.getString("is_able"))==1) {
+					ableCount++;
+				}
+			}
+			if(flagid+1<ableCount) {
 				//下移，找到该条的下一个,换下排序字段然后调用修改方法
 				JSONObject obj2=lst.getJSONObject(flagid+1);
 				String sort_order_2 = ObjToStrUtil.replaceNullValue(obj2.get("sort_order"));

@@ -5,18 +5,48 @@
  
   <sql id="condition_sql">
 		<where>
-			<if test="param.AssetCategory !=null and param.AssetCategory !='' ">
+			<!-- <if test="param.AssetCategory !=null and param.AssetCategory !='' ">
 				 AND AssetCategory = #{param.AssetCategory}
-			</if>
+			</if> -->
+			
+			<if test="param.AssetCategory != null and param.AssetCategory.size>0">
+  	 			AND AssetCategory in
+				<foreach collection="param.AssetCategory" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
+		 	
+		 	
 			 <if test="param.StartTime !=null and param.StartTime !='' ">
                  AND ApplyTime &gt;= #{param.StartTime}
              </if>
              <if test="param.EndTime !=null and param.EndTime !='' ">
                  AND ApplyTime &lt;= #{param.EndTime}
              </if>
-             <if test="param.BudgetDeptCode !=null and param.BudgetDeptCode !='' ">
+             
+             <if test="param.BudgetDeptCode != null and param.BudgetDeptCode.size>0">
+  	 			AND (
+  	 			Dept3Code in
+				<foreach collection="param.BudgetDeptCode" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+				or
+				Dept2Code in
+				<foreach collection="param.BudgetDeptCode" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+				)
+				
+		 	</if>
+             
+             <!-- <if test="param.BudgetDeptCode !=null and param.BudgetDeptCode !='' ">
 				 AND (Dept3Code = #{param.BudgetDeptCode} or Dept2Code = #{param.BudgetDeptCode})
-			</if>
+			</if> -->
+			
+			
 		</where>
 	</sql>
 
@@ -65,35 +95,69 @@
 
   <sql id="condition_sql_2">
 		<where>
-			<if test="param.AssetCategory !=null and param.AssetCategory !='' ">
+			<!-- <if test="param.AssetCategory !=null and param.AssetCategory !='' ">
 				 AND AssetCategory = #{param.AssetCategory}
-			</if>
+			</if> -->
+			
+			<if test="param.AssetCategory != null and param.AssetCategory.size>0">
+  	 			AND AssetCategory in
+				<foreach collection="param.AssetCategory" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
 			 <if test="param.StartTime !=null and param.StartTime !='' ">
                  AND ApplyTime &gt;= #{param.StartTime}
              </if>
              <if test="param.EndTime !=null and param.EndTime !='' ">
                  AND ApplyTime &lt;= #{param.EndTime}
              </if>
-             <if test="param.BudgetDeptCode !=null and param.BudgetDeptCode !='' ">
+             <!-- <if test="param.BudgetDeptCode !=null and param.BudgetDeptCode !='' ">
 				 AND Dept2Code = #{param.BudgetDeptCode}
-			</if>
+			</if> -->
+			
+			<if test="param.BudgetDeptCode != null and param.BudgetDeptCode.size>0">
+  	 			AND Dept2Code in
+				<foreach collection="param.BudgetDeptCode" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
+		 	
 		</where>
 	</sql>
   
   <sql id="condition_sql_3">
 		<where>
-			<if test="param.AssetCategory !=null and param.AssetCategory !='' ">
+			<!-- <if test="param.AssetCategory !=null and param.AssetCategory !='' ">
 				 AND AssetCategory = #{param.AssetCategory}
-			</if>
+			</if> -->
+			
+			<if test="param.AssetCategory != null and param.AssetCategory.size>0">
+  	 			AND AssetCategory in
+				<foreach collection="param.AssetCategory" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
 			 <if test="param.StartTime !=null and param.StartTime !='' ">
                  AND ApplyTime &gt;= #{param.StartTime}
              </if>
              <if test="param.EndTime !=null and param.EndTime !='' ">
                  AND ApplyTime &lt;= #{param.EndTime}
              </if>
-             <if test="param.BudgetDeptCode !=null and param.BudgetDeptCode !='' ">
+            <!--  <if test="param.BudgetDeptCode !=null and param.BudgetDeptCode !='' ">
 				 AND Dept3Code = #{param.BudgetDeptCode}
-			</if>
+			</if> -->
+			
+			<if test="param.BudgetDeptCode != null and param.BudgetDeptCode.size>0">
+  	 			AND Dept3Code in
+				<foreach collection="param.BudgetDeptCode" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
+		 	
 		</where>
 	</sql>
 	
