@@ -8,4 +8,8 @@
    <select id="getEndDate" parameterType="map" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"></include> from Calendar where the_date&gt;=#{param.startDate} and delete_flag=1 and fiscal_period='Y' order by the_date  LIMIT ${param.limit}
   </select>
+    <select id="getBeforeDate" parameterType="map" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"></include> from Calendar where the_date&lt;=#{param.startDate} and delete_flag=1 and fiscal_period='Y' order by the_date desc LIMIT ${param.limit}
+  </select>
+  
 </mapper>

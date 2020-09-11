@@ -59,5 +59,18 @@ public class CalendarServiceImpl implements CalendarService{
 		}
 		return null;
 	}
+
+	@Override
+	public Date getBeforeDay(Date startDate, int len) {
+		Map<String,Object> param= new HashMap<>();
+		param.put("startDate", startDate);
+		param.put("limit", len+1);
+		List<Calendar> lst = calendarMapper.getBeforeDate(param);
+		
+		if(CollectionUtils.isNotEmpty(lst)) {
+			return lst.get(lst.size()-1).getTheDate();
+		}
+		return null;
+	}
 	
 }

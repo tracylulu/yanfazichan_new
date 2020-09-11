@@ -95,4 +95,7 @@ public interface MailInfoService {
      */
     void sendRemindMailForWork(String sendTo, String ccTo, String beforeHandler, String process,String url);
 
+    void sendBudgetRemindMail(String sendTo, String ccTo,String url) throws Exception;
+    
+    void sendPlanRemindMail(String sendTo, String ccTo, String url) throws Exception;
 }

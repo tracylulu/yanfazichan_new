@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import com.h3c.platform.task.config.AssetPlanQuartzJobBean;
 import com.h3c.platform.task.config.DeptInfoQuartzJobBean;
 import com.h3c.platform.task.config.MailQuartzJobBean;
+import com.h3c.platform.task.config.MailRemindQuartzJobBean;
 import com.h3c.platform.task.config.ProjectInfoQuartzJobBean;
 import com.h3c.platform.task.config.SchedulerConfig;
 import com.h3c.platform.task.config.UseRateQuartzJobBean;
@@ -48,6 +49,8 @@ public class StartApplicationListener implements ApplicationListener<ContextRefr
 	private String mailCron;
 	@Value("${eos.rate.cron}")
 	private String rateCron;
+	@Value("${eos.remindMail.cron}")
+	private String remindMailCron;
 	
 	public static AtomicInteger count = new AtomicInteger(0);
 	
@@ -77,6 +80,8 @@ public class StartApplicationListener implements ApplicationListener<ContextRefr
 			buildJob(scheduler, "jobasset", "asset_job",  "triggerasset", "asset_trigger", AssetPlanQuartzJobBean.class, assetCron);
 			
 			buildJob(scheduler, "jobmail", "mail_job",  "triggermail", "mail_trigger", MailQuartzJobBean.class, mailCron);
+			
+			buildJob(scheduler, "jobremindMail", "remindMail_job",  "triggerremindMail", "remindMail_trigger", MailRemindQuartzJobBean.class, remindMailCron);
 			
 			buildJob(scheduler, "jobrate", "mail_rate",  "triggerrate", "rate_trigger", UseRateQuartzJobBean.class, rateCron);
 			

@@ -16,5 +16,10 @@ public class MailTempConst {
 			//二三级主管审核模板
 			DEPTAPPROVALDATA="DeptApproveData",
 			//工作委托模板
-			AUTHORIZEWORK="AuthorizeWork";
+			AUTHORIZEWORK="AuthorizeWork",
+			//预算提醒邮件模板
+			BUDGETMANAGER="BudgetManager",
+			//计划开启提醒邮件模板
+			PLANREMINDER="PlanReminder";
+	
 }

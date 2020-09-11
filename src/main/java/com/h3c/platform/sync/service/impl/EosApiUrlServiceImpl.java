@@ -25,6 +25,12 @@ public class EosApiUrlServiceImpl implements EosApiUrlService {
 	@Value("${eos.password.pdt}")
 	private String eosApiPasswordPdt;
 	
+	@Value("${spring.remindEmailForBudget.url}")
+    private String EmailForBudget;
+	
+	@Value("${spring.remindEmailForPlan.url}")
+    private String EmailForPlan;
+	
 	@Override
 	public ApiUrl getEosUrl() {
 		ApiUrl apiUrl=new ApiUrl();
@@ -38,5 +44,15 @@ public class EosApiUrlServiceImpl implements EosApiUrlService {
 		apiUrl.setPasswordPdt(eosApiPasswordPdt);
 		
 		return apiUrl;
+	}
+
+	@Override
+	public String getbugdetUrl() {
+		return EmailForBudget;
+	}
+
+	@Override
+	public String getPlanRemindUrl() {
+		return EmailForPlan;
 	}
 }

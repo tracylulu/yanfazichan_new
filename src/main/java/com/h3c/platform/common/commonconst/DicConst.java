@@ -118,5 +118,15 @@ public class DicConst {
 	 * 申请页面长度配置
 	 */
 	public static String R_APPLYPAGE="R_ApplyPage";
+	
+	/**
+	 * 计划开启的提醒人员
+	 */
+	public static String M_PLANREMINDER ="M_PlanReminder";
+
+	/**
+	 * 邮催的预算配置人员
+	 */
+	public static String M_BUDGETMANAGER="M_BudgetManager";
 
 }

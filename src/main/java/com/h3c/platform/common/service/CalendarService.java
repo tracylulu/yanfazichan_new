@@ -11,4 +11,6 @@ public interface CalendarService {
 	Date getEndNextDay(Date startDate,int len);
 	
 	Date getEndDay(Date startDate,int len);
+	
+	Date getBeforeDay(Date startDate,int len);
 }

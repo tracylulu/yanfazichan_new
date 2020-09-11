@@ -4,4 +4,6 @@ import com.h3c.platform.sync.entity.ApiUrl;
 
 public interface EosApiUrlService {
 	ApiUrl getEosUrl();
+	String getbugdetUrl();
+	String getPlanRemindUrl();
 }

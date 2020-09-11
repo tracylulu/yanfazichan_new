@@ -35,4 +35,6 @@ public interface CalendarMapper {
     List<Calendar>  getStartDate(Date startDate);
     
     List<Calendar>  getEndDate(@Param("param")Map<String,Object> param);
+    
+    List<Calendar>  getBeforeDate(@Param("param")Map<String,Object> param);
 }

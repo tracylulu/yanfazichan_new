@@ -396,4 +396,57 @@ public class MailInfoServiceImpl implements MailInfoService {
 			return fourthEmailDate;
 		}
 	}
+
+	private Date getStartWorkDate(SimpleDateFormat df) throws Exception {
+		Calendar cal = null;
+		cal = Calendar.getInstance();
+		Integer month = cal.get(Calendar.MONTH) + 1;
+		int startDay = 0;
+
+		JSONObject objStartDay = sysDicInfoService.getDicByTypeAndCode(DicConst.R_STARTDATE, month.toString());
+		startDay = objStartDay.getIntValue("dic_value");
+		Calendar startCal = null;
+		startCal = Calendar.getInstance();
+		startCal.set(Calendar.DAY_OF_MONTH, startDay);
+
+		Date workDate = calendarService.getStartDay(startCal.getTime());
+
+		if (workDate == null) {
+			throw new Exception("未查询到启动工作日");
+		}
+		return workDate;
+		
+	}
+	
+	@Override
+	public void sendBudgetRemindMail(String sendTo, String ccTo, String url) throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
+		contentJson.put("$time", df.format(getStartWorkDate(df)));
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
+
+		sendMailAndRecord(MailTempConst.BUDGETMANAGER, sendTo, ccTo, contentJson, templeteArr, null);
+	
+	}
+
+	@Override
+	public void sendPlanRemindMail(String sendTo, String ccTo, String url) throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		JSONObject contentJson = new JSONObject();
+		contentJson.put("$url", StringUtils.isNotBlank(url) ? url : defaultUrl);
+		contentJson.put("$time", df.format(getStartWorkDate(df)));
+
+		JSONArray templeteArr = new JSONArray();
+		JSONObject tempTempleteJson = new JSONObject();
+		tempTempleteJson.put("code", "$system");
+		templeteArr.add(tempTempleteJson);
+
+		sendMailAndRecord(MailTempConst.PLANREMINDER, sendTo, ccTo, contentJson, templeteArr, null);
+	
+	}
 }
