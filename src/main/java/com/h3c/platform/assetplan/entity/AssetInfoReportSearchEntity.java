@@ -29,6 +29,9 @@ public class AssetInfoReportSearchEntity {
     //物品类别（可传多值）
     private List<String> assetcategory;
     
+    //厂家（可传多值）
+    private List<String> assetmanufacturer;
+    
     //计划起始时间
     private String startTime;
     
@@ -83,6 +86,14 @@ public class AssetInfoReportSearchEntity {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public List<String> getAssetmanufacturer() {
+		return assetmanufacturer;
+	}
+
+	public void setAssetmanufacturer(List<String> assetmanufacturer) {
+		this.assetmanufacturer = assetmanufacturer;
 	}
 
 

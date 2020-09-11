@@ -63,7 +63,7 @@ public class MailRemindQuartzJobBean extends QuartzJobBean {
 			MailInfoService mailInfoService = (MailInfoService) SpringContextUtils.getBean(MailInfoService.class);
 			//定时任务  不是spring管理的   取不到配置文件 ,得从方法中取
 			EosApiUrlService eosApiUrlService = (EosApiUrlService) SpringContextUtils.getBean(EosApiUrlService.class);
-			String getbugdetUrl = eosApiUrlService.getbugdetUrl();
+			String getbugdetUrl = eosApiUrlService.getbugdetUrl().trim()+"?activeName=budget";
 			String planRemindUrl = eosApiUrlService.getPlanRemindUrl();
 			SysDicInfoService sysDicInfoService = (SysDicInfoService) SpringContextUtils.getBean(SysDicInfoService.class);
 			CalendarService calendarService = (CalendarService) SpringContextUtils.getBean(CalendarService.class);

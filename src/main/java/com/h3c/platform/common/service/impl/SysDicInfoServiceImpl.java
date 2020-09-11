@@ -1,6 +1,7 @@
 package com.h3c.platform.common.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -176,7 +177,7 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		for (ManufacturerInfo mfInfo : lstmf) {
 			JSONObject obj = new JSONObject();
 			List<String> lstModelName = new ArrayList<>();
-			lstmi.stream().filter(o -> mfInfo.getId().equals(o.getManufacturerId())).forEach(a -> {
+			lstmi.stream().filter(o -> mfInfo.getId().equals(o.getManufacturerId())).sorted(Comparator.comparing(ModelInfo::getName)).forEach(a -> {
 				lstModelName.add(a.getName());
 			});
 			obj.put("assetmanufacturer", mfInfo.getManufacturerName());
@@ -361,6 +362,28 @@ public class SysDicInfoServiceImpl implements SysDicInfoService {
 		String result = HttpClientUtil.sendHttpPostJsonWithHeader(url, param, headers);
 
 		return result;
+	}
+
+	@Override
+	public List<JSONObject> getManuAndModelForSearch(String name) throws Exception {
+		List<JSONObject> lst = new ArrayList<>();
+
+		List<ManufacturerInfo> lstmf = manufacturerInfoService.getManufacturerInfoByNameForSearch(name);
+		List<ModelInfo> lstmi = modelInfoService.getAll();
+
+		for (ManufacturerInfo mfInfo : lstmf) {
+			JSONObject obj = new JSONObject();
+			List<String> lstModelName = new ArrayList<>();
+			lstmi.stream().filter(o -> mfInfo.getId().equals(o.getManufacturerId())).sorted(Comparator.comparing(ModelInfo::getName)).forEach(a -> {
+				lstModelName.add(a.getName());
+			});
+			obj.put("assetmanufacturer", mfInfo.getManufacturerName());
+			obj.put("assetmodel", lstModelName);
+
+			lst.add(obj);
+		}
+
+		return lst;
 	}
 
 }

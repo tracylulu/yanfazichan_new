@@ -29,6 +29,8 @@ public interface SysDicInfoService {
 	JSONArray getJsonArrayDicsByType(String type, String isDelete) throws Exception;
 	
 	List<JSONObject> getManuAndModel(String name) throws Exception;
+	
+	List<JSONObject> getManuAndModelForSearch(String name) throws Exception;
     
 	JSONObject getDicByTypeAndCode(String type,String code) throws Exception;
 	

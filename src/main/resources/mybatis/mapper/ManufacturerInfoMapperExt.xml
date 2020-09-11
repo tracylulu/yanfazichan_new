@@ -16,6 +16,21 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="getManufacturerInfoByNameForSearch" resultMap="BaseResultMap"
+		parameterType="string">
+		select
+		<include refid="Base_Column_List"></include>
+		from ManufacturerInfo
+		<where>
+			<if test="name!=null and name!=''">
+				and (manufacturer_name like CONCAT('%',#{name},'%')
+				or manufacturer_cn like CONCAT('%',#{name},'%'))
+			</if>
+		</where>
+	</select>
+	
+	
 	<select id="getAll" resultMap="BaseResultMap">
 
 		SELECT a.id,a.manufacturer_name,a.manufacturer_cn,a.delete_flag,concat(

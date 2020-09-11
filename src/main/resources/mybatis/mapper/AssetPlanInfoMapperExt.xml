@@ -26,7 +26,7 @@
 	</update>
 
 
-	<select id="getInfoListByReviewer" parameterType="map"
+	<!-- <select id="getInfoListByReviewer" parameterType="map"
 		resultMap="BaseResultMap">
 		select * from AssetPlanInfo
 		where  FIND_IN_SET(#{param.Reviewer}, ReviewPerson) and
@@ -35,7 +35,7 @@
 			open="(" close=")" separator=",">
 			#{code}
 		</foreach>
-	</select>
+	</select> -->
 
 
 	<update id="submitAssetPlanInfoByIds" parameterType="map">

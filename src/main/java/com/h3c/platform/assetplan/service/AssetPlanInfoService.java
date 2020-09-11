@@ -221,9 +221,11 @@ public interface AssetPlanInfoService {
   	
      List<ProjectInfo> getItemCodeTop20(Map<String,Object> param);
      
+     List<ProjectInfo> getItemCodeTop20ForSearch(Map<String,Object> param);
+     
      List<String> getItemNameByItemCode(Map<String,Object> param);
      
-     List<AssetPlanInfo> getInfoListByReviewer(Map<String, Object> param);
+     //List<AssetPlanInfo> getInfoListByReviewer(Map<String, Object> param);
      
      //String getBudgetSum(Map<String, Object> param);
      

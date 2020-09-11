@@ -5,13 +5,21 @@
   
   <sql id="condition_sql">
 		<where>
+		status=1 and delete_flag=1
 			<if test="param.projectNo !=null and param.projectNo !='' ">
 				and project_no LIKE concat(#{param.projectNo},'%')
 			</if>
             
 		</where>
 	</sql>
-
+	<sql id="condition_sql_1">
+		<where>
+			<if test="param.projectNo !=null and param.projectNo !='' ">
+				and project_no LIKE concat(#{param.projectNo},'%')
+			</if>
+            
+		</where>
+	</sql>
   
 	
   <select id="getItemCodeTop20" parameterType="map" resultMap="BaseResultMap">
@@ -21,8 +29,18 @@
     	</if>
     	order by project_no asc 
 		LIMIT  20
-  
   </select>
+  
+  
+   <select id="getItemCodeTop20ForSearch" parameterType="map" resultMap="BaseResultMap">
+  	select * from ProjectInfo
+  		<if test="_parameter != null">
+    		<include refid="condition_sql_1"></include>
+    	</if>
+    	order by project_no asc 
+		LIMIT  20
+  </select>
+  
   
    <select id="getItemNameByItemCode" parameterType="map" resultType="String">
   	select project_name from ProjectInfo where project_no = #{param.projectNo}

@@ -32,6 +32,8 @@ public interface ProjectInfoMapper {
     
     List<ProjectInfo> getItemCodeTop20(@Param("param") Map<String,Object> param);
     
+    List<ProjectInfo> getItemCodeTop20ForSearch(@Param("param") Map<String,Object> param);
+    
     List<String> getItemNameByItemCode(@Param("param") Map<String,Object> param);
     
     int insertByEosData();

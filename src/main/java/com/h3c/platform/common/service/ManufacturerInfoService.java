@@ -2,12 +2,16 @@ package com.h3c.platform.common.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.h3c.platform.common.entity.ManufacturerInfo;
 import com.h3c.platform.response.ResponseResult;
 
 public interface ManufacturerInfoService {
 
 	List<ManufacturerInfo> getManufacturerInfoByName(String name);
+	
+	List<ManufacturerInfo> getManufacturerInfoByNameForSearch(String name);
 	
 	List<ManufacturerInfo> getAll() throws Exception;
 	

@@ -148,8 +148,8 @@ public class AssetPlanInfoDept3Controller {
 	   					//groupName
    						json.put("GroupName", "费用类计划");
 	   				}
-	   				json.put("TotalmoneySum",new BigDecimal(totalmoneySum));
-	   				json.put("ActualMoneySum",new BigDecimal(actualMoneySum));
+	   				json.put("TotalmoneySum",totalmoneySum);
+	   				json.put("ActualMoneySum",actualMoneySum);
 	   				//数据集list
 	   				json.put("DataSet" , list);
 	   				arrayData.add(json);	

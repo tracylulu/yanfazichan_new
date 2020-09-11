@@ -33,6 +33,8 @@ public interface ManufacturerInfoMapper {
     
     List<ManufacturerInfo> getManufacturerInfoByName(@Param("name")String name);
     
+    List<ManufacturerInfo> getManufacturerInfoByNameForSearch(@Param("name")String name);
+    
     List<ManufacturerInfo> getAll();
     
 }

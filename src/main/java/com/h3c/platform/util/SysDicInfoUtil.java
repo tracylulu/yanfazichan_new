@@ -125,6 +125,9 @@ public class SysDicInfoUtil {
 					list.get(j).setAssetcategory(arrvalue[2]);
 					list.get(j).setGoodstime(arrvalue[3]);
 				}
+				if(!"0".equals(list.get(j).getApstage())) {
+					list.get(j).setApprovalnote("");
+				}
 			}
 		}
 		for (int i = 0; i < objDic1.size(); i++) {
@@ -151,6 +154,13 @@ public class SysDicInfoUtil {
 				if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
 					list.get(j).setAssetcategory(arrvalue[2]);
 					list.get(j).setGoodstime(arrvalue[3]);
+				}
+				if(!"0".equals(list.get(j).getApstatus()) || !"02".equals(list.get(j).getApstatus()) ||
+						!"03".equals(list.get(j).getApstatus()) || !"04".equals(list.get(j).getApstatus()) ||
+						!"05".equals(list.get(j).getApstatus()) || !"051".equals(list.get(j).getApstatus()) ||
+						!"06".equals(list.get(j).getApstatus()) || !"07".equals(list.get(j).getApstatus())
+						) {
+					list.get(j).setPlannernote("");
 				}
 			}
 		}

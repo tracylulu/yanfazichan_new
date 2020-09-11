@@ -749,10 +749,10 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		return detailassetPlanInfoMapper.getByAssetId(assetplanid);
 	}
 
-	@Override
+	/*@Override
 	public List<AssetPlanInfo> getInfoListByReviewer(Map<String, Object> param) {
 		return assetPlanInfoMapper.getInfoListByReviewer(param);
-	}
+	}*/
 
 	@Override
 	public List<Integer> getAllReviewList(Map<String, Object> param) {
@@ -916,6 +916,11 @@ public class AssetPlanInfoServiceImpl implements AssetPlanInfoService {
 		cia.andCompletesetcodeEqualTo(completeSetCode);
 		cia.andDeleteflagEqualTo("1");
 		return homePageViewMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<ProjectInfo> getItemCodeTop20ForSearch(Map<String, Object> param) {
+		return projectInfoMapper.getItemCodeTop20ForSearch(param);
 	}
 }
 

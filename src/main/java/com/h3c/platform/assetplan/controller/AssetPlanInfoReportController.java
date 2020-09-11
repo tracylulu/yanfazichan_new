@@ -64,6 +64,7 @@ public class AssetPlanInfoReportController {
     	Integer pageNum = reportSearchEntity.getPageNum();
     	Integer pageSize = reportSearchEntity.getPageSize();
     	param.put("AssetCategory", reportSearchEntity.getAssetcategory());
+    	param.put("AssetManufacturer", reportSearchEntity.getAssetmanufacturer());
     	param.put("BudgetDeptCode", reportSearchEntity.getBudgetDeptCode());
     	if(StringUtils.isNotBlank(reportSearchEntity.getStartTime())) {
     		param.put("StartTime", reportSearchEntity.getStartTime()+" 00:00:00");
@@ -94,6 +95,7 @@ public class AssetPlanInfoReportController {
    	public ResponseResult pieChartByModel(@RequestBody @ApiParam(name="查询对象",value="传入json格式",required=true) AssetInfoReportSearchEntity reportSearchEntity) throws Exception{
     	Map<String, Object> param = new HashMap<>();
     	param.put("AssetCategory", reportSearchEntity.getAssetcategory());
+    	param.put("AssetManufacturer", reportSearchEntity.getAssetmanufacturer());
     	param.put("BudgetDeptCode", reportSearchEntity.getBudgetDeptCode());
     	if(StringUtils.isNotBlank(reportSearchEntity.getStartTime())) {
     		param.put("StartTime", reportSearchEntity.getStartTime()+" 00:00:00");
@@ -141,6 +143,7 @@ public class AssetPlanInfoReportController {
    	public ResponseResult lineChartByApplymonth(@RequestBody @ApiParam(name="查询对象",value="传入json格式",required=true) AssetInfoReportSearchEntity reportSearchEntity) throws Exception{
     	Map<String, Object> param = new HashMap<>();
     	param.put("AssetCategory", reportSearchEntity.getAssetcategory());
+    	param.put("AssetManufacturer", reportSearchEntity.getAssetmanufacturer());
     	param.put("BudgetDeptCode", reportSearchEntity.getBudgetDeptCode());
     	if(StringUtils.isNotBlank(reportSearchEntity.getStartTime())) {
     		param.put("StartTime", reportSearchEntity.getStartTime()+" 00:00:00");
@@ -177,6 +180,7 @@ public class AssetPlanInfoReportController {
    	public ResponseResult barChartByDeptCode(@RequestBody @ApiParam(name="查询对象",value="传入json格式",required=true) AssetInfoReportSearchEntity reportSearchEntity) throws Exception{
     	Map<String, Object> param = new HashMap<>();
     	param.put("AssetCategory", reportSearchEntity.getAssetcategory());
+    	param.put("AssetManufacturer", reportSearchEntity.getAssetmanufacturer());
     	param.put("BudgetDeptCode", reportSearchEntity.getBudgetDeptCode());
     	if(StringUtils.isNotBlank(reportSearchEntity.getStartTime())) {
     		param.put("StartTime", reportSearchEntity.getStartTime()+" 00:00:00");

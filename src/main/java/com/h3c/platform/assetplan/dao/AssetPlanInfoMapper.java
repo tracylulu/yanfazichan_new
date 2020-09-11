@@ -66,7 +66,7 @@ public interface AssetPlanInfoMapper {
     
     List<AssetPlanInfo> getNotReviewList(@Param("param") Map<String, Object> param);
     
-    List<AssetPlanInfo> getInfoListByReviewer(@Param("param") Map<String, Object> param);
+    //List<AssetPlanInfo> getInfoListByReviewer(@Param("param") Map<String, Object> param);
     
     int updateSubmitDept2Data(@Param("param") Map<String, Object> param);
     

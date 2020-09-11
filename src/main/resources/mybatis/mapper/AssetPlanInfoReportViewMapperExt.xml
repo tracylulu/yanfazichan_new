@@ -8,7 +8,7 @@
 			<!-- <if test="param.AssetCategory !=null and param.AssetCategory !='' ">
 				 AND AssetCategory = #{param.AssetCategory}
 			</if> -->
-			
+			Requireds &gt; RequiredsAudit 
 			<if test="param.AssetCategory != null and param.AssetCategory.size>0">
   	 			AND AssetCategory in
 				<foreach collection="param.AssetCategory" item="code" index="index"
@@ -16,7 +16,13 @@
 					#{code}
 				</foreach>
 		 	</if>
-		 	
+		 	<if test="param.AssetManufacturer != null and param.AssetManufacturer.size>0">
+  	 			AND AssetManufacturer in
+				<foreach collection="param.AssetManufacturer" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
 		 	
 			 <if test="param.StartTime !=null and param.StartTime !='' ">
                  AND ApplyTime &gt;= #{param.StartTime}
@@ -98,10 +104,17 @@
 			<!-- <if test="param.AssetCategory !=null and param.AssetCategory !='' ">
 				 AND AssetCategory = #{param.AssetCategory}
 			</if> -->
-			
+			Requireds &gt; RequiredsAudit 
 			<if test="param.AssetCategory != null and param.AssetCategory.size>0">
   	 			AND AssetCategory in
 				<foreach collection="param.AssetCategory" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
+		 	<if test="param.AssetManufacturer != null and param.AssetManufacturer.size>0">
+  	 			AND AssetManufacturer in
+				<foreach collection="param.AssetManufacturer" item="code" index="index"
 					open="(" close=")" separator=",">
 					#{code}
 				</foreach>
@@ -132,10 +145,17 @@
 			<!-- <if test="param.AssetCategory !=null and param.AssetCategory !='' ">
 				 AND AssetCategory = #{param.AssetCategory}
 			</if> -->
-			
+			Requireds &gt; RequiredsAudit 
 			<if test="param.AssetCategory != null and param.AssetCategory.size>0">
   	 			AND AssetCategory in
 				<foreach collection="param.AssetCategory" item="code" index="index"
+					open="(" close=")" separator=",">
+					#{code}
+				</foreach>
+		 	</if>
+		 	<if test="param.AssetManufacturer != null and param.AssetManufacturer.size>0">
+  	 			AND AssetManufacturer in
+				<foreach collection="param.AssetManufacturer" item="code" index="index"
 					open="(" close=")" separator=",">
 					#{code}
 				</foreach>

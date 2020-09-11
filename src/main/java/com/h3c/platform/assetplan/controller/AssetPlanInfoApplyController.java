@@ -906,16 +906,17 @@ public class AssetPlanInfoApplyController {
    	@ResponseBody
    	@UserLoginToken
    	public ResponseResult getAssetManufacturerList(String name) throws Exception{
-
-   		//try {
-   			
-   			return ResponseResult.success(0, "查询成功", 0, 0, null, sysDicInfoService.getManuAndModel(name));
-   		/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "查询失败");
-   		}*/
+   		return ResponseResult.success(0, "查询成功", 0, 0, null, sysDicInfoService.getManuAndModel(name));
    	}
    
+    @ApiOperation(value="返回厂家和对应的型号集合(查询页面专用)")
+   	@GetMapping("/getAssetManufacturerListForSearch")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getAssetManufacturerListForSearch(String name) throws Exception{
+   		return ResponseResult.success(0, "查询成功", 0, 0, null, sysDicInfoService.getManuAndModelForSearch(name));
+   	}
+    
     @ApiOperation(value="返回物品类别和相应的货期")
    	@GetMapping("/getAssetCategoryAndGoodstime")
    	@ResponseBody
@@ -942,6 +943,29 @@ public class AssetPlanInfoApplyController {
    			e.printStackTrace();
    			return ResponseResult.fail(false, "查询失败");
    		}*/
+   	}
+    
+    @ApiOperation(value="返回物品类别和相应的货期(查询页面专用)")
+   	@GetMapping("/getCategoryGoodstimeForSearch")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getCategoryGoodstimeForSearch() throws Exception{
+   			JSONArray arrayData = new JSONArray();
+   			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_CATEGORY,"");
+   			objDic.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigInteger("is_able")).reversed().
+   					thenComparing(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed()));
+   			for (int i = 0; i < objDic.size(); i++) {
+   				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+   				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+   				String[] arrvalue =value.split("_");
+   				JSONObject json=new JSONObject();
+   				json.put("id", obj.get("dic_code"));
+   				json.put("assetcategory", arrvalue[2]);
+   				json.put("goodstime", arrvalue[3]);
+   				json.put("expenseType", arrvalue[4]);
+   				arrayData.add(json);
+   			}
+   			return ResponseResult.success(0, "查询成功", 0, 0, null, arrayData);
    	}
     
     @ApiOperation(value="到货地点的下拉选择")
@@ -980,6 +1004,39 @@ public class AssetPlanInfoApplyController {
    			e.printStackTrace();
    			return ResponseResult.fail(false, "查询失败");
    		}*/
+   	}
+    
+    @ApiOperation(value="到货地点的下拉选择(查询页面专用)")
+   	@GetMapping("/getReceiverPlaceListForSearch")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getReceiverPlaceListForSearch() throws Exception{
+   			JSONArray arrayData = new JSONArray();
+   			com.alibaba.fastjson.JSONArray objDic=dicService.getJsonArrayDicsByType(DicConst.R_ADDRESS,"");
+   			objDic.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigInteger("is_able")).reversed().
+   					thenComparing(Comparator.comparing(obj1 -> ((JSONObject) obj1).getBigInteger("sort_order")).reversed()));
+   			for (int i = 0; i < objDic.size(); i++) {
+   				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(i);
+   				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
+   				String[] arrvalue =value.split("_");
+   				JSONObject json=new JSONObject();
+   				
+   				json.put("id", obj.get("dic_code"));
+				json.put("receiverperson",  arrvalue[0]);
+				json.put("receiverplace",  arrvalue[1]);
+				json.put("receiverplacedetail",  arrvalue[2]);
+
+				//长度为4说明配置了审核人，否则没有配置
+				if(arrvalue.length==4) {
+					String[] split3 = arrvalue[3].split(" ");
+					json.put("receiverpeople",  split3[1]);
+				}else {
+					json.put("receiverpeople", "");
+				} 
+   					arrayData.add(json);
+   				}
+
+   			return ResponseResult.success(0, "查询成功", 0, 0, null, arrayData);
    	}
     
     @ApiOperation(value="根据申购人查询123级部门和计划员")
@@ -1098,7 +1155,6 @@ public class AssetPlanInfoApplyController {
    	@ResponseBody
    	@UserLoginToken
    	public ResponseResult getItemCodeTop20(@RequestParam @ApiParam(name="itemCode",value="传过来的4位编码联想",required=true)String itemCode) throws Exception{
-    	//try {
     		JSONArray arrayData = new JSONArray();
     		Map<String, Object> param = new HashMap<>();
 			param.put("projectNo",itemCode);
@@ -1109,14 +1165,26 @@ public class AssetPlanInfoApplyController {
 				json.put("itemname", listofItemCode.get(i).getProjectName());
 				arrayData.add(json);
 			}
-			
     		return ResponseResult.success(0, "查询成功", arrayData, 20);
-    	/*} catch (Exception e) {
-   			e.printStackTrace();
-   			return ResponseResult.fail(false, "查询失败");
-   		}*/
     }  
     
+    @ApiOperation(value="项目编码联想返回top20项目编码和项目名称（查询页面专用）")
+   	@GetMapping("/getItemCodeTop20ForSearch")
+   	@ResponseBody
+   	@UserLoginToken
+   	public ResponseResult getItemCodeTop20ForSearch(@RequestParam @ApiParam(name="itemCode",value="传过来的4位编码联想",required=true)String itemCode) throws Exception{
+    		JSONArray arrayData = new JSONArray();
+    		Map<String, Object> param = new HashMap<>();
+			param.put("projectNo",itemCode);
+			List<ProjectInfo> listofItemCode = assetPlanInfoService.getItemCodeTop20ForSearch(param);
+			for (int i = 0; i < listofItemCode.size(); i++) {
+				JSONObject json=new JSONObject();
+				json.put("itemcode", listofItemCode.get(i).getProjectNo());
+				json.put("itemname", listofItemCode.get(i).getProjectName());
+				arrayData.add(json);
+			}
+    		return ResponseResult.success(0, "查询成功", arrayData, 20);
+    }  
     
     @ApiOperation(value="展示待办列表信息")
    	@GetMapping("/getTodoInfoList")

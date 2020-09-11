@@ -89,4 +89,9 @@ public class ManufacturerInfoServiceImpl implements ManufacturerInfoService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<ManufacturerInfo> getManufacturerInfoByNameForSearch(String name) {
+		return manufacturerInfoMapper.getManufacturerInfoByNameForSearch(name);
+	}
 }
