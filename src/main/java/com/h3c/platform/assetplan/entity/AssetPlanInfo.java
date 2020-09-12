@@ -3,6 +3,8 @@ package com.h3c.platform.assetplan.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class AssetPlanInfo {
     private Integer assetplanid;
 
@@ -49,7 +51,7 @@ public class AssetPlanInfo {
     private Date modifitime;
 
     private String goodstime;
-
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     private Date reqarrivaldate;
 
     private String iscompleteset;

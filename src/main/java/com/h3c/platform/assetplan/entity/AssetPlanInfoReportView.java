@@ -80,6 +80,8 @@ public class AssetPlanInfoReportView {
 
     private String applyuser;
 
+    private String applyusername;
+
     private Date applytime;
 
     private String iscompleteset;
@@ -410,6 +412,14 @@ public class AssetPlanInfoReportView {
 
     public void setApplyuser(String applyuser) {
         this.applyuser = applyuser == null ? null : applyuser.trim();
+    }
+
+    public String getApplyusername() {
+        return applyusername;
+    }
+
+    public void setApplyusername(String applyusername) {
+        this.applyusername = applyusername == null ? null : applyusername.trim();
     }
 
     public Date getApplytime() {

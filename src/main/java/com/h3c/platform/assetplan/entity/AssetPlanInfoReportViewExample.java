@@ -14,7 +14,7 @@ public class AssetPlanInfoReportViewExample {
     protected List<Criteria> oredCriteria;
 
     public AssetPlanInfoReportViewExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<Criteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -66,12 +66,12 @@ public class AssetPlanInfoReportViewExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class AbstractGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected AbstractGeneratedCriteria() {
             super();
-            criteria = new ArrayList<>();
+            criteria = new ArrayList<Criterion>();
         }
 
         public boolean isValid() {
@@ -107,18 +107,18 @@ public class AssetPlanInfoReportViewExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+        protected void addCriterionForJdbcDate(String condition, Date value, String property) {
             if (value == null) {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             addCriterion(condition, new java.sql.Date(value.getTime()), property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+        protected void addCriterionForJdbcDate(String condition, List<Date> values, String property) {
             if (values == null || values.size() == 0) {
                 throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
-            List<java.sql.Date> dateList = new ArrayList<>();
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
             while (iter.hasNext()) {
                 dateList.add(new java.sql.Date(iter.next().getTime()));
@@ -126,7 +126,7 @@ public class AssetPlanInfoReportViewExample {
             addCriterion(condition, dateList, property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+        protected void addCriterionForJdbcDate(String condition, Date value1, Date value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -274,52 +274,52 @@ public class AssetPlanInfoReportViewExample {
         }
 
         public Criteria andPlanmonthEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth =", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth =", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth <>", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <>", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThan(Date value) {
-            addCriterionForJDBCDate("PlanMonth >", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth >", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth >=", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth >=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThan(Date value) {
-            addCriterionForJDBCDate("PlanMonth <", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("PlanMonth <=", value, "planmonth");
+            addCriterionForJdbcDate("PlanMonth <=", value, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthIn(List<Date> values) {
-            addCriterionForJDBCDate("PlanMonth in", values, "planmonth");
+            addCriterionForJdbcDate("PlanMonth in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotIn(List<Date> values) {
-            addCriterionForJDBCDate("PlanMonth not in", values, "planmonth");
+            addCriterionForJdbcDate("PlanMonth not in", values, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("PlanMonth between", value1, value2, "planmonth");
+            addCriterionForJdbcDate("PlanMonth between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
         public Criteria andPlanmonthNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("PlanMonth not between", value1, value2, "planmonth");
+            addCriterionForJdbcDate("PlanMonth not between", value1, value2, "planmonth");
             return (Criteria) this;
         }
 
@@ -2683,6 +2683,76 @@ public class AssetPlanInfoReportViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andApplyusernameIsNull() {
+            addCriterion("ApplyUserName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameIsNotNull() {
+            addCriterion("ApplyUserName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameEqualTo(String value) {
+            addCriterion("ApplyUserName =", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotEqualTo(String value) {
+            addCriterion("ApplyUserName <>", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameGreaterThan(String value) {
+            addCriterion("ApplyUserName >", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameGreaterThanOrEqualTo(String value) {
+            addCriterion("ApplyUserName >=", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameLessThan(String value) {
+            addCriterion("ApplyUserName <", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameLessThanOrEqualTo(String value) {
+            addCriterion("ApplyUserName <=", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameLike(String value) {
+            addCriterion("ApplyUserName like", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotLike(String value) {
+            addCriterion("ApplyUserName not like", value, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameIn(List<String> values) {
+            addCriterion("ApplyUserName in", values, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotIn(List<String> values) {
+            addCriterion("ApplyUserName not in", values, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameBetween(String value1, String value2) {
+            addCriterion("ApplyUserName between", value1, value2, "applyusername");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyusernameNotBetween(String value1, String value2) {
+            addCriterion("ApplyUserName not between", value1, value2, "applyusername");
+            return (Criteria) this;
+        }
+
         public Criteria andApplytimeIsNull() {
             addCriterion("ApplyTime is null");
             return (Criteria) this;
@@ -3624,7 +3694,7 @@ public class AssetPlanInfoReportViewExample {
         }
     }
 
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends AbstractGeneratedCriteria {
 
         protected Criteria() {
             super();

@@ -115,7 +115,7 @@ public class AssetPlanInfoReportController {
     			continue;
     		}else {
     	   		JSONObject json =new JSONObject();
-       			for (int j = 0; i < objDic.size(); j++) {
+       			for (int j = 0; j < objDic.size(); j++) {
        				com.alibaba.fastjson.JSONObject obj= objDic.getJSONObject(j);
        				String value= obj.get("dic_value")==null?"":obj.get("dic_value").toString();
        				String[] arrvalue =value.split("_");
