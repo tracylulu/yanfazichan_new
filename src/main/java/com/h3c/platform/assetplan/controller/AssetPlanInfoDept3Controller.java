@@ -144,9 +144,11 @@ public class AssetPlanInfoDept3Controller {
 	   				if("2".equals(key)) {
 	   					//groupName
    						json.put("GroupName", "CAPEX资产类计划");
+   						json.put("groupId", "2");
 	   				}else {
 	   					//groupName
    						json.put("GroupName", "费用类计划");
+   						json.put("groupId", "1");
 	   				}
 	   				json.put("TotalmoneySum",totalmoneySum);
 	   				json.put("ActualMoneySum",actualMoneySum);
