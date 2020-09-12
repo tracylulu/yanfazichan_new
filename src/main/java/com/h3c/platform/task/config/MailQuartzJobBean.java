@@ -141,9 +141,9 @@ public class MailQuartzJobBean extends QuartzJobBean {
 			String type="";
 
 			List<String> lstApplyCode = new ArrayList<>();
-			lst.stream().filter(o -> "1".equals(o.getApstage())).forEach(o -> {
-				if (!lstApplyCode.contains(o.getApplyuser())&&StringUtils.isNotBlank(o.getApplyuser())) {
-					lstApplyCode.add(o.getApplyuser());
+			lst.stream().filter(o -> "11".equals(o.getApstatus())).forEach(o -> {
+				if (!lstApplyCode.contains(o.getRequireduser())&&StringUtils.isNotBlank(o.getRequireduser())) {
+					lstApplyCode.add(o.getRequireduser());
 				}
 			});				
 
