@@ -26,10 +26,10 @@ public class EosApiUrlServiceImpl implements EosApiUrlService {
 	private String eosApiPasswordPdt;
 	
 	@Value("${spring.remindEmailForBudget.url}")
-    private String EmailForBudget;
+    private String emailForBudget;
 	
 	@Value("${spring.remindEmailForPlan.url}")
-    private String EmailForPlan;
+    private String emailForPlan;
 	
 	@Override
 	public ApiUrl getEosUrl() {
@@ -48,11 +48,11 @@ public class EosApiUrlServiceImpl implements EosApiUrlService {
 
 	@Override
 	public String getbugdetUrl() {
-		return EmailForBudget;
+		return emailForBudget;
 	}
 
 	@Override
 	public String getPlanRemindUrl() {
-		return EmailForPlan;
+		return emailForPlan;
 	}
 }
