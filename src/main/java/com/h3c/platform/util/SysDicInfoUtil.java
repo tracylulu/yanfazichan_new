@@ -90,6 +90,7 @@ public class SysDicInfoUtil {
 			String[] arrvalue =value.split("_");
 			for (int j = 0; j < list.size(); j++) {
 				if(list.get(j).getAssetcategory().equals(obj.get("dic_code").toString())) {
+					list.get(j).setAssetcategoryid(obj.get("dic_code").toString());
 					list.get(j).setAssetcategory(arrvalue[2]);
 				}
 			}

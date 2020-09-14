@@ -11,6 +11,7 @@
     <result column="AssetManufacturer" jdbcType="VARCHAR" property="assetmanufacturer" />
     <result column="AssetModel" jdbcType="VARCHAR" property="assetmodel" />
     <result column="AssetCategory" jdbcType="VARCHAR" property="assetcategory" />
+    <result column="AssetCategoryId" jdbcType="VARCHAR" property="assetcategoryid" />
     <result column="Goodstime" jdbcType="VARCHAR" property="goodstime" />
     <result column="Purpose" jdbcType="VARCHAR" property="purpose" />
     <result column="Requireds" jdbcType="INTEGER" property="requireds" />
@@ -122,14 +123,15 @@
   </sql>
   <sql id="Base_Column_List">
     AssetPlanID, PlanCode, PlanMonth, ApplyMonth, AssetName, ExpenseType, AssetManufacturer, 
-    AssetModel, AssetCategory, Goodstime, Purpose, Requireds, RequiredsAudit, PPrice, 
-    TotalMoney, ActualMoney, ReviewerCount, Dept3ManagerCount, Dept2ManagerCount, ReviewerAgreeMoney, 
-    Dept3AgreeMoney, Dept2AgreeMoney, RequiredUser, RequiredUserName, ReviewPerson, Reviewer, 
-    Dept3Manager, Dept2Manager, Planner, OQDeptReviewer, Dept1Reviewer, DeptCode, Dept3Code, 
-    Dept3Name, Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, ReceiverPlace, AbnormalPlanEnum, 
-    OutTimePlanEnum, AssetNote, ApplyUser, ApplyUserName, ApplyTime, IsCompleteSet, CompleteSetCode, 
-    APStatus, APStatusDetail, APStage, ApprovalPerson, ApprovalNote, ApprovalResult, 
-    IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, ReviewResult, DeleteFlag
+    AssetModel, AssetCategory, AssetCategoryId, Goodstime, Purpose, Requireds, RequiredsAudit, 
+    PPrice, TotalMoney, ActualMoney, ReviewerCount, Dept3ManagerCount, Dept2ManagerCount, 
+    ReviewerAgreeMoney, Dept3AgreeMoney, Dept2AgreeMoney, RequiredUser, RequiredUserName, 
+    ReviewPerson, Reviewer, Dept3Manager, Dept2Manager, Planner, OQDeptReviewer, Dept1Reviewer, 
+    DeptCode, Dept3Code, Dept3Name, Dept2Code, Dept2Name, Dept1Code, Dept1Name, ItemCode, 
+    ReceiverPlace, AbnormalPlanEnum, OutTimePlanEnum, AssetNote, ApplyUser, ApplyUserName, 
+    ApplyTime, IsCompleteSet, CompleteSetCode, APStatus, APStatusDetail, APStage, ApprovalPerson, 
+    ApprovalNote, ApprovalResult, IsReqPurchaseReport, ISSpecifyManufacturer, ManufacturerTypeEnum, 
+    ReviewResult, DeleteFlag
   </sql>
   <select id="selectByExample" parameterType="com.h3c.platform.assetplan.entity.AssetPlanInfoSearchViewExample" resultMap="BaseResultMap">
     select
@@ -155,10 +157,10 @@
     insert into AssetPlanInfoSearchView (AssetPlanID, PlanCode, PlanMonth, 
       ApplyMonth, AssetName, ExpenseType, 
       AssetManufacturer, AssetModel, AssetCategory, 
-      Goodstime, Purpose, Requireds, 
-      RequiredsAudit, PPrice, TotalMoney, 
-      ActualMoney, ReviewerCount, Dept3ManagerCount, 
-      Dept2ManagerCount, ReviewerAgreeMoney, 
+      AssetCategoryId, Goodstime, Purpose, 
+      Requireds, RequiredsAudit, PPrice, 
+      TotalMoney, ActualMoney, ReviewerCount, 
+      Dept3ManagerCount, Dept2ManagerCount, ReviewerAgreeMoney, 
       Dept3AgreeMoney, Dept2AgreeMoney, RequiredUser, 
       RequiredUserName, ReviewPerson, Reviewer, 
       Dept3Manager, Dept2Manager, Planner, 
@@ -176,10 +178,10 @@
     values (#{assetplanid,jdbcType=INTEGER}, #{plancode,jdbcType=VARCHAR}, #{planmonth,jdbcType=DATE}, 
       #{applymonth,jdbcType=VARCHAR}, #{assetname,jdbcType=VARCHAR}, #{expensetype,jdbcType=VARCHAR}, 
       #{assetmanufacturer,jdbcType=VARCHAR}, #{assetmodel,jdbcType=VARCHAR}, #{assetcategory,jdbcType=VARCHAR}, 
-      #{goodstime,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, #{requireds,jdbcType=INTEGER}, 
-      #{requiredsaudit,jdbcType=INTEGER}, #{pprice,jdbcType=DECIMAL}, #{totalmoney,jdbcType=DECIMAL}, 
-      #{actualmoney,jdbcType=DECIMAL}, #{reviewercount,jdbcType=INTEGER}, #{dept3managercount,jdbcType=INTEGER}, 
-      #{dept2managercount,jdbcType=INTEGER}, #{revieweragreemoney,jdbcType=DECIMAL}, 
+      #{assetcategoryid,jdbcType=VARCHAR}, #{goodstime,jdbcType=VARCHAR}, #{purpose,jdbcType=VARCHAR}, 
+      #{requireds,jdbcType=INTEGER}, #{requiredsaudit,jdbcType=INTEGER}, #{pprice,jdbcType=DECIMAL}, 
+      #{totalmoney,jdbcType=DECIMAL}, #{actualmoney,jdbcType=DECIMAL}, #{reviewercount,jdbcType=INTEGER}, 
+      #{dept3managercount,jdbcType=INTEGER}, #{dept2managercount,jdbcType=INTEGER}, #{revieweragreemoney,jdbcType=DECIMAL}, 
       #{dept3agreemoney,jdbcType=DECIMAL}, #{dept2agreemoney,jdbcType=DECIMAL}, #{requireduser,jdbcType=VARCHAR}, 
       #{requiredusername,jdbcType=VARCHAR}, #{reviewperson,jdbcType=VARCHAR}, #{reviewer,jdbcType=VARCHAR}, 
       #{dept3manager,jdbcType=VARCHAR}, #{dept2manager,jdbcType=VARCHAR}, #{planner,jdbcType=VARCHAR}, 
@@ -224,6 +226,9 @@
       </if>
       <if test="assetcategory != null">
         AssetCategory,
+      </if>
+      <if test="assetcategoryid != null">
+        AssetCategoryId,
       </if>
       <if test="goodstime != null">
         Goodstime,
@@ -403,6 +408,9 @@
       </if>
       <if test="assetcategory != null">
         #{assetcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="assetcategoryid != null">
+        #{assetcategoryid,jdbcType=VARCHAR},
       </if>
       <if test="goodstime != null">
         #{goodstime,jdbcType=VARCHAR},
@@ -592,6 +600,9 @@
       <if test="record.assetcategory != null">
         AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
       </if>
+      <if test="record.assetcategoryid != null">
+        AssetCategoryId = #{record.assetcategoryid,jdbcType=VARCHAR},
+      </if>
       <if test="record.goodstime != null">
         Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       </if>
@@ -758,6 +769,7 @@
       AssetManufacturer = #{record.assetmanufacturer,jdbcType=VARCHAR},
       AssetModel = #{record.assetmodel,jdbcType=VARCHAR},
       AssetCategory = #{record.assetcategory,jdbcType=VARCHAR},
+      AssetCategoryId = #{record.assetcategoryid,jdbcType=VARCHAR},
       Goodstime = #{record.goodstime,jdbcType=VARCHAR},
       Purpose = #{record.purpose,jdbcType=VARCHAR},
       Requireds = #{record.requireds,jdbcType=INTEGER},

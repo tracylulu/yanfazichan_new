@@ -743,6 +743,76 @@ public class AssetPlanInfoSearchViewExample {
             return (Criteria) this;
         }
 
+        public Criteria andAssetcategoryidIsNull() {
+            addCriterion("AssetCategoryId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidIsNotNull() {
+            addCriterion("AssetCategoryId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidEqualTo(String value) {
+            addCriterion("AssetCategoryId =", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidNotEqualTo(String value) {
+            addCriterion("AssetCategoryId <>", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidGreaterThan(String value) {
+            addCriterion("AssetCategoryId >", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidGreaterThanOrEqualTo(String value) {
+            addCriterion("AssetCategoryId >=", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidLessThan(String value) {
+            addCriterion("AssetCategoryId <", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidLessThanOrEqualTo(String value) {
+            addCriterion("AssetCategoryId <=", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidLike(String value) {
+            addCriterion("AssetCategoryId like", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidNotLike(String value) {
+            addCriterion("AssetCategoryId not like", value, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidIn(List<String> values) {
+            addCriterion("AssetCategoryId in", values, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidNotIn(List<String> values) {
+            addCriterion("AssetCategoryId not in", values, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidBetween(String value1, String value2) {
+            addCriterion("AssetCategoryId between", value1, value2, "assetcategoryid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetcategoryidNotBetween(String value1, String value2) {
+            addCriterion("AssetCategoryId not between", value1, value2, "assetcategoryid");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodstimeIsNull() {
             addCriterion("Goodstime is null");
             return (Criteria) this;

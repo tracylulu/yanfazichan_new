@@ -22,6 +22,8 @@ public class AssetPlanInfoSearchView {
 
     private String assetcategory;
 
+    private String assetcategoryid;
+
     private String goodstime;
 
     private String purpose;
@@ -192,6 +194,14 @@ public class AssetPlanInfoSearchView {
 
     public void setAssetcategory(String assetcategory) {
         this.assetcategory = assetcategory == null ? null : assetcategory.trim();
+    }
+
+    public String getAssetcategoryid() {
+        return assetcategoryid;
+    }
+
+    public void setAssetcategoryid(String assetcategoryid) {
+        this.assetcategoryid = assetcategoryid == null ? null : assetcategoryid.trim();
     }
 
     public String getGoodstime() {
